@@ -6,14 +6,13 @@
 - **[DOM 事件](#dom-事件)**
 - **[函数式编程](#函数式编程)**
 
-
 ## ES6
 
 ### 箭头函数
 
 下面代码输出什么？
 
-```
+```js
 const shape = {
   radius: 10,
   diameter() {
@@ -37,13 +36,13 @@ D: NaN and 63
 这意味着当我们调用 perimeter 时，它不是指向 shape 对象，而是指其定义时的环境（window）。
 没有值 radius 属性，返回 undefined。
 
-
 ### 模板字符串
 
 #### 标签模板字符串
 
 下面代码的输出是什么?
-```
+
+```js
 function getPersonInfo(one, two, three) {
   console.log(one);
   console.log(two);
@@ -72,7 +71,7 @@ C: Lydia ["", "is", "years old"] 21
 
 举例：
 
-```
+```js
 function mytag(strings,...values){
     console.log(strings);
     console.log(values);
@@ -83,12 +82,11 @@ mytag`age is ${boy.age},country is ${boy.country}`;
 ['age is', ',country is', '']
 ```
 
-
 ## 函数也是对象
 
 当我们这样做会发生什么？
 
-```
+```js
 function bark() {
   console.log("Woof!");
 }
@@ -105,12 +103,11 @@ D: ReferenceError
 
 这在JavaScript中是可能的，因为函数也是对象！（原始类型之外的所有东西都是对象）
 
-
 ## 变量类型隐式转换
 
 下面代码的输出是什么?
 
-```
+```js
 function sum(a, b) {
   return a + b;
 }
@@ -128,13 +125,13 @@ D: 3
 JavaScript是一种动态类型语言：我们没有指定某些变量的类型。 在您不知情的情况下，值可以自动转换为另一种类型，称为隐式类型转换。 强制从一种类型转换为另一种类型。
 在让数字类型（1）和字符串类型（'2'）相加时，该数字被视为字符串。 我们可以连接像“Hello”+“World”这样的字符串，所以这里发生的是“1”+“2”返回“12”。
 
-
 ## 表达式和运算符
 
 #### 运算符位置
 
 下面代码的输出是什么?
-```
+
+```js
 let number = 0;
 console.log(number++);
 console.log(++number);
@@ -156,8 +153,10 @@ D: 0 1 2
 返回值（返回2）
 
 #### 属性访问
+
 1.下面代码的输出是什么?
-```
+
+```js
 const a = {};
 const b = { key: "b" };
 const c = { key: "c" };
@@ -170,12 +169,12 @@ B: 456
 C: undefined
 D: ReferenceError
 ```
+
 答案：`B`
 对象键自动转换为字符串.
 将一个对象设置为对象 a 的键, 其值为 123.
 因为这个对象自动转换为字符串化时，它变成了 `[Object object]`.
 打印 `a[b]`, 它实际上是 `a["Object object"]`
-
 
 ## DOM 事件
 
@@ -184,12 +183,14 @@ D: ReferenceError
 DOM事件分为3个级别：DOM0 级事件处理，DOM2 级事件处理和 DOM3 级事件处理
 
 1.DOM0 级别
-```
+
+```js
 el.onclick = function() {}
 ```
 
 2.DOM2 级别
-```
+
+```js
 el.addEventListener(event, callback, useCapture)
 ```
 
@@ -208,7 +209,7 @@ el.addEventListener(event, callback, useCapture)
 
 #### Event
 
-```
+```js
 event.preventDefault()  // 例如阻止链接跳转
 event.stopPropagation()
 event.stopImmediatePropagation()  // 阻止事件冒泡, 并且阻止之后相同事件的其他函数执行
@@ -220,7 +221,8 @@ event.target()  // 获取的是触发事件的标签元素
 
 完美版，防止点击了子元素
 1.
-```
+
+```js
 let delegate = function(element, eventType, selector, fn) {
   element.addEventListener(eventType, e => {
     let el = e.target
@@ -238,7 +240,8 @@ let delegate = function(element, eventType, selector, fn) {
 ```
 
 2.
-```
+
+```js
 var element = document.querySelector('.list')
 element.addEventListener('click', e => {
   let el = e.target
@@ -255,6 +258,7 @@ element.addEventListener('click', e => {
 ```
 
 #### 事件模型
+
 DOM 事件模型分为捕获和冒泡
 
 #### 事件流
@@ -262,16 +266,19 @@ DOM 事件模型分为捕获和冒泡
 三个阶段
 
 1.事件的捕获阶段
-```
+
+```js
 windiw --> document --> html --> body --> ... --> 目标元素
 ```
+
 2.事件目标阶段
 3.事件冒泡阶段
 
-
 ## try catch
+
 下面代码的输出是什么?
-```
+
+```js
 (() => {
   let x, y;
   try {
@@ -294,7 +301,7 @@ D: 1 undefined undefined
 
 catch 块接收参数 x
 这与变量的 x 不同。这个变量 x 是属于 catch 作用域的
-我们将这个块级作用域的变量设置为 1, 并设置变量 y 的值. 
+我们将这个块级作用域的变量设置为 1, 并设置变量 y 的值.
 现在，我们打印块级作用域的变量 x, 它等于 1
 在 catch 块之外，x 仍然是 undefined，而 y 是 2.
 
@@ -309,6 +316,7 @@ catch 块接收参数 x
 #### 纯函数
 
 对于一个函数，
+
 1. 相同的输入，永远会得到相同的输出；
 2. 不产生副作用；
 3. 不依赖外部状态；
