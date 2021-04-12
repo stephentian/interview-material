@@ -24,10 +24,9 @@ AJAX 无法发送
 3. CORS
   支持不同源通信
 
-
 ## 如何创建 Ajax
 
-```
+```js
 let request = new XMLHttpRequest
 // IE 
 // new ActiveXObject('Microsoft.XMLHTTP')
@@ -66,6 +65,7 @@ request.send()
 #### Hash
 
 页面 A 通过iframe或frame嵌入了跨域的页面 B
+
 ```
 // 在A中伪代码如下：
 var B = document.getElementsByTagName('iframe');
@@ -80,12 +80,14 @@ window.onhashchange = function () {
 #### postMessage
 
 窗口A(http:A.com)向跨域的窗口B(http:B.com)发送信息
+
 ```
 A
 window.postMessage('data', 'http://B.com');
 ```
 
 // 在窗口 B 中监听
+
 ```
 B
 window.addEventListener('message', function (event) {
@@ -116,6 +118,7 @@ ws.onclose = function (evt) {
 ```
 
 #### CORS
+
 全称是"跨域资源共享"(Cross-origin resource sharing)
 可以理解为支持 跨域 的 ajax
 
@@ -128,8 +131,8 @@ fetch('/some/url/', {
   // 出错了，等价于 then 的第二个参数，但这样更好用更直观
 });
 ```
-比如 vue 和 react 中的 axios
 
+比如 vue 和 react 中的 axios
 
 ## 为什么 CORS 可以跨域(原理)？
 
