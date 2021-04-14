@@ -1,5 +1,9 @@
 # css
 
+## 目录
+
+- BFC
+
 ## 布局
 
 #### 三栏布局
@@ -7,6 +11,7 @@
 1.假设高度已知，请写出三栏布局，其中左栏、右栏宽度各为 300 px, 中间自适应
 
 (1) 浮动
+
 ```
 .float .left {
   float: left;
@@ -22,6 +27,7 @@
 ```
 
 (2) 绝对定位
+
 ```
 .absolute .left {
   position: absolute;
@@ -44,6 +50,7 @@
 ```
 
 (3) flexbox 弹性布局
+
 ```
 .flexbox {
   display: flex;
@@ -60,6 +67,7 @@
 ```
 
 (4) table 表格布局
+
 ```
 .tablebox {
   display: table;
@@ -81,6 +89,7 @@
 ```
 
 (5) grid 网格布局
+
 ```
 .gridbox {
   display: grid;
@@ -108,7 +117,6 @@
 3.table 布局
 
 4.grid 布局
-
 
 ## 盒模型
 
@@ -140,24 +148,31 @@ box-sizing: border-box;
 
 获取 dom 元素宽高样式，有下列 4 种方法：
 一
+
 ```
 dom.style.width/height
 
 // 只能获取 1， 即内联样式
 ```
+
 二
+
 ```
 dom.currentStyle.width/height
 
 // 获取1, 2, 3渲染后的宽高，但是仅 IE 支持
 ```
+
 三
+
 ```
 window.getComputedStyle(dom).width/height
 
 // 与2原理相似，但是兼容性好一些
 ```
+
 四
+
 ```
 dom.getBoundingClientRect().widht/height
 
@@ -168,6 +183,7 @@ dom.getBoundingClientRect().widht/height
 #### 边距重叠
 
 1.父子元素边距重叠
+
 ```
 <div class="parent">
   <div class="child"></div>
@@ -182,21 +198,23 @@ dom.getBoundingClientRect().widht/height
 // 父级元素 parent 高度多少？
 ```
 
+## BFC
 
-#### BFC
+### 1.基本概念
 
-##### 1.基本概念
 英文名, block formatting context, 块级格式化上下文.
 它是一个独立的渲染区域, 里面由块级元素组成.
 MDN: 是块盒子的布局过程发生的区域, 也是浮动元素与其他元素交互的区域.
 
-##### 2.BFC的原理(渲染规则)
+### 2.BFC的原理(渲染规则)
+
 - (1) BFC 的元素中, 在垂直方向上的margin会发生重叠(根元素`<html>`就是一个 BFC 元素)
 - (2) BFC 区域不会和 float 元素重叠(两栏自适应)
 - (3) BFC 元素在页面上是一个独立的容器, 外面的元素和里面的元素互不影响
 - (4) 计算 BFC 元素的高度时,里面浮动元素的高度也会参与计算(`overflow:hidden`可以清除浮动)
 
-##### 3.如何创建 BFC
+### 3.如何创建 BFC
+
 - (1) float 不为 none
 - (2) position: 不为 static, relative
 - (3) overflow 不为 visible
