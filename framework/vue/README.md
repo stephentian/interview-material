@@ -2,6 +2,26 @@
 
 ## 目录
 
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+- [Vue 的响应式原理](#vue-%E7%9A%84%E5%93%8D%E5%BA%94%E5%BC%8F%E5%8E%9F%E7%90%86)
+- [为什么 Vue 还需要虚拟 DOM 进行 diff 检测差异?](#%E4%B8%BA%E4%BB%80%E4%B9%88-vue-%E8%BF%98%E9%9C%80%E8%A6%81%E8%99%9A%E6%8B%9F-dom-%E8%BF%9B%E8%A1%8C-diff-%E6%A3%80%E6%B5%8B%E5%B7%AE%E5%BC%82)
+- [组件中 name 选项作用](#%E7%BB%84%E4%BB%B6%E4%B8%AD-name-%E9%80%89%E9%A1%B9%E4%BD%9C%E7%94%A8)
+- [Vue 的 nextTick 的原理是什么？](#vue-%E7%9A%84-nexttick-%E7%9A%84%E5%8E%9F%E7%90%86%E6%98%AF%E4%BB%80%E4%B9%88)
+- [Vue 组件之间的通信](#vue-%E7%BB%84%E4%BB%B6%E4%B9%8B%E9%97%B4%E7%9A%84%E9%80%9A%E4%BF%A1)
+  - [props/$emit](#propsemit)
+  - [eventBus](#eventbus)
+  - [provide/inject](#provideinject)
+  - [ref/$refs](#refrefs)
+  - [Vuex](#vuex)
+  - [生命周期](#%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F)
+- [Vue-Router](#vue-router)
+  - [route 和 router 的区别](#route-%E5%92%8C-router-%E7%9A%84%E5%8C%BA%E5%88%AB)
+- [为什么 Vue3.0 不再使用 defineProperty](#%E4%B8%BA%E4%BB%80%E4%B9%88-vue30-%E4%B8%8D%E5%86%8D%E4%BD%BF%E7%94%A8-defineproperty)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Vue 的响应式原理
 
 当 vue 创建一个实例时, vue 会遍历 data 里的属性，使用 Object.defineProperty 给它们添加 getter/setter 属性。
@@ -188,3 +208,13 @@ this.$store.state
 
 `route`： 是“路由信息对象”，包括 path, params, hash, query, fullPath, matched, name等路由信息参数。
 `router`：是“路由实例对象”，包括了路由的跳转方法(push、replace)，钩子函数等。
+
+## 为什么 Vue3.0 不再使用 defineProperty
+
+- 1. 监控数组麻烦
+  - 使用 `Object.defineProperty` 无法监听数组变更,之前是通过 `push、pop、shift、unshift、splice、sort、reverse` 监控
+  - 无法监听 通过索引修改数组： `arr[i] = value`
+  - 无法监听 `length`
+- 2. `Object.defineProperty` 是对属性进行劫持，需要遍历对象的每个属性；`Proxy` 直接代理对象
+- 3. 对象新增属性，要重新遍历对象，对新对象使用 `Object.defineProperty` 进行劫持
+- 4. `Proxy` 为新标准，浏览器会对其进行优化。
