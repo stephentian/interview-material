@@ -7,10 +7,11 @@
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
 - [排序](#%E6%8E%92%E5%BA%8F)
-- [动态规划](#)
+- [动态规划](#%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92)
 - [n 数之和](#n-%E6%95%B0%E4%B9%8B%E5%92%8C)
   - [双数之和](#%E5%8F%8C%E6%95%B0%E4%B9%8B%E5%92%8C)
   - [三数之和](#%E4%B8%89%E6%95%B0%E4%B9%8B%E5%92%8C)
+  - [四数之和](#%E5%9B%9B%E6%95%B0%E4%B9%8B%E5%92%8C)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
