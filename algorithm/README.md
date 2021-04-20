@@ -23,6 +23,11 @@
 
 ## n 数之和
 
+诀窍:
+
+- 暴力法
+- 排序 + 双指针
+
 ### 双数之和
 
 1. 暴力法
@@ -39,17 +44,38 @@
     }
     ```
 
-2. 数组
+2. 哈希表
 
     ```js
     const twoSum = function (nums, target) {
-      
+      let map = new Map()
+      for(let i = 0, len = nums.lengths; i< len; i++) {
+        if (map.has(target - nums[i])) {
+          return [ map.get(target - nums[i]), i ]
+        } else {
+          map.set(nums[i], i)
+        }
+      }
+      return []
     }
     ```
 
 ### 三数之和
 
 地址: [3sum](https://leetcode-cn.com/problems/3sum/)
+
+1. 暴力法, 3 个 `for` 循环
+2. 排序 + 双指针
+
+```js
+const threeSum = function(nums) {
+  if (nums === null || nums.length < 3) return []
+  let ans = []
+  const len = nums.length
+  nums.sort((a, b) => a - b)
+  
+}
+```
 
 ### 四数之和
 
