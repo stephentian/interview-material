@@ -1,20 +1,41 @@
 # 网络安全
 
+## 目录
+
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [XSS(跨站脚本攻击)](#xss%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC%E6%94%BB%E5%87%BB)
+  - [攻击原理](#%E6%94%BB%E5%87%BB%E5%8E%9F%E7%90%86)
+  - [攻击分类](#%E6%94%BB%E5%87%BB%E5%88%86%E7%B1%BB)
+    - [1. 反射型](#1-%E5%8F%8D%E5%B0%84%E5%9E%8B)
+    - [2. 存储型](#2-%E5%AD%98%E5%82%A8%E5%9E%8B)
+  - [防范措施](#%E9%98%B2%E8%8C%83%E6%8E%AA%E6%96%BD)
+- [CSRF(跨站请求伪造)](#csrf%E8%B7%A8%E7%AB%99%E8%AF%B7%E6%B1%82%E4%BC%AA%E9%80%A0)
+  - [攻击原理](#%E6%94%BB%E5%87%BB%E5%8E%9F%E7%90%86-1)
+  - [防御措施](#%E9%98%B2%E5%BE%A1%E6%8E%AA%E6%96%BD)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## XSS(跨站脚本攻击)
+
 > cross site scripting
 
 ### 攻击原理
+
 允许用户将恶意代码植入到其他用户使用的界面。
 恶意攻击者往 Web 页面里插入恶意 javaScript 代码，当用户浏览该页之时，嵌入其中 Web 里面的 javaScript 代码会被执行，从而达到恶意攻击用户的目的。
 
 ### 攻击分类
 
 #### 1. 反射型
+
 非持久性跨站点脚本攻击。
 诱导用户访问一个被篡改的链接，通过 url 参数直接注入。然后在响应的数据中包含着危险的代码
 
 #### 2. 存储型
+
 持久型跨站点脚本。
 它一般发生在XSS攻击向量(一般指XSS攻击代码)存储在网站数据库，当一个页面被用户打开的时候执行。
 比非持久性XSS攻击危害性更大。
@@ -25,20 +46,24 @@
 当别人访问主页的时候，刚刚黑客写入的评论里面的脚本被浏览器当成代码执行了，用户莫名其妙受到攻击。
 
 ### 防范措施
+
 1. 对输入的数据进行转义保存，在输出时再进行还原，
 2. 对输入的数据进行过滤，确保输入数据符合我们的期望（数据类型、长度、过滤空格/特殊字符、判断唯一性等），
 3. 尽量避免使用 `eval` 或者 `new Function` 等执行字符串方法。
 
 ## CSRF(跨站请求伪造)
+
 > cross site request forgery
 
 ### 攻击原理
+
 冒充用户发送一些违反用户意愿的请求。
 比如用户原来访问过 A 网站，存了登录 A 网站的 Cookie,
 然后用户访问 B 网站时，B 网站可能有过引诱链接，这个链接是访问 A 网站的，
 可能用户点击了链接，但是用户不清楚自己进了 A 网站。（新浪微博莫名其妙增加关注）
 
 ### 防御措施
+
 1. Token 验证
 2. Referer 验证
   检查 HTTP 请求头 referer 是否为同源（Origin）
