@@ -2,9 +2,30 @@
 
 ## 目录
 
-- **[ES6](#es6)**
-- **[DOM 事件](#dom-事件)**
-- **[函数式编程](#函数式编程)**
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+- [JS](#js)
+  - [目录](#%E7%9B%AE%E5%BD%95)
+  - [ES6](#es6)
+    - [箭头函数](#%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0)
+    - [模板字符串](#%E6%A8%A1%E6%9D%BF%E5%AD%97%E7%AC%A6%E4%B8%B2)
+  - [函数也是对象](#%E5%87%BD%E6%95%B0%E4%B9%9F%E6%98%AF%E5%AF%B9%E8%B1%A1)
+  - [变量类型隐式转换](#%E5%8F%98%E9%87%8F%E7%B1%BB%E5%9E%8B%E9%9A%90%E5%BC%8F%E8%BD%AC%E6%8D%A2)
+  - [表达式和运算符](#%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%92%8C%E8%BF%90%E7%AE%97%E7%AC%A6)
+    - [运算符位置](#%E8%BF%90%E7%AE%97%E7%AC%A6%E4%BD%8D%E7%BD%AE)
+    - [属性访问](#%E5%B1%9E%E6%80%A7%E8%AE%BF%E9%97%AE)
+    - [try catch](#try-catch)
+  - [DOM 事件](#dom-%E4%BA%8B%E4%BB%B6)
+    - [DOM 事件级别](#dom-%E4%BA%8B%E4%BB%B6%E7%BA%A7%E5%88%AB)
+    - [Event](#event)
+    - [事件委托](#%E4%BA%8B%E4%BB%B6%E5%A7%94%E6%89%98)
+    - [事件模型](#%E4%BA%8B%E4%BB%B6%E6%A8%A1%E5%9E%8B)
+    - [事件流](#%E4%BA%8B%E4%BB%B6%E6%B5%81)
+  - [函数式编程](#%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B)
+    - [纯函数](#%E7%BA%AF%E5%87%BD%E6%95%B0)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## ES6
 
@@ -38,7 +59,7 @@ D: NaN and 63
 
 ### 模板字符串
 
-#### 标签模板字符串
+标签模板字符串
 
 下面代码的输出是什么?
 
@@ -127,7 +148,7 @@ JavaScript是一种动态类型语言：我们没有指定某些变量的类型�
 
 ## 表达式和运算符
 
-#### 运算符位置
+### 运算符位置
 
 下面代码的输出是什么?
 
@@ -152,7 +173,7 @@ D: 0 1 2
 增加值（数字现在是2）
 返回值（返回2）
 
-#### 属性访问
+### 属性访问
 
 1.下面代码的输出是什么?
 
@@ -176,105 +197,7 @@ D: ReferenceError
 因为这个对象自动转换为字符串化时，它变成了 `[Object object]`.
 打印 `a[b]`, 它实际上是 `a["Object object"]`
 
-## DOM 事件
-
-#### DOM 事件级别
-
-DOM事件分为3个级别：DOM0 级事件处理，DOM2 级事件处理和 DOM3 级事件处理
-
-1.DOM0 级别
-
-```js
-el.onclick = function() {}
-```
-
-2.DOM2 级别
-
-```js
-el.addEventListener(event, callback, useCapture)
-```
-
-3.DOM3 级别
-在 DOM2 级事件的基础上添加了更多的事件类型
-
-- UI事件，当用户与页面上的元素交互时触发，如：load、scroll
-- 焦点事件，当元素获得或失去焦点时触发，如：blur、focus
-- 鼠标事件，当用户通过鼠标在页面执行操作时触发如：dblclick、mouseup
-- 滚轮事件，当使用鼠标滚轮或类似设备时触发，如：mousewheel
-- 文本事件，当在文档中输入文本时触发，如：textInput
-- 键盘事件，当用户通过键盘在页面上执行操作时触发，如：keyup、keydown、keypress
-- 合成事件，当为IME（输入法编辑器）输入字符时触发，如：compositionstart
-- 变动事件，当底层DOM结构发生变化时触发，如：DOMsubtreeModified
-- 同时DOM3级事件也允许使用者自定义一些事件
-
-#### Event
-
-```js
-event.preventDefault()  // 例如阻止链接跳转
-event.stopPropagation()
-event.stopImmediatePropagation()  // 阻止事件冒泡, 并且阻止之后相同事件的其他函数执行
-event.currentTarget() // 获取到的是绑定事件的标签元素
-event.target()  // 获取的是触发事件的标签元素
-```
-
-#### 事件委托
-
-完美版，防止点击了子元素
-1.
-
-```js
-let delegate = function(element, eventType, selector, fn) {
-  element.addEventListener(eventType, e => {
-    let el = e.target
-    while (!el.matches(selector)) {
-      el = el.parentNode
-      if(element === el) {
-        el = null
-        break
-      }
-    }
-    el && fn.call(el, e, el)
-  })
-  return element
-}
-```
-
-2.
-
-```js
-var element = document.querySelector('.list')
-element.addEventListener('click', e => {
-  let el = e.target
-  while(el.tagName.toLowerCase() !== 'li') {
-    el = el.parent
-    if (el === element) {
-      el = null
-      break
-    }
-  }
-  el && console.log('点击了 xxx')
-})
-
-```
-
-#### 事件模型
-
-DOM 事件模型分为捕获和冒泡
-
-#### 事件流
-
-三个阶段
-
-1.事件的捕获阶段
-
-```js
-windiw --> document --> html --> body --> ... --> 目标元素
-```
-
-2.事件目标阶段
-3.事件冒泡阶段
-
-## try catch
+### try catch
 
 下面代码的输出是什么?
 
@@ -305,6 +228,104 @@ catch 块接收参数 x
 现在，我们打印块级作用域的变量 x, 它等于 1
 在 catch 块之外，x 仍然是 undefined，而 y 是 2.
 
+## DOM 事件
+
+### DOM 事件级别
+
+DOM事件分为3个级别：DOM0 级事件处理，DOM2 级事件处理和 DOM3 级事件处理
+
+1.DOM0 级别
+
+```js
+el.onclick = function() {}
+```
+
+2.DOM2 级别
+
+```js
+el.addEventListener(event, callback, useCapture)
+```
+
+3.DOM3 级别
+在 DOM2 级事件的基础上添加了更多的事件类型
+
+- UI事件，当用户与页面上的元素交互时触发，如：load、scroll
+- 焦点事件，当元素获得或失去焦点时触发，如：blur、focus
+- 鼠标事件，当用户通过鼠标在页面执行操作时触发如：dblclick、mouseup
+- 滚轮事件，当使用鼠标滚轮或类似设备时触发，如：mousewheel
+- 文本事件，当在文档中输入文本时触发，如：textInput
+- 键盘事件，当用户通过键盘在页面上执行操作时触发，如：keyup、keydown、keypress
+- 合成事件，当为IME（输入法编辑器）输入字符时触发，如：compositionstart
+- 变动事件，当底层DOM结构发生变化时触发，如：DOMsubtreeModified
+- 同时DOM3级事件也允许使用者自定义一些事件
+
+### Event
+
+```js
+event.preventDefault()  // 例如阻止链接跳转
+event.stopPropagation()
+event.stopImmediatePropagation()  // 阻止事件冒泡, 并且阻止之后相同事件的其他函数执行
+event.currentTarget() // 获取到的是绑定事件的标签元素
+event.target()  // 获取的是触发事件的标签元素
+```
+
+### 事件委托
+
+完美版，防止点击了子元素  
+1
+
+```js
+let delegate = function(element, eventType, selector, fn) {
+  element.addEventListener(eventType, e => {
+    let el = e.target
+    while (!el.matches(selector)) {
+      el = el.parentNode
+      if(element === el) {
+        el = null
+        break
+      }
+    }
+    el && fn.call(el, e, el)
+  })
+  return element
+}
+```
+
+2
+
+```js
+var element = document.querySelector('.list')
+element.addEventListener('click', e => {
+  let el = e.target
+  while(el.tagName.toLowerCase() !== 'li') {
+    el = el.parent
+    if (el === element) {
+      el = null
+      break
+    }
+  }
+  el && console.log('点击了 xxx')
+})
+
+```
+
+### 事件模型
+
+DOM 事件模型分为捕获和冒泡
+
+### 事件流
+
+三个阶段
+
+1.事件的捕获阶段
+
+```js
+windiw --> document --> html --> body --> ... --> 目标元素
+```
+
+2.事件目标阶段
+3.事件冒泡阶段
+
 ## 函数式编程
 
 "函数式编程"是一种"编程范式"（programming paradigm），也就是如何编写程序的方法论。
@@ -313,7 +334,7 @@ catch 块接收参数 x
 
 而函数式编程是造工具，把运算过程写成一套函数调用。
 
-#### 纯函数
+### 纯函数
 
 对于一个函数，
 
