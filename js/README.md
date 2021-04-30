@@ -5,25 +5,23 @@
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-- [JS](#js)
-  - [目录](#%E7%9B%AE%E5%BD%95)
-  - [ES6](#es6)
-    - [箭头函数](#%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0)
-    - [模板字符串](#%E6%A8%A1%E6%9D%BF%E5%AD%97%E7%AC%A6%E4%B8%B2)
-  - [函数也是对象](#%E5%87%BD%E6%95%B0%E4%B9%9F%E6%98%AF%E5%AF%B9%E8%B1%A1)
-  - [变量类型隐式转换](#%E5%8F%98%E9%87%8F%E7%B1%BB%E5%9E%8B%E9%9A%90%E5%BC%8F%E8%BD%AC%E6%8D%A2)
-  - [表达式和运算符](#%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%92%8C%E8%BF%90%E7%AE%97%E7%AC%A6)
-    - [运算符位置](#%E8%BF%90%E7%AE%97%E7%AC%A6%E4%BD%8D%E7%BD%AE)
-    - [属性访问](#%E5%B1%9E%E6%80%A7%E8%AE%BF%E9%97%AE)
-    - [try catch](#try-catch)
-  - [DOM 事件](#dom-%E4%BA%8B%E4%BB%B6)
-    - [DOM 事件级别](#dom-%E4%BA%8B%E4%BB%B6%E7%BA%A7%E5%88%AB)
-    - [Event](#event)
-    - [事件委托](#%E4%BA%8B%E4%BB%B6%E5%A7%94%E6%89%98)
-    - [事件模型](#%E4%BA%8B%E4%BB%B6%E6%A8%A1%E5%9E%8B)
-    - [事件流](#%E4%BA%8B%E4%BB%B6%E6%B5%81)
-  - [函数式编程](#%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B)
-    - [纯函数](#%E7%BA%AF%E5%87%BD%E6%95%B0)
+- [ES6](#es6)
+  - [箭头函数](#%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0)
+  - [模板字符串](#%E6%A8%A1%E6%9D%BF%E5%AD%97%E7%AC%A6%E4%B8%B2)
+- [函数也是对象](#%E5%87%BD%E6%95%B0%E4%B9%9F%E6%98%AF%E5%AF%B9%E8%B1%A1)
+- [变量类型隐式转换](#%E5%8F%98%E9%87%8F%E7%B1%BB%E5%9E%8B%E9%9A%90%E5%BC%8F%E8%BD%AC%E6%8D%A2)
+- [表达式和运算符](#%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%92%8C%E8%BF%90%E7%AE%97%E7%AC%A6)
+  - [运算符位置](#%E8%BF%90%E7%AE%97%E7%AC%A6%E4%BD%8D%E7%BD%AE)
+  - [属性访问](#%E5%B1%9E%E6%80%A7%E8%AE%BF%E9%97%AE)
+  - [try catch](#try-catch)
+- [DOM 事件](#dom-%E4%BA%8B%E4%BB%B6)
+  - [DOM 事件级别](#dom-%E4%BA%8B%E4%BB%B6%E7%BA%A7%E5%88%AB)
+  - [Event](#event)
+  - [事件委托](#%E4%BA%8B%E4%BB%B6%E5%A7%94%E6%89%98)
+  - [事件模型](#%E4%BA%8B%E4%BB%B6%E6%A8%A1%E5%9E%8B)
+  - [事件流](#%E4%BA%8B%E4%BB%B6%E6%B5%81)
+- [函数式编程](#%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B)
+  - [纯函数](#%E7%BA%AF%E5%87%BD%E6%95%B0)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -196,6 +194,8 @@ D: ReferenceError
 将一个对象设置为对象 a 的键, 其值为 123.
 因为这个对象自动转换为字符串化时，它变成了 `[Object object]`.
 打印 `a[b]`, 它实际上是 `a["Object object"]`
+
+## 语句和声明
 
 ### try catch
 
