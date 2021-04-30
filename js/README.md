@@ -197,6 +197,17 @@ D: ReferenceError
 
 ## 语句和声明
 
+### for in 和 for of
+
+`for in`: 以**任意顺序**遍历一个对象的除Symbol以外的**可枚举属性**。
+
+`for of`: 遍历**可迭代对象**定义要迭代的数据。(可迭代对象: Array，Map，Set，String，arguments 等)
+
+
+`for in` 是为遍历对象属性而构建的，**不建议与数组一起使用**。一般用于去检查对象属性，处理有 `key-value` 数据。比如配合 `hasOwnProperty()` 来确定某属性是否是对象本身的属性。
+
+比如遍历数组, `for in` 遍历出是 `key 0, 1, 2`(array 自身的属性), `for of` 遍历出是 `value a b c`。
+
 ### try catch
 
 下面代码的输出是什么?
@@ -324,6 +335,7 @@ windiw --> document --> html --> body --> ... --> 目标元素
 ```
 
 2.事件目标阶段
+
 3.事件冒泡阶段
 
 ## 函数式编程
