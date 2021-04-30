@@ -101,27 +101,6 @@ mytag`age is ${boy.age},country is ${boy.country}`;
 ['age is', ',country is', '']
 ```
 
-## 函数也是对象
-
-当我们这样做会发生什么？
-
-```js
-function bark() {
-  console.log("Woof!");
-}
-
-bark.animal = "dog";
-
-A: Nothing, this is totally fine!
-B: SyntaxError. You cannot add properties to a function this way.
-C: undefined
-D: ReferenceError
-```
-
-答案：`A`
-
-这在JavaScript中是可能的，因为函数也是对象！（原始类型之外的所有东西都是对象）
-
 ## 变量类型隐式转换
 
 下面代码的输出是什么?
@@ -141,10 +120,20 @@ D: 3
 
 答案：`C`
 
-JavaScript是一种动态类型语言：我们没有指定某些变量的类型。 在您不知情的情况下，值可以自动转换为另一种类型，称为隐式类型转换。 强制从一种类型转换为另一种类型。
-在让数字类型（1）和字符串类型（'2'）相加时，该数字被视为字符串。 我们可以连接像“Hello”+“World”这样的字符串，所以这里发生的是“1”+“2”返回“12”。
+JavaScript 是一种动态类型语言：我们没有指定某些变量的类型。 在您不知情的情况下，值可以自动转换为另一种类型，称为隐式类型转换。 强制从一种类型转换为另一种类型。
+在让数字类型（1）和字符串类型（'2'）相加时，该数字被视为字符串。 我们可以连接像 “Hello”+“World” 这样的字符串，所以这里发生的是 '1' + '2' 返回 “12”。
 
 ## 表达式和运算符
+
+## this
+
+Javascript 函数中的 `this` 表现与其他语言不同。此外，在严格模式和非严格模式之间也会有一些差别。
+
+大多数情况，函数的调用方式决定了 this 的值（运行时绑定）。为当前执行上下文（global、function 或 eval）的一个属性，在非严格模式下，总是指向一个对象，在严格模式下可以是任意值。
+
+1. 全局环境下，指向 `window`，严格模式下为 `undefined`
+2. 对象静态方法，指向调用者
+3. 箭头函数中, // TODO:
 
 ### 运算符位置
 
