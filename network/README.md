@@ -1,3 +1,22 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [网络通信](#%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1)
+  - [什么是同源策略及限制](#%E4%BB%80%E4%B9%88%E6%98%AF%E5%90%8C%E6%BA%90%E7%AD%96%E7%95%A5%E5%8F%8A%E9%99%90%E5%88%B6)
+  - [前后端如何通信](#%E5%89%8D%E5%90%8E%E7%AB%AF%E5%A6%82%E4%BD%95%E9%80%9A%E4%BF%A1)
+  - [如何创建 Ajax](#%E5%A6%82%E4%BD%95%E5%88%9B%E5%BB%BA-ajax)
+  - [什么是跨域](#%E4%BB%80%E4%B9%88%E6%98%AF%E8%B7%A8%E5%9F%9F)
+  - [跨域通信的几种方式](#%E8%B7%A8%E5%9F%9F%E9%80%9A%E4%BF%A1%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F)
+      - [JSONP](#jsonp)
+      - [Hash](#hash)
+      - [postMessage](#postmessage)
+      - [WebSocket](#websocket)
+      - [CORS](#cors)
+  - [为什么 CORS 可以跨域(原理)？](#%E4%B8%BA%E4%BB%80%E4%B9%88-cors-%E5%8F%AF%E4%BB%A5%E8%B7%A8%E5%9F%9F%E5%8E%9F%E7%90%86)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # 网络通信
 
 ## 什么是同源策略及限制
