@@ -5,25 +5,23 @@
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-- [JS](#js)
-  - [目录](#%E7%9B%AE%E5%BD%95)
-  - [ES6](#es6)
-    - [箭头函数](#%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0)
-    - [模板字符串](#%E6%A8%A1%E6%9D%BF%E5%AD%97%E7%AC%A6%E4%B8%B2)
-  - [函数也是对象](#%E5%87%BD%E6%95%B0%E4%B9%9F%E6%98%AF%E5%AF%B9%E8%B1%A1)
-  - [变量类型隐式转换](#%E5%8F%98%E9%87%8F%E7%B1%BB%E5%9E%8B%E9%9A%90%E5%BC%8F%E8%BD%AC%E6%8D%A2)
-  - [表达式和运算符](#%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%92%8C%E8%BF%90%E7%AE%97%E7%AC%A6)
-    - [运算符位置](#%E8%BF%90%E7%AE%97%E7%AC%A6%E4%BD%8D%E7%BD%AE)
-    - [属性访问](#%E5%B1%9E%E6%80%A7%E8%AE%BF%E9%97%AE)
-    - [try catch](#try-catch)
-  - [DOM 事件](#dom-%E4%BA%8B%E4%BB%B6)
-    - [DOM 事件级别](#dom-%E4%BA%8B%E4%BB%B6%E7%BA%A7%E5%88%AB)
-    - [Event](#event)
-    - [事件委托](#%E4%BA%8B%E4%BB%B6%E5%A7%94%E6%89%98)
-    - [事件模型](#%E4%BA%8B%E4%BB%B6%E6%A8%A1%E5%9E%8B)
-    - [事件流](#%E4%BA%8B%E4%BB%B6%E6%B5%81)
-  - [函数式编程](#%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B)
-    - [纯函数](#%E7%BA%AF%E5%87%BD%E6%95%B0)
+- [ES6](#es6)
+  - [箭头函数](#%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0)
+  - [模板字符串](#%E6%A8%A1%E6%9D%BF%E5%AD%97%E7%AC%A6%E4%B8%B2)
+- [函数也是对象](#%E5%87%BD%E6%95%B0%E4%B9%9F%E6%98%AF%E5%AF%B9%E8%B1%A1)
+- [变量类型隐式转换](#%E5%8F%98%E9%87%8F%E7%B1%BB%E5%9E%8B%E9%9A%90%E5%BC%8F%E8%BD%AC%E6%8D%A2)
+- [表达式和运算符](#%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%92%8C%E8%BF%90%E7%AE%97%E7%AC%A6)
+  - [运算符位置](#%E8%BF%90%E7%AE%97%E7%AC%A6%E4%BD%8D%E7%BD%AE)
+  - [属性访问](#%E5%B1%9E%E6%80%A7%E8%AE%BF%E9%97%AE)
+  - [try catch](#try-catch)
+- [DOM 事件](#dom-%E4%BA%8B%E4%BB%B6)
+  - [DOM 事件级别](#dom-%E4%BA%8B%E4%BB%B6%E7%BA%A7%E5%88%AB)
+  - [Event](#event)
+  - [事件委托](#%E4%BA%8B%E4%BB%B6%E5%A7%94%E6%89%98)
+  - [事件模型](#%E4%BA%8B%E4%BB%B6%E6%A8%A1%E5%9E%8B)
+  - [事件流](#%E4%BA%8B%E4%BB%B6%E6%B5%81)
+- [函数式编程](#%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B)
+  - [纯函数](#%E7%BA%AF%E5%87%BD%E6%95%B0)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -103,27 +101,6 @@ mytag`age is ${boy.age},country is ${boy.country}`;
 ['age is', ',country is', '']
 ```
 
-## 函数也是对象
-
-当我们这样做会发生什么？
-
-```js
-function bark() {
-  console.log("Woof!");
-}
-
-bark.animal = "dog";
-
-A: Nothing, this is totally fine!
-B: SyntaxError. You cannot add properties to a function this way.
-C: undefined
-D: ReferenceError
-```
-
-答案：`A`
-
-这在JavaScript中是可能的，因为函数也是对象！（原始类型之外的所有东西都是对象）
-
 ## 变量类型隐式转换
 
 下面代码的输出是什么?
@@ -143,10 +120,20 @@ D: 3
 
 答案：`C`
 
-JavaScript是一种动态类型语言：我们没有指定某些变量的类型。 在您不知情的情况下，值可以自动转换为另一种类型，称为隐式类型转换。 强制从一种类型转换为另一种类型。
-在让数字类型（1）和字符串类型（'2'）相加时，该数字被视为字符串。 我们可以连接像“Hello”+“World”这样的字符串，所以这里发生的是“1”+“2”返回“12”。
+JavaScript 是一种动态类型语言：我们没有指定某些变量的类型。 在您不知情的情况下，值可以自动转换为另一种类型，称为隐式类型转换。 强制从一种类型转换为另一种类型。
+在让数字类型（1）和字符串类型（'2'）相加时，该数字被视为字符串。 我们可以连接像 “Hello”+“World” 这样的字符串，所以这里发生的是 '1' + '2' 返回 “12”。
 
 ## 表达式和运算符
+
+## this
+
+Javascript 函数中的 `this` 表现与其他语言不同。此外，在严格模式和非严格模式之间也会有一些差别。
+
+大多数情况，函数的调用方式决定了 this 的值（运行时绑定）。为当前执行上下文（global、function 或 eval）的一个属性，在非严格模式下，总是指向一个对象，在严格模式下可以是任意值。
+
+1. 全局环境下，指向 `window`，严格模式下为 `undefined`
+2. 对象静态方法，指向调用者
+3. 箭头函数中, // TODO:
 
 ### 运算符位置
 
@@ -196,6 +183,19 @@ D: ReferenceError
 将一个对象设置为对象 a 的键, 其值为 123.
 因为这个对象自动转换为字符串化时，它变成了 `[Object object]`.
 打印 `a[b]`, 它实际上是 `a["Object object"]`
+
+## 语句和声明
+
+### for in 和 for of
+
+`for in`: 以**任意顺序**遍历一个对象的除Symbol以外的**可枚举属性**。
+
+`for of`: 遍历**可迭代对象**定义要迭代的数据。(可迭代对象: Array，Map，Set，String，arguments 等)
+
+
+`for in` 是为遍历对象属性而构建的，**不建议与数组一起使用**。一般用于去检查对象属性，处理有 `key-value` 数据。比如配合 `hasOwnProperty()` 来确定某属性是否是对象本身的属性。
+
+比如遍历数组, `for in` 遍历出是 `key 0, 1, 2`(array 自身的属性), `for of` 遍历出是 `value a b c`。
 
 ### try catch
 
@@ -324,6 +324,7 @@ windiw --> document --> html --> body --> ... --> 目标元素
 ```
 
 2.事件目标阶段
+
 3.事件冒泡阶段
 
 ## 函数式编程
