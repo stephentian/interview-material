@@ -1,3 +1,25 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [css](#css)
+  - [目录](#%E7%9B%AE%E5%BD%95)
+  - [布局](#%E5%B8%83%E5%B1%80)
+      - [三栏布局](#%E4%B8%89%E6%A0%8F%E5%B8%83%E5%B1%80)
+      - [多种布局的优缺点](#%E5%A4%9A%E7%A7%8D%E5%B8%83%E5%B1%80%E7%9A%84%E4%BC%98%E7%BC%BA%E7%82%B9)
+  - [盒模型](#%E7%9B%92%E6%A8%A1%E5%9E%8B)
+      - [基本概念](#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5)
+      - [两种模型及区别](#%E4%B8%A4%E7%A7%8D%E6%A8%A1%E5%9E%8B%E5%8F%8A%E5%8C%BA%E5%88%AB)
+      - [CSS 如何设置这两种模型](#css-%E5%A6%82%E4%BD%95%E8%AE%BE%E7%BD%AE%E8%BF%99%E4%B8%A4%E7%A7%8D%E6%A8%A1%E5%9E%8B)
+      - [JS 如何设置获取盒模型对应的宽和高](#js-%E5%A6%82%E4%BD%95%E8%AE%BE%E7%BD%AE%E8%8E%B7%E5%8F%96%E7%9B%92%E6%A8%A1%E5%9E%8B%E5%AF%B9%E5%BA%94%E7%9A%84%E5%AE%BD%E5%92%8C%E9%AB%98)
+      - [边距重叠](#%E8%BE%B9%E8%B7%9D%E9%87%8D%E5%8F%A0)
+  - [BFC](#bfc)
+    - [1.基本概念](#1%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5)
+    - [2.BFC的原理(渲染规则)](#2bfc%E7%9A%84%E5%8E%9F%E7%90%86%E6%B8%B2%E6%9F%93%E8%A7%84%E5%88%99)
+    - [3.如何创建 BFC](#3%E5%A6%82%E4%BD%95%E5%88%9B%E5%BB%BA-bfc)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # css
 
 ## 目录
