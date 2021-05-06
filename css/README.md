@@ -1,40 +1,32 @@
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
-
-- [css](#css)
-  - [目录](#%E7%9B%AE%E5%BD%95)
-  - [布局](#%E5%B8%83%E5%B1%80)
-      - [三栏布局](#%E4%B8%89%E6%A0%8F%E5%B8%83%E5%B1%80)
-      - [多种布局的优缺点](#%E5%A4%9A%E7%A7%8D%E5%B8%83%E5%B1%80%E7%9A%84%E4%BC%98%E7%BC%BA%E7%82%B9)
-  - [盒模型](#%E7%9B%92%E6%A8%A1%E5%9E%8B)
-      - [基本概念](#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5)
-      - [两种模型及区别](#%E4%B8%A4%E7%A7%8D%E6%A8%A1%E5%9E%8B%E5%8F%8A%E5%8C%BA%E5%88%AB)
-      - [CSS 如何设置这两种模型](#css-%E5%A6%82%E4%BD%95%E8%AE%BE%E7%BD%AE%E8%BF%99%E4%B8%A4%E7%A7%8D%E6%A8%A1%E5%9E%8B)
-      - [JS 如何设置获取盒模型对应的宽和高](#js-%E5%A6%82%E4%BD%95%E8%AE%BE%E7%BD%AE%E8%8E%B7%E5%8F%96%E7%9B%92%E6%A8%A1%E5%9E%8B%E5%AF%B9%E5%BA%94%E7%9A%84%E5%AE%BD%E5%92%8C%E9%AB%98)
-      - [边距重叠](#%E8%BE%B9%E8%B7%9D%E9%87%8D%E5%8F%A0)
-  - [BFC](#bfc)
-    - [1.基本概念](#1%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5)
-    - [2.BFC的原理(渲染规则)](#2bfc%E7%9A%84%E5%8E%9F%E7%90%86%E6%B8%B2%E6%9F%93%E8%A7%84%E5%88%99)
-    - [3.如何创建 BFC](#3%E5%A6%82%E4%BD%95%E5%88%9B%E5%BB%BA-bfc)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
 # css
 
 ## 目录
 
-- BFC
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [布局](#%E5%B8%83%E5%B1%80)
+  - [三栏布局](#%E4%B8%89%E6%A0%8F%E5%B8%83%E5%B1%80)
+  - [多种布局的优缺点](#%E5%A4%9A%E7%A7%8D%E5%B8%83%E5%B1%80%E7%9A%84%E4%BC%98%E7%BC%BA%E7%82%B9)
+- [盒模型](#%E7%9B%92%E6%A8%A1%E5%9E%8B)
+  - [两种模型及区别](#%E4%B8%A4%E7%A7%8D%E6%A8%A1%E5%9E%8B%E5%8F%8A%E5%8C%BA%E5%88%AB)
+  - [CSS 如何设置这两种模型](#css-%E5%A6%82%E4%BD%95%E8%AE%BE%E7%BD%AE%E8%BF%99%E4%B8%A4%E7%A7%8D%E6%A8%A1%E5%9E%8B)
+  - [JS 如何设置获取盒模型对应的宽和高](#js-%E5%A6%82%E4%BD%95%E8%AE%BE%E7%BD%AE%E8%8E%B7%E5%8F%96%E7%9B%92%E6%A8%A1%E5%9E%8B%E5%AF%B9%E5%BA%94%E7%9A%84%E5%AE%BD%E5%92%8C%E9%AB%98)
+  - [边距重叠](#%E8%BE%B9%E8%B7%9D%E9%87%8D%E5%8F%A0)
+- [BFC](#bfc)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## 布局
 
-#### 三栏布局
+### 三栏布局
 
 1.假设高度已知，请写出三栏布局，其中左栏、右栏宽度各为 300 px, 中间自适应
 
 (1) 浮动
 
-```
+```css
 .float .left {
   float: left;
   width: 300px;
@@ -50,7 +42,7 @@
 
 (2) 绝对定位
 
-```
+```css
 .absolute .left {
   position: absolute;
   width: 300px;
@@ -73,7 +65,7 @@
 
 (3) flexbox 弹性布局
 
-```
+```css
 .flexbox {
   display: flex;
 }
@@ -90,7 +82,7 @@
 
 (4) table 表格布局
 
-```
+```css
 .tablebox {
   display: table;
   width: 100%;
@@ -112,7 +104,7 @@
 
 (5) grid 网格布局
 
-```
+```css
 .gridbox {
   display: grid;
   width: 100%;
@@ -130,7 +122,7 @@
 }
 ```
 
-#### 多种布局的优缺点
+### 多种布局的优缺点
 
 1.float 布局
 
@@ -142,11 +134,11 @@
 
 ## 盒模型
 
-#### 基本概念
+基本概念
 
 content, padding, border, margin
 
-#### 两种模型及区别
+### 两种模型及区别
 
 标准模型
 width = content
@@ -154,13 +146,13 @@ width = content
 IE 模型
 width = content + padding + border
 
-#### CSS 如何设置这两种模型
+### CSS 如何设置这两种模型
 
 box-sizing: content-box;
 
 box-sizing: border-box;
 
-#### JS 如何设置获取盒模型对应的宽和高
+### JS 如何设置获取盒模型对应的宽和高
 
 设置 dom 元素的宽高样式 一般有三种方法：
 
@@ -171,7 +163,7 @@ box-sizing: border-box;
 获取 dom 元素宽高样式，有下列 4 种方法：
 一
 
-```
+```js
 dom.style.width/height
 
 // 只能获取 1， 即内联样式
@@ -179,7 +171,7 @@ dom.style.width/height
 
 二
 
-```
+```js
 dom.currentStyle.width/height
 
 // 获取1, 2, 3渲染后的宽高，但是仅 IE 支持
@@ -187,7 +179,7 @@ dom.currentStyle.width/height
 
 三
 
-```
+```js
 window.getComputedStyle(dom).width/height
 
 // 与2原理相似，但是兼容性好一些
@@ -195,14 +187,14 @@ window.getComputedStyle(dom).width/height
 
 四
 
-```
+```js
 dom.getBoundingClientRect().widht/height
 
 // 计算元素绝对位置（相对于视窗左上角），
 // 获取到四个元素left, top, width, height
 ```
 
-#### 边距重叠
+### 边距重叠
 
 1.父子元素边距重叠
 
@@ -222,20 +214,20 @@ dom.getBoundingClientRect().widht/height
 
 ## BFC
 
-### 1.基本概念
+1.基本概念
 
 英文名, block formatting context, 块级格式化上下文.
 它是一个独立的渲染区域, 里面由块级元素组成.
 MDN: 是块盒子的布局过程发生的区域, 也是浮动元素与其他元素交互的区域.
 
-### 2.BFC的原理(渲染规则)
+2.BFC的原理(渲染规则)
 
 - (1) BFC 的元素中, 在垂直方向上的margin会发生重叠(根元素`<html>`就是一个 BFC 元素)
 - (2) BFC 区域不会和 float 元素重叠(两栏自适应)
 - (3) BFC 元素在页面上是一个独立的容器, 外面的元素和里面的元素互不影响
 - (4) 计算 BFC 元素的高度时,里面浮动元素的高度也会参与计算(`overflow:hidden`可以清除浮动)
 
-### 3.如何创建 BFC
+3.如何创建 BFC
 
 - (1) float 不为 none
 - (2) position: 不为 static, relative
@@ -243,6 +235,7 @@ MDN: 是块盒子的布局过程发生的区域, 也是浮动元素与其他元�
 - (4) display 为 inline-block, table, table-cell, table-caption
 
 4.BFC 使用场景
-(1) 防止 margin 重叠(塌陷)
-(2) 清除浮动
+
+(1) 防止 margin 重叠(塌陷)  
+(2) 清除浮动  
 (3) 自适应多栏布局的
