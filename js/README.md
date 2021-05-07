@@ -25,6 +25,12 @@
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
+## JS 基础
+
+### 继承
+
+[JS 继承](./inherit/README.md)
+
 ## ES6
 
 ### 箭头函数
@@ -125,7 +131,7 @@ JavaScript 是一种动态类型语言：我们没有指定某些变量的类型
 
 ## 表达式和运算符
 
-## this
+### this
 
 Javascript 函数中的 `this` 表现与其他语言不同。此外，在严格模式和非严格模式之间也会有一些差别。
 
@@ -191,7 +197,6 @@ D: ReferenceError
 `for in`: 以**任意顺序**遍历一个对象的除Symbol以外的**可枚举属性**。
 
 `for of`: 遍历**可迭代对象**定义要迭代的数据。(可迭代对象: Array，Map，Set，String，arguments 等)
-
 
 `for in` 是为遍历对象属性而构建的，**不建议与数组一起使用**。一般用于去检查对象属性，处理有 `key-value` 数据。比如配合 `hasOwnProperty()` 来确定某属性是否是对象本身的属性。
 
