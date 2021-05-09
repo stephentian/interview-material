@@ -6,7 +6,6 @@
 
 // new
 
-
 function myNew1(obj) {
   let subObj = {}
   subObj.__proto__ = obj.prototype
