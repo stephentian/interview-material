@@ -27,6 +27,46 @@
 
 常见题目: 上楼梯, 斐波那契数列,
 
+重点：**状态** 和 **状态转移方程**
+
+例如：
+
+一、打家劫舍
+
+有一个非负整数数组，相邻的不能那，拿到里面的最大值。
+
+```js
+// nums [1, 2, 3, 1]
+// 最大 4
+// nums [2, 7, 9, 3, 1]
+// 最大 12 (2, 9, 1)
+
+// 状态： 
+// 1. 去最后一个 nums[i] + dp[i - 2]
+// 2. 不取最后一个 dp[i - 1]
+
+// 转移方程:
+// dp[i] = Math.max(dp[i - 1], nums[i] + dp[i - 2])
+
+function(nums) {
+  if (nums == null || nums.length == 0) {
+    return 0;
+  }
+  let length = nums.length;
+  if (length == 1) {
+    return nums[0];
+  }
+  let dp = []
+  dp[0] = nums[0]
+  dp[1] = nums[1] > nums[0] ? nums[1] : nums[0]
+  
+  for (let i = 2; i< length; i++) {
+    dp[i] = Math.max(dp[i - 1], nums[i] + dp[i - 2])
+  }
+  return dp[length - 1]
+}
+```
+
 ## 全排列
 
 ## 经典例题
@@ -38,7 +78,7 @@
 - 暴力法
 - 排序 + 双指针(左右指针) + 去重
 
-#### 双数之和
+一、 **双数之和**
 
 1. 暴力法
 
@@ -70,7 +110,7 @@
     }
     ```
 
-#### 三数之和
+二、**三数之和**
 
 地址: [3sum](https://leetcode-cn.com/problems/3sum/)
 
@@ -109,7 +149,7 @@
     }
     ```
 
-#### 四数之和
+三、**四数之和**
 
 leetcode: [4sum](https://leetcode-cn.com/problems/4sum/)
 
@@ -148,7 +188,7 @@ const fourSum = function(nums, target) {
 }
 ```
 
-#### n 数之和
+四、**n 数之和**
 
 ```js
 const nSum = function(nums, target) {
@@ -192,7 +232,7 @@ const nSum = function(nums, target) {
 
 ### 字符串解码
 
-leetcode: 394
+leetcode: [394. 字符串解码](https://leetcode-cn.com/problems/decode-string/)
 
 ```js
 var decodeString = function(s) {
