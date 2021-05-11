@@ -67,7 +67,76 @@ function(nums) {
 }
 ```
 
-## 全排列
+## 排列组合
+
+排列组合例题，递归回溯法
+
+例题：
+
+一、组合-77
+
+给定两个整数 n 和 k，返回 1 ... n 中所有可能的 k 个数的组合。
+
+```js
+const combine = function(n, k) {
+  let res = []
+
+  function helper(start, pre) {
+    let len = pre.length
+    if (len == k) {
+      res.push(pre)
+      return
+    }
+
+    // 还有 rest 个位置待填补
+    let rest = k - prev.length
+    for (let i = start; i < n; i++) {
+
+      if (n - i + 1 < rest) {
+        continue
+      }
+      helper(i+1, pre.concat(i))
+    }
+  }
+
+  helper(1, [])
+  return res
+}
+```
+
+二、对象排列组合
+
+```js
+let names = ["iPhone X", "iPhone XS"]
+
+let colors = ["黑色", "白色"]
+
+let storages = ["64g", "256g"]
+
+function combine(...chunks) {
+  let res = []
+
+  let helper = function(chunkIndex, pre) {
+    let chunk = chunks[chunkIndex]
+    let isLast = chunkIndex === chunks.length - 1
+
+    for (let val of chunk) {
+      let cur = pre.concat(val)
+
+      if (isLast) {
+        res.push(cur)
+      } else {
+        helper(chunkIndex + 1, cur)
+      }
+    }
+  }
+
+  helper(0, [])
+  return res
+}
+
+combine(names, colors, storages)
+```
 
 ## 经典例题
 
