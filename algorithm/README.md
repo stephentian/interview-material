@@ -140,6 +140,28 @@ combine(names, colors, storages)
 
 ## 经典例题
 
+### 交换链表节点
+
+链接：[24. 两两交换链表中的节点](https://leetcode-cn.com/problems/swap-nodes-in-pairs/)
+
+递归：
+
+1. 终止条件：链表为空或只剩一个元素
+2. 返回值：返回给上一层递归应该是已经交换好的子链表
+3. 单次过程：head 和 next，next 接收上一级返回的子链表
+
+```js
+var swapPairs = function(head) {
+  if (!head || !head.next) return head
+
+  let next = head.next
+  head.next = swapPairs(next.next)
+  next.next = head
+
+  return next
+}
+```
+
 ### N数之和
 
 诀窍:
