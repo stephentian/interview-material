@@ -8,13 +8,13 @@
 
 - [排序](#%E6%8E%92%E5%BA%8F)
 - [动态规划](#%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92)
-- [全排列](#%E5%85%A8%E6%8E%92%E5%88%97)
+- [排列组合](#%E6%8E%92%E5%88%97%E7%BB%84%E5%90%88)
+- [深度优先遍历](#%E6%B7%B1%E5%BA%A6%E4%BC%98%E5%85%88%E9%81%8D%E5%8E%86)
+- [广度优先搜索](#%E5%B9%BF%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2)
+- [滑动窗口](#%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3)
 - [经典例题](#%E7%BB%8F%E5%85%B8%E4%BE%8B%E9%A2%98)
+  - [交换链表节点](#%E4%BA%A4%E6%8D%A2%E9%93%BE%E8%A1%A8%E8%8A%82%E7%82%B9)
   - [N数之和](#n%E6%95%B0%E4%B9%8B%E5%92%8C)
-    - [双数之和](#%E5%8F%8C%E6%95%B0%E4%B9%8B%E5%92%8C)
-    - [三数之和](#%E4%B8%89%E6%95%B0%E4%B9%8B%E5%92%8C)
-    - [四数之和](#%E5%9B%9B%E6%95%B0%E4%B9%8B%E5%92%8C)
-    - [n 数之和](#n-%E6%95%B0%E4%B9%8B%E5%92%8C)
   - [字符串解码](#%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%A7%A3%E7%A0%81)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -228,6 +228,63 @@ var lengthOfLongestSubstring = function (s) {
     map.set(s[r], r)
   }
   return res
+}
+```
+
+## 栈
+
+例题：
+
+一、[20. 有效的括号](https://leetcode-cn.com/problems/valid-parentheses/)
+
+```js
+var isValid = function(s) {
+  const len = s.length
+  if (len % 2 === 1) return false
+
+  let map = {
+    "}": "{",
+    "]": "[",
+    ")": "("
+  }
+
+  const stack = []
+
+  for (let c of s) {
+    if (map[c]) {
+      if (!stack.length || stack[stack.length - 1] !== map[c]) {
+        return false
+      }
+      stack.pop()
+    } else {
+      stack.push(c)
+    }
+  }
+
+  return !stack.length
+}
+
+var isValid = function(s) {
+    if(s.length%2 !== 0) return false
+    let map =  {
+        '(': ')',
+        '{': '}',
+        '[': ']'
+    }
+    let stack = [];
+    
+    for (let i = 0; i < s.length; i++) {
+        let el = s[i];
+        if (map[el]) {
+            stack.push(map[el]);
+        } else {
+            if (el !== stack.pop()) {
+                return false;
+            }
+        }
+    }
+    
+    return stack.length === 0;
 }
 ```
 
