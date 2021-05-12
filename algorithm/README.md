@@ -138,6 +138,99 @@ function combine(...chunks) {
 combine(names, colors, storages)
 ```
 
+## 深度优先遍历
+
+DFS
+
+例题：
+
+一、[257. 二叉树的所有路径](https://leetcode-cn.com/problems/binary-tree-paths/)
+
+给定一个二叉树，返回所有从根节点到叶子节点的路径。
+
+```js
+
+var binaryTreePaths = function(root) {
+  const res = []
+  const helper = (root, path) => {
+    if (root) {
+      path += root.val.toString()
+      
+      if (root.left === null && root.right === null) {
+        res.push(path)
+      } else {
+        path += "->"
+        helper(root.left, path)
+        helper(root.right, path)
+      }
+    }
+  }
+
+  helper(root, "")
+  return res
+};
+```
+
+## 广度优先搜索
+
+BFS
+
+解析：维护一个 queue 队列，在读取子节点的时候同时把发现的孙子节点 push 到队列中，但是先不处理，等到这一轮队列中的子节点处理完成以后，下一轮再继续处理的就是孙子节点了，这就实现了层序遍历，也就是一层层的去处理。
+
+例题：
+
+一、[515. 在每个树行中找最大值](https://leetcode-cn.com/problems/find-largest-value-in-each-tree-row/)
+
+```js
+var largestValues = function(root) {
+  if (!root) return []
+  
+  const res = []
+  const queue = [root]
+
+  while(queue.length) {
+    const len = queue.length
+    let cur = Number.MIN_SAFE_INTEGER
+
+    for (let i = 0; i < len; i++) {
+      // 取出当前 node
+      const node = queue.shift()
+      cur = Math.max(cur, node.val)
+
+      node.left && queue.push(node.left)
+      node.right && queue.push(node.right)
+    }
+    res.push(cur)
+  }
+  return res
+}
+```
+
+## 滑动窗口
+
+其实也是 双指针，left 和 right， 形成一个窗口
+
+例题：
+
+一、[3. 无重复字符的最长子串](https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/)
+
+```js
+var lengthOfLongestSubstring = function (s) {
+  let left = 0
+  let res = 0
+  let map = new Map()
+
+  for (let r = 0; r < s.length; r ++) {
+    if (map.has(s[r]) && map.get(s[r]) >= left) {
+      left = map.get(s[r]) + 1
+    }
+    res = Math.max(res, r - left + 1)
+    map.set(s[r], r)
+  }
+  return res
+}
+```
+
 ## 经典例题
 
 ### 交换链表节点
