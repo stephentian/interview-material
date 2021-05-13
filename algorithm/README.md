@@ -288,6 +288,39 @@ var isValid = function(s) {
 }
 ```
 
+## 贪心算法
+
+例题：
+
+一、[455. 分发饼干](https://leetcode-cn.com/problems/assign-cookies/)
+
+排序 + 贪心
+
+```js
+var findContentChildren = function(g, s) {
+  let i = g.length, j = s.length - 1
+  g.sort((a, b) => a - b)
+  s.sort((a, b) => a - b)
+
+  while(i--) {
+    if (s[j] >= g[i]) {
+      if (j-- === 0) break
+    }
+  }
+  return s.length - j -1
+}
+```
+
+## 回溯
+
+- 遍历枚举出所有可能的选择。
+- 依次尝试这些选择：作出一种选择，并往下递归。
+- 如果这个选择产生不出正确的解，要撤销这个选择，回到之前的状态，并作出下一个可用的选择。
+
+例题：
+
+一、[51. N 皇后](https://leetcode-cn.com/problems/n-queens/)
+
 ## 经典例题
 
 ### 交换链表节点
@@ -498,4 +531,51 @@ var decodeString = function(s) {
     }
     return result;
 };
+```
+
+### N皇后
+
+链接: [51. N 皇后](https://leetcode-cn.com/problems/n-queens/)
+
+假设: row 为行数, col 为列数
+
+对角线[左下 -> 右上]: row + col
+对角线[左上 -> 右下]: row - col
+
+不能同行，同列，同对角线
+
+```js
+var solveNQueens = function(n) {
+  let res = [], 
+    queens = [] // 皇后每行位置数组
+
+  // 判断位置是否可以放置
+  let canPlace = (queens, row, col) => {
+    for (let i = 0; i < queens.length; i++) {
+      // i 是行, queens[i] 是列
+      // 不能同行，同列，同对角线
+      if (queens[i] === col) return false
+      if (i + queens[i] == row + col || i - queens[i] == row - col) return false
+      // if (Math.abs(row - i) === Math.abs(col - queens[i])) return false
+    }
+
+    return true
+  }
+
+  let dfs = (res, queens, n, row) => {
+    if (row === n) {
+      return res.push(queens.map(s => '.'.repeat(s) + 'Q' + '.'.repeat(n-s-1)))
+    }
+
+    for (let col = 0; col < n; col++) {
+      if (!canPlace(queens, row, col)) continue
+      queens[row] = col
+      dfs(res, queens, n, row + 1)
+      queens.splice(row, 1)
+    }
+  }
+
+  dfs(res, queens, n, 0)
+  return res
+}
 ```
