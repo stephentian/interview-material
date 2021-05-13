@@ -12,10 +12,14 @@
 - [深度优先遍历](#%E6%B7%B1%E5%BA%A6%E4%BC%98%E5%85%88%E9%81%8D%E5%8E%86)
 - [广度优先搜索](#%E5%B9%BF%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2)
 - [滑动窗口](#%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3)
+- [栈](#%E6%A0%88)
+- [贪心算法](#%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95)
+- [回溯](#%E5%9B%9E%E6%BA%AF)
 - [经典例题](#%E7%BB%8F%E5%85%B8%E4%BE%8B%E9%A2%98)
   - [交换链表节点](#%E4%BA%A4%E6%8D%A2%E9%93%BE%E8%A1%A8%E8%8A%82%E7%82%B9)
   - [N数之和](#n%E6%95%B0%E4%B9%8B%E5%92%8C)
   - [字符串解码](#%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%A7%A3%E7%A0%81)
+  - [N皇后](#n%E7%9A%87%E5%90%8E)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -571,6 +575,8 @@ var solveNQueens = function(n) {
       if (!canPlace(queens, row, col)) continue
       queens[row] = col
       dfs(res, queens, n, row + 1)
+
+      // 清空数组
       queens.splice(row, 1)
     }
   }
