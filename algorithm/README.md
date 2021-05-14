@@ -325,6 +325,10 @@ var findContentChildren = function(g, s) {
 
 一、[51. N 皇后](#n%E7%9A%87%E5%90%8E)
 
+## 洗牌算法和Sort
+
+链接: [shuffle](./shuffle/README.md)
+
 ## 经典例题
 
 ### 交换链表节点

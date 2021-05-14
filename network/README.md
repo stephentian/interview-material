@@ -176,9 +176,53 @@ fetch('/some/url/', {
 - 用 HTTP Status Code 传递 Server 的状态信息；
   - 200 Success
   - 500 Server Error
+- 请求体使用 json 格式
 
 ## HTTP
 
 ## HTTP2.0
 
 ## HTTP 中 GET 和 POST 有什么区别？
+
+GET 和 POST 是 HTTP 协议中的两个方法，在 HTTP 协议中的语义不同：
+
+- GET: 获取资源
+- POST: 创建/更新资源
+
+一、**浏览器端**
+
+- GET
+  - 因为是读取资源，所以资源可以缓存，URL 可保存书签
+  - 发送请求没有 Body (但是在 RESTful API, 参数可以放 Body 里，要看后端怎么处理)
+  - 参数在 URL，因为 URL 变化才能触发浏览器主动发送 GET
+  - 可以回退
+  - URL 长度限制，浏览器做的
+  - 发一个请求
+- POST
+  - 不能保存书签，不然一打开书签就发送 POST 创建/修改资源请求。比如页面有表单，  
+    刷新浏览器会出现一个提示弹窗，询问 “确认重新提交表单”
+  - 参数也能放 URL
+  - 不可以回退
+  - 有些浏览器发两个请求，先发 header，响应 100-continue 再发 body 数据(Firefox 火狐浏览器就发送一次请求)
+
+二、**接口**
+
+由于 HTTP 协议并没有限制 GET 一定没有 Body, POST 一定不能把参数放 URL 的 queryString 上。
+
+这样太自由了，而且后端接口需要对接前端，IOS，Android 端等，所以需要一些特定的接口风格和规范。
+
+最火的就是 REST，REST 约定了GET 是获取，POST 是创建。
+
+三、**安全性**
+
+GET
+
+- URL 传输，更容易看到
+
+POST
+
+- 用 Body 传输，相对更安全
+
+但是 HTTP 是明文协议，每个 HTTP 请求都会在网络上明文传播，不管是 URL 还是 Body。
+
+如果要避免数据被窃取，就要使用 HTTPS，从客户端到服务器端对端加密。
