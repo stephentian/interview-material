@@ -323,7 +323,7 @@ var findContentChildren = function(g, s) {
 
 例题：
 
-一、[51. N 皇后](https://leetcode-cn.com/problems/n-queens/)
+一、[51. N 皇后](#n%E7%9A%87%E5%90%8E)
 
 ## 经典例题
 
