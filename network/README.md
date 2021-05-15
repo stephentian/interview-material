@@ -178,7 +178,85 @@ fetch('/some/url/', {
   - 500 Server Error
 - 请求体使用 json 格式
 
+## TCP/IP
+
 ## HTTP
+
+HTTP：HyperText Transfer Protocol 超文本传输链接
+
+HTTP 请求报文分为三部分：请求行、请求头、请求体
+
+请求行：请求方法(method) 请求地址(path) 协议格式
+
+请求头：
+
+- Accept: value
+- Authorization: value2
+- Cache-Control: no-cache
+
+请求体
+
+e.g.
+
+```text
+　　POST/GET http://download.microtool.de:80/somedata.exe 
+　　Host: download.microtool.de 
+　　Accept:*/* 
+　　Pragma: no-cache 
+　　Cache-Control: no-cache 
+　　Referer: http://download.microtool.de/ 
+　　User-Agent:Mozilla/4.04[en](Win95;I;Nav) 
+　　Range:bytes=554554- 
+```
+
+请求方法:
+
+- GET
+- POST
+- PUT
+- DELETE
+- PATCH
+- HEAD
+- OPTIONS
+- CONNECT
+- TRACE
+
+### HTTP 状态码
+
+响应分为五类：
+
+- 100-199：信息响应
+- 200-299：成功响应
+- 300-399：重定向
+- 400-499：客户端错误
+- 500-599：服务端错误
+
+| 状态码 | 含义                                                        |
+| ------ | ----------------------------------------------------------- |
+| 100    | Continue                                                    |
+| 101    | 切换协议                                                    |
+| 200    | OK 请求成功                                                 |
+| 206    | 返回一部分资源                                              |
+| 301    | 永久重定向                                                  |
+| 302    | Found  临时重定向                                           |
+| 304    | Not Modified 内容未变化，客户端访问缓存资源，和协商缓存有关 |
+| 400    | Bad Request 参数有错                                        |
+| 401    | Unauthorized 未验证                                         |
+| 403    | Forbidden 禁止访问                                          |
+| 404    | Not Found 未找到资源                                        |
+| 500    | Internal Server Error 服务器错误                            |
+| 502    | Bad Gateway                                                 |
+| 504    | Gateway Time-out 请求超时                                   |
+
+### HTTP 优化
+
+主要两个因素：带宽和延迟
+
+- 带宽
+- 延迟
+  - **浏览器阻塞**：浏览器对同一个域名，同时只能有 4 个连接(根据浏览器内核不同有所差异)，超出最大连接限制，后续请求就会阻断
+  - **DNS 查询**: 利用 DNS 缓存
+  - **建立连接**: HTTP 是基于 TCP 的，最快也要在第三次握手是携带 HTTP 请求报文。
 
 ## HTTP2.0
 
@@ -226,3 +304,5 @@ POST
 但是 HTTP 是明文协议，每个 HTTP 请求都会在网络上明文传播，不管是 URL 还是 Body。
 
 如果要避免数据被窃取，就要使用 HTTPS，从客户端到服务器端对端加密。
+
+## 从 url 输入 到显示网页都发生了什么？
