@@ -1,33 +1,30 @@
 # JS
 
-## 目录
-
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
-- [JS 基础](#js-%E5%9F%BA%E7%A1%80)
-  - [继承](#%E7%BB%A7%E6%89%BF)
-- [ES6](#es6)
-  - [箭头函数](#%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0)
-  - [模板字符串](#%E6%A8%A1%E6%9D%BF%E5%AD%97%E7%AC%A6%E4%B8%B2)
-- [变量类型隐式转换](#%E5%8F%98%E9%87%8F%E7%B1%BB%E5%9E%8B%E9%9A%90%E5%BC%8F%E8%BD%AC%E6%8D%A2)
-- [表达式和运算符](#%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%92%8C%E8%BF%90%E7%AE%97%E7%AC%A6)
-  - [this](#this)
-  - [运算符位置](#%E8%BF%90%E7%AE%97%E7%AC%A6%E4%BD%8D%E7%BD%AE)
-  - [属性访问](#%E5%B1%9E%E6%80%A7%E8%AE%BF%E9%97%AE)
-- [语句和声明](#%E8%AF%AD%E5%8F%A5%E5%92%8C%E5%A3%B0%E6%98%8E)
-  - [for in 和 for of](#for-in-%E5%92%8C-for-of)
-  - [try catch](#try-catch)
-- [DOM 事件](#dom-%E4%BA%8B%E4%BB%B6)
-  - [DOM 事件级别](#dom-%E4%BA%8B%E4%BB%B6%E7%BA%A7%E5%88%AB)
-  - [Event](#event)
-  - [事件委托](#%E4%BA%8B%E4%BB%B6%E5%A7%94%E6%89%98)
-  - [事件模型](#%E4%BA%8B%E4%BB%B6%E6%A8%A1%E5%9E%8B)
-  - [事件流](#%E4%BA%8B%E4%BB%B6%E6%B5%81)
-- [函数式编程](#%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B)
-  - [纯函数](#%E7%BA%AF%E5%87%BD%E6%95%B0)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+  - [JS 基础](#js-基础)
+    - [继承](#继承)
+    - [垃圾回收](#垃圾回收)
+  - [ES6](#es6)
+    - [ES6 新语法](#es6-新语法)
+    - [箭头函数](#箭头函数)
+    - [模板字符串](#模板字符串)
+    - [Promise](#promise)
+  - [变量类型隐式转换](#变量类型隐式转换)
+  - [表达式和运算符](#表达式和运算符)
+    - [this](#this)
+    - [运算符位置](#运算符位置)
+    - [属性访问](#属性访问)
+  - [语句和声明](#语句和声明)
+    - [for in 和 for of](#for-in-和-for-of)
+    - [try catch](#try-catch)
+  - [DOM 事件](#dom-事件)
+    - [DOM 事件级别](#dom-事件级别)
+    - [Event](#event)
+    - [事件委托](#事件委托)
+    - [事件模型](#事件模型)
+    - [事件流](#事件流)
+  - [函数式编程](#函数式编程)
+    - [纯函数](#纯函数)
+  - [代码题](#代码题)
 
 ## JS 基础
 
@@ -124,6 +121,10 @@ mytag`age is ${boy.age},country is ${boy.country}`;
 // output
 ['age is', ',country is', '']
 ```
+
+### Promise
+
+链接: [promise](./promise/README.md)
 
 ## 变量类型隐式转换
 
@@ -368,3 +369,7 @@ windiw --> document --> html --> body --> ... --> 目标元素
 我们就把这个函数叫做纯函数
 比如 `slice` 和 `splice`， 都可以做同样的操作，
 但是 `splice` 会修改参数，也就是传入的数组，所以不是纯函数，而 `slice` 是纯函数。
+
+## 代码题
+
+代码: [code](./code/README.MD)

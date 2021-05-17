@@ -26,7 +26,7 @@
 
 ## 排序
 
-地址: [Sort](https://github.com/stephentian/daily-js/tree/master/01-Algorithm/05-Sort)
+地址: [Sort](./sort/README.md)
 
 ## 动态规划
 
@@ -326,7 +326,7 @@ var findContentChildren = function(g, s) {
 
 一、[51. N 皇后](#n%E7%9A%87%E5%90%8E)
 
-## 洗牌算法和Sort
+## 洗牌算法
 
 链接: [shuffle](./shuffle/README.md)
 
