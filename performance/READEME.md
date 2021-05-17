@@ -1,5 +1,36 @@
 # 性能优化
 
+## 性能测评工具
+
+- chrome
+- console.time() timeEnd()
+- 测评网站 jsperf.com 或 jsbench.com
+
+## js 代码优化
+
+- 全局变量
+  - 慎用
+  - 局部存储
+- 通过原型新增方法
+- 闭包陷阱
+- for 循环优化
+- 节点添加优化
+
+闭包
+
+- 闭包就是外部作用域可以访问函数内部作用域的数据。  
+- 闭包很容易出现内存泄漏
+
+for 循环优化
+
+- 把 length 存放到一个变量上
+
+节点添加优化
+
+- 节点添加会造成 回流 和 重绘
+- 使用 `document.createdocumentfragment()` 创建一个虚拟节点对象
+- 使用虚拟节点 `appendChild` 节点，减少 `DOM` 的重绘
+
 ## 网络
 
 ### DNS 预解析
