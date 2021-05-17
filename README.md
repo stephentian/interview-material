@@ -9,3 +9,5 @@
 - performance
 - webpack
 - network
+- security
+- browser

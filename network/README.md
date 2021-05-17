@@ -2,28 +2,25 @@
 
 ## 目录
 
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
-- [什么是同源策略及限制](#%E4%BB%80%E4%B9%88%E6%98%AF%E5%90%8C%E6%BA%90%E7%AD%96%E7%95%A5%E5%8F%8A%E9%99%90%E5%88%B6)
-- [前后端如何通信](#%E5%89%8D%E5%90%8E%E7%AB%AF%E5%A6%82%E4%BD%95%E9%80%9A%E4%BF%A1)
-- [如何创建 Ajax](#%E5%A6%82%E4%BD%95%E5%88%9B%E5%BB%BA-ajax)
-- [什么是跨域](#%E4%BB%80%E4%B9%88%E6%98%AF%E8%B7%A8%E5%9F%9F)
-- [跨域通信的几种方式](#%E8%B7%A8%E5%9F%9F%E9%80%9A%E4%BF%A1%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F)
-- [为什么 CORS 可以跨域(原理)？](#%E4%B8%BA%E4%BB%80%E4%B9%88-cors-%E5%8F%AF%E4%BB%A5%E8%B7%A8%E5%9F%9F%E5%8E%9F%E7%90%86)
-- [REST](#rest)
-- [TCP/IP](#tcpip)
-  - [TCP 的三次握手和四次挥手](#tcp-%E7%9A%84%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E5%92%8C%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B)
-- [HTTP](#http)
-  - [HTTP 状态码](#http-%E7%8A%B6%E6%80%81%E7%A0%81)
-  - [HTTP 优化](#http-%E4%BC%98%E5%8C%96)
-  - [HTTP1.1 区别](#http11-%E5%8C%BA%E5%88%AB)
-- [HTTPS](#https)
-- [HTTP2.0](#http20)
-- [HTTP 中 GET 和 POST 有什么区别？](#http-%E4%B8%AD-get-%E5%92%8C-post-%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB)
-- [从 url 输入 到显示网页都发生了什么？](#%E4%BB%8E-url-%E8%BE%93%E5%85%A5-%E5%88%B0%E6%98%BE%E7%A4%BA%E7%BD%91%E9%A1%B5%E9%83%BD%E5%8F%91%E7%94%9F%E4%BA%86%E4%BB%80%E4%B9%88)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+  - [什么是同源策略及限制](#什么是同源策略及限制)
+  - [前后端如何通信](#前后端如何通信)
+  - [如何创建 Ajax](#如何创建-ajax)
+  - [什么是跨域](#什么是跨域)
+  - [跨域通信的几种方式](#跨域通信的几种方式)
+  - [为什么 CORS 可以跨域(原理)？](#为什么-cors-可以跨域原理)
+  - [REST](#rest)
+  - [TCP/IP](#tcpip)
+    - [TCP 的三次握手和四次挥手](#tcp-的三次握手和四次挥手)
+  - [UDP](#udp)
+  - [HTTP](#http)
+    - [HTTP 状态码](#http-状态码)
+    - [HTTP 优化](#http-优化)
+    - [HTTP1.1 区别](#http11-区别)
+  - [HTTPS](#https)
+  - [HTTP2.0](#http20)
+  - [HTTP 中 GET 和 POST 有什么区别？](#http-中-get-和-post-有什么区别)
+  - [从 url 输入 到显示网页都发生了什么？](#从-url-输入-到显示网页都发生了什么)
+  - [浏览器缓存](#浏览器缓存)
 
 ## 什么是同源策略及限制
 
@@ -329,6 +326,12 @@ HTTPS 协议是由 SSL+HTTP 协议构建的可进行加密传输、身份认证�
 3. HTTP 端口 80 和 HTTPS 端口 443。
 4. HTTPS 可以有效的防止运营商劫持，解决了防劫持的一个大问题。
 
+例题：
+
+一、路由器抓包 https 可以看到路由地址吗？
+
+可以的，https = ssl + http。比如电脑和手机联调，使用 fiddler ，安装证书就可以看到。或者把请求拦截来，把 ssl 协议剥离，变成 http 协议，也可以看到来。
+
 ## HTTP2.0
 
 HTTP2 不再使用小版本号，新协议是 HTTP3。
@@ -414,5 +417,3 @@ POST
   3. 结合 DOM 树和 CSS 规则树，生成渲染树
   4. Reflow: 回流/重排，元素内容、结构、位置发送变化
   5. Repaint: 重绘，元素外观变化
-
-## 浏览器缓存
