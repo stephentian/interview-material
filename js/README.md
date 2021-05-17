@@ -5,14 +5,18 @@
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
+- [JS 基础](#js-%E5%9F%BA%E7%A1%80)
+  - [继承](#%E7%BB%A7%E6%89%BF)
 - [ES6](#es6)
   - [箭头函数](#%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0)
   - [模板字符串](#%E6%A8%A1%E6%9D%BF%E5%AD%97%E7%AC%A6%E4%B8%B2)
-- [函数也是对象](#%E5%87%BD%E6%95%B0%E4%B9%9F%E6%98%AF%E5%AF%B9%E8%B1%A1)
 - [变量类型隐式转换](#%E5%8F%98%E9%87%8F%E7%B1%BB%E5%9E%8B%E9%9A%90%E5%BC%8F%E8%BD%AC%E6%8D%A2)
 - [表达式和运算符](#%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%92%8C%E8%BF%90%E7%AE%97%E7%AC%A6)
+  - [this](#this)
   - [运算符位置](#%E8%BF%90%E7%AE%97%E7%AC%A6%E4%BD%8D%E7%BD%AE)
   - [属性访问](#%E5%B1%9E%E6%80%A7%E8%AE%BF%E9%97%AE)
+- [语句和声明](#%E8%AF%AD%E5%8F%A5%E5%92%8C%E5%A3%B0%E6%98%8E)
+  - [for in 和 for of](#for-in-%E5%92%8C-for-of)
   - [try catch](#try-catch)
 - [DOM 事件](#dom-%E4%BA%8B%E4%BB%B6)
   - [DOM 事件级别](#dom-%E4%BA%8B%E4%BB%B6%E7%BA%A7%E5%88%AB)
@@ -31,7 +35,21 @@
 
 [JS 继承](./inherit/README.md)
 
+### 垃圾回收
+
+[垃圾回收](./gc.md)
+
 ## ES6
+
+### ES6 新语法
+
+- let, const
+- 数组，对象解构赋值
+- Object.assign 浅拷贝
+- 箭头函数
+- rest 剩余参数
+- Promise
+- Class
 
 ### 箭头函数
 

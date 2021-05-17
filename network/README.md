@@ -106,14 +106,14 @@ window.onhashchange = function () {
 
 窗口A(http:A.com)向跨域的窗口B(http:B.com)发送信息
 
-```
+```js
 A
 window.postMessage('data', 'http://B.com');
 ```
 
 // 在窗口 B 中监听
 
-```
+```js
 B
 window.addEventListener('message', function (event) {
     console.log(event.origin);
@@ -124,7 +124,7 @@ window.addEventListener('message', function (event) {
 
 四、 WebSocket
 
-```
+```js
 var ws = new WebSocket('wss://echo.websocket.org');
 
 ws.onopen = function (evt) {
@@ -147,7 +147,7 @@ ws.onclose = function (evt) {
 全称是"跨域资源共享"(Cross-origin resource sharing)
 可以理解为支持 跨域 的 ajax
 
-```
+```js
 fetch('/some/url/', {
     method: 'get',
 }).then(function (response) {
@@ -185,6 +185,8 @@ fetch('/some/url/', {
 
 ## TCP/IP
 
+TCP: Transmission Control Protocl 传输控制协议
+
 | 协议            | 层级       |
 | --------------- | ---------- |
 | HTTP、SMTP、DNS | 应用层     |
@@ -211,6 +213,12 @@ fetch('/some/url/', {
 
 - SYN (Synchronize Sequence Numbers): 同步序列编号
 - ACK (Acknowledge character): 确认字符
+
+## UDP
+
+User Datagram Protocol 用户数据报协议
+
+UDP 没有拥塞机制，因此网络出现拥堵不会使源主机的发送效率降低。有利于实时会议视频等
 
 ## HTTP
 
@@ -383,9 +391,28 @@ POST
 
 大致过程是：
 
-- DNS解析
+- DNS解析，找到对应 IP 地址
 - TCP 连接(三次握手)
 - 发送 HTTP 请求
 - 服务器返回数据
 - 浏览器解析渲染页面
 - 连接结束(四次挥手)
+
+细节展开：
+
+- DNS 解析
+  1. 浏览器搜索 DNS 缓存
+  2. 操作系统中的 DNS 缓存
+  3. 操作系统中 Hosts 文件
+  4. 网络服务器，WIFI路由器 等缓存
+
+- 解析渲染页面
+  1. 构建 DOM 树
+     - 遇到 script 标签，则 DOM 树的构建会暂停
+  2. 构建 CSSOM 树
+     - 解析 CSS 规则树时 js 执行将暂停，直至 CSS 规则树就绪
+  3. 结合 DOM 树和 CSS 规则树，生成渲染树
+  4. Reflow: 回流/重排，元素内容、结构、位置发送变化
+  5. Repaint: 重绘，元素外观变化
+
+## 浏览器缓存
