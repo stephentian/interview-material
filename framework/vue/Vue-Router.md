@@ -30,6 +30,11 @@ Ajax 之前，用户每个操作都会刷新页面；
 - 只有在做出浏览器动作时，比如点击后退、前进按钮【或者调用 JS 中的 `history.back()`、`history.forward()`、`history.go()`】才会触发该事件。
 - 需要后台配置支持。不然返回 404。`nginx uri`
 
-## Vue-Router 源码分析
+## 手写 Vue-Router
 
-- install
+分析：
+
+- 实现一个插件, 包含 install 方法
+- 两个全局组件 `router-link` 和 `router-view`
+- 监听 `url` 变化， 实现 hash 模式跳转
+- 嵌套子路由显示
