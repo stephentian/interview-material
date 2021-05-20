@@ -17,12 +17,12 @@ css: purify-CSS
 
 ## Loder 和 Plugins 的不同
 
-### 作用不同
+1. 作用不同
 
 - Loader 加载器，让加载和解析非 JavaScript 文件的能力
 - Plugins 插件，在 webpack 运行的适当的时期，改变输出结果，扩展 webapck 的功能。
 
-### 用法不同
+2. 用法不同
 
 - Loader 在 modlue.rules 中配置，
 - Plugins 在 plugins 中单独配置。每一项是 plugin 的实例
