@@ -17,3 +17,13 @@
 链接: [2.EventEmitter.js](2.EventEmitter.js)
 
 核心方法: on, emit, off, once
+
+## 异步并发调度器
+
+链接: [3.Scheduler]
+
+思路:
+
+- tasks 等待执行队列
+- working 正在执行的
+- 超过 并发数 则 push 进 tasks

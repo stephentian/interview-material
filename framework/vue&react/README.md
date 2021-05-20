@@ -1,5 +1,16 @@
 # Vue vs React
 
+  - [MVVM](#mvvm)
+  - [Vue 和 React 区别](#vue-和-react-区别)
+      - [两者本质的区别](#两者本质的区别)
+      - [模板的区别](#模板的区别)
+      - [组件化的区别](#组件化的区别)
+      - [原理不同](#原理不同)
+  - [Vue 和 React 共同点](#vue-和-react-共同点)
+  - [key 值的作用](#key-值的作用)
+  - [虚拟 Dom(Virtual Dom)](#虚拟-domvirtual-dom)
+  - [Diff 算法](#diff-算法)
+
 ## MVVM
 
 传统的 MVC：model view controller；
@@ -14,12 +25,12 @@ ViewModel 监听模型数据的改变和控制视图行为、处理用户交互�
 
 其实技术选型没有绝对的对与错，只是考虑的因素不同。
 
-#### 两者本质的区别
+### 两者本质的区别
 
 Vue - 本质是 MVVM 框架， 由 MVC 发展来的
 React - 本质是前端组件化框架，由后端组件化发展来的
 
-#### 模板的区别
+### 模板的区别
 
 Vue - 使用模板，指令(最初由 angular 提出)
 React - 使用 JSX
@@ -61,22 +72,41 @@ class Todo extends Component {
 
 ```
 
-#### 组件化的区别
+### 组件化的区别
 
 React 本身就是组件化，没有组件化就不是 React
 Vue 也支持组件化，不过是在 MVVM 上的扩展
 
 组件化，我更倾向于 React
 
-#### 原理不同
+### 原理不同
 
 vue 使用响应式系统 + 虚拟 Dom；
 React 使用 虚拟 Dom 进行 diff 检查差异。
+
+### diff 算区别
+
+两者都使用来 Virtual Dom 
+
+不同层级之间的节点（Node）没有必要对比，因为这可能会带来 O(N³) 的计算复杂度
+
+因此，狭义的 DOM Diff 算法，一般指的是同一层级兄弟节点的范围之内
+
+ - React
+   - 首个节点不执行移动操作（除非它要被移除），以该节点为原点，其它节点都去寻找自己的新位置
+   - 每一个节点与前一个节点的先后顺序与在 Real DOM 中的顺序进行比较，如果顺序相同，则不必移动，否则就移动到前一个节点的前面或后面
+
+ - Vue
+   - 建立新序列（Virtual DOM）头（NS）尾（NE）、老序列（Real DOM）头（OS）尾（OE）一共4个指针，然后让NS/NE与OS/OE比较；
+   - 双向遍历的方式，加速了遍历的速度
+   - compile 阶段的optimize标记了static 点,可以减少 differ 次数,而且是采用双向遍历方法;
+
 
 ## Vue 和 React 共同点
 
 1. 都支持组件化；
 2. 都是数据驱动视图。
+3. 都是基于 虚拟 Dom
 
 ## key 值的作用
 

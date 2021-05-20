@@ -2,27 +2,21 @@
 
 ## 目录
 
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
-
-- [排序](#%E6%8E%92%E5%BA%8F)
-- [动态规划](#%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92)
-- [排列组合](#%E6%8E%92%E5%88%97%E7%BB%84%E5%90%88)
-- [深度优先遍历](#%E6%B7%B1%E5%BA%A6%E4%BC%98%E5%85%88%E9%81%8D%E5%8E%86)
-- [广度优先搜索](#%E5%B9%BF%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2)
-- [滑动窗口](#%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3)
-- [栈](#%E6%A0%88)
-- [贪心算法](#%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95)
-- [回溯](#%E5%9B%9E%E6%BA%AF)
-- [洗牌算法和Sort](#%E6%B4%97%E7%89%8C%E7%AE%97%E6%B3%95%E5%92%8Csort)
-- [经典例题](#%E7%BB%8F%E5%85%B8%E4%BE%8B%E9%A2%98)
-  - [交换链表节点](#%E4%BA%A4%E6%8D%A2%E9%93%BE%E8%A1%A8%E8%8A%82%E7%82%B9)
-  - [N数之和](#n%E6%95%B0%E4%B9%8B%E5%92%8C)
-  - [字符串解码](#%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%A7%A3%E7%A0%81)
-  - [N皇后](#n%E7%9A%87%E5%90%8E)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+  - [排序](#排序)
+  - [动态规划](#动态规划)
+  - [排列组合](#排列组合)
+  - [深度优先遍历](#深度优先遍历)
+  - [广度优先搜索](#广度优先搜索)
+  - [滑动窗口](#滑动窗口)
+  - [栈](#栈)
+  - [贪心算法](#贪心算法)
+  - [回溯](#回溯)
+  - [洗牌算法](#洗牌算法)
+  - [经典例题](#经典例题)
+    - [交换链表节点](#交换链表节点)
+    - [N数之和](#n数之和)
+    - [字符串解码](#字符串解码)
+    - [N皇后](#n皇后)
 
 ## 排序
 
@@ -329,6 +323,41 @@ var findContentChildren = function(g, s) {
 ## 洗牌算法
 
 链接: [shuffle](./shuffle/README.md)
+
+## LRU
+
+最近最少使用 (least recently used)
+
+LRU 在 Vue 的 keep-alive 中有使用
+
+利用 Map 的 key 的有序性
+
+```js
+class LRUCache {
+  constructor(n) {
+    this.size = n
+    this.data = new Map()
+  }
+  put(domain, info) {
+    if(this.map.has(key)) this.map.delete(key)
+
+    if(this.data.size >= this.size) {
+      // 删除最不常用数据
+      const firstKey= [...this.data.keys()][0]
+      this.data.delete(firstKey)
+    }
+    this.data.set(domain, info)
+  }
+  get(domain) {
+    if(!this.data.has(domain)) return -1
+
+    const info = this.data.get(domain)
+    this.data.delete(domain)
+    this.data.set(domain, info)
+    return info
+  }
+}
+```
 
 ## 经典例题
 
