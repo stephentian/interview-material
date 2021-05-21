@@ -21,6 +21,8 @@
   - [Vue-Router](#vue-router)
     - [route 和 router 的区别](#route-和-router-的区别)
   - [为什么 Vue3.0 不再使用 defineProperty](#为什么-vue30-不再使用-defineproperty)
+  - [Vuex](#vuex-1)
+    - [Flux 架构](#flux-架构)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -220,3 +222,9 @@ this.$store.state
 - 2. `Object.defineProperty` 是对属性进行劫持，需要遍历对象的每个属性；`Proxy` 直接代理对象
 - 3. 对象新增属性，要重新遍历对象，对新对象使用 `Object.defineProperty` 进行劫持
 - 4. `Proxy` 为新标准，浏览器会对其进行优化。
+
+## Vuex
+
+### Flux 架构
+
+数据流: view -> action -> dispatcher -> store

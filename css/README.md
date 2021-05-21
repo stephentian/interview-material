@@ -239,3 +239,9 @@ MDN: 是块盒子的布局过程发生的区域, 也是浮动元素与其他元�
 (1) 防止 margin 重叠(塌陷)  
 (2) 清除浮动  
 (3) 自适应多栏布局的
+
+## CSS 继承元素
+
+- font: font-family, font-weight, font-size
+- 文本系列属性: line-height, color
+- 元素可见性：visibility

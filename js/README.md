@@ -36,6 +36,18 @@
 
 [垃圾回收](./gc.md)
 
+### 事件循环
+
+eventloop
+
+宏任务: 
+
+微任务: 
+
+async/await:
+ - await 后跟常量: 跳出执行之后的微任务
+ - await 后跟异步函数: 等待异步函数执行完
+
 ## ES6
 
 ### ES6 新语法
@@ -369,6 +381,16 @@ windiw --> document --> html --> body --> ... --> 目标元素
 我们就把这个函数叫做纯函数
 比如 `slice` 和 `splice`， 都可以做同样的操作，
 但是 `splice` 会修改参数，也就是传入的数组，所以不是纯函数，而 `slice` 是纯函数。
+
+## 常见例题
+
+### defer 和 async
+
+defer 和 async 在网络读取（下载）这块儿是一样的，都是异步的（相较于 HTML 解析）
+
+- defer: 会在整个文档解析完成后, document 的 DOMContentLoaded 之前执行
+- async: js 在下载完后会立即执行
+
 
 ## 代码题
 
