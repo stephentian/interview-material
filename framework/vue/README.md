@@ -8,6 +8,7 @@
 - [Vue](#vue)
   - [目录](#目录)
   - [Vue 的响应式原理](#vue-的响应式原理)
+  - [Vue](#vue-1)
   - [为什么 Vue 还需要虚拟 DOM 进行 diff 检测差异?](#为什么-vue-还需要虚拟-dom-进行-diff-检测差异)
   - [组件中 name 选项作用](#组件中-name-选项作用)
   - [Vue 的 nextTick 的原理是什么？](#vue-的-nexttick-的原理是什么)
@@ -31,6 +32,8 @@
 当 vue 创建一个实例时, vue 会遍历 data 里的属性，使用 Object.defineProperty 给它们添加 getter/setter 属性。
 当被调用时，即触发 getter, Vue 会去 `Watcher` 收集依赖的所有 data。
 当被改动时，即触发 setter, Vue 会通知(Notify) `Watcher`, 然后 `Watcher` 去调用 render 函数更新相关组件。
+
+## Vue 
 
 ## 为什么 Vue 还需要虚拟 DOM 进行 diff 检测差异?
 

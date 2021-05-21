@@ -36,7 +36,7 @@
 
 [垃圾回收](./gc.md)
 
-### 事件循环
+### 事件循环 和 setTimeout requestAnimationFrame
 
 eventloop
 
@@ -47,6 +47,10 @@ eventloop
 async/await:
  - await 后跟常量: 跳出执行之后的微任务
  - await 后跟异步函数: 等待异步函数执行完
+
+setTimeout: 浏览器设置最好间隔 4ms，经过 5 重嵌套定时器之后，时间间隔被强制设定为至少 4 毫秒。
+
+requestAnimationFrame: 既不是宏任务也不是微任务，render 后，渲染之前执行。
 
 ## ES6
 
