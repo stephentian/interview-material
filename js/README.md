@@ -1,8 +1,10 @@
 # JS
 
+- [JS](#js)
   - [JS 基础](#js-基础)
     - [继承](#继承)
     - [垃圾回收](#垃圾回收)
+    - [事件循环 和 setTimeout requestAnimationFrame](#事件循环-和-settimeout-requestanimationframe)
   - [ES6](#es6)
     - [ES6 新语法](#es6-新语法)
     - [箭头函数](#箭头函数)
@@ -24,6 +26,8 @@
     - [事件流](#事件流)
   - [函数式编程](#函数式编程)
     - [纯函数](#纯函数)
+  - [常见例题](#常见例题)
+    - [defer 和 async](#defer-和-async)
   - [代码题](#代码题)
 
 ## JS 基础
@@ -40,15 +44,15 @@
 
 eventloop
 
-宏任务: 
+宏任务: setTimeout, setInterval
 
-微任务: 
+微任务: promise, 
 
 async/await:
  - await 后跟常量: 跳出执行之后的微任务
  - await 后跟异步函数: 等待异步函数执行完
 
-setTimeout: 浏览器设置最好间隔 4ms，经过 5 重嵌套定时器之后，时间间隔被强制设定为至少 4 毫秒。
+setTimeout: 浏览器设置最好间隔 4ms; 经过 5 重嵌套定时器之后，时间间隔被强制设定为至少 4 毫秒。
 
 requestAnimationFrame: 既不是宏任务也不是微任务，render 后，渲染之前执行。
 
