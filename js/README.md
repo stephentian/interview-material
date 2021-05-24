@@ -54,8 +54,22 @@ Event Loop 包含两类
 微任务 microtask: Promise.then, MutaionObserver
 
 async/await:
- - await 后跟常量: 跳出执行之后的微任务
- - await 后跟异步函数: 等待异步函数执行完
+ - chrome 70 版本
+```js
+async function async1(){
+  await async2()
+  console.log('async1 end')
+}
+// 等价于
+async function async1() {
+  return new Promise(resolve => {
+    resolve(async2())
+  }).then(() => {
+    console.log('async1 end')
+  })
+}
+```
+ - chrome 70 版本以上, await 将直接使用 Promise.resolve() 相同语义
 
 setTimeout: 浏览器设置最好间隔 4ms; 经过 5 重嵌套定时器之后，时间间隔被强制设定为至少 4 毫秒。
 

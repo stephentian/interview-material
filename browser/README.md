@@ -8,6 +8,7 @@
     - [http 缓存](#http-缓存)
     - [本地缓存](#本地缓存)
   - [浏览器内核](#浏览器内核)
+  - [web worker](#web-worker)
 
 
 
@@ -45,3 +46,5 @@
 
 火狐浏览器: Gecko
 Safari: webkit
+
+## web worker
