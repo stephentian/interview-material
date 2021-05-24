@@ -42,11 +42,16 @@
 
 ### 事件循环 和 setTimeout requestAnimationFrame
 
-eventloop
+JavaScript 是单线程的，防止主线程的不阻塞，Event Loop 的方案应用而生
 
-宏任务: setTimeout, setInterval
+Event Loop 包含两类
 
-微任务: promise, 
+- 
+- 每一个 Web Worker 也有一个独立的 Event Loop
+
+宏任务 task: script(整体代码), setTimeout, setInterval
+
+微任务 microtask: Promise.then, MutaionObserver
 
 async/await:
  - await 后跟常量: 跳出执行之后的微任务
@@ -55,6 +60,10 @@ async/await:
 setTimeout: 浏览器设置最好间隔 4ms; 经过 5 重嵌套定时器之后，时间间隔被强制设定为至少 4 毫秒。
 
 requestAnimationFrame: 既不是宏任务也不是微任务，render 后，渲染之前执行。
+
+requestAnimationFrame
+
+- 
 
 ## ES6
 
