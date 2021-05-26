@@ -40,7 +40,7 @@ for 循环优化
 节点添加优化
 
 - 节点添加会造成 回流 和 重绘
-- 使用 `document.createdocumentfragment()` 创建一个虚拟节点对象
+- 使用 `document.createDocumentFragment()` 创建一个虚拟节点对象
 - 使用虚拟节点 `appendChild` 节点，减少 `DOM` 的重绘
 
 ## 网络优化

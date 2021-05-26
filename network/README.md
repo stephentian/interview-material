@@ -1,7 +1,5 @@
 # 网络通信
-
-## 目录
-
+- [网络通信](#网络通信)
   - [什么是同源策略及限制](#什么是同源策略及限制)
   - [前后端如何通信](#前后端如何通信)
   - [如何创建 Ajax](#如何创建-ajax)
@@ -20,7 +18,7 @@
   - [HTTP2.0](#http20)
   - [HTTP 中 GET 和 POST 有什么区别？](#http-中-get-和-post-有什么区别)
   - [从 url 输入 到显示网页都发生了什么？](#从-url-输入-到显示网页都发生了什么)
-  - [浏览器缓存](#浏览器缓存)
+  - [HTTP 缓存](#http-缓存)
 
 ## 什么是同源策略及限制
 
@@ -83,6 +81,19 @@ request.send()
 在出现 CORS 之前，一直使用 JSONP 跨域通信；
 利用的是 `script` 的异步加载，读取文件，
 在本地创建一个 `script` 标签，然后加载。
+
+```js
+function handleCallback(result) {
+    console.log(result.message);
+}
+
+var jsonp = document.createElement('script');
+var ele = document.getElementById('demo');
+jsonp.type = 'text/javascript';
+jsonp.src = 'http://localhost:8080?callback=handleCallback';
+ele.appendChild(jsonp);
+ele.removeChild(jsonp);
+```
 
 二、 Hash
 
@@ -417,3 +428,6 @@ POST
   3. 结合 DOM 树和 CSS 规则树，生成渲染树
   4. Reflow: 回流/重排，元素内容、结构、位置发送变化
   5. Repaint: 重绘，元素外观变化
+
+## HTTP 缓存
+
