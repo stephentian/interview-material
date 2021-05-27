@@ -1,12 +1,6 @@
 # Vue
 
-## 目录
-
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
 - [Vue](#vue)
-  - [目录](#目录)
   - [Vue 的响应式原理](#vue-的响应式原理)
   - [Vue](#vue-1)
   - [为什么 Vue 还需要虚拟 DOM 进行 diff 检测差异?](#为什么-vue-还需要虚拟-dom-进行-diff-检测差异)
@@ -24,8 +18,6 @@
   - [为什么 Vue3.0 不再使用 defineProperty](#为什么-vue30-不再使用-defineproperty)
   - [Vuex](#vuex-1)
     - [Flux 架构](#flux-架构)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Vue 的响应式原理
 
