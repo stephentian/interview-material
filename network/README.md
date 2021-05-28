@@ -431,3 +431,21 @@ POST
 
 ## HTTP 缓存
 
+- 强缓存
+  - expires
+    - 过期时间(http1.0)
+    - 绝对时间，修改本地客户端就没用了
+  - cache-control
+    - http1.1
+    - no-store 没有缓存
+    - no-cache 缓存但重新验证
+    - max-age = 相对时间
+- 协商缓存
+  - etag & if-none-match
+    - 标志资源是否变化
+  - last-modified & if-modified-since
+
+缓存机制：  
+- 强缓存生效则使用强缓存，失效则进行协商缓存
+- cache-control 优先级高于 expires; etag 优先级高于 last-modified
+- 协商缓存有服务器决定。生效则返回 304。
