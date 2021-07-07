@@ -1,8 +1,9 @@
 # React
 
+- [React](#react)
   - [React 生命周期](#react-生命周期)
   - [React 请求放哪个生命周期中](#react-请求放哪个生命周期中)
-  - [setState到底是异步还是同步](#setstate到底是异步还是同步)
+  - [setState 到底是异步还是同步](#setstate-到底是异步还是同步)
   - [React 组件之间的通信](#react-组件之间的通信)
 
 ## React 生命周期

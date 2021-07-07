@@ -1,7 +1,5 @@
 # 网络通信
-
-## 目录
-
+- [网络通信](#网络通信)
   - [什么是同源策略及限制](#什么是同源策略及限制)
   - [前后端如何通信](#前后端如何通信)
   - [如何创建 Ajax](#如何创建-ajax)
@@ -20,11 +18,12 @@
   - [HTTP2.0](#http20)
   - [HTTP 中 GET 和 POST 有什么区别？](#http-中-get-和-post-有什么区别)
   - [从 url 输入 到显示网页都发生了什么？](#从-url-输入-到显示网页都发生了什么)
-  - [浏览器缓存](#浏览器缓存)
+  - [HTTP 缓存](#http-缓存)
 
 ## 什么是同源策略及限制
 
 同源策略限制从一个源加载的文档或脚本如何与来自另一个源的资源进行交互。
+
 这是一个用于隔离潜在恶意文件的关键的安全机制。
 
 源：协议、域名、端口。
@@ -83,6 +82,19 @@ request.send()
 在出现 CORS 之前，一直使用 JSONP 跨域通信；
 利用的是 `script` 的异步加载，读取文件，
 在本地创建一个 `script` 标签，然后加载。
+
+```js
+function handleCallback(result) {
+    console.log(result.message);
+}
+
+var jsonp = document.createElement('script');
+var ele = document.getElementById('demo');
+jsonp.type = 'text/javascript';
+jsonp.src = 'http://localhost:8080?callback=handleCallback';
+ele.appendChild(jsonp);
+ele.removeChild(jsonp);
+```
 
 二、 Hash
 
@@ -417,3 +429,24 @@ POST
   3. 结合 DOM 树和 CSS 规则树，生成渲染树
   4. Reflow: 回流/重排，元素内容、结构、位置发送变化
   5. Repaint: 重绘，元素外观变化
+
+## HTTP 缓存
+
+- 强缓存
+  - expires
+    - 过期时间(http1.0)
+    - 绝对时间，修改本地客户端就没用了
+  - cache-control
+    - http1.1
+    - no-store 没有缓存
+    - no-cache 缓存但重新验证
+    - max-age = 相对时间
+- 协商缓存
+  - etag & if-none-match
+    - 标志资源是否变化
+  - last-modified & if-modified-since
+
+缓存机制：  
+- 强缓存生效则使用强缓存，失效则进行协商缓存
+- cache-control 优先级高于 expires; etag 优先级高于 last-modified
+- 协商缓存有服务器决定。生效则返回 304。

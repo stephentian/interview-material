@@ -40,7 +40,7 @@ for 循环优化
 节点添加优化
 
 - 节点添加会造成 回流 和 重绘
-- 使用 `document.createdocumentfragment()` 创建一个虚拟节点对象
+- 使用 `document.createDocumentFragment()` 创建一个虚拟节点对象
 - 使用虚拟节点 `appendChild` 节点，减少 `DOM` 的重绘
 
 ## 网络优化
@@ -114,8 +114,8 @@ Mac 下打开 Chrome 任务管理器的方式是选择 Chrome 顶部导航 > 窗
 ## 项目体积优化
 
 - 使用 webpack-bundle-analyzer 查看打包出来文件的体积大小，看看是哪个包比较大
-- 依赖 按需加载，比如 element 组件，金山文档组件
+- 依赖 按需加载，比如 element 组件，金山文档组件，第三方组件 
 - 采用更小大库，比如 moment.js 200+kb, day.js 压缩后 2 kb
 - 开启 tree shaking ，摇树功能，对于导出的模块，有些方法没有被使用到，最终是不会放到打包的文件中的，可以减少一些代码体积
 - url-loader（将小图片打包进 html 中，减小图片数量）；terser-webpack-plugin、uglifyjs-webpack-plugin（压缩 js 文件）；更合理的拆包策略（webpack SplitChunksPlugin）
-- 开启 gzip
+- 开启 gzip, 服务端配合

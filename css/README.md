@@ -1,22 +1,18 @@
 # css
 
-## 目录
-
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
-
-- [布局](#%E5%B8%83%E5%B1%80)
-  - [三栏布局](#%E4%B8%89%E6%A0%8F%E5%B8%83%E5%B1%80)
-  - [多种布局的优缺点](#%E5%A4%9A%E7%A7%8D%E5%B8%83%E5%B1%80%E7%9A%84%E4%BC%98%E7%BC%BA%E7%82%B9)
-- [盒模型](#%E7%9B%92%E6%A8%A1%E5%9E%8B)
-  - [两种模型及区别](#%E4%B8%A4%E7%A7%8D%E6%A8%A1%E5%9E%8B%E5%8F%8A%E5%8C%BA%E5%88%AB)
-  - [CSS 如何设置这两种模型](#css-%E5%A6%82%E4%BD%95%E8%AE%BE%E7%BD%AE%E8%BF%99%E4%B8%A4%E7%A7%8D%E6%A8%A1%E5%9E%8B)
-  - [JS 如何设置获取盒模型对应的宽和高](#js-%E5%A6%82%E4%BD%95%E8%AE%BE%E7%BD%AE%E8%8E%B7%E5%8F%96%E7%9B%92%E6%A8%A1%E5%9E%8B%E5%AF%B9%E5%BA%94%E7%9A%84%E5%AE%BD%E5%92%8C%E9%AB%98)
-  - [边距重叠](#%E8%BE%B9%E8%B7%9D%E9%87%8D%E5%8F%A0)
-- [BFC](#bfc)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+- [css](#css)
+  - [布局](#布局)
+    - [三栏布局](#三栏布局)
+    - [多种布局的优缺点](#多种布局的优缺点)
+  - [盒模型](#盒模型)
+    - [两种模型及区别](#两种模型及区别)
+    - [CSS 如何设置这两种模型](#css-如何设置这两种模型)
+    - [JS 如何设置获取盒模型对应的宽和高](#js-如何设置获取盒模型对应的宽和高)
+    - [边距重叠](#边距重叠)
+  - [BFC](#bfc)
+  - [CSS 继承元素](#css-继承元素)
+  - [例题](#例题)
+    - [实现一个三角形（或扇形）](#实现一个三角形或扇形)
 
 ## 布局
 
@@ -239,3 +235,60 @@ MDN: 是块盒子的布局过程发生的区域, 也是浮动元素与其他元�
 (1) 防止 margin 重叠(塌陷)  
 (2) 清除浮动  
 (3) 自适应多栏布局的
+
+## CSS 继承元素
+
+- font: font-family, font-weight, font-size
+- 文本系列属性: line-height, color
+- 元素可见性：visibility
+
+## 例题
+
+### 实现一个三角形（或扇形）
+
+- 利用 border
+  - 高度，宽度为 0
+- 利用 CSS3 的 clip-path 属性
+  - 使用裁剪方式创建元素的可显示区域。
+  - 区域内的部分显示，区域外的隐藏。
+  - polygon（多边形）根据点的坐标绘制一条闭合的遮罩区域
+- rotate 和 overflow: hidden
+- linear-gradient 渐变色
+
+```css
+.triangle1 {
+  width: 0;
+  height: 0;
+  border: 10px solid transparent;
+  border-top-color: black;
+  /* 只有上边框有颜色，其它为透明 */
+  /* 本质上占用的空间还是一个正方形 */
+  /* 不设置 border-bottom 即可 */
+
+  /* border-top: 10px solid black;
+  border-right: 10px solid transparent;
+  border-left: 10px solid transparent; */
+}
+
+.triangle2 {
+  clip-path: polygon(50% 0, 0% 100%, 100% 100%);
+  height: 10px;
+  width: 15px;
+  background-color: #fff;
+}
+```
+
+扇形
+
+- border-radius 和 border-width 相同, 100%
+
+```css
+.sector {
+  width: 0;
+  height: 0;
+  border-width: 100px;
+  border-style: solid;
+  border-color: transparent transparent green;
+  border-radius: 100px;
+}
+```

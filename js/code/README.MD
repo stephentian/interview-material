@@ -1,6 +1,10 @@
-# 代码
+# 手写代码
 
-## 目录
+- [手写代码](#手写代码)
+  - [大数相加](#大数相加)
+  - [EventEmitter](#eventemitter)
+  - [异步并发调度器](#异步并发调度器)
+  - [柯里化](#柯里化)
 
 ## 大数相加
 
@@ -20,10 +24,14 @@
 
 ## 异步并发调度器
 
-链接: [3.Scheduler]
+链接: [3.Scheduler](3.Scheduler.js)
 
 思路:
 
 - tasks 等待执行队列
 - working 正在执行的
 - 超过 并发数 则 push 进 tasks
+
+## 柯里化
+
+链接: [4.Curry](4.Curry.js)

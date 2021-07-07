@@ -1,22 +1,15 @@
 # 网络安全
 
-## 目录
-
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
-
-- [XSS(跨站脚本攻击)](#xss%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC%E6%94%BB%E5%87%BB)
-  - [攻击原理](#%E6%94%BB%E5%87%BB%E5%8E%9F%E7%90%86)
-  - [攻击分类](#%E6%94%BB%E5%87%BB%E5%88%86%E7%B1%BB)
-    - [1. 反射型](#1-%E5%8F%8D%E5%B0%84%E5%9E%8B)
-    - [2. 存储型](#2-%E5%AD%98%E5%82%A8%E5%9E%8B)
-  - [防范措施](#%E9%98%B2%E8%8C%83%E6%8E%AA%E6%96%BD)
-- [CSRF(跨站请求伪造)](#csrf%E8%B7%A8%E7%AB%99%E8%AF%B7%E6%B1%82%E4%BC%AA%E9%80%A0)
-  - [攻击原理](#%E6%94%BB%E5%87%BB%E5%8E%9F%E7%90%86-1)
-  - [防御措施](#%E9%98%B2%E5%BE%A1%E6%8E%AA%E6%96%BD)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+- [网络安全](#网络安全)
+  - [XSS(跨站脚本攻击)](#xss跨站脚本攻击)
+    - [攻击原理](#攻击原理)
+    - [攻击分类](#攻击分类)
+      - [1. 反射型](#1-反射型)
+      - [2. 存储型](#2-存储型)
+    - [防范措施](#防范措施)
+  - [CSRF(跨站请求伪造)](#csrf跨站请求伪造)
+    - [攻击原理](#攻击原理-1)
+    - [防御措施](#防御措施)
 
 ## XSS(跨站脚本攻击)
 

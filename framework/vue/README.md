@@ -1,13 +1,8 @@
 # Vue
 
-## 目录
-
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
 - [Vue](#vue)
-  - [目录](#目录)
   - [Vue 的响应式原理](#vue-的响应式原理)
+  - [Vue](#vue-1)
   - [为什么 Vue 还需要虚拟 DOM 进行 diff 检测差异?](#为什么-vue-还需要虚拟-dom-进行-diff-检测差异)
   - [组件中 name 选项作用](#组件中-name-选项作用)
   - [Vue 的 nextTick 的原理是什么？](#vue-的-nexttick-的原理是什么)
@@ -21,14 +16,16 @@
   - [Vue-Router](#vue-router)
     - [route 和 router 的区别](#route-和-router-的区别)
   - [为什么 Vue3.0 不再使用 defineProperty](#为什么-vue30-不再使用-defineproperty)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+  - [Vuex](#vuex-1)
+    - [Flux 架构](#flux-架构)
 
 ## Vue 的响应式原理
 
 当 vue 创建一个实例时, vue 会遍历 data 里的属性，使用 Object.defineProperty 给它们添加 getter/setter 属性。
 当被调用时，即触发 getter, Vue 会去 `Watcher` 收集依赖的所有 data。
 当被改动时，即触发 setter, Vue 会通知(Notify) `Watcher`, 然后 `Watcher` 去调用 render 函数更新相关组件。
+
+## Vue 
 
 ## 为什么 Vue 还需要虚拟 DOM 进行 diff 检测差异?
 
@@ -220,3 +217,9 @@ this.$store.state
 - 2. `Object.defineProperty` 是对属性进行劫持，需要遍历对象的每个属性；`Proxy` 直接代理对象
 - 3. 对象新增属性，要重新遍历对象，对新对象使用 `Object.defineProperty` 进行劫持
 - 4. `Proxy` 为新标准，浏览器会对其进行优化。
+
+## Vuex
+
+### Flux 架构
+
+数据流: view -> action -> dispatcher -> store

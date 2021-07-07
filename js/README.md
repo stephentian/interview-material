@@ -1,8 +1,10 @@
 # JS
 
+- [JS](#js)
   - [JS 基础](#js-基础)
     - [继承](#继承)
     - [垃圾回收](#垃圾回收)
+    - [事件循环 和 setTimeout requestAnimationFrame](#事件循环-和-settimeout-requestanimationframe)
   - [ES6](#es6)
     - [ES6 新语法](#es6-新语法)
     - [箭头函数](#箭头函数)
@@ -24,6 +26,8 @@
     - [事件流](#事件流)
   - [函数式编程](#函数式编程)
     - [纯函数](#纯函数)
+  - [常见例题](#常见例题)
+    - [defer 和 async](#defer-和-async)
   - [代码题](#代码题)
 
 ## JS 基础
@@ -35,6 +39,45 @@
 ### 垃圾回收
 
 [垃圾回收](./gc.md)
+
+### 事件循环 和 setTimeout requestAnimationFrame
+
+JavaScript 是单线程的，防止主线程的不阻塞，Event Loop 的方案应用而生
+
+Event Loop 包含两类
+
+- 
+- 每一个 Web Worker 也有一个独立的 Event Loop
+
+宏任务 task: script(整体代码), setTimeout, setInterval
+
+微任务 microtask: Promise.then, MutaionObserver
+
+async/await:
+ - chrome 70 版本
+```js
+async function async1(){
+  await async2()
+  console.log('async1 end')
+}
+// 等价于
+async function async1() {
+  return new Promise(resolve => {
+    resolve(async2())
+  }).then(() => {
+    console.log('async1 end')
+  })
+}
+```
+ - chrome 70 版本以上, await 将直接使用 Promise.resolve() 相同语义
+
+setTimeout: 浏览器设置最好间隔 4ms; 经过 5 重嵌套定时器之后，时间间隔被强制设定为至少 4 毫秒。
+
+requestAnimationFrame: 既不是宏任务也不是微任务，render 后，渲染之前执行。
+
+requestAnimationFrame
+
+- 
 
 ## ES6
 
@@ -369,6 +412,16 @@ windiw --> document --> html --> body --> ... --> 目标元素
 我们就把这个函数叫做纯函数
 比如 `slice` 和 `splice`， 都可以做同样的操作，
 但是 `splice` 会修改参数，也就是传入的数组，所以不是纯函数，而 `slice` 是纯函数。
+
+## 常见例题
+
+### defer 和 async
+
+defer 和 async 在网络读取（下载）这块儿是一样的，都是异步的（相较于 HTML 解析）
+
+- defer: 会在整个文档解析完成后, document 的 DOMContentLoaded 之前执行
+- async: js 在下载完后会立即执行
+
 
 ## 代码题
 
