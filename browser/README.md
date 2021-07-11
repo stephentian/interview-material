@@ -7,8 +7,6 @@
   - [浏览器内核](#浏览器内核)
   - [web worker](#web-worker)
 
-
-
 ## 浏览器缓存
 
 ### http 缓存
@@ -26,6 +24,7 @@
   - last-modified & if-modified-since
 
 缓存机制：  
+
 - 强缓存生效则使用强缓存，失效则进行协商缓存
 - cache-control 优先级高于 expires; etag 优先级高于 last-modified
 - 协商缓存有服务器决定。生效则返回 304。
