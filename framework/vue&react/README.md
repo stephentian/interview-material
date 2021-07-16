@@ -39,7 +39,7 @@ React - 使用 JSX
 
 模板语法上，我更倾向于 React
 
-```
+```html
 // React:
 // 只需要知道一点， {} 里放 js 表达式
 <div>
@@ -56,7 +56,7 @@ React - 使用 JSX
 
 模板分离上，我更倾向于 Vue
 
-```
+```html
 // React:
 class Todo extends Component {
   constructor(props) {
@@ -125,7 +125,7 @@ key 的作用主要是为了高效的更新虚拟 DOM。
 
 Virtual Dom 结构：
 
-```
+```js
 // 标签名，属性，孩子节点，render 函数
 
 class Element {
@@ -143,7 +143,7 @@ class Element {
 
 Virtual Dom 转换成真实 Dom 并添加到网页的过程：
 
-```
+```js
 <ul id="list">
   <li class="a">1</li>
   <li>2</li>
