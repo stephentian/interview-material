@@ -11,12 +11,11 @@
     - [eventBus](#eventbus)
     - [provide/inject](#provideinject)
     - [ref/$refs](#refrefs)
-    - [Vuex](#vuex)
     - [生命周期](#生命周期)
   - [Vue-Router](#vue-router)
     - [route 和 router 的区别](#route-和-router-的区别)
   - [为什么 Vue3.0 不再使用 defineProperty](#为什么-vue30-不再使用-defineproperty)
-  - [Vuex](#vuex-1)
+  - [Vuex](#vuex)
     - [Flux 架构](#flux-架构)
 
 ## Vue 的响应式原理
@@ -25,7 +24,7 @@
 当被调用时，即触发 getter, Vue 会去 `Watcher` 收集依赖的所有 data。
 当被改动时，即触发 setter, Vue 会通知(Notify) `Watcher`, 然后 `Watcher` 去调用 render 函数更新相关组件。
 
-## Vue 
+## Vue
 
 ## 为什么 Vue 还需要虚拟 DOM 进行 diff 检测差异?
 
@@ -171,23 +170,6 @@ export default {
 
 ```
 this.$refs.child1
-```
-
-### Vuex
-
-vue 项目状态管理器。
-模块：
-
-  1. state
-  2. getters
-  3. mutations
-  4. actions
-  5. modules
-
-使用：
-
-```
-this.$store.state
 ```
 
 ### 生命周期
