@@ -9,11 +9,13 @@
   - [广度优先搜索](#广度优先搜索)
   - [滑动窗口](#滑动窗口)
   - [栈](#栈)
+  - [队列](#队列)
   - [贪心算法](#贪心算法)
   - [回溯](#回溯)
   - [洗牌算法](#洗牌算法)
   - [LRU](#lru)
   - [经典例题](#经典例题)
+    - [把一个数组旋转 K 步](#把一个数组旋转-k-步)
     - [交换链表节点](#交换链表节点)
     - [N数之和](#n数之和)
     - [字符串解码](#字符串解码)
@@ -21,7 +23,8 @@
 
 ## 基础知识
 
-时间复杂度，空间复杂度
+1. 时间复杂度，空间复杂度
+2. 执行时间测试 `console.time()` 和 `console.timeEnd()`
 
 ## 排序
 
@@ -292,6 +295,69 @@ var isValid = function(s) {
 }
 ```
 
+## 队列
+
+队列，先进先出的结构
+
+例题：
+
+一、[使用栈实现队列](https://leetcode-cn.com/problems/implement-queue-using-stacks/)
+
+参考 `webpack` 源码 [ArrayQueue.js](https://github.com/webpack/webpack/blob/main/lib/util/ArrayQueue.js)
+
+```js
+var MyQueue = function() {
+    this._stack1 = [];
+    this._stack2 = [];
+};
+
+MyQueue.prototype.push = function(x) {
+    this._stack1.push(x)
+};
+
+MyQueue.prototype.pop = function() {
+    // if (this._stack2.length === 0) {
+    //     this._stack2 = this._stack1
+    //     this._stack2.reverse();
+    //     this._stack1 = []
+    // }
+    // return this._stack2.pop()
+
+    // 或者
+    if (this._stack2.length === 0) {
+      while(this._stack1.length) {
+        this._stack2.push(this._stack1.pop())
+      }
+    }
+    return this._stack2.pop()
+};
+
+MyQueue.prototype.peek = function() {
+    if (this._stack2.length === 0) {
+        return this._stack1[0];
+    }
+    return this._stack2[this._stack2.length - 1];
+};
+
+MyQueue.prototype.empty = function() {
+    return !(this._stack1.length + this._stack2.length)
+};
+```
+
+```js
+class MyQueue {
+  const _stack1 = []
+  const _stack2 = []
+
+  pop() {
+
+  }
+  push() {
+
+  }
+}
+```
+
 ## 贪心算法
 
 例题：
@@ -365,6 +431,17 @@ class LRUCache {
 ```
 
 ## 经典例题
+
+### 把一个数组旋转 K 步
+
+两种思路：
+
+- 数组 `unshift` 数组 `pop` 值
+- 数组分为两份，剪切数组尾部 k 个元素，放前面，`concat` 剩余的子数组
+
+```js
+
+```
 
 ### 交换链表节点
 
