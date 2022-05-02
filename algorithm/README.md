@@ -10,6 +10,7 @@
   - [滑动窗口](#滑动窗口)
   - [栈](#栈)
   - [队列](#队列)
+  - [链表](#链表)
   - [贪心算法](#贪心算法)
   - [回溯](#回溯)
   - [洗牌算法](#洗牌算法)
@@ -20,6 +21,7 @@
     - [N数之和](#n数之和)
     - [字符串解码](#字符串解码)
     - [N皇后](#n皇后)
+    - [链表和数组，哪个实现队列更快](#链表和数组哪个实现队列更快)
 
 ## 基础知识
 
@@ -344,17 +346,44 @@ MyQueue.prototype.empty = function() {
 };
 ```
 
+## 链表
+
+类似数组，不过是无序存储结构
+
 ```js
-class MyQueue {
-  const _stack1 = []
-  const _stack2 = []
+function createLinkList(arr) {
+  const len = arr.length
+  if (!len) throw new Error('arr is empty')
 
-  pop() {
-
+  let node = {
+    value: arr[len-1]
   }
-  push() {
 
+  if (len === 1) return node
+
+  for(let i = len -2; i >=0; i--) {
+    node = {
+      value: arr[i],
+      next: node
+    }
   }
+
+  return node
+}
+
+// 反转链表
+function reverseLinkList(head) {
+  let preNode = null
+  let curNode = head
+
+  while(curNode) {
+      let temp = curNode.next
+      curNode.next = preNode
+      preNode = curNode
+      curNode = temp
+  }
+
+    return preNode
 }
 ```
 
@@ -701,3 +730,9 @@ var solveNQueens = function(n) {
   return res
 }
 ```
+
+### 链表和数组，哪个实现队列更快
+
+- 数组为连续存储， `push` 快， `shift` 慢
+- 链表是非连续存储，`add` 和 `delete` 都快
+- 结论：链表实现队列更快
