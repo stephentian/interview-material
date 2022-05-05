@@ -3,6 +3,7 @@
 - [Algorithm](#algorithm)
   - [基础知识](#基础知识)
   - [排序](#排序)
+  - [二分查找](#二分查找)
   - [动态规划](#动态规划)
   - [排列组合](#排列组合)
   - [深度优先遍历](#深度优先遍历)
@@ -21,7 +22,6 @@
     - [N数之和](#n数之和)
     - [字符串解码](#字符串解码)
     - [N皇后](#n皇后)
-    - [链表和数组，哪个实现队列更快](#链表和数组哪个实现队列更快)
 
 ## 基础知识
 
@@ -31,6 +31,71 @@
 ## 排序
 
 地址: [Sort](./sort/README.md)
+
+## 二分查找
+
+二分查找 (Binary Search)，也称折半查找。
+
+要求:
+
+- 线性表必须采用顺序存储结构（比如数组）
+- 表中元素按关键字有序排列
+
+思路：  
+
+1. 从数组中间元素开始，如果是 目标，则返回该元素
+2. 如果不是，利用中间元素分为前后两个子数组，
+   1. 目标 小于中间元素，查找前一个数组
+   2. 目标 大于中间元素，查找后一个数组
+3. 重复以上动作，直到找到满足条件的元素。不满足则返回 -1
+
+算法时间复杂度: O(log n)
+
+```js
+// 方法一 while 循环
+function binary_search (arr , item){
+  if (arr.length === 0) return -1;
+
+  let low = 0
+  let height = arr.length - 1
+  while(low < height) {
+    const mid = parseInt((height + low) / 2)
+
+    if(arr[mid] == item){
+      return mid
+    }else if(arr[mid] > item){
+      height = mid - 1
+    }else{
+      low = mid + 1
+    }
+  }
+  return -1
+}
+
+// 方法二 递归
+const binarySearch1 = function(
+  arr,
+  target,
+  startIndex = 0,
+  endIndex
+) {
+  if (arr.length === 0) return -1;
+  if (!endIndex) endIndex = arr.length - 1;
+
+  // 递归结束条件
+  if (startIndex > endIndex) return -1;
+
+  const midIndex = Math.floor((startIndex + endIndex) / 2);
+
+  if (target < arr[midIndex]) {
+    return binarySearch1(arr, target, startIndex, midIndex - 1);
+  } else if (target > arr[midIndex]) {
+    return binarySearch1(arr, target, midIndex + 1, endIndex);
+  } else {
+    return midIndex;
+  }
+};
+```
 
 ## 动态规划
 
@@ -730,9 +795,3 @@ var solveNQueens = function(n) {
   return res
 }
 ```
-
-### 链表和数组，哪个实现队列更快
-
-- 数组为连续存储， `push` 快， `shift` 慢
-- 链表是非连续存储，`add` 和 `delete` 都快
-- 结论：链表实现队列更快
