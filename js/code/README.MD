@@ -5,6 +5,7 @@
   - [EventEmitter](#eventemitter)
   - [异步并发调度器](#异步并发调度器)
   - [柯里化](#柯里化)
+  - [防抖和节流](#防抖和节流)
 
 ## 大数相加
 
@@ -35,3 +36,10 @@
 ## 柯里化
 
 链接: [4.Curry](4.Curry.js)
+
+## 防抖和节流
+
+链接:
+
+- [debounce](debounce.js)
+- [throttle](throttle.js)

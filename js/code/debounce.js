@@ -7,7 +7,7 @@
 
 // 防抖
 
-function debouncd(fn, time = 1000) {
+function debounce(fn, time = 1000) {
   let timer
   return function () {
     const args = arguments

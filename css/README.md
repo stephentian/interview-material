@@ -139,7 +139,7 @@ content, padding, border, margin
 标准模型
 width = content
 
-IE 模型
+怪异(IE)模型
 width = content + padding + border
 
 ### CSS 如何设置这两种模型
