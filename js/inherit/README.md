@@ -7,9 +7,62 @@ JavaScript 本身不提供 `class` 实现( es6 提供了语法糖)，想要继�
 - 原型链，即子类的原型指向父类的实例从而实现原型共享。
 - 构造函数，即通过js的apply、call实现子类调用父类的属性、方法；
 
-## 目录
+- [继承](#继承)
+  - [相关概念](#相关概念)
+    - [原型及原型链](#原型及原型链)
+    - [constructor](#constructor)
+    - [new](#new)
+    - [instanceof](#instanceof)
+  - [继承方式](#继承方式)
+  - [原型链继承](#原型链继承)
+  - [构造函数继承](#构造函数继承)
+  - [组合继承](#组合继承)
+  - [原型式继承](#原型式继承)
+  - [寄生式继承](#寄生式继承)
+  - [寄生组合式继承](#寄生组合式继承)
+  - [ES6 extends](#es6-extends)
 
-## 有哪些继承方式
+## 相关概念
+
+### 原型及原型链
+
+原型：
+
+隐式原型 `__proto__`
+
+显示原型 `prototype`
+
+原型链图
+
+![原型链图](./prototype-chain.png)
+
+### constructor
+
+1. 用于返回创建该对象的函数
+
+   ```js
+   var obj = []
+   obj.constructor // Array
+   ```
+
+2. 在一个 Class 类中只能有一个 `constructor` 方法, 用于创建和初始化 class 创建的对象的特殊方法
+
+  ```js
+  class Polygon{
+    constructor() {
+      this.name = 'Polygon'
+    }
+  }
+  const poly1 = new Polygon()
+  ```
+
+### new
+
+[手写 new](./new.js)
+
+### instanceof
+
+## 继承方式
 
 - 原型链继承
 - 构造函数继承

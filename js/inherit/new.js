@@ -13,7 +13,6 @@ function myNew1(obj) {
   return typeof res === 'object' ? res : subObj
 }
 
-
 function myNew2() {
   let obj = {}
   let constor = [].shift.call(arguments)
