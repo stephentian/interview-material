@@ -1,8 +1,10 @@
 # Vue
 
 - [Vue](#vue)
-  - [Vue 发展史](#vue-发展史)
-  - [Vue 的响应式原理](#vue-的响应式原理)
+  - [基础知识](#基础知识)
+    - [Vue 发展史](#vue-发展史)
+    - [生命周期](#生命周期)
+    - [Vue 的响应式原理](#vue-的响应式原理)
   - [为什么 Vue 还需要虚拟 DOM 进行 diff 检测差异?](#为什么-vue-还需要虚拟-dom-进行-diff-检测差异)
   - [组件中 name 选项作用](#组件中-name-选项作用)
   - [Vue 的 nextTick 的原理是什么？](#vue-的-nexttick-的原理是什么)
@@ -11,17 +13,18 @@
     - [eventBus](#eventbus)
     - [provide/inject](#provideinject)
     - [ref/$refs](#refrefs)
-    - [生命周期](#生命周期)
-  - [Vue-Router](#vue-router)
-    - [route 和 router 的区别](#route-和-router-的区别)
   - [Vue3.0](#vue30)
     - [变化](#变化)
     - [Vue3 信息通信](#vue3-信息通信)
     - [为什么 Vue3.0 不再使用defineProperty](#为什么-vue30-不再使用defineproperty)
+  - [Vue-Router](#vue-router)
+    - [route 和 router 的区别](#route-和-router-的区别)
   - [Vuex](#vuex)
     - [Flux 架构](#flux-架构)
 
-## Vue 发展史
+## 基础知识
+
+### Vue 发展史
 
 2015年，Vue1.0
 
@@ -43,7 +46,18 @@
 4. 自定义 `render API`
 5. 支持 Time Slicing 时间切片(类似 React Fiber 切片架构)，Vue 会限制执行时间(小于 16ms)，只在一个时间片段内运行。
 
-## Vue 的响应式原理
+### 生命周期
+
+- beforeCreate
+- created
+- beforeMount
+- mounted
+- beforeUpdate
+- updated
+- beforeDestroy
+- destroyed
+
+### Vue 的响应式原理
 
 当 vue 创建一个实例时, vue 会遍历 data 里的属性，使用 Object.defineProperty 给它们添加 getter/setter 属性。
 当被调用时，即触发 getter, Vue 会去 `Watcher` 收集依赖的所有 data。
@@ -195,24 +209,6 @@ export default {
 this.$refs.child1
 ```
 
-### 生命周期
-
-- beforeCreate
-- created
-- beforeMount
-- mounted
-- beforeUpdate
-- updated
-- beforeDestroy
-- destroyed
-
-## Vue-Router
-
-### route 和 router 的区别
-
-`route`： 是“路由信息对象”，包括 path, params, hash, query, fullPath, matched, name等路由信息参数。
-`router`：是“路由实例对象”，包括了路由的跳转方法(push、replace)，钩子函数等。
-
 ## Vue3.0
 
 ### 变化
@@ -243,6 +239,13 @@ this.$refs.child1
 - 2. `Object.defineProperty` 是对属性进行劫持，需要遍历对象的每个属性；`Proxy` 直接代理对象
 - 3. 对象新增属性，要重新遍历对象，对新对象使用 `Object.defineProperty` 进行劫持
 - 4. `Proxy` 为新标准，浏览器会对其进行优化。
+
+## Vue-Router
+
+### route 和 router 的区别
+
+`route`： 是“路由信息对象”，包括 path, params, hash, query, fullPath, matched, name等路由信息参数。
+`router`：是“路由实例对象”，包括了路由的跳转方法(push、replace)，钩子函数等。
 
 ## Vuex
 

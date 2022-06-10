@@ -4,14 +4,16 @@
   - [什么是同源策略及限制](#什么是同源策略及限制)
   - [前后端如何通信](#前后端如何通信)
   - [如何创建 Ajax](#如何创建-ajax)
-  - [什么是跨域](#什么是跨域)
-  - [跨域通信的几种方式](#跨域通信的几种方式)
-  - [为什么 CORS 可以跨域(原理)？](#为什么-cors-可以跨域原理)
+  - [跨域](#跨域)
+    - [跨域通信的几种方式](#跨域通信的几种方式)
+    - [为什么 CORS 可以跨域(原理)？](#为什么-cors-可以跨域原理)
+    - [跨域为什么会发送 options 请求](#跨域为什么会发送-options-请求)
   - [REST](#rest)
   - [TCP/IP](#tcpip)
     - [TCP 的三次握手和四次挥手](#tcp-的三次握手和四次挥手)
   - [UDP](#udp)
   - [HTTP](#http)
+    - [HTTP 消息](#http-消息)
     - [HTTP 状态码](#http-状态码)
     - [HTTP 优化](#http-优化)
     - [HTTP1.1 区别](#http11-区别)
@@ -20,7 +22,6 @@
   - [HTTP 中 GET 和 POST 有什么区别？](#http-中-get-和-post-有什么区别)
   - [从 url 输入 到显示网页都发生了什么？](#从-url-输入-到显示网页都发生了什么)
   - [HTTP 缓存](#http-缓存)
-  - [option 请求](#option-请求)
 
 ## 什么是同源策略及限制
 
@@ -63,11 +64,14 @@ request.send()
 
 ```
 
-## 什么是跨域
+## 跨域
 
-两个不同源的页面进行通信，浏览器就会显示跨域
+两个不同源的页面进行 http 请求，浏览器就会显示跨域。
 
-## 跨域通信的几种方式
+- 浏览器同源策略
+- 不会限制 `<link>，<img>, <script>, <iframe>` 加载第三方资源
+
+### 跨域通信的几种方式
 
 1. JSONP
 
@@ -81,11 +85,11 @@ request.send()
 
 一、 JSONP
 
-在出现 CORS 之前，一直使用 JSONP 跨域通信；
-利用的是 `script` 的异步加载，读取文件，
+原理: 利用 `script` 不会被浏览器限制跨域请求，读取文件，
 在本地创建一个 `script` 标签，然后加载。
 
 ```js
+// 主网页
 function handleCallback(result) {
     console.log(result.message);
 }
@@ -96,13 +100,16 @@ jsonp.type = 'text/javascript';
 jsonp.src = 'http://localhost:8080?callback=handleCallback';
 ele.appendChild(jsonp);
 ele.removeChild(jsonp);
+
+// http://localhost:8080
+// 返回 'handleCallback({error:0, message: { 数据内容}})'
 ```
 
 二、 Hash
 
 页面 A 通过iframe或frame嵌入了跨域的页面 B
 
-```
+```js
 // 在A中伪代码如下：
 var B = document.getElementsByTagName('iframe');
 B.src = B.src + '#' + 'data';
@@ -170,11 +177,17 @@ fetch('/some/url/', {
 
 比如 vue 和 react 中的 axios
 
-## 为什么 CORS 可以跨域(原理)？
+### 为什么 CORS 可以跨域(原理)？
 
 浏览器一旦发现 AJAX 请求跨源，就会自动添加一些附加的头信息，有时还会多出一次附加的请求，但用户不会有感觉。
 因此，实现 CORS 通信的关键是服务器。
 只要服务器实现了CORS接口，就可以跨源通信。
+
+### 跨域为什么会发送 options 请求
+
+浏览器行为，有时候发生，有时候不发生.
+
+options 请求，跨域请求之前的预检查。options 请求头会返回 `Access-Control-Allow-Methods` 即支持请求的方法。
 
 ## REST
 
@@ -237,17 +250,11 @@ HTTP：HyperText Transfer Protocol 超文本传输链接
 
 HTTP 特性: 无状态，持久连接
 
+### HTTP 消息
+
+两种消息类型：请求(request)，响应(response)
+
 HTTP 请求报文分为三部分：请求行、请求头、请求体
-
-请求行：请求方法(method) 请求地址(path) 协议格式
-
-请求头：
-
-- Accept: value
-- Authorization: value2
-- Cache-Control: no-cache
-
-请求体
 
 e.g.
 
@@ -262,6 +269,17 @@ e.g.
 　　Range:bytes=554554- 
 ```
 
+请求行：请求方法(method) 请求地址(path) 协议格式
+
+请求头：
+
+- Accept: value
+- Authorization: value2
+- User-Agent: Mozilla/5.0
+- Cache-Control: no-cache
+
+请求体 body
+
 请求方法:
 
 - GET
@@ -273,6 +291,16 @@ e.g.
 - OPTIONS
 - CONNECT
 - TRACE
+
+响应报文
+
+响应头：
+
+- Cache-Control: 缓存机制类型
+- Content-Length: 响应体长度
+- Content-Type: 返回内容的 MIME 类型
+- Expires：响应过期日期和时间
+- Set-Cookie：设置 Http Cookie
 
 ### HTTP 状态码
 
@@ -443,7 +471,7 @@ POST
     - no-store 没有缓存
     - no-cache 缓存但重新验证
     - max-age = 相对时间
-- 协商缓存
+- 协商缓存(弱缓存)
   - etag & if-none-match
     - 标志资源是否变化
   - last-modified & if-modified-since
@@ -454,7 +482,3 @@ POST
 - cache-control 优先级高于 expires; etag 优先级高于 last-modified
 - 协商缓存有服务
 器决定。生效则返回 304。
-
-## option 请求
-
-跨域为什么要发送 `option` 请求
