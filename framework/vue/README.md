@@ -1,8 +1,8 @@
 # Vue
 
 - [Vue](#vue)
+  - [Vue 发展史](#vue-发展史)
   - [Vue 的响应式原理](#vue-的响应式原理)
-  - [Vue](#vue-1)
   - [为什么 Vue 还需要虚拟 DOM 进行 diff 检测差异?](#为什么-vue-还需要虚拟-dom-进行-diff-检测差异)
   - [组件中 name 选项作用](#组件中-name-选项作用)
   - [Vue 的 nextTick 的原理是什么？](#vue-的-nexttick-的原理是什么)
@@ -14,17 +14,40 @@
     - [生命周期](#生命周期)
   - [Vue-Router](#vue-router)
     - [route 和 router 的区别](#route-和-router-的区别)
-  - [为什么 Vue3.0 不再使用 defineProperty](#为什么-vue30-不再使用-defineproperty)
+  - [Vue3.0](#vue30)
+    - [变化](#变化)
+    - [Vue3 信息通信](#vue3-信息通信)
+    - [为什么 Vue3.0 不再使用defineProperty](#为什么-vue30-不再使用defineproperty)
   - [Vuex](#vuex)
     - [Flux 架构](#flux-架构)
+
+## Vue 发展史
+
+2015年，Vue1.0
+
+1. 和 `Angular` 一样，把 `template` 扔给浏览器渲染，有点像 `jQuery`。
+2. 异步请求库用 `vue-resource`
+
+2016年，Vue2.0  
+
+1. 吸收了 React 虚拟 DOM 的方案，将 `template` 编译为 `render` 函数，`render` 返回 `Virtual DOM`，然后 `patch` 对比差异，最后渲染。
+2. runtime 版本（使用 render 渲染）和 compiler 版本(使用 template)
+3. 支持服务端渲染；
+4. 异步请求库用 `axios`
+
+2020年，Vue3.0  
+
+1. 源码使用 `TypeScript` 重写，原来是 `Flow`
+2. `Virtual Dom` 重构
+3. 使用 `Proxy` 代替 `defineProperty`
+4. 自定义 `render API`
+5. 支持 Time Slicing 时间切片(类似 React Fiber 切片架构)，Vue 会限制执行时间(小于 16ms)，只在一个时间片段内运行。
 
 ## Vue 的响应式原理
 
 当 vue 创建一个实例时, vue 会遍历 data 里的属性，使用 Object.defineProperty 给它们添加 getter/setter 属性。
 当被调用时，即触发 getter, Vue 会去 `Watcher` 收集依赖的所有 data。
 当被改动时，即触发 setter, Vue 会通知(Notify) `Watcher`, 然后 `Watcher` 去调用 render 函数更新相关组件。
-
-## Vue
 
 ## 为什么 Vue 还需要虚拟 DOM 进行 diff 检测差异?
 
@@ -62,7 +85,7 @@ Vue 则是 push + pull 结合的方式侦测变化。
 
 该方法适用于**父子组件**
 
-```
+```js
 // 父组件
 <Child :message="message" @emitEvent="onClick"></Child>
 export default {
@@ -97,7 +120,7 @@ export default {
 
 1. 初始化
 
-    ```
+    ```js
     // event-bus.js
 
     import Vue from 'vue'
@@ -106,7 +129,7 @@ export default {
 
 2. 发送事件
 
-    ```
+    ```js
     <Child1></Child1>
     <Child2></Child2>
 
@@ -128,7 +151,7 @@ export default {
 
 3. 接收事件
 
-    ```
+    ```js
     // Child2
     export default {
       mouted() {
@@ -143,7 +166,7 @@ export default {
 
 vue 新增 api， 父组件中通过provide来提供变量, 然后再子组件中通过inject来注入变量。
 
-```
+```js
 // 父组件
 <Child></Child>
 export default {
@@ -162,13 +185,13 @@ export default {
 
 有的时候你仍可能需要在 JavaScript 里直接访问一个子组件。可以通过 `ref` 特性为这个子组件赋予一个 ID 引用。
 
-```
+```js
 <Child ref="child1"></Child>
 ```
 
 现在在你已经定义了这个 ref 的组件里，你用下面的指令来访问。
 
-```
+```js
 this.$refs.child1
 ```
 
@@ -190,7 +213,28 @@ this.$refs.child1
 `route`： 是“路由信息对象”，包括 path, params, hash, query, fullPath, matched, name等路由信息参数。
 `router`：是“路由实例对象”，包括了路由的跳转方法(push、replace)，钩子函数等。
 
-## 为什么 Vue3.0 不再使用 defineProperty
+## Vue3.0
+
+### 变化
+
+1. `$children` 移除。要访问子组件实例，使用 `$refs`
+2. `data` 选项标准化，只能接受返回 `object` 的 `function`
+3. `Mixin` 合并行为变更，`data` 同名属性直接覆盖，而不是合并
+4. `$on, $off, $once` 被移除
+   - 之前用于创建一个事件总线，`eventBus`
+   - 事件总线模式可以被替换为使用外部的库，例如`tiny-emitter`
+5. 过滤器移除，使用 计算属性或者方法代替。
+6. 过渡类名 v-enter 修改为 v-enter-from、过渡类名 v-leave 修改为 v-leave-from
+7. `.sync` 的部分并将其替换为 `v-model`
+8. `v-if` 总是优先于 `v-for` 生效。
+
+### Vue3 信息通信
+
+- Prop 和事件: 父子组件通信，兄弟节点通过父组件通信
+- Provide/inject: 组件和插槽通信，也能用于组件远距离通信
+- 全局状态管理：Vuex, pinia
+
+### 为什么 Vue3.0 不再使用defineProperty
 
 - 1. 监控数组麻烦
   - 使用 `Object.defineProperty` 无法监听数组变更,之前是通过 `push、pop、shift、unshift、splice、sort、reverse` 监控

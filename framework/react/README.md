@@ -3,26 +3,30 @@
 - [React](#react)
   - [React 生命周期](#react-生命周期)
   - [React 请求放哪个生命周期中](#react-请求放哪个生命周期中)
-  - [setState 到底是异步还是同步](#setstate-到底是异步还是同步)
+  - [setState](#setstate)
+  - [使用方法](#使用方法)
+    - [setState 到底是异步还是同步](#setstate-到底是异步还是同步)
   - [React 组件之间的通信](#react-组件之间的通信)
 
 ## React 生命周期
 
 挂载阶段
- - constructor
- - getDerivedStateFromPorps
- - render
- - componentDidMount
+
+- constructor
+- getDerivedStateFromPorps
+- render
+- componentDidMount
 
 更新阶段
- - getDerivedStateFromPorps
- - shouldComponentUpdate
- - render
- - getSnapshotBeforeUpdate
+
+- getDerivedStateFromPorps
+- shouldComponentUpdate
+- render
+- getSnapshotBeforeUpdate
 
 卸载阶段
- - componentWillUnmount
 
+- componentWillUnmount
 
 ## React 请求放哪个生命周期中
 
@@ -34,10 +38,16 @@
 官方推荐：`componentDidMount`
 有特殊需要提前请求，也可以在 `constructor` 中请求。
 
+## setState
 
-## setState 到底是异步还是同步
+## 使用方法
 
-摘自：https://www.cxymsg.com/guide/react.html#setstate%E5%88%B0%E5%BA%95%E6%98%AF%E5%BC%82%E6%AD%A5%E8%BF%98%E6%98%AF%E5%90%8C%E6%AD%A5
+1. 接收改变对象 setState(obj, callback)
+2. 接受函数 setState(fn, callback), fn 有两个参数 `state` 和 `props`
+
+### setState 到底是异步还是同步
+
+摘自：<https://www.cxymsg.com/guide/react.html#setstate%E5%88%B0%E5%BA%95%E6%98%AF%E5%BC%82%E6%AD%A5%E8%BF%98%E6%98%AF%E5%90%8C%E6%AD%A5>
 
 先给出答案: 有时表现出异步,有时表现出同步。
 
