@@ -21,6 +21,8 @@
     - [边距重叠](#边距重叠)
   - [BFC](#bfc)
     - [清除浮动](#清除浮动)
+  - [Flex](#flex)
+    - [Flex 属性](#flex-属性)
   - [例题](#例题)
     - [实现一个三角形（或扇形）](#实现一个三角形或扇形)
 
@@ -114,6 +116,17 @@
 1. line-height = height
 2. 父元素 table, 子元素 vertical-align: middle
 3. flex 布局
+
+水平垂直居中:
+
+1. transform
+
+    ```css
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    ```
 
 ### 三栏布局
 
@@ -340,6 +353,27 @@ MDN: 是块盒子的布局过程发生的区域, 也是浮动元素与其他元�
 1. clear: both
 2. overflow: hidden, overflow: auto
 3. :after clear:both, content: ""
+
+## Flex
+
+通常称为 flexbox 或 flex，也称为弹性盒子或弹性布局
+
+flex 有两根轴线，分别是主轴(main axis：项目排列布局的方向，默认是水平方向 `row`)和交叉轴，主轴的方向由 `flex-diretion` 属性控制，交叉轴始终垂直于主轴
+
+### Flex 属性
+
+1. `flex-wrap: nowrap | wrap | wrap-reverse;`  
+  用于指定项目太多超过一行的时候是否换行，默认 `nowrap` 不换行
+2. `flex-flow`  
+  是 flex-direction 和 flex-wrap 的合并简写
+3. `flew-grow`  
+  让项目放大。默认 0 不放大
+4. `flex-shrink`
+  缩小程度。但不是按比例缩小。默认1，同比例收缩
+5. `flex-basis`  
+  项目占据尺寸。默认 auto，自动计算
+6. `flex`  
+  是 flex-grow flex-shrink flex-basis 合并简写。默认值：`flex: 0 1 auto`
 
 ## 例题
 
