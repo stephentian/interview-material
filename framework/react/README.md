@@ -2,6 +2,7 @@
 
 - [React](#react)
   - [基础知识](#基础知识)
+    - [React 发展历程](#react-发展历程)
     - [React 生命周期](#react-生命周期)
     - [React Fiber架构](#react-fiber架构)
     - [React 请求放哪个生命周期中](#react-请求放哪个生命周期中)
@@ -10,6 +11,16 @@
   - [React 组件之间的通信](#react-组件之间的通信)
 
 ## 基础知识
+
+### React 发展历程
+
+2017 React 16
+
+  1. React Fiber 架构。切片架构
+
+2019 React 16.8
+
+  1. React Hooks, 无需编写类即可使用状态和其他React功能的方法，不会产生 JSX 嵌套地狱
 
 ### React 生命周期
 
