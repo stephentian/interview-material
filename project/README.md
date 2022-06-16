@@ -26,7 +26,7 @@
     b. 版本 webpack > 4: compiler.hooks.done.tapAsync 异步调用  
     c. compiler 对象代表了完整的 webpack 环境配置  
     d. compilation 对象代表了一次资源版本构建
-4. 遍历 stars.compilation.assets ，记录 文件大小，上次大小，时间戳，并且 使用 node fs 模块保存 json
+4. 遍历 stats.compilation.assets ，记录 文件大小，上次大小，时间戳，并且 使用 node fs 模块保存 json
 
 优化点:
 
@@ -164,15 +164,27 @@ ANALYZE_MODE = 'analyze'
 
 ### 虚拟列表
 
-相关文章: [长列表优化之虚拟列表](https://zhuanlan.zhihu.com/p/444778554)
+相关文章:
+
+1. [长列表优化之虚拟列表](https://zhuanlan.zhihu.com/p/444778554)
+2. [how-to-make-virtual-scroll](https://stackoverflow.com/questions/60924305/how-to-make-virtual-scroll)
 
 列表项
 
 1. 列表项高度 `itemHeight`, 可视区第一个元素 `startIndex = Math.floor(scrollTop / itemHeight)`, 最后一个元素 `endIndex`
 2. 可视区第一个元素偏移量 `startOffset`
+3. 撑开容器, 可持续滚动, 三种方案
+   1. `padding`
+   2. `transform: translateY(0px)`
+   3. 空盒子 `height`
 
 优化
 
 1. 滚动过快有白屏
    1. 通过增加缓存区, 也就是增加渲染区域, 大于可视区
    2. skeleton加载骨架屏, 部分渲染, 白屏会变成 loading 状态
+
+列表项不定高度
+
+1. 通过 `ResizeObserver` 监听元素变化, 得到高度
+2. 用一个 `listPositions` 维护一个项目未知数组

@@ -62,6 +62,9 @@ JavaScript 本身不提供 `class` 实现( es6 提供了语法糖)，想要继�
 
 ### instanceof
 
+a instanceof Fn
+判断: 沿着 `a.__proto__` 往上找, 同时沿着 B.prototype 找, 如果找到同一个引用, 即返回 true
+
 ## 继承方式
 
 - 原型链继承
