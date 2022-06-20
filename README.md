@@ -14,3 +14,7 @@
 - [code 手写代码](./code/README.md)
 - [questions 题集](./questions/README.md)
 - [project 项目经验](./project/README.md)
+
+## 自我介绍
+
+你好，我叫xxx, 来自xxxxx, xx 年开始参加工作。目前是在xx的xxxx部门，担任xxxx工程师。

@@ -12,6 +12,7 @@
   - [key 值的作用](#key-值的作用)
   - [虚拟 Dom(Virtual Dom)](#虚拟-domvirtual-dom)
   - [Diff 算法](#diff-算法)
+  - [为什么都用 Hooks](#为什么都用-hooks)
 
 ## MVVM
 
@@ -95,13 +96,19 @@ React 使用 虚拟 Dom 进行 diff 检查差异。
 因此，狭义的 DOM Diff 算法，一般指的是同一层级兄弟节点的范围之内
 
 - React
+  - 递增法, 右移
   - 首个节点不执行移动操作（除非它要被移除），以该节点为原点，其它节点都去寻找自己的新位置
-  - 每一个节点与前一个节点的先后顺序与在 Real DOM 中的顺序进行比较，如果顺序相同，则不必移动，否则就移动到前一个节点的前面或后面
+  - 第一步, 遍历 Old 存在下标 oldIndex, 遍历 New 记录下标 newIndex
+  - 第二步, newIndex <= oldIndex, 不动; newIndex > oldIndex, 把节点往右移动.
+  - 每一个节点与前一个节点的先后顺序与在 Real DOM 中的顺序进行比较，如果顺序相同，则不必移动；如果 index 大于之前的节点, 就节点右移
 
 - Vue
   - 建立新序列（Virtual DOM）头（NS）尾（NE）、老序列（Real DOM）头（OS）尾（OE）一共4个指针，然后让NS/NE与OS/OE比较；
   - 双向遍历的方式，加速了遍历的速度
-  - compile 阶段的optimize标记了static 点,可以减少 differ 次数,而且是采用双向遍历方法;
+  - compile 阶段的 optimize 标记了static 点,可以减少 differ 次数,而且是采用双向遍历方法;
+- Vue3.0
+  - 核心是最长递增子序列, 这个算法是找到连续最多一段没有改变的列表, 然后移动它, 其他的更新.
+  - 给新列表, map 一个 source 数组, 数组的值全为 -1; 遍历旧列表, 将旧列表出现, 并且新列表存在, 则用旧列表的 index 替换 source 数组的值; 这样 数组里为 -1 的就是不存在的节点, 有值的 就是移动的节点; 找到最长的一段递增，说明这段不需要移动.
 
 ## Vue 和 React 共同点
 
@@ -175,3 +182,16 @@ vue 和 react 里的 diff 算法有所不同。它们的 diff 算法就是对虚
 
 不设 key 时，newNode 和 oldNode 只会头尾两端相互比较，
 有 key 时， 还会从 key 生成的的对象找匹配节点，如果有说明只是换了位置。
+
+## 为什么都用 Hooks
+
+以 `use` 开头, 提供一组生命周期、组件复用、状态管理等开发能力的方法
+
+优点
+
+1. 更好的状态复用(代替 mixin)  
+    `const { name, setName } = useName();`
+  
+2. 代码组织, 原来有生命周期 等 api, 方法的定义及调用分开了, 现在可以一起
+
+3. 比类组件更容易理解, 比如随处可见的 `.bind(this)`

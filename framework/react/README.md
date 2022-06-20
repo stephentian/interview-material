@@ -9,6 +9,7 @@
   - [setState](#setstate)
     - [setState 到底是异步还是同步](#setstate-到底是异步还是同步)
   - [React 组件之间的通信](#react-组件之间的通信)
+  - [为什么 React 随处可见 bind(this)](#为什么-react-随处可见-bindthis)
 
 ## 基础知识
 
@@ -91,3 +92,23 @@ React16启用了全新的架构，叫做Fiber。目的是解决大型React项目
 3. Context(全局)
 4. 发布订阅模式
 5. 全局状态管理工具：Redux、Mobx
+
+## 为什么 React 随处可见 bind(this)
+
+原因在于 JavaScript 不在 React
+
+比如:
+
+1. 函数里的 `this`, 指向 `window`, 或者 `undefined`
+2. 隐式绑定,
+   - `obj.fn()` this 指向 `obj`
+   - `const outFn = obj.fn; outFn()` this 指向全局
+   - 或者作为参数传入其他全局函数 `outFn1(obj.fn)`, this 指向全局
+3. 显式绑定
+   - `obj.fn.bind(obj)`, this 指向 obj, 避免上面的问题
+
+如果不绑定, 组件方法 this 值可能为 `undefined`, 因为 class 类不管是原型方法还是静态方法定义，“this”值在被调用的函数内部将为 undefined
+
+解决方法：箭头函数
+
+ES6 中, 箭头函数 this 默认指向函数的宿主对象(或者函数所绑定的对象)
