@@ -6,12 +6,14 @@
     - [判断 Array 类型](#判断-array-类型)
     - [继承](#继承)
     - [垃圾回收](#垃圾回收)
-    - [事件循环 和 setTimeout requestAnimationFrame](#事件循环-和-settimeout-requestanimationframe)
+    - [事件循环 Event Loop](#事件循环-event-loop)
+    - [setTimeout 和 requestAnimationFrame](#settimeout-和-requestanimationframe)
+    - [requestIdleCallback](#requestidlecallback)
   - [作用域,作用域链及闭包](#作用域作用域链及闭包)
     - [词法作用域](#词法作用域)
     - [作用域链](#作用域链)
     - [闭包](#闭包)
-    - [ES6 新语法](#es6-新语法)
+  - [ES6 新语法](#es6-新语法)
     - [箭头函数](#箭头函数)
     - [模板字符串](#模板字符串)
     - [Promise](#promise)
@@ -32,6 +34,7 @@
     - [纯函数](#纯函数)
   - [常见例题](#常见例题)
     - [defer 和 async](#defer-和-async)
+    - [考察 Event Loop 执行顺序](#考察-event-loop-执行顺序)
   - [代码题](#代码题)
 
 ## JS 基础
@@ -61,18 +64,36 @@ null: 用来保存对象, 没有值。null 值表示一个空对象指针. `type
 
 [垃圾回收](./gc.md)
 
-### 事件循环 和 setTimeout requestAnimationFrame
+### 事件循环 Event Loop
 
-JavaScript 是单线程的，防止主线程的不阻塞，Event Loop 的方案应用而生
+JavaScript 是单线程的, 为了防止用户交互, 脚本, UI 渲染和网络请求等行为, 防止主线程的不阻塞，Event Loop 的方案应用而生
 
 Event Loop 包含两类
 
--
-- 每一个 Web Worker 也有一个独立的 Event Loop
+- Browsing Context
+- Worker: 每一个 Web Worker 也有一个独立的 Event Loop
 
-宏任务 task: script(整体代码), setTimeout, setInterval
+任务队列 task queue
 
-微任务 microtask: Promise.then, MutaionObserver
+为了协调事件循环中的同步任务和异步任务, 使用了任务队列机制
+
+- 一个事件循环有一个或多个任务队列
+- 任务队列是集合, 不是队列. 因为Event Loop第一步是选取队列中第一个可运行的任务, 而不是第一个任务
+- 微任务队列不是任务队列
+
+Event loop 每一次循环操作叫 `tick`
+
+1. 执行最先进入队列的任务
+2. 检查是否存在 microtack, 存在则不停执行, 直至清空 Mirotask queue
+3. render 渲染
+4. requestAnimationFrame
+5. intersectionObserver
+6. render 渲染
+7. requestIdeleCallback 取第一个, 执行
+
+宏任务 task: script(整体代码), setTimeout, setInterval, setImmediate
+
+微任务 microtask: Promise.then, MutaionObserver, process.nextTick
 
 async/await:
 
@@ -95,11 +116,33 @@ async function async1() {
 
 - chrome 70 版本以上, await 将直接使用 Promise.resolve() 相同语义
 
-setTimeout: 浏览器设置最好间隔 4ms; 经过 5 重嵌套定时器之后，时间间隔被强制设定为至少 4 毫秒。
+### setTimeout 和 requestAnimationFrame
 
-requestAnimationFrame: 既不是宏任务也不是微任务，render 后，渲染之前执行。
+setTimeout:
 
-requestAnimationFrame
+- 浏览器设置最好间隔 4ms;
+- 经过 5 重嵌套定时器之后，时间间隔被强制设定为至少 4 毫秒。
+- 同步任务执行过久, 可能 setTimeout 时间不准
+
+requestAnimationFrame:
+
+- 回调执行与 宏任务微任务无关, 与浏览器是否渲染有关, 它是在浏览器渲染之前, 微任务执行后执行。
+- 一般显示器屏幕为 60hz, 大约 16.7ms 执行一次
+
+区别
+
+- 执行时机: requestAnimation 由系统决定执行时间, setTimeout的执行时间并不是确定的
+- 节能: 页面未激活(隐藏, 最小化), requestAnimationFrame 暂停执行, setTimeout 会继续执行
+- 函数节流: 防止刷新阶段, 防止函数执行多次
+- 引擎: setTimeout JS 引擎, 存在事件队列. requestAnimationFrame 属于 GUI 引擎, 发生在渲染之前
+
+### requestIdleCallback
+
+requestIdleCallback 由 React fiber 引起关注. 用来判断浏览器渲染之后的空闲时间
+
+requestAnimationFrame 每次渲染都执行
+
+requestIdleCallback 渲染完空闲时才执行
 
 ## 作用域,作用域链及闭包
 
@@ -127,7 +170,7 @@ requestAnimationFrame
 
 通俗说法: 可以访问其他函数内部变量的函数
 
-### ES6 新语法
+## ES6 新语法
 
 - let, const
 - 数组，对象解构赋值
@@ -455,6 +498,42 @@ defer 和 async 在网络读取（下载）这块儿是一样的，都是异步�
 
 - defer: 会在整个文档解析完成后, document 的 DOMContentLoaded 之前执行
 - async: js 在下载完后会立即执行
+
+### 考察 Event Loop 执行顺序
+
+```js
+console.log(0)
+setTimeout(()=>{
+    console.log(1)
+})
+requestAnimationFrame(()=>{
+    console.log(2)
+})
+console.log(3)
+new Promise(function(resolve){
+    console.log(4)
+    resolve(5);
+}).then(res=>{
+    console.log(res)
+})
+requestIdleCallback(()=>{
+    console.log(6)
+})
+async function async1() {
+    console.log(7)
+    await async2()
+    console.log(8)
+}
+async function async2() {
+    console.log(9)
+}
+async1()
+console.log(10)
+```
+
+打印顺序: `0 3 4 7 9 10 5 8 2 6 1`
+
+###
 
 ## 代码题
 
