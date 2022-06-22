@@ -118,8 +118,11 @@ React 使用 虚拟 Dom 进行 diff 检查差异。
 
 ## key 值的作用
 
+见源码 [vue/patch.js](https://github.com/vuejs/vue/blob/dev/src/core/vdom/patch.js#L424) 的 `sameVnode`, 判断两个节点是否相同
+
 1. 是给每一个 vnode 的唯一 id,可以依靠 key, 更准确, 更快的拿到 oldVnode 中对应的 vnode 节点。
 2. 更新组件时判断两个节点是否相同。相同就复用，不相同就删除旧的创建新的。
+3. 不能用 index 来作为 key，index 相对于列表元素来说是可变的，无法标记原有节点
 
 我不认为带 key 一定可以增加 diff 效率，因为 key 的增删也是耗时的。
 

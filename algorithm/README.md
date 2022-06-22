@@ -214,7 +214,102 @@ combine(names, colors, storages)
 
 ## 深度优先遍历
 
-DFS
+DFS Depth-First Search
+
+- 利用栈特性, 先入后出, push, pop
+- 以纵向的维度对 DOM 树进行遍历, 从最顶向左下遍历
+- 直到所有子节点遍历完毕, 再返回遍历兄弟节点
+
+比如遍历一个 DOM 结构, 从算法的角度
+
+| 1       | 2   | 3      |
+| :------ | --- | ------ |
+| -       | div | -      |
+| ui      | p   | button |
+| li - li |
+| a       |
+
+```js
+let tree =  {
+  id: '1',
+  title: 'div',
+  children: [
+    {
+      id: '1-1',
+      title: 'ul',
+      children: [
+        {
+          id: '1-1-1',
+          title: 'li',
+          children: [
+            {
+              id: '1-1-1-1',
+              title: 'a'
+            }
+          ]
+        },
+        {
+          id: '1-1-2',
+          title: 'li'
+        }
+      ]
+    }, 
+    {
+      id: '1-2',
+      title: 'p'
+    },
+    {
+      id: '1-3',
+      title: 'button'
+    }
+  ]
+}
+```
+
+1. 递归版本
+
+    ```js
+    function dfs(node, nodeList = []) {
+      if (node) {
+        nodeList.push(node)
+        if(node.children && node.children.length>0){
+          const child = node.children
+          for(let i = 0; i<child.length; i++) {
+            dfs(child[i], nodeList)
+          }
+        }
+      }
+      return nodeList
+    }
+    // div ul li a li p button
+    ```
+
+2. 非递归版
+
+    ```js
+    function dfs(node) {
+      let nodes = []
+
+      if (node) {
+        let stack = []
+        stack.push(node)
+
+        while(stack.length) {
+          const item = stack.pop()
+          const child = item.children
+          
+          nodes.push(item)
+          if (child && child.length > 0) {
+            for(let i = child.length - 1; i >= 0; i--) {
+              stack.push(child[i])
+            }
+          }
+        }
+      }
+
+      return nodes
+    }
+    ```
 
 例题：
 
@@ -249,7 +344,10 @@ var binaryTreePaths = function(root) {
 
 BFS
 
-解析：维护一个 queue 队列，在读取子节点的时候同时把发现的孙子节点 push 到队列中，但是先不处理，等到这一轮队列中的子节点处理完成以后，下一轮再继续处理的就是孙子节点了，这就实现了层序遍历，也就是一层层的去处理。
+- 维护一个 queue 队列, 先进先出 push, pop
+- 在读取子节点的时候同时把发现的孙子节点 push 到队列中，但是先不处理，
+- 等到这一轮队列中的子节点处理完成以后
+- 下一轮再继续处理的就是孙子节点了，这就实现了层序遍历
 
 例题：
 

@@ -1,13 +1,27 @@
 # Vue-Router
 
-## 目录
+- [Vue-Router](#vue-router)
+  - [基础知识](#基础知识)
+    - [前端路由起源](#前端路由起源)
+    - [route 和 router 区别](#route-和-router-区别)
+  - [前端路由类型](#前端路由类型)
+    - [hash](#hash)
+    - [history](#history)
+  - [手写 Vue-Router](#手写-vue-router)
 
-## 前端路由起源
+## 基础知识
+
+### 前端路由起源
 
 Ajax 之前，用户每个操作都会刷新页面；  
 有了 Ajax,  用户无需刷新页面。  
 前端路由不同于传统路由，它不需要服务器来进行解析。  
 前端路由描述的是 URL 与 UI 之间的映射关系。  
+
+### route 和 router 区别
+
+`route`： 是“路由信息对象”，包括 path, params, hash, query, fullPath, matched, name等路由信息参数。
+`router`：是“路由实例对象”，包括了路由的跳转方法(push、replace)，钩子函数等。
 
 ## 前端路由类型
 

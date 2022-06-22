@@ -8,8 +8,9 @@
     - [React 请求放哪个生命周期中](#react-请求放哪个生命周期中)
   - [setState](#setstate)
     - [setState 到底是异步还是同步](#setstate-到底是异步还是同步)
+    - [setState 输出顺序](#setstate-输出顺序)
   - [React 组件之间的通信](#react-组件之间的通信)
-  - [为什么 React 随处可见 bind(this)](#为什么-react-随处可见-bindthis)
+  - [为什么 React bind(this)](#为什么-react-bindthis)
 
 ## 基础知识
 
@@ -72,18 +73,68 @@ React16启用了全新的架构，叫做Fiber。目的是解决大型React项目
 
 摘自：<https://www.cxymsg.com/guide/react.html#setstate%E5%88%B0%E5%BA%95%E6%98%AF%E5%BC%82%E6%AD%A5%E8%BF%98%E6%98%AF%E5%90%8C%E6%AD%A5>
 
-先给出答案: 有时表现出异步,有时表现出同步。
+有时表现出异步,有时表现出同步。
 
-更新是 异步的，执行是同步的
+执行是同步的, 异步指的是多个 state 会合并一起批量更新.
 
 比如执行 100 次 setState, 如果是同步的话，那这个组件绘渲染 100次，这对性能是一个相当大的消耗。
 
 所以，React 会把 多次的 setState 合为一次执行。所以更新上是异步的。
 
-原生事件和异步代码中：
+原理
+
+1. setState 源码, 会根据 `isBatchingUpdates` 判断直接更新 `this.state` 还是放入队列中. `isBatchingUpdates` 默认 `false`
+2. `batchedUpdates` 会修改 `isBatchingUpdates` 为 `true`
+3. React 处理事件(`onClick` 事件处理函数等或 React 生命周期内), 会调用 `batchedUpdates`
+4. 造成 setState 不会同步更新
+
+原生事件和异步代码
 
 - 原生事件不会触发 react 的批处理机制，因而调用setState会直接更新
 - 异步代码中调用 setState，由于js的异步处理机制，异步代码会暂存，等待同步代码执行完毕再执行，此时react的批处理机制已经结束，因而直接更新
+
+### setState 输出顺序
+
+```js
+class Example extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      val: 0
+    };
+  }
+  
+  componentDidMount() {
+    this.setState({val: this.state.val + 1});
+    console.log(this.state.val);    // 第 1 次 log
+
+    this.setState({val: this.state.val + 1});
+    console.log(this.state.val);    // 第 2 次 log
+
+    setTimeout(() => {
+      this.setState({val: this.state.val + 1});
+      console.log(this.state.val);  // 第 3 次 log
+
+      this.setState({val: this.state.val + 1});
+      console.log(this.state.val);  // 第 4 次 log
+    }, 0);
+  }
+
+  render() {
+    return null;
+  }
+};
+```
+
+分析
+
+1. 第一次和第二次都是在 react 自身生命周期内，触发时 `isBatchingUpdates` 为 true
+2. 两次 setState 时，获取到 `this.state.val` 都是 0，所以执行时都是将 0 设置成 1，在 react 内部会被合并掉，只执行一次。设置完成后 state.val 值为 `1`
+3. `setTimeout` 中的代码，触发时 `isBatchingUpdates` 为 false，所以能够直接进行更新，所以连着输出 `2，3`
+
+输出： `0 0 1 1`
+
+注意: React 18 默认并发就是 `0011`，18 以下就是 `0023`
 
 ## React 组件之间的通信
 
@@ -93,7 +144,7 @@ React16启用了全新的架构，叫做Fiber。目的是解决大型React项目
 4. 发布订阅模式
 5. 全局状态管理工具：Redux、Mobx
 
-## 为什么 React 随处可见 bind(this)
+## 为什么 React bind(this)
 
 原因在于 JavaScript 不在 React
 

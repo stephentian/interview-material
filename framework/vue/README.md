@@ -5,20 +5,16 @@
     - [Vue 发展史](#vue-发展史)
     - [生命周期](#生命周期)
     - [Vue 的响应式原理](#vue-的响应式原理)
-  - [为什么 Vue 还需要虚拟 DOM 进行 diff 检测差异?](#为什么-vue-还需要虚拟-dom-进行-diff-检测差异)
+  - [虚拟 DOM](#虚拟-dom)
   - [组件中 name 选项作用](#组件中-name-选项作用)
-  - [Vue 的 nextTick 的原理是什么？](#vue-的-nexttick-的原理是什么)
+  - [Vue 的 nextTick 的原理](#vue-的-nexttick-的原理)
+  - [Vue 父子组件渲染过程](#vue-父子组件渲染过程)
   - [Vue 组件之间的通信](#vue-组件之间的通信)
-    - [props/$emit](#propsemit)
-    - [eventBus](#eventbus)
-    - [provide/inject](#provideinject)
-    - [ref/$refs](#refrefs)
   - [Vue3.0](#vue30)
     - [变化](#变化)
-    - [Vue3 信息通信](#vue3-信息通信)
-    - [为什么 Vue3.0 不再使用defineProperty](#为什么-vue30-不再使用defineproperty)
+    - [Vue3 组件通信](#vue3-组件通信)
+    - [为什么 Vue3 不使用 defineProperty](#为什么-vue3-不使用-defineproperty)
   - [Vue-Router](#vue-router)
-    - [route 和 router 的区别](#route-和-router-的区别)
   - [Vuex](#vuex)
     - [Flux 架构](#flux-架构)
 
@@ -63,7 +59,30 @@
 当被调用时，即触发 getter, Vue 会去 `Watcher` 收集依赖的所有 data。
 当被改动时，即触发 setter, Vue 会通知(Notify) `Watcher`, 然后 `Watcher` 去调用 render 函数更新相关组件。
 
-## 为什么 Vue 还需要虚拟 DOM 进行 diff 检测差异?
+## 虚拟 DOM
+
+什么是 虚拟DOM
+
+Virtual DOM, 用 js 对象来描述真实 DOM 结构
+
+```js
+{
+  sel: 'div',
+  data: {},
+  children: undefined,
+  text: 'aaa',
+  ele: undefined,
+  key: undefined
+}
+```
+
+虚拟DOM 作用
+
+1. 在负责视图中提升渲染性能
+2. 维护视图和状态之间的关系
+3. 可以支持服务端渲染 ssr, 框架跨平台, 原生应用 rn, 小程序等
+
+为什么需要虚拟 DOM
 
 现代前端框架有两种方式侦测变化,一种是 pull 一种是 push。
 
@@ -83,19 +102,40 @@ Vue 则是 push + pull 结合的方式侦测变化。
 2. 项目使用 keep-alive 是，可使用组件的 name 进行过滤
 3. 便于调试，有名字的组件有更友好的警告信息，搭配 `dev-tools`。
 
-## Vue 的 nextTick 的原理是什么？
+## Vue 的 nextTick 的原理
 
-1. 作用：
-    Vue 是异步修改 DOM 的并且不鼓励开发者直接接触 DOM。
-    但有时候业务需要必须对数据更改--刷新后的 DOM 做相应的处理，这时候就可以使用 Vue.nextTick。
-2. 理解前提：
-    首先需要知道事件循环中宏任务和微任务这两个概念。
-    常见的宏任务有 script, setTimeout, setInterval, setImmediate, I/O, UI rendering。
-    常见的微任务有 process.nextTick(Nodejs),Promise.then(), MutationObserver。
+- Vue 是异步修改 DOM 的并且不鼓励开发者直接接触 DOM。
+- 但有时候业务需要必须对数据更改--刷新后的 DOM 做相应的处理，这时候就可以使用 Vue.nextTick。
+
+实现:
+
+- 源码首先使用 `promise, MutationOberver` 微任务去实现
+- 如果不支持, 就是使用 `setImmediate` 和 `setTimeout`, 等待当前微/宏任务执行完, 再执行回调.
+
+## Vue 父子组件渲染过程
+
+创建过程自上而下, 挂载过程自下而上
+
+- parent created
+- child created
+- child mounted
+- parent mounted
+
+原因:
+
+1. Vue 源码中, 回递归组件, 先递归到创建父组件, 有子组件就创建子组件
+2. 子组件被创建完, 如果没有子组件, 会添加 `mounted` 钩子到队列中, 等 `patch` 结束后执行. 然后再去父组件执行挂载 `mounted`
 
 ## Vue 组件之间的通信
 
-### props/$emit
+4 种方式:
+
+1. props/$emit
+2. eventBus
+3. provide/inject
+4. ref/$refs
+
+props/$emit
 
 该方法适用于**父子组件**
 
@@ -127,7 +167,7 @@ export default {
 }
 ```
 
-### eventBus
+eventBus
 
 `eventBus` 又称为事件总线，在vue中可以使用它来作为沟通桥梁的概念, 就像是所有组件共用相同的事件中心。多用于兄弟组件。
 **缺点：** 当项目较大,就容易造成难以维护的灾难。还不利于多人合作。
@@ -176,7 +216,7 @@ export default {
     }
     ```
 
-### provide/inject
+provide/inject
 
 vue 新增 api， 父组件中通过provide来提供变量, 然后再子组件中通过inject来注入变量。
 
@@ -195,7 +235,7 @@ export default {
 }
 ```
 
-### ref/$refs
+ref/$refs
 
 有的时候你仍可能需要在 JavaScript 里直接访问一个子组件。可以通过 `ref` 特性为这个子组件赋予一个 ID 引用。
 
@@ -224,13 +264,13 @@ this.$refs.child1
 7. `.sync` 的部分并将其替换为 `v-model`
 8. `v-if` 总是优先于 `v-for` 生效。
 
-### Vue3 信息通信
+### Vue3 组件通信
 
 - Prop 和事件: 父子组件通信，兄弟节点通过父组件通信
-- Provide/inject: 组件和插槽通信，也能用于组件远距离通信
+- provide/inject: 组件和插槽通信，也能用于组件远距离通信
 - 全局状态管理：Vuex, pinia
 
-### 为什么 Vue3.0 不再使用defineProperty
+### 为什么 Vue3 不使用 defineProperty
 
 - 1. 监控数组麻烦
   - 使用 `Object.defineProperty` 无法监听数组变更,之前是通过 `push、pop、shift、unshift、splice、sort、reverse` 监控
@@ -242,10 +282,7 @@ this.$refs.child1
 
 ## Vue-Router
 
-### route 和 router 的区别
-
-`route`： 是“路由信息对象”，包括 path, params, hash, query, fullPath, matched, name等路由信息参数。
-`router`：是“路由实例对象”，包括了路由的跳转方法(push、replace)，钩子函数等。
+见 [Vue-Router](./Vue-Router.md)
 
 ## Vuex
 
