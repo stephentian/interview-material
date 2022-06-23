@@ -21,6 +21,7 @@ class VueRouter {
     this.options = options
     this.routeMap = {}
 
+    // 将当前路径变成响应式
     this.data = _Vue.observable({
       current: '/',
     })
@@ -61,6 +62,7 @@ class VueRouter {
       },
     })
 
+    // 保留 this 指向
     const self = this
     Vue.component('router-view', {
       render(h) {
@@ -69,9 +71,16 @@ class VueRouter {
       },
     })
   }
+
   initEvent() {
     window.addEventListener('popstate', () => {
       this.data.current = window.location.pathname
+    })
+
+    // 监听 hash变化
+    window.addEventListener('hashchange', () => {
+      //http://localhost/#/home
+      this.data.current = window.location.hash.slice(1) || '/';
     })
   }
 }
