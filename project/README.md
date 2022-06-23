@@ -7,6 +7,7 @@
   - [长列表优化方案](#长列表优化方案)
     - [懒加载(可视区加载)](#懒加载可视区加载)
     - [虚拟列表](#虚拟列表)
+    - [动态监听 DOM 高度变化](#动态监听-dom-高度变化)
 
 ## km-bundle-size
 
@@ -174,9 +175,14 @@ ANALYZE_MODE = 'analyze'
 1. 列表项高度 `itemHeight`, 可视区第一个元素 `startIndex = Math.floor(scrollTop / itemHeight)`, 最后一个元素 `endIndex`
 2. 可视区第一个元素偏移量 `startOffset`
 3. 撑开容器, 可持续滚动, 三种方案
-   1. `padding`
-   2. `transform: translateY(0px)`
-   3. 空盒子 `height`
+   - `padding`
+   - `transform: translateY(0px)`
+   - 空盒子 `height`
+
+列表项不定高
+
+1. 通过 `ResizeObserver` 监听元素变化, 得到高度
+2. 用一个 `listPositions` 维护一个项目未知数组
 
 优化
 
@@ -184,7 +190,86 @@ ANALYZE_MODE = 'analyze'
    1. 通过增加缓存区, 也就是增加渲染区域, 大于可视区
    2. skeleton加载骨架屏, 部分渲染, 白屏会变成 loading 状态
 
-列表项不定高度
+### 动态监听 DOM 高度变化
 
-1. 通过 `ResizeObserver` 监听元素变化, 得到高度
-2. 用一个 `listPositions` 维护一个项目未知数组
+上面所说的都是列表项高度固定
+
+当遇到列表项含有图片资源时, 他们会在渲染是发起请求, 图片加载触发浏览器重排, 然后列表项高度被撑开
+
+尝试以下方法:
+
+1. MutationObserver
+2. IntersectionObserver
+3. ResizeObserver
+4. iframe
+5. 资源 onload 事件
+
+一. MutationObserver
+
+该 API 提供监听对 DOM 树变化的能力
+
+方法
+
+- observe(target, config)
+  - target: element 需要监听元素
+  - config: 需要监听的属性
+- disconnect: 停止实例接收通知, 且回调函数不会被调用
+- takeRecords: 删除所有待处理的通知，并将它们返回到MutationRecord 对象的新 Array 中
+
+可监听属性
+
+```js
+const config = {
+    childList: true, // 子节点的变动（新增、删除或者更改）
+    attributes: true, // 属性的变动
+    characterData: true, // 节点内容或节点文本的变动
+    subtree: true, // 是否将观察器应用于该节点的所有后代节点
+}
+```
+
+```js
+// 创建实例 并传入回调函数
+const observer = new MutationObserver((mutationList) => {
+    if (height !== contentRef.current?.clientHeight) {
+        console.log("高度变化了！");
+        setHeight(contentRef.current.clientHeight);
+    }
+});
+// 开始监听节点
+observer.observe(targetNode, config);
+// 停止观察
+observer.disconnect();
+```
+
+缺点:
+
+1. 是用 maxHeight 没有设置 height, 所以没有元素属性的变化, 监听不到
+2. 使用动画 animation 改变容器, 也会监听不到
+
+二. IntersectionObserver
+
+可以监听一个元素是否进入用户视野
+
+三. ResizeObserver
+
+监听到 Element 的内容区域或 SVGElement的边界框改变。内容区域则需要减去内边距 padding. 直接监听元素尺寸变化
+
+方法
+
+- observe()
+- unobserve
+- disconnect
+
+缺点:
+
+  1. 兼容性不够, 使用它 ResizeObserver-polyfill 完成兼容
+
+四. iframe
+
+`ResizeObserver-polyfill` 源码中使用的方案, 监听 resize 变化
+
+在容器里面嵌套一个隐藏的高度为 100% 的 iframe，通过监听他的 resize 事件，当容器尺寸变化时，自然会 iframe 尺寸也会改变，通过`contentWindow.onresize()` 就能监听得到
+
+缺点:
+
+- 不够优雅, 需要插入 iframe 元素

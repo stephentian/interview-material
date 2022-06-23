@@ -7,6 +7,8 @@
   - [动态规划](#动态规划)
   - [排列组合](#排列组合)
   - [深度优先遍历](#深度优先遍历)
+    - [200. 岛屿数量](#200-岛屿数量)
+    - [257. 二叉树的所有路径](#257-二叉树的所有路径)
   - [广度优先搜索](#广度优先搜索)
   - [滑动窗口](#滑动窗口)
   - [栈](#栈)
@@ -18,10 +20,10 @@
   - [LRU](#lru)
   - [经典例题](#经典例题)
     - [把一个数组旋转 K 步](#把一个数组旋转-k-步)
-    - [交换链表节点](#交换链表节点)
+    - [24.交换链表节点](#24交换链表节点)
     - [N数之和](#n数之和)
-    - [字符串解码](#字符串解码)
-    - [N皇后](#n皇后)
+    - [394.字符串解码](#394字符串解码)
+    - [51.N皇后](#51n皇后)
 
 ## 基础知识
 
@@ -313,9 +315,43 @@ let tree =  {
 
 例题：
 
-一、[257. 二叉树的所有路径](https://leetcode-cn.com/problems/binary-tree-paths/)
+### 200. 岛屿数量
 
-给定一个二叉树，返回所有从根节点到叶子节点的路径。
+leetcode: [200. 岛屿数量](https://leetcode.cn/problems/number-of-islands/)
+
+思路: 把当前为 1 的点变为 0, 并使用  dfs 查找出来上下左右的点 变为 0
+
+```js
+var numIslands = function(grid) {
+    let res = 0
+    const row = grid.length
+    const col = grid[0].length
+
+    function dfs(x, y) {
+        grid[x][y] = 0
+        if (x > 0 && grid[x - 1][y] === "1") dfs(x - 1, y)
+        if (x < row -1 && grid[x + 1][y] === "1") dfs(x + 1, y)
+        if (grid[x][y - 1] === "1") dfs(x, y - 1)
+        if (grid[x][y + 1] === "1") dfs(x, y + 1)
+    }
+      
+    for (let i = 0; i < row; i ++) {
+        for (let j = 0; j < col; j++) {
+            if (grid[i][j] === "1") {
+                dfs(i, j)
+                res ++
+            }
+        }
+    }
+    return res
+};
+```
+
+### 257. 二叉树的所有路径
+
+leetcode: [257. 二叉树的所有路径](https://leetcode-cn.com/problems/binary-tree-paths/)
+
+给定一个二叉树，返回所有从根节点到叶子节点的路径
 
 ```js
 
@@ -342,12 +378,61 @@ var binaryTreePaths = function(root) {
 
 ## 广度优先搜索
 
-BFS
+BFS Breath-First Search
 
-- 维护一个 queue 队列, 先进先出 push, pop
+- 维护一个 queue 队列, 先进先出 push, shift
 - 在读取子节点的时候同时把发现的孙子节点 push 到队列中，但是先不处理，
 - 等到这一轮队列中的子节点处理完成以后
 - 下一轮再继续处理的就是孙子节点了，这就实现了层序遍历
+
+1. 递归版本
+
+    ```js
+    function bfs(node, nodeList = []) {
+      if (node) {
+        nodeList.push(node)
+        if(node.children && node.children.length>0){
+          const child = node.children
+          for(let i = 0; i<child.length; i++) {
+            bfs(child[i], nodeList)
+          }
+        }
+        while(node) {
+          bfs()
+          node.children
+        }
+      }
+      return nodeList
+    }
+
+    ```
+
+2. 非递归版
+
+    ```js
+    function bfs(node) {
+      let nodes = []
+
+      if (node) {
+        let queue = []
+        queue.unshift(node)
+
+        while(queue.length) {
+          const item = queue.shift()
+          const child = item.children
+          
+          nodes.push(item)
+          if (child && child.length > 0) {
+            for(let i = 0; i < child.length; i++) {
+              queue.push(child[i])
+            }
+          }
+        }
+      }
+
+      return nodes
+    }
+    ```
 
 例题：
 
@@ -635,7 +720,7 @@ class LRUCache {
 
 ```
 
-### 交换链表节点
+### 24.交换链表节点
 
 链接：[24. 两两交换链表中的节点](https://leetcode-cn.com/problems/swap-nodes-in-pairs/)
 
@@ -816,7 +901,7 @@ const nSum = function(nums, target) {
 }
 ```
 
-### 字符串解码
+### 394.字符串解码
 
 leetcode: [394. 字符串解码](https://leetcode-cn.com/problems/decode-string/)
 
@@ -845,7 +930,7 @@ var decodeString = function(s) {
 };
 ```
 
-### N皇后
+### 51.N皇后
 
 链接: [51. N 皇后](https://leetcode-cn.com/problems/n-queens/)
 
