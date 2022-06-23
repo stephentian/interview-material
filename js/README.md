@@ -2,6 +2,7 @@
 
 - [JS](#js)
   - [JS 基础](#js-基础)
+    - [特点](#特点)
     - [类型](#类型)
     - [判断 Array 类型](#判断-array-类型)
     - [继承](#继承)
@@ -16,7 +17,13 @@
   - [ES6 新语法](#es6-新语法)
     - [箭头函数](#箭头函数)
     - [模板字符串](#模板字符串)
+    - [扩展运算符](#扩展运算符)
+    - [Set](#set)
+    - [Map](#map)
+    - [WeakMap](#weakmap)
     - [Promise](#promise)
+    - [Reflect](#reflect)
+    - [Proxy](#proxy)
   - [变量类型隐式转换](#变量类型隐式转换)
   - [表达式和运算符](#表达式和运算符)
     - [this](#this)
@@ -24,6 +31,7 @@
     - [属性访问](#属性访问)
   - [语句和声明](#语句和声明)
     - [for in 和 for of](#for-in-和-for-of)
+    - [for await of](#for-await-of)
     - [try catch](#try-catch)
   - [DOM](#dom)
     - [Event](#event)
@@ -38,6 +46,23 @@
   - [代码题](#代码题)
 
 ## JS 基础
+
+### 特点
+
+- 弱类型, 没有严格的类型检查
+- 解释型脚本语言, 不需要编译直接由解释器运行
+- 跨平台性, 依赖于浏览器环境
+- 单线程, 适合异步并发, 这也是选择 js 写 Node 的原因
+- 面向对象语言, 有 类, 对象等
+- 也可以是函数式语言(箭头函数, 高阶函数, 柯里化等)
+
+当然也有不严谨, 不规范的地方
+
+1. this 的设计
+2. type null  = object
+3. 隐式转换 [] + {} 返回 "[object Object]"
+4. == 类型转换规则极复杂
+5. `new Date().getYear()` 返回是 1900 开始计算, 要用 `getFullYear`
 
 ### 类型
 
@@ -174,6 +199,7 @@ requestIdleCallback 渲染完空闲时才执行
 
 - let, const
 - 数组，对象解构赋值
+- 扩展运算符
 - Object.assign 浅拷贝
 - 箭头函数
 - rest 剩余参数
@@ -254,9 +280,195 @@ mytag`age is ${boy.age},country is ${boy.country}`;
 ['age is', ',country is', '']
 ```
 
+### 扩展运算符
+
+扩展运算符（spread）是三个点（`...`）
+
+1. 复制数组, 浅拷贝, 深拷贝一层, 后面的还是浅拷贝
+2. 合并数组
+
+```js
+// 剩余参数
+function push(array, ...items) {
+  array.push(...items);
+}
+
+console.log(...[1, 2, 3])
+// 1 2 3
+
+// 字符串转数组
+[...'hello']
+// [ "h", "e", "l", "l", "o" ]
+```
+
+### Set
+
+类似于数组，但是成员的值都是唯一的，没有重复的值
+
+Set 结构没有键名，只有键值（或者说键名和键值是同一个值）
+
+```js
+const s = new Set();
+
+[2, 3, 5, 4, 5, 2, 2].forEach(x => s.add(x));
+
+for (let i of s) {
+  console.log(i);
+}
+// 2 3 5 4
+```
+
+属性和方法
+
+1. size
+2. add
+3. delete
+4. has
+5. clear
+
+遍历: Set 的遍历顺序就是插入顺序
+
+```js
+let set = new Set(['red', 'green', 'blue']);
+
+for (let item of set.keys()) {
+  console.log(item);
+}
+// red
+// green
+// blue
+
+for (let item of set.values()) {
+  console.log(item);
+}
+// red
+// green
+// blue
+```
+
+### Map
+
+js 中的对象，本质是键值对的集合（Hash结构），只能用 字符串当作键名
+
+Map 结构, 键名不限于字符串，各种类型都可以当键名。
+
+```js
+const m = new Map();
+const o = {p: 'Hello World'};
+
+m.set(o, 'content')
+m.get(o) // "content"
+
+m.has(o) // true
+m.delete(o) // true
+m.has(o) // false
+```
+
+Map 也可以接受一个数组作为参数
+
+```js
+const map = new Map([
+  ['name', '张三'],
+  ['title', 'Author']
+])
+```
+
+Map 的键实际上是跟内存地址绑定的，只要内存地址不一样，就视为两个键
+
+属性和方法
+
+1. size
+2. set
+3. get
+4. has
+5. delete
+6. clear
+
+遍历: Map 的遍历顺序就是插入顺序
+
+```js
+
+```
+
+### WeakMap
+
+WeakMap 只接受对象作为键名（null除外），不接受其他类型的值作为键名
+
 ### Promise
 
 链接: [promise](./promise/README.md)
+
+### Reflect
+
+用于操作对象的 API
+
+1. Reflect.defineProperty
+2. 很多操作会更易读
+
+    ```js
+    // 老写法
+    Function.prototype.apply.call(Math.floor, undefined, [1.75]) // 1
+
+    // 新写法
+    Reflect.apply(Math.floor, undefined, [1.75]) // 1
+    ```
+
+3. 让`Object`操作都变成函数行为
+
+    ```js
+    'assign' in Object // true
+    Reflect.has(Object, 'assign') // true
+
+    delete myObj.foo
+    Reflect.deleteProperty(myObj, 'foo')
+
+    // 代替 new
+    const instance = new Greeting('张三');
+    const instance = Reflect.construct(Greeting, ['张三']);
+    ```
+
+### Proxy
+
+在目标对象之前架设一层“拦截”，外界对该对象的访问，都必须先通过这层拦截
+
+`var proxy = new Proxy(target, handler)`
+
+- target, 代理目标对象
+- handler 一个对象，用来定制拦截行为
+
+```js
+var obj = new Proxy({}, {
+  get: function (target, propKey, receiver) {
+    console.log(`getting ${propKey}!`);
+    return Reflect.get(target, propKey, receiver);
+  },
+  set: function (target, propKey, value, receiver) {
+    console.log(`setting ${propKey}!`);
+    return Reflect.set(target, propKey, value, receiver);
+  }
+})
+
+obj.count = 1
+//  setting count!
+++obj.count
+//  getting count!
+//  setting count!
+//  2
+```
+
+this 问题: 目标对象 this 指向 proxy 代理
+
+```js
+const target = {
+  m: function () {
+    console.log(this === proxy);
+  }
+};
+const proxy = new Proxy(target, {});
+
+target.m() // false
+proxy.m()  // true
+```
 
 ## 变量类型隐式转换
 
@@ -360,13 +572,60 @@ D: ReferenceError
 
 ### for in 和 for of
 
-`for in`: 以**任意顺序**遍历一个对象的除Symbol以外的**可枚举属性**。
+`for in`: 遍历**可枚举属性**数据。得到 key
 
-`for of`: 遍历**可迭代对象**定义要迭代的数据。(可迭代对象: Array，Map，Set，String，arguments 等)
+- **任意顺序**遍历一个对象的除Symbol以外的**可枚举属性**
+- 遍历数组, 字符串
+- 可枚举属性: Object 属性的 `enumerable`
+
+`for of`: 遍历**可迭代对象**定义要迭代的数据。得到 value
+
+- Array，Map，Set，String，arguments 等
+- 可迭代: 对象 `[Symbol.iterator]` 有 `next` 方法
 
 `for in` 是为遍历对象属性而构建的，**不建议与数组一起使用**。一般用于去检查对象属性，处理有 `key-value` 数据。比如配合 `hasOwnProperty()` 来确定某属性是否是对象本身的属性。
 
 比如遍历数组, `for in` 遍历出是 `key 0, 1, 2`(array 自身的属性), `for of` 遍历出是 `value a b c`。
+
+### for await of
+
+for await of 用于遍历多个 `Promise`
+
+```js
+function createPromise(val) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(val)
+    }, 1500)
+  })
+}
+(async function () {
+  const p1 = createPromise(1)
+  const p2 = createPromise(2)
+  const p3 = createPromise(3)
+
+  // const res1 = await p1
+  // console.log(res1)
+  // const res2 = await p2
+  // console.log(res2)
+  // const res3 = await p3
+  // console.log(res3)
+  // 1 
+  // 2 
+  // 3
+
+  const list = [p1, p2, p3]
+  Promise.all(list).then(res => console.log(res))
+  // [1 2 3]
+
+  for await (let p of list) {
+    console.log(p)
+  }
+  // 1
+  // 2 
+  // 3
+})()
+```
 
 ### try catch
 

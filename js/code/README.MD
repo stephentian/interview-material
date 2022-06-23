@@ -6,6 +6,7 @@
   - [异步并发调度器](#异步并发调度器)
   - [柯里化](#柯里化)
   - [防抖和节流](#防抖和节流)
+  - [深拷贝](#深拷贝)
 
 ## 大数相加
 
@@ -43,3 +44,7 @@
 
 - [debounce](debounce.js)
 - [throttle](throttle.js)
+
+## 深拷贝
+
+[deepClone](deepClone.js)
