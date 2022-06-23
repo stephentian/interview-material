@@ -33,6 +33,10 @@ ViewModel 监听模型数据的改变和控制视图行为、处理用户交互�
 Vue - 本质是 MVVM 框架， 由 MVC 发展来的
 React - 本质是前端组件化框架，由后端组件化发展来的
 
+Vue 使用的是传统 web开发更熟悉的模板语法
+
+React 特色是函数式编程的理念
+
 ### 模板的区别
 
 Vue - 使用模板，指令(最初由 angular 提出)
@@ -173,6 +177,20 @@ document.body.appendChild(ulDom)
 ```
 
 ## Diff 算法
+
+传统 diff 算法复杂度 O(n^3)：将两棵树比较 O(n^2)，然后进行树的编辑（插入，替换，删除）再遍历一次，总共 O(n^3)
+
+vue 和 React Diff 算法复杂度为 O(n)：
+
+- 只比较同一层级，不跨级比较
+- tag不相同，则会直接删除重建，不再深度比较
+
+```js
+for(const i in old) {
+  if(current[i].key == old[i].key) {/** ... **/ }
+  else {}
+}
+```
 
 首先，diff 算法也不是前端创造的，比如我日常使用的 `git diff` 也是运用了 diff 算法。
 linux 系统里好像也有 diff 命令来比较文件。

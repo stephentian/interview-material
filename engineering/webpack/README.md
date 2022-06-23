@@ -1,6 +1,7 @@
 # Webpack
 
 - [Webpack](#webpack)
+  - [webpack 构建流程](#webpack-构建流程)
   - [如何利用 webpack 优化前端性能](#如何利用-webpack-优化前端性能)
   - [什么是 Tree-shaking？](#什么是-tree-shaking)
   - [Loder 和 Plugins 的不同](#loder-和-plugins-的不同)
@@ -8,6 +9,12 @@
   - [手写一个 Plugin](#手写一个-plugin)
   - [如何提高 webpack 的构建速度](#如何提高-webpack-的构建速度)
   - [说说 webpack 的热更新HMR](#说说-webpack-的热更新hmr)
+
+## webpack 构建流程
+
+1. 初始化: 读取与合并配置参数；加载 Plugin；实例化 Compiler
+2. 编译: （调用 Compiler 的 run）从 entry 出发，调用所有配置的 loader 对 module 进行翻译，再递归编译该 module 依赖的 module，最后将编译后的 module 组合成 chunk 及对应资源 assets
+3. 输出：把编译得到的 assets 输出到文件系统
 
 ## 如何利用 webpack 优化前端性能
 

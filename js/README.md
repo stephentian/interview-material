@@ -3,17 +3,17 @@
 - [JS](#js)
   - [JS 基础](#js-基础)
     - [特点](#特点)
+    - [单线程](#单线程)
     - [类型](#类型)
     - [判断 Array 类型](#判断-array-类型)
     - [继承](#继承)
     - [垃圾回收](#垃圾回收)
-    - [事件循环 Event Loop](#事件循环-event-loop)
-    - [setTimeout 和 requestAnimationFrame](#settimeout-和-requestanimationframe)
-    - [requestIdleCallback](#requestidlecallback)
+    - [JS 执行过程](#js-执行过程)
   - [作用域,作用域链及闭包](#作用域作用域链及闭包)
     - [词法作用域](#词法作用域)
     - [作用域链](#作用域链)
     - [闭包](#闭包)
+    - [执行上下文](#执行上下文)
   - [ES6 新语法](#es6-新语法)
     - [箭头函数](#箭头函数)
     - [模板字符串](#模板字符串)
@@ -64,6 +64,14 @@
 4. == 类型转换规则极复杂
 5. `new Date().getYear()` 返回是 1900 开始计算, 要用 `getFullYear`
 
+### 单线程
+
+不想让浏览器变得太复杂
+
+1. JavaScript的诞生就是为了处理浏览器网页的交互
+2. 因为多线程需要共享资源、且有可能修改彼此的运行结果
+3. 两个线程修改了同一个DOM节点就会产生不必要的麻烦
+
 ### 类型
 
 基本类型: undefined, null, boolean, number, string
@@ -89,85 +97,32 @@ null: 用来保存对象, 没有值。null 值表示一个空对象指针. `type
 
 [垃圾回收](./gc.md)
 
-### 事件循环 Event Loop
+### JS 执行过程
 
-JavaScript 是单线程的, 为了防止用户交互, 脚本, UI 渲染和网络请求等行为, 防止主线程的不阻塞，Event Loop 的方案应用而生
+js 执行过程分为两个阶段：
 
-Event Loop 包含两类
+1. 编译阶段
+2. 执行阶段
 
-- Browsing Context
-- Worker: 每一个 Web Worker 也有一个独立的 Event Loop
+一、编译阶段
 
-任务队列 task queue
+编译阶段 js 引擎做 3 件事
 
-为了协调事件循环中的同步任务和异步任务, 使用了任务队列机制
+- 词法分析
+- 语法分析
+- 字节码生成
 
-- 一个事件循环有一个或多个任务队列
-- 任务队列是集合, 不是队列. 因为Event Loop第一步是选取队列中第一个可运行的任务, 而不是第一个任务
-- 微任务队列不是任务队列
+二、执行阶段
 
-Event loop 每一次循环操作叫 `tick`
+执行阶段会创建不同类型上下文：全局上下文、函数执行上下文
 
-1. 执行最先进入队列的任务
-2. 检查是否存在 microtack, 存在则不停执行, 直至清空 Mirotask queue
-3. render 渲染
-4. requestAnimationFrame
-5. intersectionObserver
-6. render 渲染
-7. requestIdeleCallback 取第一个, 执行
+创建上下文分为两个阶段
 
-宏任务 task: script(整体代码), setTimeout, setInterval, setImmediate
-
-微任务 microtask: Promise.then, MutaionObserver, process.nextTick
-
-async/await:
-
-- chrome 70 版本
-
-```js
-async function async1(){
-  await async2()
-  console.log('async1 end')
-}
-// 等价于
-async function async1() {
-  return new Promise(resolve => {
-    resolve(async2())
-  }).then(() => {
-    console.log('async1 end')
-  })
-}
-```
-
-- chrome 70 版本以上, await 将直接使用 Promise.resolve() 相同语义
-
-### setTimeout 和 requestAnimationFrame
-
-setTimeout:
-
-- 浏览器设置最好间隔 4ms;
-- 经过 5 重嵌套定时器之后，时间间隔被强制设定为至少 4 毫秒。
-- 同步任务执行过久, 可能 setTimeout 时间不准
-
-requestAnimationFrame:
-
-- 回调执行与 宏任务微任务无关, 与浏览器是否渲染有关, 它是在浏览器渲染之前, 微任务执行后执行。
-- 一般显示器屏幕为 60hz, 大约 16.7ms 执行一次
-
-区别
-
-- 执行时机: requestAnimation 由系统决定执行时间, setTimeout的执行时间并不是确定的
-- 节能: 页面未激活(隐藏, 最小化), requestAnimationFrame 暂停执行, setTimeout 会继续执行
-- 函数节流: 防止刷新阶段, 防止函数执行多次
-- 引擎: setTimeout JS 引擎, 存在事件队列. requestAnimationFrame 属于 GUI 引擎, 发生在渲染之前
-
-### requestIdleCallback
-
-requestIdleCallback 由 React fiber 引起关注. 用来判断浏览器渲染之后的空闲时间
-
-requestAnimationFrame 每次渲染都执行
-
-requestIdleCallback 渲染完空闲时才执行
+- 创建阶段
+  - 绑定 this
+  - 为函数和变量分配内存（变量提升、函数提升等）
+  - 初始化变量为 undefined
+- 执行阶段
 
 ## 作用域,作用域链及闭包
 
@@ -185,7 +140,9 @@ requestIdleCallback 渲染完空闲时才执行
 
 ### 作用域链
 
-在执行阶段确定, 由当前环境和上层环境一系列变量对象组成. 保证变量和函数的有序访问
+- 本质上是一个指向变量对象的指针列表
+- 在执行阶段确定, 由当前环境和上层环境一系列变量对象组成
+- 保证变量和函数的有序访问
 
 从当前上下文查找, 从父级找, 一直找到全局上下文, 这样形成的链表
 
@@ -194,6 +151,15 @@ requestIdleCallback 渲染完空闲时才执行
 概念: 一个函数和它的词法环境捆绑在一起, 这样的组合叫闭包
 
 通俗说法: 可以访问其他函数内部变量的函数
+
+### 执行上下文
+
+执行上下文指 函数调用时 产生的变量对象. 这个对象无法访问，但是可以访问其中的变量、this 等。
+
+js 执行两个阶段：编译阶段，执行阶段
+
+- 当 JS 被编译时，一个执行上下文就被创建
+- 当执行上下文准备就绪，进入执行阶段
 
 ## ES6 新语法
 

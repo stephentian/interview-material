@@ -5,7 +5,12 @@
     - [http 缓存](#http-缓存)
     - [本地缓存](#本地缓存)
   - [浏览器内核](#浏览器内核)
+  - [浏览器的多线程](#浏览器的多线程)
   - [web worker](#web-worker)
+  - [事件循环 Event Loop](#事件循环-event-loop)
+    - [setTimeout](#settimeout)
+    - [requestAnimationFrame](#requestanimationframe)
+    - [requestIdleCallback](#requestidlecallback)
 
 ## 浏览器缓存
 
@@ -43,4 +48,106 @@
 火狐浏览器: Gecko
 Safari: webkit
 
+## 浏览器的多线程
+
+1. GUI 渲染线程
+   - 绘制页面，解析 HTML、CSS，构建 DOM 树，布局和绘制等
+   - 页面重绘和回流
+   - 与 JS 引擎线程互斥，也就是所谓的 JS 执行阻塞页面更新
+2. JS 引擎线程
+    - 负责 JS 脚本代码的执行
+    - 负责准执行准备好待执行的事件，即定时器计数结束，或异步请求成功并正确返回的事件
+    - 与 GUI 渲染线程互斥，执行时间过长将阻塞页面的渲染
+3. 事件触发线程
+    - 将准备好的事件交给 JS 引擎线程执行
+    - 多个事件加入任务队列的时候需要排队等待(JS 的单线程)
+4. 定时器触发线程
+   - 负责执行异步的定时器类的事件，如 setTimeout、setInterval
+   - 定时器到时间之后把注册的回调加到任务队列的队尾
+5. HTTP 请求线程
+   - 负责执行异步请求
+   - 该线程会把回调函数加入到任务队列的队尾等待执行
+
 ## web worker
+
+## 事件循环 Event Loop
+
+JavaScript 是单线程的, 为了防止用户交互, 脚本, UI 渲染和网络请求等行为, 防止主线程的不阻塞，Event Loop 的方案应用而生
+
+Event Loop 包含两类
+
+- Browsing Context
+- Worker: 每一个 Web Worker 也有一个独立的 Event Loop
+
+任务队列 task queue
+
+为了协调事件循环中的同步任务和异步任务, 使用了任务队列机制
+
+- 一个事件循环有一个或多个任务队列
+- 任务队列是集合, 不是队列. 因为Event Loop第一步是选取队列中第一个可运行的任务, 而不是第一个任务
+- 微任务队列不是任务队列
+
+Event loop 每一次循环操作叫 `tick`
+
+1. 执行最先进入队列的任务
+2. 检查是否存在 microtack, 存在则不停执行, 直至清空 Mirotask queue
+3. render 渲染
+4. requestAnimationFrame
+5. intersectionObserver
+6. render 渲染
+7. requestIdeleCallback 取第一个, 执行
+
+宏任务 task: script(整体代码), setTimeout, setInterval, setImmediate
+
+微任务 microtask: Promise.then, MutaionObserver, process.nextTick
+
+async/await:
+
+- chrome 70 版本
+
+```js
+async function async1(){
+  await async2()
+  console.log('async1 end')
+}
+// 等价于
+async function async1() {
+  return new Promise(resolve => {
+    resolve(async2())
+  }).then(() => {
+    console.log('async1 end')
+  })
+}
+```
+
+- chrome 70 版本以上, await 将直接使用 Promise.resolve() 相同语义
+
+### setTimeout
+
+setTimeout:
+
+- 浏览器设置最好间隔 4ms;
+- 经过 5 重嵌套定时器之后，时间间隔被强制设定为至少 4 毫秒。
+- 同步任务执行过久, 可能 setTimeout 时间不准
+
+### requestAnimationFrame
+
+- 回调执行与 宏任务微任务无关, 与浏览器是否渲染有关, 它是在浏览器渲染之前, 微任务执行后执行。
+- 一般显示器屏幕为 60hz, 大约 16.7ms 执行一次
+
+[深入requestAnimationFrame 执行机制](https://blog.51cto.com/feng/5289890)
+
+setTimeout 和 requestAnimationFrame 区别
+
+- 执行时机: requestAnimation 由系统决定执行时间, setTimeout的执行时间并不是确定的
+- 节能: 页面未激活(隐藏, 最小化), requestAnimationFrame 暂停执行, setTimeout 会继续执行
+- 函数节流: 防止刷新阶段, 防止函数执行多次
+- 引擎: setTimeout JS 引擎, 存在事件队列. requestAnimationFrame 属于 GUI 引擎, 发生在渲染之前
+
+### requestIdleCallback
+
+requestIdleCallback 由 React fiber 引起关注. 用来判断浏览器渲染之后的空闲时间
+
+requestAnimationFrame 每次渲染都执行
+
+requestIdleCallback 渲染完空闲时才执行

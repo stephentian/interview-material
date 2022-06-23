@@ -14,6 +14,7 @@
   - [栈](#栈)
   - [队列](#队列)
   - [链表](#链表)
+    - [21.合并两个有序链表](#21合并两个有序链表)
   - [贪心算法](#贪心算法)
   - [回溯](#回溯)
   - [洗牌算法](#洗牌算法)
@@ -632,6 +633,45 @@ function reverseLinkList(head) {
   }
 
     return preNode
+}
+```
+
+### 21.合并两个有序链表
+
+leetcode: [21. 合并两个有序链表](https://leetcode.cn/problems/merge-two-sorted-lists/)
+
+```js
+// 递归
+var mergeTwoLists = function(list1, list2) {
+  if (!list1) return list2
+  if (!list2) return list1
+
+  if (list1.val < list2.val) {
+    list1.next = mergeTwoLists(list1.next, list2)
+    return list1
+  } else {
+    list2.next = mergeTwoLists(list2.next, list1)
+    return list2
+  }
+};
+
+// 非递归
+var mergeTwoLists = function(list1, list2) {
+  let head = new ListNode()
+  let cur = head // 中间变量
+  while(list1 && list2) {
+    if(list1.val <= list2.val) {
+      cur.next = list1
+      list1 = list1.next
+    } else {
+      cur.next = list2
+      list2 = list2.next
+    }
+    cur = cur.next
+  }
+  
+  cur.next = list1 !== null ? list1: list2
+  return head.next
 }
 ```
 

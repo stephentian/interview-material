@@ -2,12 +2,53 @@
 
 - [Framework 框架](#framework-框架)
   - [Vue](#vue)
+    - [Vue 优缺点](#vue-优缺点)
+  - [React](#react)
+    - [React 优缺点](#react-优缺点)
   - [Svelte](#svelte)
   - [Flux(Vuex, Redux)](#fluxvuex-redux)
 
 ## Vue
 
 相关文章: [从前端发展史来聊聊 Vue3 的未来价值](https://zhuanlan.zhihu.com/p/522160995)
+
+### Vue 优缺点
+
+优点
+
+- 优秀的生态，vue-router, vuex等
+- 代码可读性，组件里有 html， js，css
+- 封装的很好，上手灵活，学习成本低
+- 便于团队维护，方便项目交接
+- 渲染速度快，虚拟DOM局部更新
+
+缺点
+
+- 过度灵活的风险，会让你过于依赖框架，不去深究实现原理
+- 兼容性 IE 8
+- 依靠依赖收集, 可能有些乱定义变量, 但是变量也会有 watcher，增大无用代码
+- Object.definedProperty 数组修改, 无法监听等
+- mixin 混用，命名空间相同问题
+- 很多Vue2 问题 Vue3 解决了
+
+## React
+
+### React 优缺点
+
+优点
+
+- 浏览器兼容性好
+- 渲染速度快
+- 代码模块化
+
+缺点
+
+- 心智负担，甚至会影响业务逻辑的正确与否
+- 学习路线陡峭，很多 API 要熟悉
+- 私人封装，接手困难
+- this 绑定
+- this.setState 设计迷思
+- React 18 也优化了很多上述缺点
 
 ## Svelte
 
