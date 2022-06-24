@@ -5,12 +5,14 @@
     - [http 缓存](#http-缓存)
     - [本地缓存](#本地缓存)
   - [浏览器内核](#浏览器内核)
-  - [浏览器的多线程](#浏览器的多线程)
-  - [web worker](#web-worker)
   - [事件循环 Event Loop](#事件循环-event-loop)
     - [setTimeout](#settimeout)
     - [requestAnimationFrame](#requestanimationframe)
     - [requestIdleCallback](#requestidlecallback)
+  - [浏览器的多线程](#浏览器的多线程)
+  - [web worker](#web-worker)
+  - [WebSocket](#websocket)
+    - [WebSocket 心跳机制](#websocket-心跳机制)
 
 ## 浏览器缓存
 
@@ -19,7 +21,7 @@
 - 强缓存
   - expires
     - 过期时间(http1.0)
-    - 绝对时间，修改本地客户端就没用了
+    - 绝对时间，修改本地客户端，会导致误判
   - cache-control
     - http1.1
     - max-age 相对时间
@@ -37,38 +39,22 @@
 ### 本地缓存
 
 - localStorage
-  - 前端设置，长期存储，要手动清除。存储格式是字符串，注意存对象取出来要格式化。
+  - 浏览器端设置，永久存储，要手动清除
+  - 存储格式是字符串，注意存对象取出来要格式化
+  - 同源情况，即可获取
+  - 每个网站限制 5MB
 - sessionStorage
-  - 前端设置，会话关闭则消失
+  - 浏览器端设置，窗口或页面关闭则清除
+  - 同窗口才能获取
+  
 - cookie
-  - 后端设置，保存则客户端本地
+  - 服务端设置，保存则客户端本地
+  - 限制 4KB
 
 ## 浏览器内核
 
 火狐浏览器: Gecko
 Safari: webkit
-
-## 浏览器的多线程
-
-1. GUI 渲染线程
-   - 绘制页面，解析 HTML、CSS，构建 DOM 树，布局和绘制等
-   - 页面重绘和回流
-   - 与 JS 引擎线程互斥，也就是所谓的 JS 执行阻塞页面更新
-2. JS 引擎线程
-    - 负责 JS 脚本代码的执行
-    - 负责准执行准备好待执行的事件，即定时器计数结束，或异步请求成功并正确返回的事件
-    - 与 GUI 渲染线程互斥，执行时间过长将阻塞页面的渲染
-3. 事件触发线程
-    - 将准备好的事件交给 JS 引擎线程执行
-    - 多个事件加入任务队列的时候需要排队等待(JS 的单线程)
-4. 定时器触发线程
-   - 负责执行异步的定时器类的事件，如 setTimeout、setInterval
-   - 定时器到时间之后把注册的回调加到任务队列的队尾
-5. HTTP 请求线程
-   - 负责执行异步请求
-   - 该线程会把回调函数加入到任务队列的队尾等待执行
-
-## web worker
 
 ## 事件循环 Event Loop
 
@@ -151,3 +137,95 @@ requestIdleCallback 由 React fiber 引起关注. 用来判断浏览器渲染之
 requestAnimationFrame 每次渲染都执行
 
 requestIdleCallback 渲染完空闲时才执行
+
+## 浏览器的多线程
+
+1. GUI 渲染线程
+   - 绘制页面，解析 HTML、CSS，构建 DOM 树，布局和绘制等
+   - 页面重绘和回流
+   - 与 JS 引擎线程互斥，也就是所谓的 JS 执行阻塞页面更新
+2. JS 引擎线程
+    - 负责 JS 脚本代码的执行
+    - 负责准执行准备好待执行的事件，即定时器计数结束，或异步请求成功并正确返回的事件
+    - 与 GUI 渲染线程互斥，执行时间过长将阻塞页面的渲染
+3. 事件触发线程
+    - 将准备好的事件交给 JS 引擎线程执行
+    - 多个事件加入任务队列的时候需要排队等待(JS 的单线程)
+4. 定时器触发线程
+   - 负责执行异步的定时器类的事件，如 setTimeout、setInterval
+   - 定时器到时间之后把注册的回调加到任务队列的队尾
+5. HTTP 请求线程
+   - 负责执行异步请求
+   - 该线程会把回调函数加入到任务队列的队尾等待执行
+
+## web worker
+
+由于 js 是单线程的，Web Worker 允许主线程外还存在一个线程
+
+```js
+let worker = new Worker("http://url.js")
+worker.onmessage = function(e) {} // 监听返回的信息，e.data
+w.onerror = e => {...} // 监听错误
+w.terminate() // 关闭Worker线程
+```
+
+关键：
+
+- 分配给 Worker 线程的脚本文件必须和主线程的脚本文件同源
+- Worker 不能读取本地文件（file://~），文件必须来自网络
+- web worker 处于外部文件，无法访问到 winodow、document等
+
+## WebSocket
+
+以前客户端只能发送 ajax 请求与服务端通信，这样获取不到实时的服务端变化。WebSocket 使得前后端可以双向通讯，提高了通信效率
+
+- WebSocket 是基于 TCP 协议进行全双工通讯的协议（应用层）
+- 一次 TCP 握手，即可建立永久连接，并可双向传输数据
+
+```js
+let ws = new WebSocket(url)
+
+ws.onopen = e => {
+  console.log('连接成功', e)
+  ws.send('我发送消息给服务端'); // 客户端与服务器端通信
+}
+
+ws.onmessage = e => {
+  console.log('服务器端返回：', e.data)
+}
+
+Socket.send() // 使用连接发送数据
+Socket.close() // 关闭连接
+```
+
+WebSocket的当前状态：WebSocket.readyState
+
+- 0：正在连接
+- 1：连接成功
+- 2：连接正在关闭
+- 3：连接已关闭
+
+### WebSocket 心跳机制
+
+WebSocket 有时候不稳定，需要检查心跳，心跳机制的时间可以自己与后端约定
+
+```js
+heartCheck() {
+  this.pingPong = 'ping'; // ws的心跳机制状态值
+  this.pingInterval = setInterval(() => {
+    if (this.ws.readyState === 1) {
+      this.ws.send('ping'); // 客户端发送ping
+    }
+  }, 10000)
+
+  this.pongInterval = setInterval(() => {
+    if (this.pingPong === 'ping') {
+      // 没有返回 pong 重启webSocket
+      // connect
+    }
+    // 重置为ping 
+    // 若下一次 ping 发送失败 或 pong 返回失败，将重启
+    this.pingPong = 'ping'
+  }, 20000)
+}
+```

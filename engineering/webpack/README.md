@@ -9,6 +9,8 @@
   - [手写一个 Plugin](#手写一个-plugin)
   - [如何提高 webpack 的构建速度](#如何提高-webpack-的构建速度)
   - [说说 webpack 的热更新HMR](#说说-webpack-的热更新hmr)
+  - [webpack 模块联邦](#webpack-模块联邦)
+    - [共享模块方式](#共享模块方式)
 
 ## webpack 构建流程
 
@@ -116,3 +118,23 @@ webpack的热更新又称热替换（Hot Module Replacement），缩写为HMR。
 4. 浏览器接收到 hash 事件后，请求 manifest 资源文件，确认增量变更范围
 5. 浏览器加载发生变更的增量模块
 6. Webpack 运行时触发变更模块的 module.hot.accept 回调，执行代码变更逻辑
+
+## webpack 模块联邦
+
+webpack5 出的新特性, Module Federation 模块联邦
+
+这个功能可以跨应用做到模块共享。
+
+比如：a 应用要使用 b 应用的 list 组件，直接 `import('b/list')`
+
+b：模块消费方 host
+a：模块提供方 remote
+
+本地起服务器，然后将包封装成 url，在另一个项目引入
+
+### 共享模块方式
+
+1. npm：发布到 npm 平台
+2. umd：直接引入 cdn
+3. 微前端：主应用下面建立一个 common 公共模块
+4. 模块联邦
