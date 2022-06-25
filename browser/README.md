@@ -10,7 +10,7 @@
     - [requestAnimationFrame](#requestanimationframe)
     - [requestIdleCallback](#requestidlecallback)
   - [浏览器的多线程](#浏览器的多线程)
-  - [web worker](#web-worker)
+  - [Web Worker](#web-worker)
   - [WebSocket](#websocket)
     - [WebSocket 心跳机制](#websocket-心跳机制)
 
@@ -28,7 +28,9 @@
 - 协商缓存
   - etag & if-none-match
     - 标志资源是否变化
+    - etag值没有规定，可以是时间戳的哈希值，版本号等
   - last-modified & if-modified-since
+    - 资源最后被修改的时间
 
 缓存机制：  
 
@@ -158,15 +160,16 @@ requestIdleCallback 渲染完空闲时才执行
    - 负责执行异步请求
    - 该线程会把回调函数加入到任务队列的队尾等待执行
 
-## web worker
+## Web Worker
 
-由于 js 是单线程的，Web Worker 允许主线程外还存在一个线程
+- 由于 js 是单线程的，Web Worker 允许主线程外还存在一个线程
+- 通过 postMessage 将结果回传到主线程
 
 ```js
 let worker = new Worker("http://url.js")
 worker.onmessage = function(e) {} // 监听返回的信息，e.data
-w.onerror = e => {...} // 监听错误
-w.terminate() // 关闭Worker线程
+worker.onerror = e => {} // 监听错误
+worker.terminate() // 关闭Worker线程
 ```
 
 关键：
