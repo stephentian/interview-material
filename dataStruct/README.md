@@ -12,6 +12,7 @@
   - [经典例题](#经典例题)
     - [数组和链表区别](#数组和链表区别)
     - [链表和数组，哪个实现队列更快](#链表和数组哪个实现队列更快)
+    - [数组转成树](#数组转成树)
 
 ## 栈
 
@@ -112,5 +113,97 @@ class myQueue {
   get length() {
     return this.len
   }
+}
+```
+
+### 数组转成树
+
+数据：
+
+```js
+const arr = [
+  { id: 6, name: 'a', pId: 3 },
+  { id: 2, name: 'a', pId: 1 },
+  { id: 3, name: 'a', pId: 1 },
+  { id: 4, name: 'a', pId: 2 },
+  { id: 1, name: 'a', pId: 0 },
+  { id: 5, name: 'a', pId: 3 },
+]
+
+// 转变成
+{
+  id: 1, pId: 0, name: 'a',
+  child: [{ 
+    id:2, pId: 1, name: 'a',
+    child: [
+      { id: 4, name: 'a', pId: 2 },
+    ]
+  }, {
+    id: 3, pId: 1, name: 'a',
+    child: [
+      { id: 5, name: 'a', pId: 3 },
+      { id: 6, name: 'a', pId: 3 },
+    ]
+  }]
+}
+```
+
+```js
+// 针对有序数组, pId 有序
+function arrToTree(arr) {
+  const map = new Map()
+  let root = null
+
+  for(let i in arr) {
+    const node = arr[i]
+    map.set(node.id, node)
+
+    const parent = map.get(node.pId)
+    if (parent) {
+      if (!parent.child) parent.child = []
+      parent.child.push(node)
+    }
+
+    if (!node.pId) {
+      root = arr[i]
+    }
+  }
+  return root
+}
+```
+
+父级id 无序数组
+
+```js
+// 方法一
+// 利用了对象引用类型，浅拷贝
+// 缺点: 改变了 arr
+function arrTranslateTree(arr) {
+  let data = arr.filter(item => {
+    item.children = arr.filter(e => {
+      return item.id === e.pId
+    })
+    return !item.pId
+  })
+  return data
+}
+
+// 方法二
+function arrToTree(arr) {
+  let data = {}
+  const res = []
+
+  for(let i in arr) {
+    data[arr[i].id] = arr[i]
+  }
+  arr.forEach(item => {
+    if(data[item.pId]) {
+      if (!data[item.pId].children) data[item.pId].children = []
+      data[item.pId].children.push(item)
+    } else {
+      res.push(item)
+    }
+  })
+  return res
 }
 ```

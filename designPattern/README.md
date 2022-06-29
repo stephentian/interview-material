@@ -1,5 +1,9 @@
 # design pattern
 
+- [design pattern](#design-pattern)
+  - [观察者模式](#观察者模式)
+    - [使用 Proxy 实现观察者模式](#使用-proxy-实现观察者模式)
+
 ## 观察者模式
 
 观察者模式（Observer mode）指的是函数自动观察数据对象，一旦对象有变化，函数就会自动执行。

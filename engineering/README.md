@@ -23,6 +23,7 @@
   - [ESbuild](#esbuild)
     - [为什么快](#为什么快)
   - [vite](#vite)
+  - [TypeScript](#typescript)
 
 前端工程化
 
@@ -282,3 +283,7 @@ vite 是构建工具的封装，内部是 rollup。
 - vite 生产基于 rollup，（打包体积小）
 - vite 开发环境，基于 ESBuild 进行预编译打包，并进行缓存，按需返回。
 - 总体构建比 webpack 快 10 - 100倍。
+
+## TypeScript
+
+link: [typescript](./typescript/README.md)
