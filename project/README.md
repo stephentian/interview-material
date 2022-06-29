@@ -106,7 +106,7 @@ ANALYZE_MODE = 'analyze'
 1. 移除, 替换第三方库
    - 检查是否有重复模块(lodash)
    - 检查体积过大的模块, 看是否可以用其他库代替(moment 替换成 day.js)
-   - 第三方库 使用 `.es` 版本, 有 `tree-shaking` 优势
+   - 第三方库 使用 `.es` 版本, 有 `tree-shaking` 优势(ESModule import 异步加载, require 同步加载)
 
 2. 按需加载
    - 比如有些库有附加模块, moment 有 local(国际化)模块, 不需要的话, 使用 `ignorePlugin` 去掉
