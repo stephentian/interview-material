@@ -23,18 +23,23 @@ const node = reactive({
 console.log(node.leftChildren, node.rightChildren); // 1 undefined
 
 function computed(fn) {
+  // const obj = {
+  //   value: null,
+  // };
+  // const handler = {
+  //   get: function (target, key, value) {
+  //     console.log("获取 value");
+  //     return fn();
+  //   },
+  // };
+  // let result = new Proxy(obj, handler);
   const obj = {
-    value: null,
-  };
-  const handler = {
-    get: function (target, key, value) {
-      console.log("获取 value");
+    get value() {
       return fn();
     },
   };
-  let result = new Proxy(obj, handler);
 
-  return result;
+  return obj;
 }
 
 const children = computed(

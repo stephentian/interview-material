@@ -315,7 +315,7 @@ dom.getBoundingClientRect().widht/height
 
 1.父子元素边距重叠
 
-```
+```html
 <div class="parent">
   <div class="child"></div>
 </div>
