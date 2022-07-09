@@ -7,10 +7,11 @@
     - [Vue 的响应式原理](#vue-的响应式原理)
   - [虚拟 DOM](#虚拟-dom)
   - [组件中 name 选项作用](#组件中-name-选项作用)
-  - [Vue 的 nextTick 的原理](#vue-的-nexttick-的原理)
-  - [Vue 父子组件渲染过程](#vue-父子组件渲染过程)
-  - [Vue 组件之间的通信](#vue-组件之间的通信)
-  - [Vue3.0](#vue30)
+  - [nextTick 的原理](#nexttick-的原理)
+  - [父子组件渲染过程](#父子组件渲染过程)
+  - [组件之间的通信](#组件之间的通信)
+  - [keep-alive](#keep-alive)
+  - [Vue3](#vue3)
     - [变化](#变化)
     - [Vue3 组件通信](#vue3-组件通信)
     - [为什么 Vue3 不使用 defineProperty](#为什么-vue3-不使用-defineproperty)
@@ -102,17 +103,18 @@ Vue 则是 push + pull 结合的方式侦测变化。
 2. 项目使用 keep-alive 是，可使用组件的 name 进行过滤
 3. 便于调试，有名字的组件有更友好的警告信息，搭配 `dev-tools`。
 
-## Vue 的 nextTick 的原理
+## nextTick 的原理
 
-- Vue 是异步修改 DOM 的并且不鼓励开发者直接接触 DOM。
-- 但有时候业务需要必须对数据更改--刷新后的 DOM 做相应的处理，这时候就可以使用 Vue.nextTick。
+- Vue 是异步渲染 DOM，修改数据，立马获取 DOM 元素是不变的。
+- 有时候业务需要必须对数据更改后的 DOM 做相应的处理，这时候就可以使用 Vue.nextTick。
 
 实现:
 
 - 源码首先使用 `promise, MutationOberver` 微任务去实现
 - 如果不支持, 就是使用 `setImmediate` 和 `setTimeout`, 等待当前微/宏任务执行完, 再执行回调.
+- 一次事件循环是一个 tick, UI 渲染是在两个 tick 之间。
 
-## Vue 父子组件渲染过程
+## 父子组件渲染过程
 
 创建过程自上而下, 挂载过程自下而上
 
@@ -126,7 +128,7 @@ Vue 则是 push + pull 结合的方式侦测变化。
 1. Vue 源码中, 回递归组件, 先递归到创建父组件, 有子组件就创建子组件
 2. 子组件被创建完, 如果没有子组件, 会添加 `mounted` 钩子到队列中, 等 `patch` 结束后执行. 然后再去父组件执行挂载 `mounted`
 
-## Vue 组件之间的通信
+## 组件之间的通信
 
 4 种方式:
 
@@ -249,7 +251,21 @@ ref/$refs
 this.$refs.child1
 ```
 
-## Vue3.0
+## keep-alive
+
+- 组件，或者页面开启缓存数据
+- 会触发两个生命周期 `activated` `deactivated`
+- 可以在 `activated` 刷新数据
+
+原理：采用了 LRU (最近最少使用 least recently used)缓存算法管理
+
+1. 缓存组件 vnode 到 cache 对象，键名`key`保存为数组 `keys`
+2. 将不经常用的缓存组件放前面，常用的放后面
+3. 缓存消耗内存，会设一个 max 值，如果超过 max 就将第一个 `key` 删除，对应 `cache` 对象里也删除该节点。
+
+LRU：[LRU.js](../../algorithm/LRU.js)
+
+## Vue3
 
 ### 变化
 

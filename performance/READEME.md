@@ -57,7 +57,7 @@ DNS 预解析
 `Cache-Control` 是服务端时间。
 返回 200。
 
--  协商缓存
+- 协商缓存
 
 如果缓存过期，则使用协商缓存来解决问题。协商缓存需要请求，如果缓存有效则返回 304.
 有两种实现方式：`Last-Modified` 和 `Etag`
@@ -66,7 +66,7 @@ DNS 预解析
 
 预渲染
 
-```
+```html
 <link rel="prerender" href="">
 ```
 
@@ -92,8 +92,6 @@ DNS 预解析
    HTML 解析完成后顺序执行。
 4. 执行 JS 代码过长，需要很多时间计算的代码可以考虑使用 `Webworker`。`Webworker` 可以让我们另开一个线程执行脚本而不影响渲染。
 
-
-
 ## 其他
 
 ### 使用 webpack 优化项目
@@ -114,7 +112,7 @@ Mac 下打开 Chrome 任务管理器的方式是选择 Chrome 顶部导航 > 窗
 ## 项目体积优化
 
 - 使用 webpack-bundle-analyzer 查看打包出来文件的体积大小，看看是哪个包比较大
-- 依赖 按需加载，比如 element 组件，金山文档组件，第三方组件 
+- 依赖 按需加载，比如 element 组件，金山文档组件，第三方组件
 - 采用更小大库，比如 moment.js 200+kb, day.js 压缩后 2 kb
 - 开启 tree shaking ，摇树功能，对于导出的模块，有些方法没有被使用到，最终是不会放到打包的文件中的，可以减少一些代码体积
 - url-loader（将小图片打包进 html 中，减小图片数量）；terser-webpack-plugin、uglifyjs-webpack-plugin（压缩 js 文件）；更合理的拆包策略（webpack SplitChunksPlugin）
