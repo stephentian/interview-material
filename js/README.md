@@ -14,7 +14,7 @@
     - [作用域链](#作用域链)
     - [闭包](#闭包)
     - [执行上下文](#执行上下文)
-  - [ES6 新语法](#es6-新语法)
+  - [ES6 语法](#es6-语法)
     - [箭头函数](#箭头函数)
     - [模板字符串](#模板字符串)
     - [扩展运算符](#扩展运算符)
@@ -23,7 +23,9 @@
     - [WeakMap](#weakmap)
     - [Promise](#promise)
     - [Reflect](#reflect)
+    - [Generator](#generator)
     - [Proxy](#proxy)
+    - [Class](#class)
   - [变量类型隐式转换](#变量类型隐式转换)
   - [表达式和运算符](#表达式和运算符)
     - [this](#this)
@@ -161,16 +163,7 @@ js 执行两个阶段：编译阶段，执行阶段
 - 当 JS 被编译时，一个执行上下文就被创建
 - 当执行上下文准备就绪，进入执行阶段
 
-## ES6 新语法
-
-- let, const
-- 数组，对象解构赋值
-- 扩展运算符
-- Object.assign 浅拷贝
-- 箭头函数
-- rest 剩余参数
-- Promise
-- Class
+## ES6 语法
 
 ### 箭头函数
 
@@ -364,6 +357,10 @@ WeakMap 只接受对象作为键名（null除外），不接受其他类型的�
 
 链接: [promise](./promise/README.md)
 
+Promise 是 ES6 出的异步编程的一种解决方案。
+
+传统：回调函数，事件监听
+
 ### Reflect
 
 用于操作对象的 API
@@ -392,6 +389,14 @@ WeakMap 只接受对象作为键名（null除外），不接受其他类型的�
     const instance = new Greeting('张三');
     const instance = Reflect.construct(Greeting, ['张三']);
     ```
+
+### Generator
+
+ES6 提供的一种异步编程的解决方案
+
+- function 和函数名之间有个 `*` 号
+- 函数内部使用 `yield` 表达式，用来暂停执行
+- 返回一个遍历器对象，对象使用 `next` 方法进入下一个状态
 
 ### Proxy
 
@@ -436,6 +441,41 @@ target.m() // false
 proxy.m()  // true
 ```
 
+### Class
+
+一个定义类的语法糖，让 js 更像传统的面向对象语言（C++，java）
+
+```js
+function Point(x, y) {
+  this.x = x;
+  this.y = y;
+}
+
+Point.prototype.toString = function () {
+  return '(' + this.x + ', ' + this.y + ')';
+};
+
+// class
+class Point {
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
+  }
+
+  toString() {
+    return '(' + this.x + ', ' + this.y + ')';
+  }
+
+  // 静态方法
+  // 只能 类使用 Point.foo() 
+  static foo() {}
+
+  // 私有方法
+  // 只能在 类的 内部使用的方法
+  #bar() {}
+}
+```
+
 ## 变量类型隐式转换
 
 下面代码的输出是什么?
@@ -468,7 +508,7 @@ Javascript 函数中的 `this` 表现与其他语言不同。此外，在严格�
 
 1. 全局环境下，指向 `window`，严格模式下为 `undefined`
 2. 对象静态方法，指向调用者
-3. 箭头函数中, // TODO:
+3. 箭头函数中, this 不变, 在声明的位置时确定 this
 
 ### 算术运算符
 
@@ -757,8 +797,6 @@ console.log(10)
 ```
 
 打印顺序: `0 3 4 7 9 10 5 8 2 6 1`
-
-###
 
 ## 代码题
 
