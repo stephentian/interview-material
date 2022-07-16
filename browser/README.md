@@ -1,10 +1,12 @@
 # 浏览器
 
 - [浏览器](#浏览器)
+  - [浏览器内核](#浏览器内核)
+  - [JavaScript 引擎线程](#javascript-引擎线程)
+  - [浏览器渲染](#浏览器渲染)
   - [浏览器缓存](#浏览器缓存)
     - [http 缓存](#http-缓存)
     - [本地缓存](#本地缓存)
-  - [浏览器内核](#浏览器内核)
   - [事件循环 Event Loop](#事件循环-event-loop)
     - [setTimeout](#settimeout)
     - [requestAnimationFrame](#requestanimationframe)
@@ -13,6 +15,35 @@
   - [Web Worker](#web-worker)
   - [WebSocket](#websocket)
     - [WebSocket 心跳机制](#websocket-心跳机制)
+
+## 浏览器内核
+
+- Gecko: 火狐浏览器
+- Wekit: Safari, Google Chrome
+- Blink: Webkit的一个分支，Google Chrome, Edge
+
+浏览器内核常表示 浏览器的 排版引擎(layout engine)；
+也称浏览器引擎，页面渲染引擎
+
+## JavaScript 引擎线程
+
+javascript 是一门高级语言，CPU 只能识别机器语言；javascript 引擎将 javascript 翻译成 CPU 指令
+
+- SpiderMonkey: Brendan Eich(js作者) 开发
+- JavaScriptCore: Webkit 中的 js 引擎，Apple 开发
+- V8: Google 开发
+- Chakra: 微软，IE 浏览器
+
+## 浏览器渲染
+
+- 解析渲染页面
+  1. 构建 DOM 树
+     - 遇到 script 标签，则 DOM 树的构建会暂停
+  2. 构建 CSSOM 树
+     - 解析 CSS 规则树时 js 执行将暂停，直至 CSS 规则树就绪
+  3. 结合 DOM 树和 CSS 规则树，生成渲染树
+  4. Reflow: 回流/重排，元素内容、结构、位置发送变化
+  5. Repaint: 重绘，元素外观变化
 
 ## 浏览器缓存
 
@@ -52,11 +83,6 @@
 - cookie
   - 服务端设置，保存则客户端本地
   - 限制 4KB
-
-## 浏览器内核
-
-火狐浏览器: Gecko
-Safari: webkit
 
 ## 事件循环 Event Loop
 

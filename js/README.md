@@ -118,13 +118,15 @@ js 执行过程分为两个阶段：
 
 执行阶段会创建不同类型上下文：全局上下文、函数执行上下文
 
-创建上下文分为两个阶段
-
-- 创建阶段
-  - 绑定 this
+- 初始化上下文
+  - 创建全局变量 Global Object(GO)
+  - 添加全局访问变量 Date, Array, String, setTimeout 等等
   - 为函数和变量分配内存（变量提升、函数提升等）
-  - 初始化变量为 undefined
-- 执行阶段
+  - 绑定 this
+- 执行上下文
+  - 执行上下文栈 Execution Context Stack(ECS)
+  - 全局执行栈 Global Execution Context(GEC)
+  - 函数执行上下文
 
 ## 作用域,作用域链及闭包
 

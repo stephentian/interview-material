@@ -9,8 +9,8 @@
 5. `check` (setImmediate)
 6. `close callbacks` (回调关闭, 比如 `socket.on('close')`)
 
-- 微任务会在两个阶段之间执行。
-- 每个阶段都有一个执行队列 (先进先出)，只有全部执行完才进入下一个
+- Node11 之前：微任务会在任意两个阶段之间执行。
+- Node11 之后：一个阶段里的一个宏任务(setTimeout,setInterval和setImmediate)就立刻执行微任务队列，跟浏览器趋于一致
 
 ### process.nextTick
 
