@@ -4,6 +4,7 @@
   - [基础知识](#基础知识)
     - [Vue 发展史](#vue-发展史)
     - [生命周期](#生命周期)
+    - [Vue 实例过程](#vue-实例过程)
     - [Vue 的响应式原理](#vue-的响应式原理)
   - [虚拟 DOM](#虚拟-dom)
   - [组件中 name 选项作用](#组件中-name-选项作用)
@@ -53,6 +54,17 @@
 - updated
 - beforeDestroy
 - destroyed
+
+### Vue 实例过程
+
+1. Vue 构造函数执行，全局数据和根组件属性合并
+2. 初始化生命周期
+3. 初始化自定义事件
+4. 执行 beforeCreate
+5. 初始化模板，解析 插槽，render(h) 方法
+6. 初始化响应式数据
+7. 执行 created
+8. 执行 mount 挂载 el dom元素
 
 ### Vue 的响应式原理
 
@@ -210,7 +222,7 @@ eventBus
     ```js
     // Child2
     export default {
-      mouted() {
+      mounted() {
         EventBus.$on('addition', params => {
           // ...
         })
