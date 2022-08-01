@@ -4,4 +4,6 @@
  * @date: 2022-07-02
  **/
 
-class Vm {}
+class MVVM {
+  constructor() {}
+}
