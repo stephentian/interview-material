@@ -5,6 +5,7 @@
     - [process.nextTick](#processnexttick)
     - [setImmediate 和 setImmediate](#setimmediate-和-setimmediate)
     - [保证 setImmediate 比 setTimeout 快](#保证-setimmediate-比-settimeout-快)
+    - [require 和 fs.readFile 区别](#require-和-fsreadfile-区别)
 
 ## Event Loop
 
@@ -56,5 +57,12 @@ fs.readFile(path.resolve(__dirname, 'a.json'), (err) => {
   console.log('setImmediate')
  })
 })
-
 ```
+
+### require 和 fs.readFile 区别
+
+读取 JSON 文件，
+
+require = fs.readFileSync + JSON.parse
+
+require 引入对象，而 fs.readFile 引入文本
