@@ -44,3 +44,49 @@ function flattenSome(arr) {
 	}
 	return arr
 }
+
+// 对象扁平化
+
+function flattenObj(obj) {
+	const newObj = {}
+	function format(o, pre) {
+		for (let key in o) {
+			if (typeof o[key] === 'object') {
+				if (!pre) {
+					format(o[key], key)
+				} else {
+					if (Array.isArray(o)) {
+						format(o[key], pre + '[' + key + ']')
+					} else {
+						format(o[key], pre + '.' + key)
+					}
+				}
+			} else {
+				if (!pre) {
+					newObj[key] = o[key]
+				} else {
+					if (Array.isArray(o)) {
+						newObj[pre + '[' + key + ']'] = o[key]
+					} else {
+						newObj[pre + '.' + key] = o[key]
+					}
+				}
+			}
+		}
+	}
+
+	format(obj, null)
+	return newObj
+}
+
+const obj = { a: 1, b: { c: '123', d: 0}, e: [1, 2, 3]}
+
+flattenObj(obj)
+// {
+//     "a": 1,
+//     "b.c": "123",
+//     "b.d": 0,
+//     "e[0]": 1,
+//     "e[1]": 2,
+//     "e[2]": 3
+// }
