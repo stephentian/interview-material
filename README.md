@@ -1,6 +1,6 @@
 # interview-material
 
-## 目录1
+## 目录
 
 - [html](./html/README.md)
 - [css](./css/README.md)
