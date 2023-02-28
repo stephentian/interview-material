@@ -177,3 +177,71 @@ flattenObject(obj1)
 //     "f": null,
 //     "g": undefined
 // }
+
+// 树结构扁平化 tree
+
+let tree = [
+  {
+    id: 1,
+    name: '1',
+    pid: 0,
+    children: [
+      {
+        id: 2,
+        name: '2',
+        pid: 1,
+        children: []
+      },
+      {
+        id: 3,
+        name: '3',
+        pid: 1,
+        children: [
+          {
+            id: 4,
+            name: '4',
+            pid: 3,
+            children: []
+          }
+        ]
+      }
+    ]
+  }
+]
+
+function flattenTreeReduce(tree) {
+  return tree.reduce((list, item) => {
+    const { children, ...res } = item
+    return list.concat(
+      res,
+      children && children.length ? flattenTreeReduce(children) : []
+    )
+  })
+}
+
+// {
+//     "id": 1,
+//     "name": "1",
+//     "pid": 0,
+//     "children": [
+//         {
+//             "id": 2,
+//             "name": "2",
+//             "pid": 1,
+//             "children": []
+//         },
+//         {
+//             "id": 3,
+//             "name": "3",
+//             "pid": 1,
+//             "children": [
+//                 {
+//                     "id": 4,
+//                     "name": "4",
+//                     "pid": 3,
+//                     "children": []
+//                 }
+//             ]
+//         }
+//     ]
+// }
