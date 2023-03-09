@@ -24,6 +24,7 @@
 		- [清除浮动](#清除浮动)
 	- [Flex](#flex)
 		- [Flex 属性](#flex-属性)
+	- [媒体查询](#媒体查询)
 	- [例题](#例题)
 		- [实现一个三角形（或扇形）](#实现一个三角形或扇形)
 
@@ -388,6 +389,15 @@ flex 有两根轴线，分别是主轴(main axis：项目排列布局的方向�
   项目占据尺寸。默认 auto，自动计算
 6. `flex`  
   是 flex-grow flex-shrink flex-basis 合并简写。默认值：`flex: 0 1 auto`
+
+## 媒体查询
+
+```css
+/* 在小于或等于 992px 的屏幕里 */
+@media screen and (max-width:992px) {
+  body {}
+}
+```
 
 ## 例题
 
