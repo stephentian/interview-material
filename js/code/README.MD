@@ -8,6 +8,7 @@
 	- [防抖和节流](#防抖和节流)
 	- [深拷贝](#深拷贝)
 	- [数组扁平化](#数组扁平化)
+	- [call, apply, bind](#call-apply-bind)
 
 ## 大数相加
 
@@ -55,4 +56,18 @@
 
 ## 数组扁平化
 
-代码: [Flatten]()
+代码: [Flatten](Flatten.js)
+
+## call, apply, bind
+
+1. 三者都可以改变函数的 this 指向.
+
+2. apply 传数组，call 是参数列表；bind 参数可以分多次传入
+
+3. call 和 apply 是直接执行函数, bind 是返回一个绑定 this 的函数
+
+代码:  
+
+1. [call](call.js)
+2. [apply](apply.js)
+3. [bind](bind.js)
