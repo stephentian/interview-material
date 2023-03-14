@@ -2,7 +2,7 @@
 
 - [项目经验](#项目经验)
 	- [km-bundle-size](#km-bundle-size)
-	- [rb-img-lazy](#rb-img-lazy)
+	- [图片懒加载 rb-img-lazy](#图片懒加载-rb-img-lazy)
 	- [webpack-bundle-analyzer](#webpack-bundle-analyzer)
 	- [长列表优化方案](#长列表优化方案)
 		- [懒加载(可视区加载)](#懒加载可视区加载)
@@ -48,9 +48,16 @@
 1. 根据版本号来记录或查看
 2. 兼容立即使用. 可用于生产环境
 
-## rb-img-lazy
+## 图片懒加载 rb-img-lazy
 
-图片懒加载
+1. 滚动监听 `scrollTop + clientHeight <= scrollHeight`
+
+2. 滚动监听 `getBoundingClientRect`
+
+3. 检查目标元素与其祖先元素或顶级文档视窗(viewport)交叉状态，`IntersectionObserver`
+
+前两种需要 节流或者防抖，监听会重复触发。
+
 
 原理:
 
