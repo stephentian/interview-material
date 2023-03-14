@@ -29,6 +29,7 @@
 	- [例题](#例题)
 		- [实现一个三角形（或扇形）](#实现一个三角形或扇形)
 		- [如何消除 img或者 行内元素 (inline-block) 之间的间隙？](#如何消除-img或者-行内元素-inline-block-之间的间隙)
+		- [文本溢出省略号](#文本溢出省略号)
 
 ## 基础知识
 
@@ -310,14 +311,6 @@ li:nth-of-type(n+7){
 }
 ```
 
-三、Grid
-
-
-四、Table
-
-
-
-
 ## 盒模型
 
 基本概念
@@ -522,3 +515,22 @@ flex 有两根轴线，分别是主轴(main axis：项目排列布局的方向�
 
 1. `letter-spacing: 0`
 2. `font-size: 0`
+
+### 文本溢出省略号
+
+一、单行
+
+```css
+overflow: hidden;（文字长度超出限定宽度，则隐藏超出的内容）
+white-space: nowrap;（设置文字在一行显示，不能换行）
+text-overflow: ellipsis;
+```
+
+二、多行
+
+```css
+display: -webkit-box;
+line-clamp: 2;
+-webkit-line-clamp: 2;
+text-overflow: ellipsis;
+```
