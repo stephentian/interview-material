@@ -15,6 +15,7 @@
 		- [水平和垂直居中](#水平和垂直居中)
 		- [三栏布局](#三栏布局)
 		- [多种布局的优缺点](#多种布局的优缺点)
+		- [九宫格布局](#九宫格布局)
 	- [盒模型](#盒模型)
 		- [两种模型及区别](#两种模型及区别)
 		- [CSS 如何设置这两种模型](#css-如何设置这两种模型)
@@ -255,6 +256,30 @@
 
 4.grid 布局
 
+### 九宫格布局
+
+一、Flex
+
+```css
+.wrapper {
+  display: flex;
+  width: 100px;
+  height: 180px;
+  flex-wrap: wrap;
+  align-content: start; // 子元素换行，多行设置
+}
+```
+
+二、Float
+
+三、Grid
+
+
+四、Table
+
+
+
+
 ## 盒模型
 
 基本概念
@@ -389,6 +414,9 @@ flex 有两根轴线，分别是主轴(main axis：项目排列布局的方向�
   项目占据尺寸。默认 auto，自动计算
 6. `flex`  
   是 flex-grow flex-shrink flex-basis 合并简写。默认值：`flex: 0 1 auto`
+
+7. `align-item` 和 `align-content` 区别
+   align-items是针对每一个子项起作用居中，`align-content` 用于多行。
 
 ## 媒体查询
 
