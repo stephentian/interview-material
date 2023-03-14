@@ -249,29 +249,66 @@
 
 ### 多种布局的优缺点
 
-1.float 布局
+一、float 布局
 
-2.flex 弹性布局
+使用float可以使元素脱离文档流，形成BFC，在重新渲染时不会影响其他的元素。需要注意使用float的元素其父元素会塌陷，需要清除浮动。
 
-3.table 布局
+二、flex 弹性布局
 
-4.grid 布局
+flex布局主要适用于移动端项目
+
+三、table 布局
+
+1. Table 要比其它 html 标记占更多的字节。(延迟下载时间，占用服务器更多的流量资源。)
+2. Table 会阻挡浏览器渲染引擎的渲染顺序。
+
+四、grid 布局
+
+规范并未成熟，主流的浏览器使用较少，不推荐使用在企业项目中
 
 ### 九宫格布局
 
 一、Flex
 
+设置父元素
+
 ```css
-.wrapper {
+.ul {
   display: flex;
   width: 100px;
   height: 180px;
   flex-wrap: wrap;
   align-content: start; // 子元素换行，多行设置
 }
+li {
+  width: 30%;
+  height: 30%;
+  margin-right: 5%;
+  margin-bottom: 5%;
+}
+
+li:nth-of-type(3n){ 
+  margin-right: 0; // 3的倍数的元素, 3, 6, 9 等
+}
+
+li:nth-of-type(n+7){ 
+  margin-bottom: 0; // 等于大于 7 的元素, 7, 8, 9
+}
 ```
 
 二、Float
+
+子元素
+
+```css
+.li {
+  float: left;
+  width: 30%;
+  height: 30%;
+  margin-right: 5%;
+  margin-bottom: 5%;
+}
+```
 
 三、Grid
 
