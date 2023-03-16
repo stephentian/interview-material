@@ -14,7 +14,7 @@ class LRU {
 
     if (this.cache.size >= this.size) {
       // 删除最不常用数据
-			
+      // this.cache.delete(this.cache.keys().next().value);
       const firstKey = [...this.cache.keys()][0]
       this.cache.delete(firstKey)
     }
