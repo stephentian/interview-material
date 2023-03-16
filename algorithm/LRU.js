@@ -6,25 +6,26 @@
 
 class LRU {
   constructor(n) {
-    this.size = n;
-    this.data = new Map();
+    this.size = n
+    this.cache = new Map()
   }
-  put(domain, info) {
-    if (this.map.has(key)) this.map.delete(key);
+  set(key, value) {
+    if (this.map.has(key)) this.map.delete(key)
 
-    if (this.data.size >= this.size) {
+    if (this.cache.size >= this.size) {
       // 删除最不常用数据
-      const firstKey = [...this.data.keys()][0];
-      this.data.delete(firstKey);
+			
+      const firstKey = [...this.cache.keys()][0]
+      this.cache.delete(firstKey)
     }
-    this.data.set(domain, info);
+    this.cache.set(key, value)
   }
-  get(domain) {
-    if (!this.data.has(domain)) return -1;
+  get(key) {
+    if (!this.cache.has(key)) return -1
 
-    const info = this.data.get(domain);
-    this.data.delete(domain);
-    this.data.set(domain, info);
-    return info;
+    const value = this.cache.get(key)
+    this.cache.delete(key)
+    this.cache.set(key, value)
+    return value
   }
 }
