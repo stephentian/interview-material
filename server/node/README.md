@@ -62,8 +62,8 @@ fs.readFile(path.resolve(__dirname, 'a.json'), (err) => {
 
 ### 浏览器的 Event Loop 区别
 
-1. 浏览器环境下，microtask的任务队列是每个macrotask执行完之后执行。
-2. node 中，microtask会在事件循环的各个阶段之间执行，也就是一个阶段执行完毕，就会去执行microtask队列的任务。
+1. 浏览器环境下，microtask 的任务队列是每个 macrotask 执行完之后执行。
+2. node 中，microtask 会在事件循环的各个阶段之间执行，也就是一个阶段执行完毕，就会去执行 microtask 队列的任务。
 
 ## require 和 fs.readFile 区别
 
