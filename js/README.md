@@ -47,6 +47,7 @@
 	- [常见例题](#常见例题)
 		- [defer 和 async](#defer-和-async)
 		- [考察 Event Loop 执行顺序](#考察-event-loop-执行顺序)
+		- [闭包，使用场景，注意点及如何解决](#闭包使用场景注意点及如何解决)
 	- [代码题](#代码题)
 
 ## JS 基础
@@ -173,7 +174,87 @@ js 执行过程分为两个阶段：
 
 使用场景：
 
-1. 封装私有变量和方法：
+1. 封装私有变量和方法：由于 JavaScript 中没有类的概念，因此可以使用闭包来模拟私有变量和方法的功能。通过将变量和方法定义在一个函数内部，并返回一个内部函数，可以创建一个闭包，从而实现对变量和方法的私有化。
+
+	```js
+	function Counter() {
+		let count = 0; // 私有变量
+		function inner() {
+			count++;
+			console.log(count);
+		}
+		return inner;
+	}
+	const counter = Counter();
+	counter(); // 输出 1
+	counter(); // 输出 2
+	```
+
+2. 延迟执行：闭包可以用于延迟函数的执行。通过将函数定义在一个函数内部，并返回一个内部函数，可以创建一个闭包，从而实现对函数的延迟执行。
+
+	 ```js
+	 function delayedGreeting(name) {
+		return function() {
+			console.log(`Hello, ${name}!`);
+		};
+	}
+	const greeting = delayedGreeting("Alice"); // 创建闭包
+	setTimeout(greeting, 1000); // 延迟 1 秒后执行函数
+	 ```
+
+3. 记忆化：闭包可以用于缓存函数的计算结果。通过将函数定义在一个函数内部，并返回一个内部函数，可以创建一个闭包，从而实现对函数计算结果的缓存。
+
+	```js
+	function memoize(fn) {
+		const cache = {}; // 缓存对象
+		return function(...args) {
+			const key = JSON.stringify(args); // 将参数转换为字符串作为缓存的键
+			if (cache[key]) {
+				return cache[key]; // 如果缓存中已经有结果，则直接返回结果
+			}
+			const result = fn(...args); // 否则计算结果，并存入缓存
+			cache[key] = result;
+			return result;
+		};
+	}
+	const expensiveFunction = memoize(function(x, y) {
+		console.log("calculating...");
+		return x + y;
+	});
+	console.log(expensiveFunction(1, 2)); // 输出 "calculating..." 和 3
+	console.log(expensiveFunction(1, 2)); // 只输出 3，因为结果被缓存了
+	```
+
+注意点：
+
+因为闭包会持有外部函数的变量和参数，如果这些变量和参数占用的内存比较大，就会导致内存泄漏。因此，在使用闭包时需要注意内存管理。
+
+如何避免闭包内容泄漏：
+
+1. 及时释放闭包：在不再需要闭包时，可以将闭包设置为 null，从而释放其对外部变量和参数的引用。
+
+2. 减少闭包的使用：尽量避免在循环中创建闭包，因为在循环中创建的闭包很容易导致内存泄漏。
+
+3. 使用事件委托：在处理 DOM 事件时，可以使用事件委托的方式，将事件处理程序定义在父元素上，从而避免在每个子元素上都创建一个闭包。
+
+4. 使用 WeakMap：可以使用 WeakMap 来存储闭包和其相关的数据，这样当闭包不再被使用时，相关的数据会自动被垃圾回收。
+
+	```js
+	const map = new WeakMap();
+	function createClosure() {
+		const data = { /* 一些数据 */ };
+		const closure = function() {
+			/* 一些操作 */
+		};
+		map.set(closure, data); // 使用 WeakMap 存储闭包和相关数据
+		return closure;
+	}
+	const closure = createClosure();
+	closure();
+	map.delete(closure); // 及时删除闭包和相关数据
+	```
+
+5. 避免循环引用：在使用闭包时，应避免出现循环引用的情况，即闭包和外部变量相互引用，从而导致内存泄漏。可以使用函数参数或全局变量来解决这个问题。
 
 ### 执行上下文
 
@@ -828,6 +909,10 @@ console.log(10)
 ```
 
 打印顺序: `0 3 4 7 9 10 5 8 2 6 1`
+
+### 闭包，使用场景，注意点及如何解决
+
+见上: [闭包](#闭包)
 
 ## 代码题
 
