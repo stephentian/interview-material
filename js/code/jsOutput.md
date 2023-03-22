@@ -7,10 +7,14 @@
 
 - [js 输出](#js-输出)
 	- [作用域](#作用域)
+	- [闭包](#闭包)
 	- [this](#this)
 	- [运算符](#运算符)
 	- [模版字符串](#模版字符串)
 	- [对象字符串](#对象字符串)
+	- [模块导入](#模块导入)
+	- [Object.defineProperty](#objectdefineproperty)
+	- [reduce](#reduce)
 
 ## 作用域
 
@@ -26,6 +30,23 @@ sayHi()
 // undefined
 // ReferenceError
 ```
+
+```js
+(() => {
+  let x, y;
+  try {
+    throw new Error();
+  } catch (x) {
+    (x = 1), (y = 2);
+    console.log(x);
+  }
+  console.log(x);
+  console.log(y);
+})();
+// 1 undefined 2
+```
+
+## 闭包
 
 ```js
 for (var i = 0; i < 3; i++) {
@@ -103,4 +124,42 @@ console.log(a[b]);
 // 456
 // a["[object Object]"] = 123
 // a["[object Object]"] = 456
+```
+
+## 模块导入
+
+```js
+// counter.js
+let counter = 10;
+export default counter;
+
+// index.js
+import myCounter from './counter';
+myCounter += 1;
+console.log(myCounter);
+
+// Error
+// 导入的模块是 只读的, 不能修改
+```
+
+## Object.defineProperty
+
+defineProperty 默认不可枚举
+
+```js
+const person = { name: 'Lydia' };
+
+Object.defineProperty(person, 'age', { value: 21 });
+
+console.log(person);
+console.log(Object.keys(person));
+// { name: "Lydia", age: 21 }, ["name"]
+```
+
+## reduce
+
+```js
+[1, 2, 3, 4].reduce((x, y) => console.log(x, y));
+
+// 1 2 and undefined 3 and undefined 4
 ```
