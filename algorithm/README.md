@@ -25,6 +25,7 @@
 		- [N数之和](#n数之和)
 		- [394.字符串解码](#394字符串解码)
 		- [51.N皇后](#51n皇后)
+		- [403.青蛙过河](#403青蛙过河)
 
 ## 基础知识
 
@@ -1016,5 +1017,35 @@ var solveNQueens = function(n) {
 
   dfs(res, queens, n, 0)
   return res
+}
+```
+
+### 403.青蛙过河
+
+链接: [403.青蛙过河](https://leetcode.cn/problems/frog-jump/)
+
+```js
+var canCross = function (stones) {
+   const set = new Set()
+   return helper(stones, 0, 0, set)
+};
+var helper = function (stones, index, k, set) {
+    const key = index * 1000 + k
+    if (set.has(key)) {
+        return false
+    } else {
+        set.add(key)
+    }
+    for (let i = index + 1; i < stones.length; i++) {
+        const gap = stones[i] - stones[index]
+        if (gap >= k-1 && gap <= k+1) {
+            if (helper(stones, i, gap, set)) {
+                return true
+            }
+        } else if (gap > k+1) {
+            break
+        }
+    }
+    return index == stones.length - 1
 }
 ```
