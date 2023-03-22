@@ -10,6 +10,10 @@
 	- [数组扁平化](#数组扁平化)
 	- [call, apply, bind](#call-apply-bind)
 
+## 代码输出问题
+
+
+
 ## 大数相加
 
 链接: [1.BigNumAdd.js](1.BigNumAdd.js)

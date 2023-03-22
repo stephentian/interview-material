@@ -1,12 +1,12 @@
 # Framework 框架
 
 - [Framework 框架](#framework-框架)
-  - [Vue](#vue)
-    - [Vue 优缺点](#vue-优缺点)
-  - [React](#react)
-    - [React 优缺点](#react-优缺点)
-  - [Svelte](#svelte)
-  - [Flux(Vuex, Redux)](#fluxvuex-redux)
+	- [Vue](#vue)
+		- [Vue 优缺点](#vue-优缺点)
+	- [React](#react)
+		- [React 优缺点](#react-优缺点)
+	- [Svelte](#svelte)
+	- [Flux(Vuex, Redux)](#fluxvuex-redux)
 
 ## Vue
 
