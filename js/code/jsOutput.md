@@ -13,8 +13,10 @@
 	- [模版字符串](#模版字符串)
 	- [对象字符串](#对象字符串)
 	- [模块导入](#模块导入)
+	- [import 顺序](#import-顺序)
 	- [Object.defineProperty](#objectdefineproperty)
 	- [reduce](#reduce)
+	- [generator 生成器](#generator-生成器)
 
 ## 作用域
 
@@ -142,6 +144,26 @@ console.log(myCounter);
 // 导入的模块是 只读的, 不能修改
 ```
 
+## import 顺序
+
+```js
+// index.js
+console.log('running index.js');
+import { sum } from './sum.js';
+console.log(sum(1, 2));
+
+// sum.js
+console.log('running sum.js');
+export const sum = (a, b) => a + b;
+// running sum.js, running index.js, 3
+
+// 使用import关键字，所有导入的模块都会被预先解析。
+// 导入的模块首先运行，导入模块的文件中的代码随后执行。
+// CommonJS中的require（）和import的区别！使用require（），您可以在代码运行时按需加载依赖项。
+// require
+// running index.js, running sum.js, 3
+```
+
 ## Object.defineProperty
 
 defineProperty 默认不可枚举
@@ -162,4 +184,24 @@ console.log(Object.keys(person));
 [1, 2, 3, 4].reduce((x, y) => console.log(x, y));
 
 // 1 2 and undefined 3 and undefined 4
+```
+
+## generator 生成器
+
+```js
+function* startGame() {
+  const answer = yield 'Do you love JavaScript?';
+  if (answer !== 'Yes') {
+    return "Oh wow... Guess we're done here";
+  }
+  return 'JavaScript loves you back ❤️';
+}
+
+const game = startGame();
+console.log(/* 1 */); // Do you love JavaScript?
+console.log(/* 2 */); // JavaScript loves you back ❤️
+
+// game.next().value and game.next("Yes").value
+
+// 调用game.next（“true”）.value时，先前的 yield 将被传递给 next（）函数的参数值所取代，在这种情况下为“是”。变量答案的值现在等于 “true”。
 ```

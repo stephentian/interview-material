@@ -17,6 +17,7 @@
 		- [执行上下文](#执行上下文)
 	- [JS 语法](#js-语法)
 		- [箭头函数](#箭头函数)
+		- [padStart 和 padEnd](#padstart-和-padend)
 		- [模板字符串](#模板字符串)
 		- [扩展运算符](#扩展运算符)
 		- [Set](#set)
@@ -294,6 +295,39 @@ D: NaN and 63
 对于箭头函数, this 指向它所在的上下文的环境, 与普通函数不同！
 这意味着当我们调用 `circular` 时，它不是指向 shape 对象，而是指其定义时的环境（window）。
 没有值 radius 属性，返回 undefined。
+
+### padStart 和 padEnd
+
+字符串补全长度的功能。如果某个字符串不够指定长度，会在头部或尾部补全。padStart()用于头部补全，padEnd()用于尾部补全。
+
+接受两个参数，第一个参数是字符串补全生效的最大长度，第二个参数是用来补全的字符串。
+
+```js
+'x'.padStart(5, 'ab') // 'ababx'
+'x'.padStart(4, 'ab') // 'abax'
+
+'x'.padEnd(5, 'ab') // 'xabab'
+'x'.padEnd(4, 'ab') // 'xaba'
+
+// 原字符串的长度，等于或大于最大长度，则字符串补全不生效，返回原字符串。
+'xxx'.padStart(2, 'ab') // 'xxx'
+'xxx'.padEnd(2, 'ab') // 'xxx'
+
+// 省略第二个参数，默认使用空格补全长度。
+'x'.padStart(4) // '   x'
+'x'.padEnd(4) // 'x   
+```
+
+padStart()的常见用途是为数值补全指定位数。
+
+```js
+'1'.padStart(10, '0') // "0000000001"
+'12'.padStart(10, '0') // "0000000012"
+'123456'.padStart(10, '0') // "0000123456"
+
+'12'.padStart(10, 'YYYY-MM-DD') // "YYYY-MM-12"
+'09-12'.padStart(10, 'YYYY-MM-DD') // "YYYY-09-12"
+```
 
 ### 模板字符串
 
