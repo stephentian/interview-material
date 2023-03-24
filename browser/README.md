@@ -1,24 +1,24 @@
 # 浏览器
 
 - [浏览器](#浏览器)
-  - [浏览器内核](#浏览器内核)
-  - [JavaScript 引擎线程](#javascript-引擎线程)
-  - [浏览器渲染](#浏览器渲染)
-  - [浏览器缓存](#浏览器缓存)
-    - [http 缓存](#http-缓存)
-    - [本地缓存](#本地缓存)
-  - [事件循环 Event Loop](#事件循环-event-loop)
-    - [setTimeout](#settimeout)
-    - [requestAnimationFrame](#requestanimationframe)
-    - [requestIdleCallback](#requestidlecallback)
-  - [浏览器的多线程](#浏览器的多线程)
-  - [Web Worker](#web-worker)
-  - [WebSocket](#websocket)
-    - [WebSocket 心跳机制](#websocket-心跳机制)
+	- [浏览器内核](#浏览器内核)
+	- [JavaScript 引擎线程](#javascript-引擎线程)
+	- [浏览器渲染](#浏览器渲染)
+	- [浏览器缓存](#浏览器缓存)
+		- [http 缓存](#http-缓存)
+		- [本地缓存](#本地缓存)
+	- [事件循环 Event Loop](#事件循环-event-loop)
+		- [setTimeout](#settimeout)
+		- [requestAnimationFrame](#requestanimationframe)
+		- [requestIdleCallback](#requestidlecallback)
+	- [浏览器的多线程](#浏览器的多线程)
+	- [Web Worker](#web-worker)
+	- [WebSocket](#websocket)
+		- [WebSocket 心跳机制](#websocket-心跳机制)
 
 ## 浏览器内核
 
-- Gecko: 火狐浏览器
+- Gecko: 火狐浏览器1
 - Wekit: Safari, Google Chrome
 - Blink: Webkit的一个分支，Google Chrome, Edge
 
