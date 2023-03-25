@@ -18,7 +18,7 @@
 
 ## 浏览器内核
 
-- Gecko: 火狐浏览器1
+- Gecko: 火狐浏览器
 - Wekit: Safari, Google Chrome
 - Blink: Webkit的一个分支，Google Chrome, Edge
 
