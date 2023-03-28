@@ -6,7 +6,6 @@
     - [设计缺陷](#设计缺陷)
     - [单线程](#单线程)
     - [类型](#类型)
-    - [判断 Array 类型](#判断-array-类型)
     - [继承](#继承)
     - [垃圾回收](#垃圾回收)
     - [eval](#eval)
@@ -90,13 +89,6 @@
 undefined: 声明变量未初始化的值
 
 null: 用来保存对象, 没有值。null 值表示一个空对象指针. `typeof null` 为 `object`
-
-### 判断 Array 类型
-
-1. 原型, Array.prototype.isPrototypeOf(obj)
-2. 构造函数, obj instanceof Array
-3. Object.prototype.toString.call(obj) === '[object Array]'
-4. Array.isArray(obj)
 
 ### 继承
 

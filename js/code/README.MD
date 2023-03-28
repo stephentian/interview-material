@@ -1,6 +1,7 @@
 # 代码题
 
 - [代码题](#代码题)
+	- [代码输出问题](#代码输出问题)
 	- [大数相加](#大数相加)
 	- [EventEmitter](#eventemitter)
 	- [异步并发调度器](#异步并发调度器)
@@ -9,6 +10,7 @@
 	- [深拷贝](#深拷贝)
 	- [数组扁平化](#数组扁平化)
 	- [call, apply, bind](#call-apply-bind)
+	- [判断 Array 类型](#判断-array-类型)
 
 ## 代码输出问题
 
@@ -75,3 +77,32 @@
 1. [call](call.js)
 2. [apply](apply.js)
 3. [bind](bind.js)
+
+## 判断 Array 类型
+
+1. 原型, Array.prototype.isPrototypeOf(obj)
+2. 构造函数, obj instanceof Array
+3. Object.prototype.toString.call(obj) === '[object Array]'
+4. Array.isArray(obj)
+5. Array.from() 将数组转换为一个新的数组对象，并且需要使用 instanceof 运算符进行类型判断。
+
+```js
+var arr = [1, 2, 3];
+
+// instanceof
+if (arr instanceof Array) {
+  console.log("arr 是 Array 类型");
+}
+// Object.prototype.toString.call
+if (Object.prototype.toString.call(arr) === "[object Array]") {
+  console.log("arr 是 Array 类型");
+}
+
+// Array.from
+if (Array.from(arr) instanceof Array) {
+  console.log("arr 是 Array 类型");
+}
+
+// Array.isArray
+// Array.isArray(arr)
+```
