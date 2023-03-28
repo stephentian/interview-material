@@ -1,29 +1,31 @@
 # 前端工程
 
 - [前端工程](#前端工程)
-	- [工程化、组件化、模块化](#工程化组件化模块化)
-	- [模块化规范](#模块化规范)
-		- [CommonJS](#commonjs)
-		- [AMD](#amd)
-		- [CMD](#cmd)
-		- [ES Module](#es-module)
-		- [CommonJS 和 ES6 Module区别](#commonjs-和-es6-module区别)
-		- [为什么 CommonJS 可以循环引用](#为什么-commonjs-可以循环引用)
-	- [前端构建工具演变流程](#前端构建工具演变流程)
-	- [Webpack](#webpack)
-		- [webpack 发展史](#webpack-发展史)
-		- [打包器](#打包器)
-		- [webpack 优势](#webpack-优势)
-	- [Grunt](#grunt)
-	- [Gulp](#gulp)
-	- [Browserify](#browserify)
-	- [Yeoman](#yeoman)
-	- [Babel](#babel)
-		- [AST](#ast)
-	- [ESbuild](#esbuild)
-		- [为什么快](#为什么快)
-	- [vite](#vite)
-	- [TypeScript](#typescript)
+  - [工程化、组件化、模块化](#工程化组件化模块化)
+  - [模块化规范](#模块化规范)
+    - [CommonJS](#commonjs)
+    - [AMD](#amd)
+    - [CMD](#cmd)
+    - [ES Module](#es-module)
+    - [CommonJS 和 ES6 Module区别](#commonjs-和-es6-module区别)
+    - [为什么 CommonJS 可以循环引用](#为什么-commonjs-可以循环引用)
+  - [前端构建工具演变流程](#前端构建工具演变流程)
+  - [Webpack](#webpack)
+    - [webpack 发展史](#webpack-发展史)
+    - [打包器](#打包器)
+    - [webpack 优势](#webpack-优势)
+  - [Grunt](#grunt)
+  - [Gulp](#gulp)
+  - [Browserify](#browserify)
+  - [Yeoman](#yeoman)
+  - [Babel](#babel)
+    - [AST](#ast)
+  - [ESbuild](#esbuild)
+    - [为什么快](#为什么快)
+  - [vite](#vite)
+  - [TypeScript](#typescript)
+  - [微前端](#微前端)
+    - [微前端，每个团队都有自己的选择，浏览器加载多个框架和重复的组件代码？](#微前端每个团队都有自己的选择浏览器加载多个框架和重复的组件代码)
 
 前端工程化
 
@@ -301,3 +303,22 @@ vite 是构建工具的封装，内部是 rollup。
 ## TypeScript
 
 link: [typescript](./typescript/README.md)
+
+## 微前端
+
+微前端 Micro-Frontends，一种类似微服务的架构。
+
+### 微前端，每个团队都有自己的选择，浏览器加载多个框架和重复的组件代码？
+
+解决方案：
+
+1. 统一版本管理：对于每个团队使用的技术栈和框架，可以进行版本统一管理，确保不同团队使用的版本一致，这样可以减少重复的代码和框架的加载。
+
+2. 使用公共依赖库：可以将多个团队共同使用的依赖库单独打包成一个公共依赖库，这样就可以减少重复的组件代码和框架的加载。
+
+3. 懒加载和按需加载：可以通过懒加载和按需加载的方式，仅在需要的时候加载组件和框架，减少页面的初始化时间和加载时间。可以使用类似于 Webpack 的代码分割和动态导入的功能，将不同团队的代码分开打包，按需加载。
+
+4. 使用 CDN 或缓存：可以使用 CDN 或者缓存的方式，将公共的组件和框架文件缓存起来，这样可以减少重复的加载和请求，加快页面的加载速度。
+
+5. 代码合并和压缩：可以对不同团队的代码进行合并和压缩，减少代码体积和请求次数，提高页面的加载速度和性能。
+
