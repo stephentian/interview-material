@@ -17,6 +17,8 @@
 	- [Object.defineProperty](#objectdefineproperty)
 	- [reduce](#reduce)
 	- [generator 生成器](#generator-生成器)
+	- [async await](#async-await)
+	- [解构赋值](#解构赋值)
 
 ## 作用域
 
@@ -205,3 +207,23 @@ console.log(/* 2 */); // JavaScript loves you back ❤️
 
 // 调用game.next（“true”）.value时，先前的 yield 将被传递给 next（）函数的参数值所取代，在这种情况下为“是”。变量答案的值现在等于 “true”。
 ```
+
+## async await
+
+```js
+async function getData() {
+	return await Promise.resolve('OK!')
+}
+
+const data = getData()
+console.log(data)
+
+// Promise {<pending>}
+
+// 如果需要 打印 OK!
+// data.then(res => console.log(res))
+```
+
+async 函数总是返回一个 promise。调用 getData() 会返回一个 `pending` 状态的 promise.
+
+## 解构赋值
