@@ -6,19 +6,20 @@
 # js 输出
 
 - [js 输出](#js-输出)
-	- [作用域](#作用域)
-	- [闭包](#闭包)
-	- [this](#this)
-	- [运算符](#运算符)
-	- [模版字符串](#模版字符串)
-	- [对象字符串](#对象字符串)
-	- [模块导入](#模块导入)
-	- [import 顺序](#import-顺序)
-	- [Object.defineProperty](#objectdefineproperty)
-	- [reduce](#reduce)
-	- [generator 生成器](#generator-生成器)
-	- [async await](#async-await)
-	- [解构赋值](#解构赋值)
+  - [作用域](#作用域)
+  - [闭包](#闭包)
+  - [this](#this)
+  - [运算符](#运算符)
+  - [模版字符串](#模版字符串)
+  - [对象字符串](#对象字符串)
+  - [模块导入](#模块导入)
+  - [import 顺序](#import-顺序)
+  - [Object.defineProperty](#objectdefineproperty)
+  - [reduce](#reduce)
+  - [generator 生成器](#generator-生成器)
+  - [async await](#async-await)
+  - [解构赋值](#解构赋值)
+  - [let const](#let-const)
 
 ## 作用域
 
@@ -246,4 +247,21 @@ const { firstName: myName } = { firstName: 'Lydia' };
 
 console.log(myName); // "Lydia"
 console.log(firstName); // Uncaught ReferenceError: firstName is not defined
+```
+
+## let const
+
+```js
+function checkAge(age) {
+  if (age < 18) {
+    const message = "Sorry, you're too young.";
+  } else {
+    const message = "Yay! You're old enough!";
+  }
+
+  return message;
+}
+
+console.log(checkAge(21));
+// ReferenceError
 ```
