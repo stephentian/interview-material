@@ -227,3 +227,23 @@ console.log(data)
 async 函数总是返回一个 promise。调用 getData() 会返回一个 `pending` 状态的 promise.
 
 ## 解构赋值
+
+```js
+const { firstName: myName } = { firstName: 'Lydia' };
+
+console.log(firstName);
+
+// ReferenceError: firstName is not defined
+
+// const { firstName } = { firstName: 'Lydia' };
+// ES5 version:
+// var firstName = { firstName: 'Lydia' }.firstName;
+// console.log(firstName); // "Lydia"
+
+const { firstName: myName } = { firstName: 'Lydia' };
+// ES5 version:
+// var myName = { firstName: 'Lydia' }.firstName;
+
+console.log(myName); // "Lydia"
+console.log(firstName); // Uncaught ReferenceError: firstName is not defined
+```
