@@ -1,29 +1,29 @@
 # 前端工程
 
 - [前端工程](#前端工程)
-  - [工程化、组件化、模块化](#工程化组件化模块化)
-  - [模块化规范](#模块化规范)
-    - [CommonJS](#commonjs)
-    - [AMD](#amd)
-    - [CMD](#cmd)
-    - [ES Module](#es-module)
-    - [CommonJS 和 ES6 Module区别](#commonjs-和-es6-module区别)
-    - [为什么 CommonJS 可以循环引用](#为什么-commonjs-可以循环引用)
-  - [前端构建工具演变流程](#前端构建工具演变流程)
-  - [Webpack](#webpack)
-    - [webpack 发展史](#webpack-发展史)
-    - [打包器](#打包器)
-    - [webpack 优势](#webpack-优势)
-  - [Grunt](#grunt)
-  - [Gulp](#gulp)
-  - [Browserify](#browserify)
-  - [Yeoman](#yeoman)
-  - [Babel](#babel)
-    - [AST](#ast)
-  - [ESbuild](#esbuild)
-    - [为什么快](#为什么快)
-  - [vite](#vite)
-  - [TypeScript](#typescript)
+	- [工程化、组件化、模块化](#工程化组件化模块化)
+	- [模块化规范](#模块化规范)
+		- [CommonJS](#commonjs)
+		- [AMD](#amd)
+		- [CMD](#cmd)
+		- [ES Module](#es-module)
+		- [CommonJS 和 ES6 Module区别](#commonjs-和-es6-module区别)
+		- [为什么 CommonJS 可以循环引用](#为什么-commonjs-可以循环引用)
+	- [前端构建工具演变流程](#前端构建工具演变流程)
+	- [Webpack](#webpack)
+		- [webpack 发展史](#webpack-发展史)
+		- [打包器](#打包器)
+		- [webpack 优势](#webpack-优势)
+	- [Grunt](#grunt)
+	- [Gulp](#gulp)
+	- [Browserify](#browserify)
+	- [Yeoman](#yeoman)
+	- [Babel](#babel)
+		- [AST](#ast)
+	- [ESbuild](#esbuild)
+		- [为什么快](#为什么快)
+	- [vite](#vite)
+	- [TypeScript](#typescript)
 
 前端工程化
 
@@ -81,7 +81,7 @@
 - 一个单独的文件就是一个模块
 - 同步加载模块
 - 输出模块指模块只有一个接口对象
-- 最初被应用于 Nodejs，成为 Nodejs 的模块规范
+- 最初被应用于 `Node.js`，成为 `Node.js` 的模块规范
 
 `module` 是通过 new Module() 实例化得到的一个 CommonJS 模块实例
 
@@ -113,6 +113,16 @@ CMD 推崇异步依赖加载的，只有在用到某个模块的时候再去 req
 ECMAScript Modul 规范
 
 编译时输出，模块解析发生在编译阶段
+
+导入导出
+
+```js
+// export => import {} from ''
+
+// export default
+// import * from ''
+// import * as m from ''
+```
 
 ### CommonJS 和 ES6 Module区别
 
