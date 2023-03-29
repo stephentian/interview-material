@@ -72,7 +72,7 @@
 
 3. call 和 apply 是直接执行函数, bind 是返回一个绑定 this 的函数
 
-代码:  
+代码:
 
 1. [call](call.js)
 2. [apply](apply.js)
