@@ -94,6 +94,23 @@ console.log(number);
 // 0 2 2
 ```
 
+```js
+const output = `${[] && 'Im'}possible! You should${'' && `n't`} see a therapist after so much JavaScript lol`;
+
+// Impossible! You should see a therapist after so much JavaScript lol
+// && 左边为 true 返回右边
+// 为 false 返回左边
+```
+
+```js
+const one = false || {} || null;
+const two = null || false || '';
+const three = [] || 0 || true;
+
+console.log(one, two, three);
+// {} "" []
+```
+
 ## 模版字符串
 
 ```js
