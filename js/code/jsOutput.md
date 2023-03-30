@@ -24,6 +24,7 @@
 	- [解构赋值](#解构赋值)
 	- [let const](#let-const)
 	- [NaN](#nan)
+	- [Object.seal \& Object.freeze](#objectseal--objectfreeze)
 
 ## 作用域
 
@@ -417,3 +418,30 @@ console.log(isNaN(age));
 ```
 
 `Number.isNaN` 用于判断是否为 `NaN`
+
+## Object.seal & Object.freeze
+
+```js
+const person = { name: 'Lydia Hallie' };
+
+Object.seal(person);
+// 如何修改 person
+// person.name = "Evan Bacon"
+// Object.seal 可以防止添加新属性，删除已存在熟悉
+```
+
+```js
+const person = {
+  name: 'Lydia Hallie',
+  address: {
+    street: '100 Main St',
+  },
+};
+
+Object.freeze(person);
+// 如何修改 person
+// person.address.street = "101 Main St"
+// Object.freeze 
+// 无法添加、修改或删除任何属性
+// 但它只是简单地冻结对象，如果属性是一个对象，那这个属性是可以修改的
+```
