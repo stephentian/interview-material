@@ -12,7 +12,7 @@
 	- [运算符](#运算符)
 	- [模版字符串](#模版字符串)
 	- [对象字符串](#对象字符串)
-	- [模块导入](#模块导入)
+	- [模块导入导出](#模块导入导出)
 	- [import 顺序](#import-顺序)
 	- [Object.defineProperty](#objectdefineproperty)
 	- [reduce](#reduce)
@@ -152,7 +152,7 @@ console.log(a[b]);
 // a["[object Object]"] = 456
 ```
 
-## 模块导入
+## 模块导入导出
 
 ```js
 // counter.js
@@ -166,6 +166,19 @@ console.log(myCounter);
 
 // Error
 // 导入的模块是 只读的, 不能修改
+```
+
+```js
+// sum.js
+export default function sum(x) {
+  return x + x;
+}
+
+// index.js
+import * as sum from './sum';
+// 如何调用 sum 方法
+
+// sum.default(1)
 ```
 
 ## import 顺序
