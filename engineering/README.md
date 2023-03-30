@@ -1,31 +1,31 @@
 # 前端工程
 
 - [前端工程](#前端工程)
-  - [工程化、组件化、模块化](#工程化组件化模块化)
-  - [模块化规范](#模块化规范)
-    - [CommonJS](#commonjs)
-    - [AMD](#amd)
-    - [CMD](#cmd)
-    - [ES Module](#es-module)
-    - [CommonJS 和 ES6 Module区别](#commonjs-和-es6-module区别)
-    - [为什么 CommonJS 可以循环引用](#为什么-commonjs-可以循环引用)
-  - [前端构建工具演变流程](#前端构建工具演变流程)
-  - [Webpack](#webpack)
-    - [webpack 发展史](#webpack-发展史)
-    - [打包器](#打包器)
-    - [webpack 优势](#webpack-优势)
-  - [Grunt](#grunt)
-  - [Gulp](#gulp)
-  - [Browserify](#browserify)
-  - [Yeoman](#yeoman)
-  - [Babel](#babel)
-    - [AST](#ast)
-  - [ESbuild](#esbuild)
-    - [为什么快](#为什么快)
-  - [vite](#vite)
-  - [TypeScript](#typescript)
-  - [微前端](#微前端)
-    - [微前端，每个团队都有自己的选择，浏览器加载多个框架和重复的组件代码？](#微前端每个团队都有自己的选择浏览器加载多个框架和重复的组件代码)
+	- [工程化、组件化、模块化](#工程化组件化模块化)
+	- [模块化规范](#模块化规范)
+		- [CommonJS](#commonjs)
+		- [AMD](#amd)
+		- [CMD](#cmd)
+		- [ES Module](#es-module)
+		- [CommonJS 和 ES6 Module区别](#commonjs-和-es6-module区别)
+		- [为什么 CommonJS 可以循环引用](#为什么-commonjs-可以循环引用)
+	- [前端构建工具演变流程](#前端构建工具演变流程)
+	- [Webpack](#webpack)
+		- [webpack 发展史](#webpack-发展史)
+		- [打包器](#打包器)
+		- [webpack 优势](#webpack-优势)
+	- [Grunt](#grunt)
+	- [Gulp](#gulp)
+	- [Browserify](#browserify)
+	- [Yeoman](#yeoman)
+	- [Babel](#babel)
+		- [AST](#ast)
+	- [ESbuild](#esbuild)
+		- [为什么快](#为什么快)
+	- [vite](#vite)
+	- [TypeScript](#typescript)
+	- [微前端](#微前端)
+		- [微前端，每个团队都有自己的选择，浏览器加载多个框架和重复的组件代码？](#微前端每个团队都有自己的选择浏览器加载多个框架和重复的组件代码)
 
 前端工程化
 
@@ -87,9 +87,9 @@
 
 `module` 是通过 new Module() 实例化得到的一个 CommonJS 模块实例
 
-模块输出：`module.exports`
+模块导出：`module.exports`
 
-模块输入：`require`
+模块导入：`require`
 
 ### AMD
 
@@ -116,14 +116,30 @@ ECMAScript Modul 规范
 
 编译时输出，模块解析发生在编译阶段
 
-导入导出
+export 导出，导入时要加 大括号 { }
 
 ```js
-// export => import {} from ''
+// export var a = ""
+// export function b () {}
+// export { a, b }
 
-// export default
+// import { a, b } from ''
+
 // import * from ''
 // import * as m from ''
+// m.a
+// m.b
+```
+
+一个文件里面只能有一个export default语句
+
+```js
+// export default { a, b, c }
+
+// import all from ''
+// all.a
+// all.b
+// all.c
 ```
 
 ### CommonJS 和 ES6 Module区别
