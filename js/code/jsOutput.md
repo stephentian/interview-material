@@ -6,20 +6,23 @@
 # js 输出
 
 - [js 输出](#js-输出)
-  - [作用域](#作用域)
-  - [闭包](#闭包)
-  - [this](#this)
-  - [运算符](#运算符)
-  - [模版字符串](#模版字符串)
-  - [对象字符串](#对象字符串)
-  - [模块导入](#模块导入)
-  - [import 顺序](#import-顺序)
-  - [Object.defineProperty](#objectdefineproperty)
-  - [reduce](#reduce)
-  - [generator 生成器](#generator-生成器)
-  - [async await](#async-await)
-  - [解构赋值](#解构赋值)
-  - [let const](#let-const)
+	- [作用域](#作用域)
+	- [闭包](#闭包)
+	- [this](#this)
+	- [运算符](#运算符)
+	- [模版字符串](#模版字符串)
+	- [对象字符串](#对象字符串)
+	- [模块导入](#模块导入)
+	- [import 顺序](#import-顺序)
+	- [Object.defineProperty](#objectdefineproperty)
+	- [reduce](#reduce)
+	- [generator 生成器](#generator-生成器)
+	- [异步函数](#异步函数)
+		- [promise](#promise)
+	- [async await](#async-await)
+	- [for await](#for-await)
+	- [解构赋值](#解构赋值)
+	- [let const](#let-const)
 
 ## 作用域
 
@@ -226,6 +229,32 @@ console.log(/* 2 */); // JavaScript loves you back ❤️
 // 调用game.next（“true”）.value时，先前的 yield 将被传递给 next（）函数的参数值所取代，在这种情况下为“是”。变量答案的值现在等于 “true”。
 ```
 
+## 异步函数
+
+### promise
+
+```js
+const myPromise = () => Promise.resolve('I have resolved!');
+
+function firstFunction() {
+  myPromise().then(res => console.log(res + "111"));
+  console.log('second1');
+}
+
+async function secondFunction() {
+  console.log(await myPromise());
+  console.log('second2');
+}
+
+firstFunction();
+secondFunction();
+
+// second1
+// I have resolved!111
+// I have resolved!
+// second2
+```
+
 ## async await
 
 ```js
@@ -243,6 +272,25 @@ console.log(data)
 ```
 
 async 函数总是返回一个 promise。调用 getData() 会返回一个 `pending` 状态的 promise.
+
+## for await
+
+```js
+async function* range(start, end) {
+  for (let i = start; i <= end; i++) {
+    yield Promise.resolve(i);
+  }
+}
+
+(async () => {
+  const gen = range(1, 3);
+  for await (const item of gen) {
+    console.log(item);
+  }
+})();
+
+// 1 2 3
+```
 
 ## 解构赋值
 
@@ -280,5 +328,32 @@ function checkAge(age) {
 }
 
 console.log(checkAge(21));
+// ReferenceError
+```
+
+```js
+function compareMembers(person1, person2 = person) {
+  if (person1 !== person2) {
+    console.log('Not the same!');
+  } else {
+    console.log('They are the same!');
+  }
+}
+const person = { name: 'Lydia' };
+compareMembers(person);
+
+// They are the same!
+```
+
+```js
+let name = 'Lydia';
+
+function getName() {
+  console.log(name);
+  let name = 'Sarah';
+}
+
+getName();
+
 // ReferenceError
 ```
