@@ -23,6 +23,7 @@
 	- [for await](#for-await)
 	- [解构赋值](#解构赋值)
 	- [let const](#let-const)
+	- [NaN](#nan)
 
 ## 作用域
 
@@ -231,6 +232,32 @@ console.log(/* 2 */); // JavaScript loves you back ❤️
 
 ## 异步函数
 
+```js
+const myPromise = Promise.resolve(Promise.resolve('Promise'));
+
+function funcOne() {
+  setTimeout(() => console.log('Timeout 1!'), 0);
+  myPromise.then(res => res).then(res => console.log(`${res} 1!`));
+  console.log('Last line 1!');
+}
+
+async function funcTwo() {
+  const res = await myPromise;
+  console.log(`${res} 2!`)
+  setTimeout(() => console.log('Timeout 2!'), 0);
+  console.log('Last line 2!');
+}
+
+funcOne();
+funcTwo();
+// Last line 1!
+// Promise 2!
+// Last line 2!
+// Promise 1!
+// Timeout 1!
+// Timeout 2!
+```
+
 ### promise
 
 ```js
@@ -357,3 +384,23 @@ getName();
 
 // ReferenceError
 ```
+
+## NaN
+
+```js
+const name = 'Lydia Hallie';
+const age = 21;
+
+console.log(Number.isNaN(name));
+console.log(Number.isNaN(age));
+
+// false
+// false
+
+console.log(isNaN(name));
+console.log(isNaN(age));
+// true
+// false
+```
+
+`Number.isNaN` 用于判断是否为 `NaN`
