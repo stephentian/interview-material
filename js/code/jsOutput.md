@@ -6,25 +6,26 @@
 # js 输出
 
 - [js 输出](#js-输出)
-	- [作用域](#作用域)
-	- [闭包](#闭包)
-	- [this](#this)
-	- [运算符](#运算符)
-	- [模版字符串](#模版字符串)
-	- [对象字符串](#对象字符串)
-	- [模块导入导出](#模块导入导出)
-	- [import 顺序](#import-顺序)
-	- [Object.defineProperty](#objectdefineproperty)
-	- [reduce](#reduce)
-	- [generator 生成器](#generator-生成器)
-	- [异步函数](#异步函数)
-		- [promise](#promise)
-	- [async await](#async-await)
-	- [for await](#for-await)
-	- [解构赋值](#解构赋值)
-	- [let const](#let-const)
-	- [NaN](#nan)
-	- [Object.seal \& Object.freeze](#objectseal--objectfreeze)
+  - [作用域](#作用域)
+  - [闭包](#闭包)
+  - [this](#this)
+  - [运算符](#运算符)
+  - [模版字符串](#模版字符串)
+  - [对象字符串](#对象字符串)
+  - [模块导入导出](#模块导入导出)
+  - [import 顺序](#import-顺序)
+  - [Object.defineProperty](#objectdefineproperty)
+  - [reduce](#reduce)
+  - [generator 生成器](#generator-生成器)
+    - [yield 和 yield\*](#yield-和-yield)
+  - [异步函数](#异步函数)
+    - [promise](#promise)
+  - [async await](#async-await)
+  - [for await](#for-await)
+  - [解构赋值](#解构赋值)
+  - [let const](#let-const)
+  - [NaN](#nan)
+  - [Object.seal \& Object.freeze](#objectseal--objectfreeze)
 
 ## 作用域
 
@@ -244,6 +245,43 @@ console.log(/* 2 */); // JavaScript loves you back ❤️
 // 调用game.next（“true”）.value时，先前的 yield 将被传递给 next（）函数的参数值所取代，在这种情况下为“是”。变量答案的值现在等于 “true”。
 ```
 
+### yield 和 yield*
+
+yield 用来返回一个值并暂停函数的执行，等待下一次调用 next() 方法时继续执行；
+yield* 用来委托另一个生成器函数或可迭代对象，将其迭代器对象的值依次返回。
+
+```js
+function* generator() {
+  yield 1;
+  yield 2;
+  yield 3;
+}
+
+const gen = generator();
+
+console.log(gen.next()); // { value: 1, done: false }
+console.log(gen.next()); // { value: 2, done: false }
+console.log(gen.next()); // { value: 3, done: false }
+console.log(gen.next()); // { value: undefined, done: true }
+
+
+function* generator1() {
+  yield 1;
+  yield 2;
+}
+
+function* generator2() {
+  yield* generator1();
+  yield 3;
+}
+const gen2 = generator2();
+
+console.log(gen2.next()); // { value: 1, done: false }
+console.log(gen2.next()); // { value: 2, done: false }
+console.log(gen2.next()); // { value: 3, done: false }
+console.log(gen2.next()); // { value: undefined, done: true }
+```
+
 ## 异步函数
 
 ```js
@@ -295,6 +333,35 @@ secondFunction();
 // I have resolved!
 // second2
 ```
+
+```js
+const promise1 = Promise.resolve('First')
+const promise2 = Promise.resolve('Second')
+const promise3 = Promise.reject('Third')
+const promise4 = Promise.resolve('Fourth')
+
+const runPromises = async () => {
+	const res1 = await Promise.all([promise1, promise2])
+	const res2  = await Promise.all([promise3, promise4])
+	return [res1, res2]
+}
+
+runPromises()
+	.then(res => console.log(res))
+	.catch(err => console.log(err))
+
+// Third
+
+// A: [['First', 'Second'], ['Fourth']]
+// B: [['First', 'Second'], ['Third', 'Fourth']]
+// C: [['First', 'Second']]
+// D: 'Third'
+// D
+```
+
+Promise.all() 方法会等待所有的 Promise 对象都被解决后才会返回结果，所以在等待 Promise.all([promise3, promise4]) 返回结果的过程中，promise3 的错误原因会被抛出，导致整个 Promise.all() 返回一个被拒绝的 Promise 对象。
+
+使用 .catch() 方法处理该错误时，控制台只会打印出该错误原因字符串 'Third'，而不是一个数组。
 
 ## async await
 
