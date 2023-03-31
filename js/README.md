@@ -82,7 +82,7 @@
 
 ### 类型
 
-基本类型: undefined, null, boolean, number, string
+基本类型: undefined, null, boolean, number, string, Symbol
 
 引用类型: function, object, array
 

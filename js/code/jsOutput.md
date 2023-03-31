@@ -444,4 +444,21 @@ Object.freeze(person);
 // Object.freeze 
 // 无法添加、修改或删除任何属性
 // 但它只是简单地冻结对象，如果属性是一个对象，那这个属性是可以修改的
+
+
+## 箭头函数
+
+```js
+let config = {
+  alert: setInterval(() => {
+    console.log('Alert!');
+  }, 1000),
+};
+
+config = null;
+
+// setInterval 回调仍将每秒调用一次
+// 当 config 对象被设置为 null 时，对象本身被释放，但是属性 alert 中的定时器函数并没有被释放。因为该定时器函数被设置为箭头函数，它引用了外部的作用域，即 config 对象，所以在定时器内部依然可以访问 config 对象。
+
+// 因此，尽管 config 对象已经被释放，但是定时器函数依然可以每秒调用一次，并输出 'Alert!'。
 ```
