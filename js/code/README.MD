@@ -12,6 +12,7 @@
 	- [call, apply, bind](#call-apply-bind)
 	- [判断 Array 类型](#判断-array-类型)
 	- [实现一个 const](#实现一个-const)
+	- [实现一个 JSON.parse](#实现一个-jsonparse)
 
 ## 代码输出问题
 
@@ -130,4 +131,43 @@ function __const(data, value) {
 __const('a', 10)
 a = 10 // 报错
 console.log(a)
+```
+
+## 实现一个 JSON.parse
+
+```js
+function parse (json) {
+    return eval("(" + json + ")");
+}
+
+// 相关地址：https://link.juejin.cn/?target=https%3A%2F%2Fgithub.com%2Fdouglascrockford%2FJSON-js%2Fblob%2Fmaster%2Fjson2.js%23L373
+
+// 调用核心的 next 函数，逐个读取字符
+var next = function (c) {
+	if (c && c !== ch) {
+			error("Expected '" + c + "' instead of '" + ch + "'");
+	}
+
+	ch = text.charAt(at);
+	at += 1;
+	return ch;
+};
+value = function () {
+    white();
+    // 根据当前字符是什么，我们便能推导出后面应该接的是什么类型
+    switch (ch) {
+        case "{":
+            return object();
+        case "[":
+            return array();
+        case "\"":
+            return string();
+        case "-":
+            return number();
+        default:
+            return (ch >= "0" && ch <= "9")
+                ? number()
+                : word();
+    }
+};
 ```
