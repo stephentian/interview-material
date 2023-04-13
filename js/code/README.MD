@@ -1,18 +1,18 @@
 # 代码题
 
 - [代码题](#代码题)
-	- [代码输出问题](#代码输出问题)
-	- [大数相加](#大数相加)
-	- [EventEmitter](#eventemitter)
-	- [异步并发调度器](#异步并发调度器)
-	- [柯里化](#柯里化)
-	- [防抖和节流](#防抖和节流)
-	- [深拷贝](#深拷贝)
-	- [数组扁平化](#数组扁平化)
-	- [call, apply, bind](#call-apply-bind)
-	- [判断 Array 类型](#判断-array-类型)
-	- [实现一个 const](#实现一个-const)
-	- [实现一个 JSON.parse](#实现一个-jsonparse)
+  - [代码输出问题](#代码输出问题)
+  - [大数相加](#大数相加)
+  - [EventEmitter](#eventemitter)
+  - [异步并发调度器](#异步并发调度器)
+  - [柯里化](#柯里化)
+  - [防抖和节流](#防抖和节流)
+  - [深拷贝](#深拷贝)
+  - [数组扁平化](#数组扁平化)
+  - [call, apply, bind](#call-apply-bind)
+  - [判断 Array 类型](#判断-array-类型)
+  - [实现一个 const](#实现一个-const)
+  - [实现一个 JSON.parse](#实现一个-jsonparse)
 
 ## 代码输出问题
 
@@ -152,7 +152,7 @@ var next = function (c) {
 	at += 1;
 	return ch;
 };
-value = function () {
+var value = function () {
     white();
     // 根据当前字符是什么，我们便能推导出后面应该接的是什么类型
     switch (ch) {
