@@ -148,7 +148,7 @@ const c = { key: 'c' };
 a[b] = 123;
 a[c] = 456;
 
-console.log(a[b]);
+console.log(a[b])
 // 456
 // a["[object Object]"] = 123
 // a["[object Object]"] = 456
