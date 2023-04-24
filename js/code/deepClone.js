@@ -12,6 +12,33 @@ function clone(target) {
   }
 }
 
+// 测试
+
+// 生成指定深度和每层广度的代码
+function createData(deep, breadth = 0) {
+	var data = {}
+	var temp = data
+
+	for (var i = 0; i < deep; i++) {
+		temp = temp['data'] = {}
+		for (var j = 0; j < breadth; j++) {
+			temp[j] = j
+		}
+	}
+
+	return data
+}
+// createData(1, 2); // 1层深度，每层有2个数据 {data: {0: 0, 1: 1}}
+
+// 一行代码的深拷贝
+function cloneJSON(source) {
+	return JSON.parse(JSON.stringify(source))
+}
+// 递归爆栈
+// cloneJSON(createData(10000)); // Maximum call stack size exceeded
+// 循环引用 报错
+// cloneJSON(a) // Uncaught TypeError: Converting circular structure to JSON
+
 // 深拷贝优化
 // 正则、时间类型处理
 // 函数处理
