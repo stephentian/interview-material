@@ -1,7 +1,7 @@
 /**
  * author: stephentian
  * email: tianre96@gmail.com
- * day: 2023-02-23
+ * day: 2023-04-25
  **/
 
 // 扁平化
@@ -14,7 +14,28 @@ function flattenEs6(params) {
   return params.flat(Infinity)
 }
 
-// 一、递归
+// 2. 字符串化
+
+let str = JSON.stringify(target)
+
+// 2.1 split
+
+arr2 = str.replace(/(\[|\])/g, '').split(',')
+// 2.2 replace + JSON.parse
+
+str = str.replace(/(\[|\])/g, '')
+str = '[' + str + ']'
+arr3 = JSON.parse(str)
+
+// 4. reduce
+
+function flattern(arr) {
+  return arr.reduce((pre, cur) => {
+    return pre.concat(Array.isArray(cur) ? flattern(cur) : cur)
+  }, [])
+}
+
+// 递归
 
 // 利用 map
 
