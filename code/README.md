@@ -4,6 +4,7 @@
   - [可拖拽盒子](#可拖拽盒子)
   - [lazyMan](#lazyman)
   - [版本号排序](#版本号排序)
+  - [遍历 dom 节点](#遍历-dom-节点)
 
 ## 可拖拽盒子
 
@@ -32,4 +33,44 @@ arr.sort((a,b) => {
     }
 })
 console.log(arr);
+```
+
+## 遍历 dom 节点
+
+```js
+// 递归
+// function traversal(node) {
+//     if (node && node.nodeType === 1) {
+//         console.log(node.tagName)
+//     }
+
+//     let { childNodes } = node
+//     let item
+//     for (let i = 0; i<childNodes.length; i++) {
+//         item = childNodes[i]
+//         if (item.nodeType === 1) {
+//             traversal(item)
+//         }
+//     }
+// }
+
+// 广度遍历
+function traversal(node) {
+    const stack = []
+    stack.push(node)
+
+    while (stack.length > 0) {
+        const ele = stack.pop()
+        if (ele && ele.nodeType === 1) {
+            console.log(ele.tagName)
+
+            const { children } = ele
+            const len = children.length
+
+            for (let i = 0; i < len; i++) {
+                stack.unshift(children[i])
+            }
+        }
+    }
+}
 ```
