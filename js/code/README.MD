@@ -3,7 +3,7 @@
 - [代码题](#代码题)
   - [代码输出问题](#代码输出问题)
   - [大数相加](#大数相加)
-  - [EventEmitter](#eventemitter)
+  - [事件订阅 EventEmitter](#事件订阅-eventemitter)
   - [异步并发调度器](#异步并发调度器)
   - [柯里化](#柯里化)
   - [防抖和节流](#防抖和节流)
@@ -28,7 +28,7 @@
 - 4. 当前位 sum = temp % 10 + sum
 - 5. 最终 sum = carry === '1' ? '1' + sum : sum
 
-## EventEmitter
+## 事件订阅 EventEmitter
 
 链接: [2.EventEmitter.js](2.EventEmitter.js)
 

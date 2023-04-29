@@ -35,6 +35,7 @@
     - [this](#this)
     - [算术运算符](#算术运算符)
     - [属性访问](#属性访问)
+  - [typeof](#typeof)
   - [语句和声明](#语句和声明)
     - [for in 和 for of](#for-in-和-for-of)
     - [for await of](#for-await-of)
@@ -752,6 +753,19 @@ D: ReferenceError
 将一个对象设置为对象 a 的键, 其值为 123.
 因为这个对象自动转换为字符串化时，它变成了 `[Object object]`.
 打印 `a[b]`, 它实际上是 `a["Object object"]`
+
+## typeof
+
+输出结果
+
+1. `number`
+2. `string`
+3. `boolean`
+4. `undefined`
+5. `object`
+6. `function`
+7. `symbol`
+``
 
 ## 语句和声明
 
