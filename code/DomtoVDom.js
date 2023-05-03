@@ -44,7 +44,8 @@ function _render(vnode) {
       dom.setAttribute(key, value);
     });
   }
-  // 子数组进行递归操作 这一步是关键
+
+  // 子数组进行递归操作
   vnode.children.forEach((child) => dom.appendChild(_render(child)));
   return dom;
 }
