@@ -35,7 +35,7 @@ function _render(vnode) {
   if (typeof vnode === "string") {
     return document.createTextNode(vnode);
   }
-  // 普通DOM
+
   const dom = document.createElement(vnode.tag);
   if (vnode.attrs) {
     // 遍历属性
