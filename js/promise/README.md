@@ -1,5 +1,11 @@
 # promise
 
+- [promise](#promise)
+	- [简介](#简介)
+	- [基本用法](#基本用法)
+	- [Promise.all](#promiseall)
+		- [使用 Promise.all 进行 5 个请求，若其中一个失败了，怎么让其他4个成功返回？](#使用-promiseall-进行-5-个请求若其中一个失败了怎么让其他4个成功返回)
+
 ## 简介
 
 Promise 是异步编程的一种解决方案。类似一个容器，里面保存着三种状态，到了某种状态才会结束。
@@ -23,5 +29,31 @@ const promise = new Promise((resolve, reject) => {
 	} else {
 		reject('error')
 	}
+})
+```
+
+## Promise.all
+
+### 使用 Promise.all 进行 5 个请求，若其中一个失败了，怎么让其他4个成功返回？
+
+每个promise，都会在执行成功的时候resolve，执行失败时 reject，那么，只要我们在执行失败的时候，也返回一个变量而不执行 reject;
+
+Promise.all 是接收一个数组，使用 map 方法去掉数组里面每一个 promise 执行失败时的 reject
+
+```js
+let p1 = Promise.resolve(1)
+let p2 = Promise.resolve(2)
+let p3 = new Promise((resolve, reject) => {
+  setTimeout(() => {
+     reject(3)
+  }, 2000);
+})
+
+let all = Promise.all([p1, p2, p3].map((p) => p.then(res => res).catch(err => false)))
+
+all.then((res) => {
+  console.log(res, res.filter(Boolean)) // 2s后打印 [1, 2, false], [1, 2]
+}).catch((err) => {
+  console.log('err', err)
 })
 ```
