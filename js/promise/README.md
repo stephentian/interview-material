@@ -52,7 +52,7 @@ let p3 = new Promise((resolve, reject) => {
 let all = Promise.all([p1, p2, p3].map((p) => p.then(res => res).catch(err => false)))
 
 all.then((res) => {
-  console.log(res, res.filter(Boolean)) // 2s后打印 [1, 2, false], [1, 2]
+  console.log(res, res.filter(Boolean)) // 2s 后打印 [1, 2, false], [1, 2]
 }).catch((err) => {
   console.log('err', err)
 })
