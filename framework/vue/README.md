@@ -16,6 +16,7 @@
     - [变化](#变化)
     - [Vue3 组件通信](#vue3-组件通信)
     - [为什么 Vue3 不使用 defineProperty](#为什么-vue3-不使用-defineproperty)
+    - [Vue3.0性能提升主要是通过哪几方面体现的？](#vue30性能提升主要是通过哪几方面体现的)
   - [Vue-Router](#vue-router)
   - [Vuex](#vuex)
     - [Flux 架构](#flux-架构)
@@ -307,6 +308,13 @@ LRU：[LRU.js](../../algorithm/LRU.js)
 - 2. `Object.defineProperty` 是对属性进行劫持，需要遍历对象的每个属性；`Proxy` 直接代理对象
 - 3. 对象新增属性，要重新遍历对象，对新对象使用 `Object.defineProperty` 进行劫持
 - 4. `Proxy` 为新标准，浏览器会对其进行优化。
+
+### Vue3.0性能提升主要是通过哪几方面体现的？
+
+- 在 bundle 包大小方面（tree-shaking 减少了 41% 的体积）
+- 初始渲染速度方面（快了 55%）
+- 更新速度方面（快了 133%）
+- 内存占用方面（减少了 54%）
 
 ## Vue-Router
 
