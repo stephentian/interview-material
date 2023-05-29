@@ -16,6 +16,8 @@
 
 ### React 发展历程
 
+2013 React 发布
+
 2017 React 16
 
   1. React Fiber 架构。切片架构
@@ -23,6 +25,10 @@
 2019 React 16.8
 
   1. React Hooks, 无需编写类即可使用状态和其他React功能的方法，不会产生 JSX 嵌套地狱
+
+2021 React 17
+
+2022 React 18
 
 ### React 生命周期
 
