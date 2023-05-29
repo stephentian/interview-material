@@ -6,11 +6,17 @@
     - [React 生命周期](#react-生命周期)
     - [React Fiber架构](#react-fiber架构)
     - [React 请求放哪个生命周期中](#react-请求放哪个生命周期中)
+    - [React 设计思想](#react-设计思想)
+    - [JSX](#jsx)
   - [setState](#setstate)
     - [setState 到底是异步还是同步](#setstate-到底是异步还是同步)
     - [setState 输出顺序](#setstate-输出顺序)
   - [React 组件之间的通信](#react-组件之间的通信)
   - [为什么 React bind(this)](#为什么-react-bindthis)
+  - [React 版本](#react-版本)
+    - [React 18](#react-18)
+      - [特征更新](#特征更新)
+  - [Hooks](#hooks)
 
 ## 基础知识
 
@@ -61,6 +67,18 @@ React16启用了全新的架构，叫做Fiber。目的是解决大型React项目
 
 官方推荐：`componentDidMount`
 有特殊需要提前请求，也可以在 `constructor` 中请求。
+
+### React 设计思想
+
+1. 组件化
+2. 数据驱动视图
+3. 虚拟 DOM
+
+### JSX
+
+JSX是react的语法糖，它允许在html中写JS，它不能被浏览器直接识别，需要通过webpack、babel之类的编译工具转换为JS执行
+
+- 只要使用了jsx，就需要引用react，因为jsx本质就是React.createElement
 
 ## setState
 
@@ -163,3 +181,16 @@ class Example extends React.Component {
 解决方法：箭头函数
 
 ES6 中, 箭头函数 this 默认指向函数的宿主对象(或者函数所绑定的对象)
+
+## React 版本
+
+### React 18
+
+#### 特征更新
+
+1. setState 自动批处理
+2. 引入了新的root API，支持new concurrent renderer(并发模式的渲染)
+3. 去掉了对IE浏览器的支持
+4. flushSync 退出批量更新
+
+## Hooks
