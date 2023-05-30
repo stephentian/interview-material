@@ -199,4 +199,8 @@ ES6 中, 箭头函数 this 默认指向函数的宿主对象(或者函数所绑�
 3. 去掉了对IE浏览器的支持
 4. flushSync 退出批量更新
 
+
+2. 之前: `ReactDom.render` 将应用组件渲染到页面的根元素
+   1. 当前: 通过 `ReactDom.creatRoot` 创建根节点对象
+
 ## Hooks
