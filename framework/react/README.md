@@ -212,6 +212,8 @@ class Example extends React.Component {
    <!-- rootNode.addEventListener(); -->
    ```
 
+3. 废弃三个 Will 除了组件销毁那个，componentWillMount、componentWillReceiveProps、componentWillUpdate
+
 ### React 18
 
 #### 特征更新
@@ -243,6 +245,8 @@ class Example extends React.Component {
 ## Hooks
 
 React v16.8.0 引入的新特性，它使函数组件能够拥有状态和其他 React 特性。
+
+在 React 中，useState 以及任何其他以“use”开头的函数都被称为 Hook。只能在组件或自定义 Hook 的最顶层调用。
 
 ### Hooks API
 
