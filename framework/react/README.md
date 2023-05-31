@@ -7,16 +7,21 @@
     - [React Fiber架构](#react-fiber架构)
     - [React 请求放哪个生命周期中](#react-请求放哪个生命周期中)
     - [React 设计思想](#react-设计思想)
+    - [React 三种开发模式](#react-三种开发模式)
     - [JSX](#jsx)
   - [setState](#setstate)
     - [setState 到底是异步还是同步](#setstate-到底是异步还是同步)
     - [setState 输出顺序](#setstate-输出顺序)
   - [React 组件之间的通信](#react-组件之间的通信)
-  - [为什么 React bind(this)](#为什么-react-bindthis)
   - [React 版本](#react-版本)
+    - [React 16](#react-16)
+    - [React 17](#react-17)
     - [React 18](#react-18)
       - [特征更新](#特征更新)
   - [Hooks](#hooks)
+  - [常见问题](#常见问题)
+    - [StrictMode 模式是什么](#strictmode-模式是什么)
+    - [为什么 React bind(this)](#为什么-react-bindthis)
 
 ## 基础知识
 
@@ -80,11 +85,17 @@ React16启用了全新的架构，叫做Fiber。目的是解决大型React项目
 2. 数据驱动视图
 3. 虚拟 DOM
 
+### React 三种开发模式
+
+- Legacy 模式：通过 ReactDom.reander(.rootNode) 创建的应用遵循该模式。默认关闭StrictMode，和以前一样
+- Blocking 模式:通过 ReactDOM.createBlockingRoot(rootNode).render()，默认开启StrictMode，作为向第三种模式迁移的中间态(可以体验并发模式的部分功能)。
+- Concurrent 模式：通过 ReactDOM.createRoot(rootNode).render() 创建的应用，默认开启StrictMode ，这种模式开启了所有的新功能。
+
 ### JSX
 
 JSX是react的语法糖，它允许在html中写JS，它不能被浏览器直接识别，需要通过webpack、babel之类的编译工具转换为JS执行
 
-- 只要使用了jsx，就需要引用react，因为jsx本质就是React.createElement
+- 只要使用了jsx，就需要引用react，因为 jsx 本质就是React.createElement
 
 ## setState
 
@@ -168,7 +179,47 @@ class Example extends React.Component {
 4. 发布订阅模式
 5. 全局状态管理工具：Redux、Mobx
 
-## 为什么 React bind(this)
+## React 版本
+
+### React 16
+
+1. hooks
+2. memo, lazy, suspense
+3. profiler
+4. 
+
+### React 17
+
+1. 全新的 jsx 转换
+   之前: React中如果使用JSX，则必须导入React `import React from 'react';`, JSX 会转换为 React.createElement()
+   当前: 编写 JSX 代码将不再需要手动导入 React 包，编译器会针对 JSX 代码进行自动导入（React/jsx-runtime）
+
+### React 18
+
+#### 特征更新
+
+1. setState 自动批处理
+2. 引入了新的root API，支持new concurrent renderer(并发模式的渲染)
+3. 去掉了对IE浏览器的支持
+4. flushSync 退出批量更新
+
+
+
+5. 之前: `ReactDom.render` 将应用组件渲染到页面的根元素
+   1. 当前: 通过 `ReactDom.creatRoot` 创建根节点对象
+
+## Hooks
+
+
+## 常见问题
+
+### StrictMode 模式是什么
+
+StrictMode，16.3 版本发布，为了规范代码，
+
+针对开发者编写的“不符合并发更新规范的代码”给出提示，逐步引导开发者编写规范的代码。比如使用以 will 开头的生命周期就会给出对应的报错提示。
+
+### 为什么 React bind(this)
 
 原因在于 JavaScript 不在 React
 
@@ -187,20 +238,3 @@ class Example extends React.Component {
 解决方法：箭头函数
 
 ES6 中, 箭头函数 this 默认指向函数的宿主对象(或者函数所绑定的对象)
-
-## React 版本
-
-### React 18
-
-#### 特征更新
-
-1. setState 自动批处理
-2. 引入了新的root API，支持new concurrent renderer(并发模式的渲染)
-3. 去掉了对IE浏览器的支持
-4. flushSync 退出批量更新
-
-
-2. 之前: `ReactDom.render` 将应用组件渲染到页面的根元素
-   1. 当前: 通过 `ReactDom.creatRoot` 创建根节点对象
-
-## Hooks
