@@ -189,7 +189,7 @@ ES6 中, 箭头函数 this 默认指向函数的宿主对象(或者函数所绑�
 #### 特征更新
 
 1. setState 自动批处理
-2. 引入了新的root API，支持new concurrent renderer(并发模式的渲染)
+2. 引入了新的 root API，支持 new concurrent renderer(并发模式的渲染)
 3. 去掉了对IE浏览器的支持
 4. flushSync 退出批量更新
 
