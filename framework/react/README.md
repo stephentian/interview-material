@@ -20,6 +20,7 @@
   - [HOC 高阶组件](#hoc-高阶组件)
   - [Hooks](#hooks)
     - [Hooks API](#hooks-api)
+      - [useState](#usestate)
   - [常见问题](#常见问题)
     - [StrictMode 模式是什么](#strictmode-模式是什么)
     - [React 请求放哪个生命周期中](#react-请求放哪个生命周期中)
@@ -250,16 +251,27 @@ React v16.8.0 引入的新特性，它使函数组件能够拥有状态和其他
 
 ### Hooks API
 
-useState：用于在函数组件中添加状态。
-useEffect：用于在函数组件中添加副作用。
-useContext：用于在函数组件中访问 context。
-useReducer：用于在函数组件中管理复杂的状态。
-useCallback：用于在函数组件中缓存回调函数，以避免不必要的重新渲染。
-useMemo：用于在函数组件中缓存值，以避免不必要的重新计算。
-useRef：用于在函数组件中存储可变的值。
-useImperativeHandle：用于在函数组件中公开 ref。
-useLayoutEffect：与 useEffect 相同，但在 DOM 更新之前同步执行。
-useDebugValue：用于在自定义 Hooks 中显示调试信息。
+useState: 用于在函数组件中添加状态。
+useEffect: 用于在函数组件中添加副作用。
+useContext: 用于在函数组件中访问 context。
+useReducer: 用于在函数组件中管理复杂的状态。
+useCallback: 用于在函数组件中缓存回调函数，以避免不必要的重新渲染。
+useMemo: 用于在函数组件中缓存值，以避免不必要的重新计算。
+useRef: 用于在函数组件中存储可变的值。
+useImperativeHandle: 用于在函数组件中公开 ref。
+useLayoutEffect: 与 useEffect 相同，但在 DOM 更新之前同步执行。
+useDebugValue: 用于在自定义 Hooks 中显示调试信息。
+
+#### useState
+
+useState 的唯一参数是 state 变量的初始值
+
+当你调用 useState 时，你是在告诉 React 你想让这个组件记住一些东西: 
+
+`const [index, setIndex] = useState(0);`
+
+- state 变量 (index) 会保存上次渲染的值。
+- state setter 函数 (setIndex) 可以更新 state 变量并触发 React 重新渲染组件。
 
 ## 常见问题
 
