@@ -247,7 +247,7 @@ class Example extends React.Component {
 
 React v16.8.0 引入的新特性，它使函数组件能够拥有状态和其他 React 特性。
 
-在 React 中，useState 以及任何其他以“use”开头的函数都被称为 Hook。只能在组件或自定义 Hook 的最顶层调用。
+在 React 中，useState 以及任何其他以 “use” 开头的函数都被称为 Hook。只能在组件或自定义 Hook 的最顶层调用。
 
 ### Hooks API
 
@@ -264,9 +264,11 @@ useDebugValue: 用于在自定义 Hooks 中显示调试信息。
 
 #### useState
 
+useState 是一个 React Hook，它用于在函数组件中添加状态。当你调用 useState 时，它会返回一个数组，其中第一个元素是当前状态的值，第二个元素是一个回调函数，用于更新状态的值。当你调用第二个元素时，React 会比较新旧状态的值是否相同，如果不同，则会触发组件的重新渲染。
+
 useState 的唯一参数是 state 变量的初始值
 
-当你调用 useState 时，你是在告诉 React 你想让这个组件记住一些东西: 
+当你调用 useState 时，你是在告诉 React 你想让这个组件记住一些东西：
 
 `const [index, setIndex] = useState(0);`
 
