@@ -25,6 +25,7 @@
     - [StrictMode 模式是什么](#strictmode-模式是什么)
     - [React 请求放哪个生命周期中](#react-请求放哪个生命周期中)
     - [为什么 React bind(this)](#为什么-react-bindthis)
+    - [为什么 React 不推荐直接修改 state](#为什么-react-不推荐直接修改-state)
 
 ## 基础知识
 
@@ -312,3 +313,9 @@ StrictMode，16.3 版本发布，为了规范代码，
 解决方法：箭头函数
 
 ES6 中, 箭头函数 this 默认指向函数的宿主对象(或者函数所绑定的对象)
+
+### 为什么 React 不推荐直接修改 state
+
+1. Debugging：直接修改 state 可能会导致不可预测的行为和难以调试的问题。因为 React 会将组件的 state 看作是一致的，如果直接修改，可能会导致状态不一致，从而导致错误的行为和难以查找的调试问题。
+2. 性能问题：直接修改 state 可能会导致性能问题，因为 React 需要在组件层面进行Diff和Re-render。如果直接在 state 中修改数据，React 无法检测到变化，导致组件不会重新渲染。
+3. 更简单实现：React 不像 vue，不依赖数据变化，不需要劫持数据的属性。
