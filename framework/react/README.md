@@ -4,6 +4,7 @@
   - [基础知识](#基础知识)
     - [React 发展历程](#react-发展历程)
     - [React 生命周期](#react-生命周期)
+    - [React 实例过程](#react-实例过程)
     - [React Fiber架构](#react-fiber架构)
     - [React 设计思想](#react-设计思想)
     - [React 三种开发模式](#react-三种开发模式)
@@ -77,6 +78,8 @@ getSnapshotBeforeUpdate(prevProps, prevState)：在 render 方法之后、更新
 componentDidUpdate(prevProps, prevState, snapshot)：在组件更新后被调用，可以进行 DOM 操作、网络请求或更新组件的状态等操作。
 
 componentWillUnmount：在组件卸载之前被调用，可以清除定时器、移除事件监听器或取消网络请求等操作。
+
+### React 实例过程
 
 ### React Fiber架构
 
@@ -317,5 +320,5 @@ ES6 中, 箭头函数 this 默认指向函数的宿主对象(或者函数所绑�
 ### 为什么 React 不推荐直接修改 state
 
 1. Debugging：直接修改 state 可能会导致不可预测的行为和难以调试的问题。因为 React 会将组件的 state 看作是一致的，如果直接修改，可能会导致状态不一致，从而导致错误的行为和难以查找的调试问题。
-2. 性能问题：直接修改 state 可能会导致性能问题，因为 React 需要在组件层面进行Diff和Re-render。如果直接在 state 中修改数据，React 无法检测到变化，导致组件不会重新渲染。
+2. 性能问题：直接修改 state 可能会导致性能问题，因为 React 需要在组件层面进行 Diff 和 Re-render。如果直接在 state 中修改数据，React 无法检测到变化，导致组件不会重新渲染。
 3. 更简单实现：React 不像 vue，不依赖数据变化，不需要劫持数据的属性。
