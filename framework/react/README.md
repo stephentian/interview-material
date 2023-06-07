@@ -4,6 +4,7 @@
   - [基础知识](#基础知识)
     - [React 发展历程](#react-发展历程)
     - [React 生命周期](#react-生命周期)
+    - [React 实例过程](#react-实例过程)
     - [React Fiber架构](#react-fiber架构)
     - [React 设计思想](#react-设计思想)
     - [React 三种开发模式](#react-三种开发模式)
@@ -77,6 +78,8 @@ getSnapshotBeforeUpdate(prevProps, prevState)：在 render 方法之后、更新
 componentDidUpdate(prevProps, prevState, snapshot)：在组件更新后被调用，可以进行 DOM 操作、网络请求或更新组件的状态等操作。
 
 componentWillUnmount：在组件卸载之前被调用，可以清除定时器、移除事件监听器或取消网络请求等操作。
+
+### React 实例过程
 
 ### React Fiber架构
 
