@@ -51,13 +51,13 @@
 挂载阶段
 
 - constructor
-- getDerivedStateFromPorps
+- getDerivedStateFromProps
 - render
 - componentDidMount
 
 更新阶段
 
-- getDerivedStateFromPorps
+- getDerivedStateFromProps
 - shouldComponentUpdate
 - render
 - getSnapshotBeforeUpdate
