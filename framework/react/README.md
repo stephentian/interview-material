@@ -81,6 +81,10 @@ componentWillUnmount：在组件卸载之前被调用，可以清除定时器、
 
 ### React 实例过程
 
+1. 创建一个 React 元素：首先，你需要使用 JSX（一种类似 HTML 的语法）来创建一个 React 元素。这个元素可以是任何 React 组件，例如一个简单的文本组件、一个包含子元素的组件等等。
+2. 创建 React 实例：使用 ReactDOM.render() 方法，将创建的 React 元素渲染到一个 DOM 元素中。ReactDOM.render() 方法需要两个参数：要渲染的 React 元素和一个 DOM 元素。这个 DOM 元素可以是页面中的一个 div 元素或者是一个已经存在的元素。
+3. 更新 React 实例：当需要更新 React 实例时，你需要调用 setState() 方法来更新组件的状态。React 会根据新的状态重新渲染组件，并更新 UI。
+
 ### React Fiber架构
 
 React16启用了全新的架构，叫做 Fiber。目的是解决大型React项目的性能问题，再顺手解决之前的一些痛点。
