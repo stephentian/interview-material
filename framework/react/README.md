@@ -22,6 +22,7 @@
   - [Hooks](#hooks)
     - [Hooks API](#hooks-api)
       - [useState](#usestate)
+      - [useEffects](#useeffects)
   - [常见问题](#常见问题)
     - [StrictMode 模式是什么](#strictmode-模式是什么)
     - [React 请求放哪个生命周期中](#react-请求放哪个生命周期中)
@@ -282,6 +283,30 @@ useState 的唯一参数是 state 变量的初始值
 
 - state 变量 (index) 会保存上次渲染的值。
 - state setter 函数 (setIndex) 可以更新 state 变量并触发 React 重新渲染组件。
+
+#### useEffects
+
+useEffect 是一个用于在组件渲染后执行副作用（如数据获取、订阅和 DOM 操作等）的函数。它是 React Hooks API 中最常用的一个函数，可以帮助开发者管理组件的状态和副作用。
+
+useEffect 接受两个参数：一个函数和一个数组。函数是需要执行的效果逻辑，数组则是一个可选的依赖数组，用于指定在哪些依赖项发生变化时重新运行 useEffect。
+
+```js
+// 不带依赖项
+useEffect(() => {  
+  // 在组件渲染后执行的效果逻辑  
+});
+```
+
+```js
+// 带依赖项
+useEffect(() => {  
+  // 在依赖项发生变化时重新运行 useEffect 的效果逻辑  
+}, [dependencies]);
+```
+
+dependencies 是一个数组，用于指定在哪些依赖项发生变化时重新运行 useEffect。如果依赖项发生变化，useEffect 将会重新执行；如果没有指定依赖项，或者所有依赖项都没有发生变化，useEffect 将不会重新执行。
+
+**注意：** useEffect 在每次组件渲染后都会执行，因此应该避免在 useEffect 中执行过多的副作用操作，以免影响性能。此外，为了避免副作用操作之间的相互依赖，应该将副作用操作拆分成多个 useEffect 函数，并在依赖项中分别指定。
 
 ## 常见问题
 
