@@ -28,6 +28,7 @@
     - [React 请求放哪个生命周期中](#react-请求放哪个生命周期中)
     - [为什么 React bind(this)](#为什么-react-bindthis)
     - [为什么 React 不推荐直接修改 state](#为什么-react-不推荐直接修改-state)
+    - [useEffect 和 useCallback 有什么差异？](#useeffect-和-usecallback-有什么差异)
 
 ## 基础知识
 
@@ -351,3 +352,11 @@ ES6 中, 箭头函数 this 默认指向函数的宿主对象(或者函数所绑�
 1. Debugging：直接修改 state 可能会导致不可预测的行为和难以调试的问题。因为 React 会将组件的 state 看作是一致的，如果直接修改，可能会导致状态不一致，从而导致错误的行为和难以查找的调试问题。
 2. 性能问题：直接修改 state 可能会导致性能问题，因为 React 需要在组件层面进行 Diff 和 Re-render。如果直接在 state 中修改数据，React 无法检测到变化，导致组件不会重新渲染。
 3. 更简单实现：React 不像 vue，不依赖数据变化，不需要劫持数据的属性。
+
+### useEffect 和 useCallback 有什么差异？
+
+两个都是用于处理函数组件中副作用的 hook。
+
+1. 作用不同：useCallback 用于创建缓存的函数，以提高组件性能；useEffect 用于在组件渲染后执行副作用操作，如数据获取、订阅和 DOM 操作等。
+2. 参数不同：useCallback 接受两个参数，一个是待缓存的函数，另一个是依赖项数组；useEffect 接受一个函数和一个依赖项数组（可选参数）。
+3. 执行方式不同：useCallback 在依赖项发生变化时重新创建缓存函数；useEffect 在依赖项发生变化时重新执行副作用操作。
