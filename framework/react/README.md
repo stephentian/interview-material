@@ -23,6 +23,7 @@
     - [Hooks API](#hooks-api)
       - [useState](#usestate)
   - [Redux](#redux)
+    - [Redux 工作原理](#redux-工作原理)
   - [常见问题](#常见问题)
     - [StrictMode 模式是什么](#strictmode-模式是什么)
     - [React 请求放哪个生命周期中](#react-请求放哪个生命周期中)
@@ -233,7 +234,11 @@ class Example extends React.Component {
 - 去掉了对IE浏览器的支持
 - flushSync 退出批量更新
 
-1. 引入了新的渲染 API
+1. setState 自动批处理  
+   react17，只有 react 事件会进行批处理，原生js事件、promise，setTimeout、setInterval不会  
+   react18，将所有事件都进行批处理，即多次 setState 会被合并为1次执行，提高了性能，在数据层，将多个状态更新合并成一次处理（在视图层，将多次渲染合并成一次渲染）
+
+2. 引入了新的渲染 API
    之前: `ReactDom.render` 将应用组件渲染到页面的根元素
    当前: 通过 `ReactDom.creatRoot` 创建根节点对象
 
@@ -293,6 +298,16 @@ Redux 三个原则
 1. 单一事实来源：整个应用程序的状态存储在单个存储中的对象/状态树中。单一状态树可以更轻松地跟踪随时间的变化以及调试或检查应用程序。
 2. 状态是只读的： 改变状态的唯一方法是触发一个动作。操作是描述更改的普通 JS 对象。就像状态是数据的最小表示一样，动作是对该数据更改的最小表示。
 3. 使用纯函数进行更改： 为了指定状态树如何通过操作转换，您需要纯函数。纯函数是那些返回值仅取决于其参数值的函数。
+
+### Redux 工作原理
+
+使用单例模式实现
+
+Store 一个全局状态管理对象
+
+Reducer 一个纯函数，根据旧 state 和 props 更新新 state
+
+Action 改变状态的唯一方式是 dispatch action
 
 ## 常见问题
 
