@@ -29,6 +29,7 @@
     - [React 请求放哪个生命周期中](#react-请求放哪个生命周期中)
     - [为什么 React bind(this)](#为什么-react-bindthis)
     - [为什么 React 不推荐直接修改 state](#为什么-react-不推荐直接修改-state)
+    - [为什么React自定义组件首字母要大写](#为什么react自定义组件首字母要大写)
 
 ## 基础知识
 
@@ -109,9 +110,14 @@ React16启用了全新的架构，叫做 Fiber。目的是解决大型React项�
 
 ### JSX
 
-JSX是react的语法糖，它允许在html中写JS，它不能被浏览器直接识别，需要通过webpack、babel之类的编译工具转换为JS执行
+JSX 是 react 的语法糖，它允许在html中写JS，它不能被浏览器直接识别，需要通过webpack、babel之类的编译工具转换为JS执行
 
-- 只要使用了jsx，就需要引用react，因为 jsx 本质就是React.createElement
+- 只要使用了jsx，就需要引用 react，因为 jsx 本质就是 React.createElement
+
+JSX与JS的区别：
+
+- JS可以被打包工具直接编译，不需要额外转换，jsx需要通过babel编译，它是 React.createElement的 语法糖，使用jsx等价于R eact.createElement
+- jsx是js的语法扩展，允许在html中写JS；JS是原生写法，需要通过script标签引入
 
 ## setState
 
@@ -230,26 +236,26 @@ class Example extends React.Component {
 #### 特征更新
 
 - setState 自动批处理
+  - react17，只有 react 事件会进行批处理，原生js事件、promise，setTimeout、setInterval不会  
+  - react18，将所有事件都进行批处理，即多次 setState 会被合并为1次执行，提高了性能，在数据层，将多个状态更新合并成一次处理（在视图层，将多次渲染合并成一次渲染）
 - 引入了新的root API，支持new concurrent renderer(并发模式的渲染)
-- 去掉了对IE浏览器的支持
+  - 之前: `ReactDom.render` 将应用组件渲染到页面的根元素
+  - 当前: 通过 `ReactDom.creatRoot` 创建根节点对象
+  
+    ```js
+    // v18
+    import { createRoot } from 'react-dom/client';
+
+    const domNode = document.getElementById('root');
+    const root = createRoot(domNode);
+    root.render(<App />);
+    ```
+
+- 去掉了对IE浏览器的支持，使用 IE 要回退到 17版本
 - flushSync 退出批量更新
-
-1. setState 自动批处理  
-   react17，只有 react 事件会进行批处理，原生js事件、promise，setTimeout、setInterval不会  
-   react18，将所有事件都进行批处理，即多次 setState 会被合并为1次执行，提高了性能，在数据层，将多个状态更新合并成一次处理（在视图层，将多次渲染合并成一次渲染）
-
-2. 引入了新的渲染 API
-   之前: `ReactDom.render` 将应用组件渲染到页面的根元素
-   当前: 通过 `ReactDom.creatRoot` 创建根节点对象
-
-   ```js
-   // v18
-   import { createRoot } from 'react-dom/client';
-
-   const domNode = document.getElementById('root');
-   const root = createRoot(domNode);
-   root.render(<App />);
-   ```
+- react组件返回值更新
+  - 在react17中，返回空组件只能返回null，显式返回undefined会报错
+  - 在react18中，支持null和undefined返回
 
 ## HOC 高阶组件
 
@@ -352,3 +358,19 @@ ES6 中, 箭头函数 this 默认指向函数的宿主对象(或者函数所绑�
 1. Debugging：直接修改 state 可能会导致不可预测的行为和难以调试的问题。因为 React 会将组件的 state 看作是一致的，如果直接修改，可能会导致状态不一致，从而导致错误的行为和难以查找的调试问题。
 2. 性能问题：直接修改 state 可能会导致性能问题，因为 React 需要在组件层面进行 Diff 和 Re-render。如果直接在 state 中修改数据，React 无法检测到变化，导致组件不会重新渲染。
 3. 更简单实现：React 不像 vue，不依赖数据变化，不需要劫持数据的属性。
+
+### 为什么React自定义组件首字母要大写
+
+jsx通过babel转义时，调用了React.createElement函数，它接收三个参数，分别是type元素类型，props元素属性，children子元素。
+
+从jsx到真实DOM需要经历jsx->虚拟DOM->真实DOM。如果组件首字母为小写，它会被当成字符串进行传递，在创建虚拟DOM的时候，就会把它当成一个html标签，而html没有app这个标签，就会报错。组件首字母为大写，它会当成一个变量进行传递，React知道它是个自定义组件就不会报错了
+
+```js
+<app>lyllovelemon</app>
+// 转义后
+React.createElement("app",null,"lyllovelemon")
+
+<App>lyllovelemon</App>
+// 转义后
+React.createElement(App,null,lyllovelemon)
+```
