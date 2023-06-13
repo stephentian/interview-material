@@ -2,7 +2,7 @@
 
 - [浏览器](#浏览器)
   - [浏览器内核](#浏览器内核)
-  - [JavaScript 引擎线程](#javascript-引擎线程)
+  - [JavaScript 引擎](#javascript-引擎)
   - [浏览器渲染](#浏览器渲染)
   - [浏览器缓存](#浏览器缓存)
     - [http 缓存](#http-缓存)
@@ -18,27 +18,27 @@
 
 ## 浏览器内核
 
-浏览器内核，可以理解为浏览器的心脏，是指浏览器最核心的部分，浏览器内核主要包含两部分：渲染引擎和 JS 引擎，但由于JS引擎越来越独立，浏览器内核就倾向于单指渲染引擎，所以我们常说的浏览器内核主要指的就是 **渲染引擎**。
+浏览器内核 ，可以理解为浏览器的心脏，是指浏览器最核心的部分，浏览器内核主要包含两部分：渲染引擎和 JS 引擎，但由于JS引擎越来越独立，浏览器内核就倾向于单指渲染引擎（Rendering Engine），所以我们常说的浏览器内核主要指的就是 **渲染引擎**。
 
-- Trident：该内核被认为是在早期IE浏览器中占主导地位，但现在也存在于其他一些浏览器中，如Edge。它对真正的网页标准支持不太好，且存在一些安全漏洞。
-- Gecko：该内核主要用于 Firefox 火狐浏览器。它的优点是功能强大、丰富，可以支持很多复杂网页效果和浏览器扩展接口，但缺点是消耗较多的资源，如内存。
-- Presto：该内核被称为公认的浏览网页速度最快的内核，同时也是处理 JS 脚本最兼容的内核，能在 Windows、Mac 及 Linux操作系统下完美运行。
-- Webkit：该内核主要用于Safari浏览器，它的优点是具有清晰的源码结构、极快的渲染速度，但缺点是对网页代码的兼容性较低，可能导致一些编写不标准的网页无法正确显示。
-  - Chromium：google 基于 Webkit 再深度改装的内核，除了 Chrome，目前广泛应用于Sogou、360极速、世界之窗极速、百度、淘宝、猎豹等浏览器
-  - Webkit2
-  - Blink: Webkit 的一个分支, google 目前在使用
-
-浏览器内核常表示 浏览器的 排版引擎(layout engine)；
-也称浏览器引擎，页面渲染引擎
+浏览器内核（browser kernel）常表示 浏览器的排版引擎(Rendering Engine，layout engine)，也称浏览器引擎，页面渲染引擎，渲染内核等。
 
 ![浏览器内核列表](./img/browser-core.png)
 
-## JavaScript 引擎线程
+- Trident： Microsoft，该内核被认为是在早期IE浏览器中占主导地位，但现在也存在于其他一些浏览器中，如Edge。它对真正的网页标准支持不太好，且存在一些安全漏洞。
+- Gecko：该内核主要用于 Firefox 火狐浏览器。它的优点是功能强大、丰富，可以支持很多复杂网页效果和浏览器扩展接口，但缺点是消耗较多的资源，如内存。
+- Presto：（已弃用）该内核被称为公认的浏览网页速度最快的内核，同时也是处理 JS 脚本最兼容的内核，能在 Windows、Mac 及 Linux操作系统下完美运行。
+- Webkit：Apple，该内核主要用于 Safari 浏览器，它的优点是具有清晰的源码结构、极快的渲染速度，但缺点是对网页代码的兼容性较低，可能导致一些编写不标准的网页无法正确显示。
+  - Chromium：Google，基于 Webkit 再深度改装的内核，除了 Chrome，目前广泛应用于Sogou、360极速、世界之窗极速、百度、淘宝、猎豹等浏览器
+  - Webkit2
+  - Blink: Webkit 的一个分支, google 目前在使用
 
-javascript 是一门高级语言，CPU 只能识别机器语言；javascript 引擎将 javascript 翻译成 CPU 指令
+## JavaScript 引擎
+
+javascript 是一门高级语言，CPU 只能识别机器语言；
+JavaScript 引擎是用来渲染JavaScript的，javascript 引擎将 javascript 翻译成 CPU 指令，JavaScript的渲染速度越快，动态网页的展示也越快。
 
 - SpiderMonkey: Brendan Eich(js作者) 开发
-- JavaScriptCore: Webkit 中的 js 引擎，Apple 开发
+- JSCore: Webkit 中的 js 引擎，Apple 开发
 - V8: Google 开发
 - Chakra: 微软，IE 浏览器
 
