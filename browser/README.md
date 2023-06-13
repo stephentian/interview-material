@@ -3,6 +3,8 @@
 - [浏览器](#浏览器)
   - [浏览器内核](#浏览器内核)
   - [JavaScript 引擎](#javascript-引擎)
+    - [v8](#v8)
+  - [Chromium 浏览器架构](#chromium-浏览器架构)
   - [浏览器渲染](#浏览器渲染)
   - [浏览器缓存](#浏览器缓存)
     - [http 缓存](#http-缓存)
@@ -13,6 +15,7 @@
     - [requestIdleCallback](#requestidlecallback)
   - [浏览器的多线程](#浏览器的多线程)
   - [Web Worker](#web-worker)
+  - [Service worker](#service-worker)
   - [WebSocket](#websocket)
     - [WebSocket 心跳机制](#websocket-心跳机制)
 
@@ -25,7 +28,7 @@
 ![浏览器内核列表](./img/browser-core.png)
 
 - Trident： Microsoft，该内核被认为是在早期IE浏览器中占主导地位，但现在也存在于其他一些浏览器中，如Edge。它对真正的网页标准支持不太好，且存在一些安全漏洞。
-- Gecko：该内核主要用于 Firefox 火狐浏览器。它的优点是功能强大、丰富，可以支持很多复杂网页效果和浏览器扩展接口，但缺点是消耗较多的资源，如内存。
+- Gecko：Mozilla，该内核主要用于 Firefox 火狐浏览器。它的优点是功能强大、丰富，可以支持很多复杂网页效果和浏览器扩展接口，但缺点是消耗较多的资源，如内存。
 - Presto：（已弃用）该内核被称为公认的浏览网页速度最快的内核，同时也是处理 JS 脚本最兼容的内核，能在 Windows、Mac 及 Linux操作系统下完美运行。
 - Webkit：Apple，该内核主要用于 Safari 浏览器，它的优点是具有清晰的源码结构、极快的渲染速度，但缺点是对网页代码的兼容性较低，可能导致一些编写不标准的网页无法正确显示。
   - Chromium：Google，基于 Webkit 再深度改装的内核，除了 Chrome，目前广泛应用于Sogou、360极速、世界之窗极速、百度、淘宝、猎豹等浏览器
@@ -39,8 +42,22 @@ JavaScript 引擎是用来渲染JavaScript的，javascript 引擎将 javascript 
 
 - SpiderMonkey: Brendan Eich(js作者) 开发
 - JSCore: Webkit 中的 js 引擎，Apple 开发
-- V8: Google 开发
+- V8: Google 开发，Blink
 - Chakra: 微软，IE 浏览器
+
+### v8
+
+V8是Google的开源高性能JavaScript和WebAssembly引擎，用C++编写，它实现ECMAScript和WebAssembly，可独立运行或嵌入到任何C++应用程序中，如Chrome和Node.js。
+
+## Chromium 浏览器架构
+
+chrome 架构图：
+
+![chrome 架构图](./img/chromeArchitecture.jpeg)
+
+- WebCore：WebKit 加载和渲染网页的基础，是不同浏览器所使用的 WebKit 中共享的部分，包括HTML解析器、CSS解析器、SVG、布局、渲染树等等；
+- JavaScript引擎：JavaScript解析器，WebKit默认的引擎是JavaScriptCore，Google的Blink为V8引擎；
+- ebKit Ports：WebKit中的移植部分，包括网络栈、音视频解码、硬件加速等模块，这部分对WebKit的功能和性能影响比较大。
 
 ## 浏览器渲染
 
@@ -211,6 +228,29 @@ worker.terminate() // 关闭Worker线程
 - 分配给 Worker 线程的脚本文件必须和主线程的脚本文件同源
 - Worker 不能读取本地文件（file://~），文件必须来自网络
 - web worker 处于外部文件，无法访问到 winodow、document等
+
+## Service worker
+
+用于浏览器缓存资源
+
+如果网站中注册了service worker那么它可以拦截当前网站所有的请求，进行判断（需要编写相应的判断程序），如果需要向服务器发起请求的就转给服务器，如果可以直接使用缓存的就直接返回缓存不再转给服务器。从而大大提高浏览体验。
+
+- 基于 web worker（一个独立于JavaScript主线程的独立线程，在里面执行需要消耗大量资源的操作不会堵塞主线程）
+- 在web worker的基础上增加了离线缓存的能力
+- 本质上充当Web应用程序（服务器）与浏览器之间的代理服务器（可以拦截全站的请求，并作出相应的动作->由开发者指定的动作）
+- 由事件驱动的,具有生命周期
+- 支持推送
+- 可以让开发者自己控制管理缓存的内容以及版本
+
+sw 工作原理：  
+1、后台线程：独立于当前网页线程；  
+2、网络代理：在网页发起请求时代理，来缓存文件；
+
+**注意：**
+
+- Service worker运行在worker上下文 --> 不能访问DOM
+- 它设计为完全异步，同步API（如XHR和localStorage）不能在service worker中使用
+- 只能使用 HTTPS
 
 ## WebSocket
 
