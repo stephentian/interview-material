@@ -21,6 +21,9 @@ arr.sort(() => .5 - Math.random())
 
 这种写法看似都是随机，但其实是有问题的，**它不是真正的随机**
 
+- 一方面， v8 引擎实现的 Array.prototype.sort() 方法对于短数组和长数组会使用不同的算法策略，短数组使用插入排序，长数组使用快速排序（如有误，欢迎指正）。
+- 最主要的是，ES 规范中规定排序比较函数 cmp(a, b) 对于相同的 a, b ，总是需要返回相同的比较结果，否则排序结果是不确定的。
+
 ## 验证 sort 随机性
 
 见 [self-training](https://github.com/stephentian/daily-js/blob/master/09-Skills/01-shuffle/self-training.html)

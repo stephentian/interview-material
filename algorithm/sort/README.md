@@ -123,7 +123,55 @@ const quickSort = function (arr) {
 }
 ```
 
+循环来实现快速排序
+
+```js
+function quickSort(arr) {  
+  let stack = [];  
+  let result = [];  
+  let temp = [];  
+  let len = arr.length;  
+  let stackTop;  
+  let leftEnd;  
+  let rightEnd;  
+  let pivot;  
+  let i;  
+  let j;  
+  
+  while (stack.length > 0 || arr.length > 1) {  
+    if (arr.length > 1) {  
+      stackTop = stack.pop();  
+      leftEnd = stackTop[0];  
+      rightEnd = stackTop[1];  
+      pivot = arr.splice(Math.floor(arr.length / 2), 1)[0];  
+      for (i = leftEnd; i < arr.length; i++) {  
+        if (arr[i] < pivot) {  
+          temp.push(arr[i]);  
+        } else {  
+          break;  
+        }  
+      }  
+      for (j = arr.length - 1; j >= rightEnd; j--) {  
+        if (arr[j] > pivot) {  
+          arr.splice(j + 1, 0, pivot);  
+        } else {  
+          break;  
+        }  
+      }  
+      arr = temp.concat(arr.slice(leftEnd, rightEnd), temp);  
+      result = result.concat(arr.slice(leftEnd, rightEnd));  
+      arr = arr.slice(leftEnd + 1, rightEnd).concat([pivot]).concat(arr.slice(rightEnd + 1));  
+    } else {  
+      stack.push([0, arr.length - 1]);  
+    }  
+  }  
+  return result;  
+}
+```
+
 ## 插入排序
+
+插入排序的工作方式像许多人排序一手扑克牌。开始时，我们的左手为空并且桌子上的牌面向下。然后，我们每次从桌子上拿走一张牌并将它插入左手中正确的位置。为了找到一张牌的正确位置，我们从右到左将它与已在手中的每张牌进行比较。拿在左手上的牌总是排序好的。
 
 时间复杂度：O(n^2)
 空间复杂度：O(1)
@@ -131,11 +179,11 @@ const quickSort = function (arr) {
 思路：
 
 1. 假定第一个元素是排好序的；
-2. 取下一个元素 i，取改元素的值为 key，i 左边的元素为 j = i - 1；
+2. 取下一个元素 i，取该元素的值为 key，i 左边的元素为 j = i - 1；
 3. 当 i 左边的元素不是最后一个元素 (j>=0)，并且 该元素的值大于 i 的值(`arr[j] > key`)；说明该元素需要移到下一个位置( arr[j+1] = arr[j])；
 4. 继续往左遍历( `j--` )，重复 `3` 步骤；
 5. 将 key 值放到最后遍历到的位置(arr[j+1] = key)。
-6. 重复 `2-5` 步骤，直到遍历完( `i++` )。
+6. 重复 `2-5` 步骤，直到遍历完( `i < arr.length; i++` )。
 
 ```js
 function insertSort(arr) {
@@ -195,7 +243,9 @@ function selection(arr) {
 
 > shell sort
 
-也称递减增量排序算法
+希尔排序（Shell Sort）是插入排序的一种更高效的改进版本，也被称为缩小增量排序（Diminishing Increment Sort）。它的基本思想是将待排序的数组分成若干个子序列，对每个子序列进行插入排序，逐步缩小增量，最后再对整个序列进行一次插入排序。
+
+希尔排序的时间复杂度为O(nlogn)到O(n^2)之间，具体取决于所选择的增量序列。其中最常用的增量序列是希尔增量，即把数组长度除以2的若干次方，直到为1为止。
 
 时间复杂度：O(n log n)
 空间复杂度：O(1)
@@ -207,21 +257,24 @@ function selection(arr) {
 
 ```js
 function shellSort(arr) {
-  if (arr.length <= 1) {
-    return arr
-  }
   // 算间隔
-  let len = Math.floor(arr.length / 2)
-  while (len > 0) {
-    for (let i = len; i < arr.length; i++) {
+  let gap = Math.floor(arr.length / 2)
+
+  while (gap > 0) {
+    for (let i = gap; i < arr.length; i++) {
       let temp = arr[i]
-      for (let j = i - len; j >= 0 && temp < arr[j]; j = j - len) {
-        arr[j + len] = arr[j]
+      let j = i
+
+      while (j >= gap && arr[j - gap] > temp) {
+        arr[j] = arr[j - gap]
+        j -= gap
       }
-      arr[j + len] = temp
+      arr[j] = temp
     }
-    len = Math.floor(len / 2)
+    gap = Math.floor(gap / 2)
   }
+
+  return arr
 }
 ```
 
