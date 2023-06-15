@@ -10,7 +10,13 @@
     - [浏览器缓存](#浏览器缓存)
       - [强缓存](#强缓存)
       - [协商缓存](#协商缓存)
+    - [数据库缓存](#数据库缓存)
     - [本地缓存](#本地缓存)
+      - [Cookie](#cookie)
+      - [localStorage](#localstorage)
+      - [sessionStorage](#sessionstorage)
+    - [代理服务器缓存](#代理服务器缓存)
+    - [CDN缓存](#cdn缓存)
   - [事件循环 Event Loop](#事件循环-event-loop)
     - [setTimeout](#settimeout)
     - [requestAnimationFrame](#requestanimationframe)
@@ -75,9 +81,23 @@ chrome 架构图：
 
 ## 缓存
 
+缓存从微观上可以分为以下几类：
+
+- 浏览器缓存（http缓存）
+- 代理服务器缓存
+- CDN缓存
+- 数据库缓存
+- 应用层缓存（本地缓存）
+
 ### 浏览器缓存
 
 也叫 http 缓存
+
+Web缓存的好处：
+
+- 减小网络延迟，加快页面打开速度--缓存比源服务器离客户端更近，所以，从缓存请求内容比从源服务器所用时间更少，缓存的使用可以明显加快页面打开速度，达到更好的体验。html
+- 下降服务器的压力--给网络资源设定有效期以后，用户能够重复使用本地的缓存，减小对源服务器的请求，间接下降服务器的压力。同时，搜索引擎的爬虫机器人也能根据过时机制下降爬取的频率，也能有效下降服务器的压力。
+- 减小网络带宽损耗--不管对于网站运营者或者用户，带宽都表明着金钱,当Web缓存副本被使用时，只会产生极小的网络流量，能够有效的下降运营成本。
 
 #### 强缓存
 
@@ -159,7 +179,50 @@ If-Modified-Since，是浏览器再次请求资源时，会携带上一次返回
 - cache-control 优先级高于 expires; etag 优先级高于 last-modified
 - 协商缓存有服务器决定。生效则返回 304。
 
+![http cache](./img/httpCache.png)
+
+### 数据库缓存
+
+数据库表繁多，若是频繁进行数据库查询，很容易致使数据库不堪重荷。为了提供查询的性能，会将查询后的数据放到内存中进行缓存，下次查询时，直接从内存缓存直接返回，提供响应效率。
+
+memcached,redis 等
+
 ### 本地缓存
+
+storage
+
+浏览器的本地缓存主要分为 5 种，localStorage, sessionStorage, cookie, WebSql, indexedDB
+
+#### Cookie
+
+cookie 是服务器生成的，保存到浏览器的一个本地文件中。前端可以通过 Set-Cookie 设置 cookie，前端可以设置多个 Set-Cookie。 * cookie 可以设置过期的时间也可以不设置时间，浏览器关闭后就会失效。
+
+```js
+Set-Cookie: BDSVRTM=7; path=/
+Set-Cookie: H_PS_PSSID=34130_34099_33969_31253_33848_33607_26350; path=/; domain=.baidu.com
+```
+
+- cookie 产生原因：是用来做 状态存储 的，因为 http 是无状态的，不能记录数据状态，cookie 可以记录数据的状态。比如用户的id，密码，浏览过的页面等。
+- cookie 的优点：1. 记住数据的状态，密码等。2. 弥补的 HTTP 的无状态。
+- cookie 的缺点：
+  - 容量缺陷，只能存储4kb大小；
+  - 安全问题，cookie是以文本的形式在浏览器和服务器之前传递信息，很有可能会被修改。
+  - 请求的Cookie文件容易被删除。 
+  - 性能消耗大，cookie 是紧跟域名的，域名下的任意地址被修改都携带cookie到服务器。造成性能浪费。
+
+#### localStorage
+
+localStorage 存值的方式和 cookie 类似，都会存放在同一个域名下，localStorage 可以长期存储，没有时间的限制。可以通过localStorage.setItem()/getItem() 存取值。
+
+- localStorage 优点：1.扩展了 cookie 的存储大小，可以存放 5M 大小，不同浏览器不同；2.只存储在浏览器不会和服务器之间有通信解决了cookie 的安全问题和性能消耗问题。 
+- localStorage 缺点：1.需要手动删除保存的数据；2.只支持字符串类型，JSON 类型需要通过JSON.stringify() 转化。3. 同步的操作，写入大量的数据可以会导致页面卡顿。 
+- localStorage 使用场景：利用 localStorage 可以存放一些稳定的资源和base64的图片等
+
+#### sessionStorage
+
+sessionStorage 和 localStorage 一致，唯一大的区别在于 sessionStorage 是会话级别的存储 会话级别的 sessionStorage 也就是在浏览器页面关闭后，这个存储也就消失了。 
+
+sessionStorage 的场景：sessionStorage 可以用于保存一些临时的数据，防止页面消失后数据就没了，比如表单填写和用户的浏览器记录等。
 
 - localStorage
   - 浏览器端设置，永久存储，要手动清除
@@ -173,6 +236,20 @@ If-Modified-Since，是浏览器再次请求资源时，会携带上一次返回
 - cookie
   - 服务端设置，保存则客户端本地
   - 限制 4KB
+
+### 代理服务器缓存
+
+代理服务器是浏览器和源服务器之间的中间服务器，浏览器先向这个中间服务器发起Web请求，通过处理后（好比权限验证，缓存匹配等），再将请求转发到源服务器。
+
+共享缓存，不仅为一个用户服务，通常为大量用户提供服务，所以在减小相应时间和带宽使用方面颇有效，同一个副本会被重用屡次。
+
+Squid，Nginx，Apache等
+
+### CDN缓存
+
+CDN（Content delivery networks）缓存，也叫网关缓存、反向代理缓存。CDN缓存通常是由网站管理员本身部署，为了让他们的网站更容易扩展并得到更好的性能。
+
+浏览器先向CDN网关发起Web请求，网关服务器后面对应着一台或多台负载均衡源服务器，会根据它们的负载请求，动态将请求转发到合适的源服务器上。虽然这种架构负载均衡源服务器之间的缓存无法共享，但却拥有更好的处扩展性。从浏览器角度来看，整个CDN就是一个源服务器，浏览器和服务器之间的缓存机制，在这种架构下一样适用。
 
 ## 事件循环 Event Loop
 
