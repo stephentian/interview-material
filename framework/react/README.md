@@ -25,6 +25,10 @@
       - [useEffects](#useeffects)
   - [Redux](#redux)
     - [Redux 工作原理](#redux-工作原理)
+  - [React-Router](#react-router)
+    - [React-Router 工作原理](#react-router-工作原理)
+    - [为什么需要前端路由](#为什么需要前端路由)
+    - [前端路由解决的问题](#前端路由解决的问题)
   - [常见问题](#常见问题)
     - [StrictMode 模式是什么](#strictmode-模式是什么)
     - [React 请求放哪个生命周期中](#react-请求放哪个生命周期中)
@@ -132,9 +136,9 @@ JSX与JS的区别：
 
 摘自：<https://www.cxymsg.com/guide/react.html#setstate%E5%88%B0%E5%BA%95%E6%98%AF%E5%BC%82%E6%AD%A5%E8%BF%98%E6%98%AF%E5%90%8C%E6%AD%A5>
 
-有时表现出异步,有时表现出同步。
+setState是一个异步方法，但是在setTimeout/setInterval等定时器里逃脱了React对它的掌控，变成了同步方法。
 
-执行是同步的, 异步指的是多个 state 会合并一起批量更新.
+所以有时表现出异步,有时表现出同步。异步指的是多个 state 会合并一起批量更新.
 
 比如执行 100 次 setState, 如果是同步的话，那这个组件绘渲染 100次，这对性能是一个相当大的消耗。
 
@@ -151,6 +155,8 @@ JSX与JS的区别：
 
 - 原生事件不会触发 react 的批处理机制，因而调用setState会直接更新
 - 异步代码中调用 setState，由于js的异步处理机制，异步代码会暂存，等待同步代码执行完毕再执行，此时react的批处理机制已经结束，因而直接更新
+
+React18 以后，使用了createRoot api后，所有setState都是异步批量执行的
 
 ### setState 输出顺序
 
@@ -202,6 +208,18 @@ class Example extends React.Component {
 3. Context(全局)
 4. 发布订阅模式
 5. 全局状态管理工具：Redux、Mobx
+
+- 父组件向子组件通信
+  - props
+- 子组件向父组件通信
+  - 回调函数
+  - Ref
+- 兄弟组件通信
+  - props
+- 父组件向后代组件通信
+  - Context
+- 无关组件通信
+  - Context
 
 ## React 版本
 
@@ -343,6 +361,44 @@ Store 一个全局状态管理对象
 Reducer 一个纯函数，根据旧 state 和 props 更新新 state
 
 Action 改变状态的唯一方式是 dispatch action
+
+## React-Router
+
+组件：
+HashRouter/BrowserRouter 路由器
+
+Route 路由匹配
+
+Link 链接，在html中是个锚点
+
+NavLink 当前活动链接
+
+Switch 路由跳转
+
+Redirect 路由重定向
+
+```js
+<Link to="/home">Home</Link>
+<NavLink to="/abount" activeClassName="active">About</NavLink>
+<Redirect to="/dashboard">Dashboard</Redirect>
+```
+
+### React-Router 工作原理
+
+BrowserRouter 使用的 HTML5 的 history api 实现路由跳转
+HashRouter 使用 URL 的 hash 属性控制路由跳转
+
+### 为什么需要前端路由
+
+1. 早期：一个页面对应一个路由，路由跳转导致页面刷新，用户体验差
+2. ajax的出现使得不刷新页面也可以更新页面内容，出现了SPA（单页应用）。SPA不能记住用户操作，只有一个页面对URL做映射，SEO不友好
+3. 前端路由帮助我们在仅有一个页面时记住用户进行了哪些操作
+
+### 前端路由解决的问题
+
+1. 当用户刷新页面，浏览器会根据当前URL对资源进行重定向(发起请求)
+2. 单页面对服务端来说就是一套资源，怎么做到不同的URL映射不同的视图内容
+3. 拦截用户的刷新操作，避免不必要的资源请求；感知URL的变化
 
 ## 常见问题
 
