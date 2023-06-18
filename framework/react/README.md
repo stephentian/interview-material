@@ -240,7 +240,7 @@ class Example extends React.Component {
 - setState 自动批处理
   - react17，只有 react 事件会进行批处理，原生js事件、promise，setTimeout、setInterval不会  
   - react18，将所有事件都进行批处理，即多次 setState 会被合并为1次执行，提高了性能，在数据层，将多个状态更新合并成一次处理（在视图层，将多次渲染合并成一次渲染）
-- 引入了新的root API，支持new concurrent renderer(并发模式的渲染)
+- 引入了新的 root API，支持 new concurrent renderer(并发模式的渲染)
   - 之前: `ReactDom.render` 将应用组件渲染到页面的根元素
   - 当前: 通过 `ReactDom.creatRoot` 创建根节点对象
   
@@ -255,6 +255,9 @@ class Example extends React.Component {
 
 - 去掉了对IE浏览器的支持，使用 IE 要回退到 17版本
 - flushSync 退出批量更新
+- Strict Mode
+  - 当你使用严格模式（Strict Mode）时，React 会对每个组件进行两次渲染，以便你观察一些意想不到的结果。
+  - React 17 中，取消了其中一次渲染的控制台日志，以便让日志更容易阅读。
 - react组件返回值更新
   - 在react17中，返回空组件只能返回null，显式返回undefined会报错
   - 在react18中，支持null和undefined返回
