@@ -18,7 +18,7 @@ class LRU {
 		return value
 	}
 	set(key, value) {
-		if (this.map.has(key)) this.map.delete(key)
+		if (this.cache.has(key)) this.cache.delete(key)
 
 		if (this.cache.size >= this.size) {
 			// 删除最不常用数据
