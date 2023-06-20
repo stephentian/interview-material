@@ -13,6 +13,7 @@
   - [虚拟 Dom(Virtual Dom)](#虚拟-domvirtual-dom)
   - [Diff 算法](#diff-算法)
   - [为什么都用 Hooks](#为什么都用-hooks)
+  - [Router](#router)
 
 ## MVVM
 
@@ -216,3 +217,16 @@ vue 和 react 里的 diff 算法有所不同。它们的 diff 算法就是对虚
 2. 代码组织, 原来有生命周期 等 api, 方法的定义及调用分开了, 现在可以一起
 
 3. 比类组件更容易理解, 比如随处可见的 `.bind(this)`
+
+## Router
+
+vue-router
+
+1. 路由器（router）：Vue-Router 提供了一个路由器对象，用于管理应用程序的路由。路由器负责匹配 URL 与相应的组件，以及在组件之间切换时进行相应的操作。
+2. 路由项（route）：路由项定义了 URL 与组件之间的映射关系。每个路由项都包含一个路径（path）和一个组件（component）。路径是一个字符串表达式，用于匹配 URL 中的路径。组件是一个 Vue 组件，用于渲染匹配该路径的页面。
+3. 路由视图（router view）：Vue-Router 允许在 Vue 模板中使用 `<router-view>`标签来渲染匹配当前路由的组件。当用户在应用程序中导航时，路由视图会根据当前的路由自动渲染相应的组件。
+4. 路由导航（router navigation）：Vue-Router 提供了用于导航的方法，如编程式导航（programmatic navigation）和声明式导航（declarative navigation）。编程式导航通过修改路由器的 currentRoute 对象来实现导航，而声明式导航通过在 HTML 中使用 `<router-link>`标签来实现导航。
+5. 动态路由（dynamic routing）：动态路由允许路由项中的路径包含动态参数，如冒号（:）或星号（*）。动态参数允许同一组件根据不同的路径进行渲染。例如，一个动态路由 /users/:id 可以匹配多个不同的 URL，如 /users/123 或 /users/456。
+6. 嵌套路由（nested routes）：Vue-Router 支持嵌套路由，允许路由项和组件进行分层结构。在嵌套的路由项中，可以通过斜杠（/）来指定子路径，从而实现在父组件中嵌套渲染子组件。
+
+Vue-Router 和 React-Router 的实现核心和原理比较相似，都通过路由器来管理路由项和动态路由，并通过路由视图来自动渲染匹配当前路由的组件。
