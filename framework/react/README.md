@@ -14,6 +14,7 @@
     - [setState 输出顺序](#setstate-输出顺序)
   - [React 组件之间的通信](#react-组件之间的通信)
   - [React 版本](#react-版本)
+    - [React 15](#react-15)
     - [React 16](#react-16)
     - [React 17](#react-17)
     - [React 18](#react-18)
@@ -23,6 +24,7 @@
     - [Hooks API](#hooks-api)
       - [useState](#usestate)
       - [useEffects](#useeffects)
+    - [自定义 Hooks](#自定义-hooks)
   - [Redux](#redux)
     - [Redux 工作原理](#redux-工作原理)
   - [React-Router](#react-router)
@@ -223,7 +225,24 @@ class Example extends React.Component {
 
 ## React 版本
 
+### React 15
+
+React15 架构可以分为两层：
+
+- Reconciler（协调器）—— 负责找出变化的组件
+- Renderer（渲染器）—— 负责将变化的组件渲染到页面
+
+15 版本是基于 Stack Reconcilation(栈调和器)。它是递归、同步的方式。栈的优点在于用少量的代码就可以实现diff功能。并且非常容易理解。但是它也带来了严重的性能问题。
+
+React15 使用的是栈调和器，由于递归执行，所以更新一旦开始，中途就无法中断。当调用层级很深时，递归更新时间超过了屏幕刷新时间间隔，用户交互就会卡顿。
+
 ### React 16
+
+React16架构可以分为三层：
+
+- Scheduler（调度器）—— 调度任务的优先级，高优任务优先进入Reconciler
+- Reconciler（协调器）—— 负责找出变化的组件
+- Renderer（渲染器）—— 负责将变化的组件渲染到页面上
 
 1. hooks
 2. memo, lazy, suspense
@@ -341,6 +360,10 @@ useEffect(() => {
 dependencies 是一个数组，用于指定在哪些依赖项发生变化时重新运行 useEffect。如果依赖项发生变化，useEffect 将会重新执行；如果没有指定依赖项，或者所有依赖项都没有发生变化，useEffect 将不会重新执行。
 
 **注意：** useEffect 在每次组件渲染后都会执行，因此应该避免在 useEffect 中执行过多的副作用操作，以免影响性能。此外，为了避免副作用操作之间的相互依赖，应该将副作用操作拆分成多个 useEffect 函数，并在依赖项中分别指定。
+
+### 自定义 Hooks
+
+自定义 Hook 是一个函数，其名称以 “use” 开头，函数内部可以调用其他的 Hook。
 
 ## Redux
 
