@@ -13,6 +13,8 @@
   - [虚拟 Dom(Virtual Dom)](#虚拟-domvirtual-dom)
   - [Diff 算法](#diff-算法)
   - [为什么都用 Hooks](#为什么都用-hooks)
+    - [React Hooks](#react-hooks)
+    - [Vue Hooks](#vue-hooks)
   - [Router](#router)
 
 ## MVVM
@@ -217,6 +219,28 @@ vue 和 react 里的 diff 算法有所不同。它们的 diff 算法就是对虚
 2. 代码组织, 原来有生命周期 等 api, 方法的定义及调用分开了, 现在可以一起
 
 3. 比类组件更容易理解, 比如随处可见的 `.bind(this)`
+
+React Hooks 和 Vue Hooks 在实现上有所不同，但它们的目的都是为了在函数组件中引入状态和副作用。
+
+### React Hooks
+
+React Hooks 是 React 16.8 版本引入的新特性，它允许在函数组件中使用状态（useState）和副作用（useEffect）。Hooks 的核心原理是利用函数式组件和闭包特性，将 React 组件的状态和副作用抽象成函数内部的变量和函数，使得函数组件也能够拥有状态和副作用。
+
+React Hooks 的核心概念包括：
+
+- useState：在函数组件中引入状态，通过传入的初始状态值来创建状态变量，并提供相应的 setState 方法来更新状态。
+- useEffect：在函数组件中引入副作用，通过传入的依赖项列表和函数来实现副作用的引入，副作用可以是异步操作、订阅、取消订阅等。
+
+### Vue Hooks
+
+Vue Hooks 是 Vue.js 3.0 版本引入的特性，它允许在单文件组件（SFC）中使用钩子函数。Hooks 的核心原理是利用 Vue.js 的响应式系统，将组件中的状态和副作用抽象成钩子函数，使得组件开发者可以更加方便地处理组件的生命周期、事件、异步操作等。
+
+Vue Hooks 的核心概念包括：
+
+- beforeCreate、created：组件实例被创建之前和之后分别触发。
+- beforeMount、mounted：模板编译结束，但尚未挂载到 DOM 上之前和之后分别触发。
+- beforeUpdate、updated：组件数据更新后分别触发。
+- beforeDestroy、destroyed：组件实例销毁之前和之后分别触发。
 
 ## Router
 
