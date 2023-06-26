@@ -229,7 +229,7 @@ class Example extends React.Component {
 
 React15 架构可以分为两层：
 
-- Reconciler（协调器）—— 负责找出变化的组件
+- Reconciler（协调器）—— 负责递归处理虚拟DOM，找出变化的组件
 - Renderer（渲染器）—— 负责将变化的组件渲染到页面
 
 15 版本是基于 Stack Reconcilation(栈调和器)。它是递归、同步的方式。栈的优点在于用少量的代码就可以实现diff功能。并且非常容易理解。但是它也带来了严重的性能问题。
