@@ -413,7 +413,15 @@ HTTPS 协议是由 SSL+HTTP 协议构建的可进行加密传输、身份认证�
 
 ## HTTP 中 GET 和 POST 有什么区别？
 
-GET 和 POST 是 HTTP 协议中的两个方法，在 HTTP 协议中的语义不同：
+GET 和 POST 本质上就是 TCP 链接，区别是在 HTTP 规定和 浏览器和服务器处理中
+
+由于 HTTP 协议并没有限制 GET 一定没有 Body, POST 一定不能把参数放 URL 的 queryString 上。
+
+这样太自由了，而且后端接口需要对接前端，IOS，Android 端等，所以需要一些特定的接口风格和规范。
+
+最火的就是 REST，REST 约定了GET 是获取，POST 是创建。
+
+在 HTTP 协议中的语义也不同：
 
 - GET: 获取资源
 - POST: 创建/更新资源
@@ -434,15 +442,7 @@ GET 和 POST 是 HTTP 协议中的两个方法，在 HTTP 协议中的语义不�
   - 不可以回退
   - 有些浏览器发两个请求，先发 header，响应 100-continue 再发 body 数据(Firefox 火狐浏览器就发送一次请求)
 
-二、**接口**
-
-由于 HTTP 协议并没有限制 GET 一定没有 Body, POST 一定不能把参数放 URL 的 queryString 上。
-
-这样太自由了，而且后端接口需要对接前端，IOS，Android 端等，所以需要一些特定的接口风格和规范。
-
-最火的就是 REST，REST 约定了GET 是获取，POST 是创建。
-
-三、**安全性**
+二、**安全性**
 
 GET
 
