@@ -1,4 +1,13 @@
-# DP 动态规划
+# 动态规划
+
+DP（dynamic program）
+
+重点：**状态** 和 **状态转移方程**
+
+常见题目: 爬楼梯, 斐波那契数列 等
+
+- [爬楼梯](#爬楼梯)
+- [打家劫舍](#打家劫舍)
 
 ## 爬楼梯
 
@@ -39,4 +48,40 @@ var climbStairs = function(n) {
 	}
 	return dp[n]
 };
+```
+
+## 打家劫舍
+
+有一个非负整数数组，相邻的不能拿，拿到里面的值求和，输出和的最大值。
+
+```js
+// nums [1, 2, 3, 1]
+// 最大 4
+// nums [2, 7, 9, 3, 1]
+// 最大 12 (2, 9, 1)
+
+// 状态： 
+// 1. 取最后一个 nums[i] + dp[i - 2]
+// 2. 不取最后一个 dp[i - 1]
+
+// 转移方程:
+// dp[i] = Math.max(dp[i - 1], nums[i] + dp[i - 2])
+
+function(nums) {
+  if (nums == null || nums.length == 0) {
+    return 0;
+  }
+  let length = nums.length;
+  if (length == 1) {
+    return nums[0];
+  }
+  let dp = []
+  dp[0] = nums[0]
+  dp[1] = nums[1] > nums[0] ? nums[1] : nums[0]
+  
+  for (let i = 2; i< length; i++) {
+    dp[i] = Math.max(dp[i - 1], nums[i] + dp[i - 2])
+  }
+  return dp[length - 1]
+}
 ```
