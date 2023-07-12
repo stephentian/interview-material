@@ -7,24 +7,24 @@
 // Dom 结构
 
 
-{ tag:"DIV", 
-  attrs:{ id:'app' }, 
-  children: [{ 
-    tag:'SPAN', 
-    children:[{
-      tag:'A', children: []
-    }] 
-  }, { 
-    tag:'SPAN', 
-    children: [{ 
-      tag:'A', 
-      children: []
-    }, { 
-      Tag:'A', 
-      children: []
-    }] 
-  }] 
-}
+// { tag:"DIV", 
+//   attrs:{ id:'app' }, 
+//   children: [{ 
+//     tag:'SPAN', 
+//     children:[{
+//       tag:'A', children: []
+//     }] 
+//   }, { 
+//     tag:'SPAN', 
+//     children: [{ 
+//       tag:'A', 
+//       children: []
+//     }, { 
+//       Tag:'A', 
+//       children: []
+//     }] 
+//   }] 
+// }
 
 function _render(vnode) {
   // 如果是数字类型转化为字符串
