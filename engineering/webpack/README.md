@@ -2,11 +2,16 @@
 
 - [Webpack](#webpack)
   - [webpack 构建流程](#webpack-构建流程)
-  - [如何利用 webpack 优化前端性能](#如何利用-webpack-优化前端性能)
-  - [什么是 Tree-shaking？](#什么是-tree-shaking)
+  - [常见 loader 和 plugins](#常见-loader-和-plugins)
+  - [webpack 优化](#webpack-优化)
+    - [优化构建速度](#优化构建速度)
+    - [优化代码性能](#优化代码性能)
+    - [Tree-shaking](#tree-shaking)
   - [Loder 和 Plugins 的不同](#loder-和-plugins-的不同)
-  - [手写一个 Loader](#手写一个-loader)
-  - [手写一个 Plugin](#手写一个-plugin)
+  - [loader](#loader)
+    - [手写一个 Loader](#手写一个-loader)
+  - [Plugins](#plugins)
+    - [手写一个 Plugin](#手写一个-plugin)
   - [如何提高 webpack 的构建速度](#如何提高-webpack-的构建速度)
   - [说说 webpack 的热更新HMR](#说说-webpack-的热更新hmr)
   - [webpack 模块联邦](#webpack-模块联邦)
@@ -18,16 +23,32 @@
 2. 编译: （调用 Compiler 的 run）从 entry 出发，调用所有配置的 loader 对 module 进行翻译，再递归编译该 module 依赖的 module，最后将编译后的 module 组合成 chunk 及对应资源 assets
 3. 输出：把编译得到的 assets 输出到文件系统
 
-## 如何利用 webpack 优化前端性能
+## 常见 loader 和 plugins
 
-指优化 webpack 的输出结果，即使项目在浏览器运行快速高效
+- 样式资源： css-loader style-loader sass-loader
+- 生成 html 资源： html-webpack-plugin
+- 图片资源： file-loader url-loader
+- css 兼容： postcss-loader
+- 压缩资源：optimize-css-assets-webpack-plugin
+- 语法检查：eslint-loader
+
+## webpack 优化
+
+### 优化构建速度
+
+1. babel 缓存：cacheDirectory，contenthash
+2. 多进程打包
+3. externals
+4. dlls
+
+### 优化代码性能
 
 - 压缩代码。`UglifyJsPlugin`、`cssnano`
 - 删除死代码(Tree Shaking)。`--optimize-minimize`
-- 利用 CDN 加速。
+- 利用 CDN 加速
 - 提取公共代码
 
-## 什么是 Tree-shaking？
+### Tree-shaking
 
 tree-shaking 指打包中去除在代码中没有被用到的那些死代码。
 js: UglifyJsPlugin
@@ -45,12 +66,19 @@ css: purify-CSS
    - Loader 在 modlue.rules 中配置，
    - Plugins 在 plugins 中单独配置。每一项是 plugin 的实例
 
-## 手写一个 Loader
+## loader
+
+loader 本质上是一个函数。
+
+1. loader 的执行顺序在 use 数组里面是 **从下往上** 执行。
+2. loader 里面有一个 pitch 方法，use数组中 pitch 方法的执行顺序是从上往下执行，因此我们如果想先执行某些功能，可以先在 pitch 方法中定义。
+
+### 手写一个 Loader
 
 打包时, 将 `'a'` 替换成 `'b'`
 
 ```js
-// replaceLoser.js
+// replaceLoader.js
 
 // loader-utils工具包
 const loaderUtils = require('loader-utils')
@@ -77,7 +105,9 @@ module.exports = {
 }
 ```
 
-## 手写一个 Plugin
+## Plugins
+
+### 手写一个 Plugin
 
 ```js
 // myPlugin.js

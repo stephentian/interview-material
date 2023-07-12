@@ -330,6 +330,7 @@ e.g.
 | 401    | Unauthorized 未验证                                         |
 | 403    | Forbidden 禁止访问                                          |
 | 404    | Not Found 未找到资源                                        |
+| 405    | Method Not Allowed 请求方法不对                                        |
 | 500    | Internal Server Error 服务器错误                            |
 | 502    | Bad Gateway                                                 |
 | 504    | Gateway Time-out 请求超时                                   |
