@@ -1,21 +1,20 @@
 # Webpack
 
-- [Webpack](#webpack)
-  - [webpack 构建流程](#webpack-构建流程)
-  - [常见 loader 和 plugins](#常见-loader-和-plugins)
-  - [webpack 优化](#webpack-优化)
-    - [优化构建速度](#优化构建速度)
-    - [优化代码性能](#优化代码性能)
-    - [Tree-shaking](#tree-shaking)
-  - [Loder 和 Plugins 的不同](#loder-和-plugins-的不同)
-  - [loader](#loader)
-    - [手写一个 Loader](#手写一个-loader)
-  - [Plugins](#plugins)
-    - [手写一个 Plugin](#手写一个-plugin)
-  - [如何提高 webpack 的构建速度](#如何提高-webpack-的构建速度)
-  - [说说 webpack 的热更新HMR](#说说-webpack-的热更新hmr)
-  - [webpack 模块联邦](#webpack-模块联邦)
-    - [共享模块方式](#共享模块方式)
+- [webpack 构建流程](#webpack-构建流程)
+- [常见 loader 和 plugins](#常见-loader-和-plugins)
+- [webpack 优化](#webpack-优化)
+  - [优化构建速度](#优化构建速度)
+  - [优化代码性能](#优化代码性能)
+  - [Tree-shaking](#tree-shaking)
+- [Loder 和 Plugins 的不同](#loder-和-plugins-的不同)
+- [loader](#loader)
+  - [手写一个 Loader](#手写一个-loader)
+- [Plugins](#plugins)
+  - [手写一个 Plugin](#手写一个-plugin)
+- [如何提高 webpack 的构建速度](#如何提高-webpack-的构建速度)
+- [说说 webpack 的热更新HMR](#说说-webpack-的热更新hmr)
+- [webpack 模块联邦](#webpack-模块联邦)
+  - [共享模块方式](#共享模块方式)
 
 ## webpack 构建流程
 
@@ -40,6 +39,7 @@
 2. 多进程打包
 3. externals
 4. dlls
+5. oneOf oneOf里面的loader只匹配一个。不能有两个配置处理同一种类型的文件；避免每个文件都被所有loader过一遍
 
 ### 优化代码性能
 
