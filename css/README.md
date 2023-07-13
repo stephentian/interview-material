@@ -1,36 +1,35 @@
 # css
 
-- [css](#css)
-  - [基础知识](#基础知识)
-    - [CSS3 新特性](#css3-新特性)
-    - [伪类](#伪类)
-    - [伪元素](#伪元素)
-    - [CSS 继承元素](#css-继承元素)
-    - [CSS 隐藏元素](#css-隐藏元素)
-    - [position](#position)
-    - [CSS中(px, rem, vw)含义及优缺点](#css中px-rem-vw含义及优缺点)
-    - [CSS选择器优先级](#css选择器优先级)
-    - [clip-path](#clip-path)
-  - [布局](#布局)
-    - [水平和垂直居中](#水平和垂直居中)
-    - [三栏布局](#三栏布局)
-    - [多种布局的优缺点](#多种布局的优缺点)
-    - [九宫格布局](#九宫格布局)
-  - [盒模型](#盒模型)
-    - [两种模型及区别](#两种模型及区别)
-    - [CSS 如何设置这两种模型](#css-如何设置这两种模型)
-    - [JS 如何设置获取盒模型对应的宽和高](#js-如何设置获取盒模型对应的宽和高)
-    - [边距重叠](#边距重叠)
-  - [BFC](#bfc)
-    - [清除浮动](#清除浮动)
-  - [IFC](#ifc)
-  - [Flex](#flex)
-    - [Flex 属性](#flex-属性)
-  - [媒体查询](#媒体查询)
-  - [例题](#例题)
-    - [实现一个三角形（或扇形）](#实现一个三角形或扇形)
-    - [如何消除 img或者 行内元素 (inline-block) 之间的间隙？](#如何消除-img或者-行内元素-inline-block-之间的间隙)
-    - [文本溢出省略号](#文本溢出省略号)
+- [基础知识](#基础知识)
+  - [CSS3 新特性](#css3-新特性)
+  - [伪类](#伪类)
+  - [伪元素](#伪元素)
+  - [CSS 继承元素](#css-继承元素)
+  - [CSS 隐藏元素](#css-隐藏元素)
+  - [position](#position)
+  - [CSS中(px, rem, vw)含义及优缺点](#css中px-rem-vw含义及优缺点)
+  - [CSS选择器优先级](#css选择器优先级)
+  - [clip-path](#clip-path)
+- [布局](#布局)
+  - [水平和垂直居中](#水平和垂直居中)
+  - [三栏布局](#三栏布局)
+  - [多种布局的优缺点](#多种布局的优缺点)
+  - [九宫格布局](#九宫格布局)
+- [盒模型](#盒模型)
+  - [两种模型及区别](#两种模型及区别)
+  - [CSS 如何设置这两种模型](#css-如何设置这两种模型)
+  - [JS 如何设置获取盒模型对应的宽和高](#js-如何设置获取盒模型对应的宽和高)
+  - [边距重叠](#边距重叠)
+- [BFC](#bfc)
+  - [清除浮动](#清除浮动)
+- [IFC](#ifc)
+- [Flex](#flex)
+  - [Flex 属性](#flex-属性)
+- [媒体查询](#媒体查询)
+- [例题](#例题)
+  - [实现一个三角形（或扇形）](#实现一个三角形或扇形)
+  - [如何消除 img 或者 行内元素 (inline-block) 之间的间隙？](#如何消除-img-或者-行内元素-inline-block-之间的间隙)
+  - [文本溢出省略号](#文本溢出省略号)
 
 ## 基础知识
 
@@ -253,7 +252,7 @@
 
 一、float 布局
 
-使用float可以使元素脱离文档流，形成BFC，在重新渲染时不会影响其他的元素。需要注意使用float的元素其父元素会塌陷，需要清除浮动。
+使用 float 可以使元素脱离文档流，形成 BFC，在重新渲染时不会影响其他的元素。需要注意使用 float 的元素其父元素会塌陷，需要清除浮动。
 
 二、flex 弹性布局
 
@@ -289,11 +288,11 @@ li {
   margin-bottom: 5%;
 }
 
-li:nth-of-type(3n){ 
+li:nth-of-type(3n) {
   margin-right: 0; // 3的倍数的元素, 3, 6, 9 等
 }
 
-li:nth-of-type(n+7){ 
+li:nth-of-type(n+7) {
   margin-bottom: 0; // 等于大于 7 的元素, 7, 8, 9
 }
 ```
@@ -382,7 +381,9 @@ dom.getBoundingClientRect().widht/height
 <div class="parent">
   <div class="child"></div>
 </div>
+```
 
+```css
 .child {
   width: 100%;
   height: 100px;
@@ -390,7 +391,10 @@ dom.getBoundingClientRect().widht/height
 }
 
 // 父级元素 parent 高度多少？
+// 100
 ```
+
+解决方案：父元素设置 padding，或者 border，或者触发 BFC
 
 ## BFC
 
@@ -409,9 +413,9 @@ MDN: 是块盒子的布局过程发生的区域, 也是浮动元素与其他元�
 
 3.如何创建 BFC
 
-- (1) float 不为 none
-- (2) position: 不为 static, relative
-- (3) overflow 不为 visible
+- (1) float 布局，float right，left
+- (2) position 为 absolute, fixed
+- (3) overflow 为 hidden
 - (4) display 为 inline-block, table, table-cell, table-caption
 
 4.BFC 使用场景
@@ -430,14 +434,14 @@ MDN: 是块盒子的布局过程发生的区域, 也是浮动元素与其他元�
 
 Inline Formatting Context，行内格式化上下文。
 
-创建一个 IFC: 块级元素中仅包含内联级别元素；设置其为 inline-block 则会在外层产生IFC
+创建一个 IFC: 块级元素中仅包含内联级别元素；设置其为 inline-block 则会在外层产生 IFC
 
 作用: 解决元素垂直居中
 
 布局规则
 
 1. 子元素水平方向横向排列，并且垂直方向起点为元素顶部
-2. 子元素只会计算横向样式空间，【padding、border、margin】，垂直方向样式空间不会被计算，【padding、border、margin】
+2. 子元素只会计算横向样式空间，【 padding、border、margin 】，垂直方向样式空间不会被计算，【 padding、border、margin 】
 3. 在垂直方向上，子元素会以不同形式来对齐（vertical-align）
 4. float 元素优先排列
 
@@ -463,7 +467,7 @@ flex 有两根轴线，分别是主轴(main axis：项目排列布局的方向�
   是 flex-grow flex-shrink flex-basis 合并简写。默认值：`flex: 0 1 auto`
 
 7. `align-item` 和 `align-content` 区别
-   align-items是针对每一个子项起作用居中，`align-content` 用于多行。
+   align-items 是针对每一个子项起作用居中，`align-content` 用于多行。
 
 ## 媒体查询
 
@@ -525,7 +529,7 @@ flex 有两根轴线，分别是主轴(main axis：项目排列布局的方向�
 }
 ```
 
-### 如何消除 img或者 行内元素 (inline-block) 之间的间隙？
+### 如何消除 img 或者 行内元素 (inline-block) 之间的间隙？
 
 消除字符间距
 
