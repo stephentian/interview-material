@@ -1,8 +1,9 @@
 # design pattern
 
-- [design pattern](#design-pattern)
-  - [观察者模式](#观察者模式)
-    - [使用 Proxy 实现观察者模式](#使用-proxy-实现观察者模式)
+- [观察者模式](#观察者模式)
+  - [使用 Proxy 实现观察者模式](#使用-proxy-实现观察者模式)
+- [Adapter 适配器模式](#adapter-适配器模式)
+- [工厂模式](#工厂模式)
 
 ## 观察者模式
 
@@ -47,3 +48,11 @@ function set(target, key, value, receiver) {
   return result;
 }
 ```
+
+## Adapter 适配器模式
+
+[adapter](./adapter.js)
+
+## 工厂模式
+
+[factory](./factory.js)
