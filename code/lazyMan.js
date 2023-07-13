@@ -3,7 +3,35 @@
  * @return: undefined
  **/
 
+// 问题描述
+// 实现一个LazyMan，可以按照以下方式调用:
+// LazyMan("Hank")
+// 输出：
+// Hi! This is Hank!
+
+// LazyMan("Hank").sleep(5).eat("dinner")
+// 输出：
+// Hi! This is Hank!
+// （等待 5 秒...）
+// Wake up after 5s
+// Eat dinner~
+
+// LazyMan("Hank").eat("dinner").eat("supper")
+// 输出：
+// Hi This is Hank!
+// Eat dinner ~
+// Eat supper ~
+
+// LazyMan("Hank").sleepFirst(2).eat("supper")
+// 输出：
+// （等待 2 秒）
+// Wake up after 2s
+// Hi This is Hank!
+// Eat supper
+
 // 考察知识点：闭包，事件轮询机制，链式调用，队列
+// 执行任务不能紧跟在插入任务的后面执行，等所有任务都进队了，才开始执行任务队列。
+// 借助 setTimeout 函数，将他们分进两个事件队列就好了
 
 class LazyMan {
   constructor(name) {
@@ -54,6 +82,7 @@ class LazyMan {
   }
 
   sleepFirst(seconds) {
+    const self = this
 		const task = () => {
 			return new Promise((resolve) => {
 				// const delay = seconds * 1000
@@ -63,7 +92,8 @@ class LazyMan {
 				// }
 				setTimeout(resolve, seconds * 1000)
 			}).then(() => {
-				console.log(`Wake up after ${seconds}`)
+        console.log(`Wake up after ${seconds}s`)
+        self.next()
 			})
 		}
 
@@ -74,10 +104,23 @@ class LazyMan {
 	}
 }
 
-const lazyManA = new LazyMan('A')
+function lazyMan(name) {
+  return new LazyMan(name)
+}
+
+// lazyMan('Hank')
+
+// lazyMan("Hank").sleep(5).eat("dinner")
+
+// lazyMan("Hank").eat("dinner").eat("supper")
+
+lazyMan("Hank").sleepFirst(2).eat("supper")
+
+// lazyMan('A')
+// const lazyManA = new LazyMan('A')
 
 // lazyManA.sleepFirst(2).eat('meal')
-lazyManA.eat('meal').sleepFirst(2)
+// lazyManA.eat('meal').sleepFirst(2)
 // This is A !
 // Eat meal!
 
