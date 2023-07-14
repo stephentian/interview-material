@@ -18,7 +18,7 @@
 - [Browserify](#browserify)
 - [Yeoman](#yeoman)
 - [Babel](#babel)
-  - [AST](#ast)
+- [AST](#ast)
 - [ESbuild](#esbuild)
   - [为什么快](#为什么快)
 - [vite](#vite)
@@ -138,7 +138,7 @@ export 导出，导入时要加 大括号 { }
 
 ### CommonJS 和 ES6 Module区别
 
-- CommonJS 输出是一个值的拷贝, ES6 是值的引用
+- CommonJS 输出是一个值的拷贝, ES6 通过 export 是值的引用，export default 是值的拷贝
   - 值拷贝：把模块的值赋值给 `module.exports`，修改 require 的文件，当前文件不变
   - 引用：修改导入文件，当前文件会同步变化
 - CommonJS 运行时加载，ES6 是编译时输出
@@ -191,7 +191,7 @@ Webpack 核心只处理 JS 和 JSON，处理其他（css, img）等需要 Loader
 
 ## Grunt
 
-过获取到的JSON 配置执行操作，来流水线式执行相应任务。
+过获取到的 JSON 配置执行操作，来流水线式执行相应任务。
 
 ## Gulp
 
@@ -203,8 +203,11 @@ Webpack 核心只处理 JS 和 JSON，处理其他（css, img）等需要 Loader
 
 ## Yeoman
 
-- 一个通用的脚手架搭建系统，可以创建任何的类型的app。
-- ”语言无感知”的，支持创建任何类型开发语言的项目，Web,Java, Python, C#等。
+Yeoman 是 Google 的团队和外部贡献者团队合作开发的，他的目标是通过Grunt（一个用于开发任务自动化的命令行工具）和 Bower（一个HTML、CSS、Javascript和图片等前端资源的包管理器）的包装为开发者创建一个易用的工作流。
+
+- 一个通用的脚手架搭建系统，可以创建任何的类型的 app。
+- ”语言无感知”的，支持创建任何类型开发语言的项目，Web, Java, Python, C# 等。
+- 三部分组成：yo（脚手架工具）、grunt（构建工具）、bower（包管理器）
 
 所有的操作都是通过 Yeoman 环境里面的各种 generator 实现的。通过自定义 generator，我们可以创建任何格式的项目目录。
 
@@ -218,22 +221,26 @@ babel的核心步骤:
 
 将代码解析成抽象语法树(AST)，然后我们就可以对我们想要的节点进行操作，转换成新的AST，然后再生成新的代码。
 
-### AST
+## AST
 
 Abstract Syntax Tree 抽象语法树
+
+javascript转译、代码压缩、css预处理器、elint、pretiier，等都建立在了AST这个巨人的肩膀上。
 
 在线转换 ast : [astexplorer](https://astexplorer.net/)
 
 编译过程
 
 1. 词法分析
+   - 一个一个字母地读取代码
    - 会移除空白符，注释等
-   - 扫描 scanner，读取代码分割成 tokens列表
+   - 扫描 scanner，读取代码，将代码分割成 tokens列表（一维数组）
 2. 语法分析
    - 解析器，将 数组转化成 树形表达形式
-   - 验证语法，语法错误，抛出错误
-
-AST不是100%与源码匹配的， js 源码解析器会一个一个字母地读取代码
+   - 同时验证语法，语法错误，抛出错误
+   - 生成树的时候，解析器会删除一些没必要的标识tokens（比如不完整的括号）
+   - 因此 AST 不是 100% 与源码匹配的
+   - 解析器 100% 覆盖所有代码结构生成树叫做 CST（具体语法树）
 
 ```js
 function foo(a) {
@@ -331,4 +338,3 @@ link: [typescript](./typescript/README.md)
 4. 使用 CDN 或缓存：可以使用 CDN 或者缓存的方式，将公共的组件和框架文件缓存起来，这样可以减少重复的加载和请求，加快页面的加载速度。
 
 5. 代码合并和压缩：可以对不同团队的代码进行合并和压缩，减少代码体积和请求次数，提高页面的加载速度和性能。
-

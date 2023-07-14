@@ -38,8 +38,8 @@
 1. babel 缓存：cacheDirectory，contenthash
 2. 多进程打包
 3. externals
-4. dlls
-5. oneOf oneOf里面的loader只匹配一个。不能有两个配置处理同一种类型的文件；避免每个文件都被所有loader过一遍
+4. DLLPlugin 把第三方代码完全分离开，即每次只打包项目自身的代码
+5. oneOf：oneOf里面的loader只匹配一个。不能有两个配置处理同一种类型的文件；避免每个文件都被所有loader过一遍
 
 ### 优化代码性能
 
@@ -154,6 +154,8 @@ webpack的热更新又称热替换（Hot Module Replacement），缩写为HMR。
 webpack5 出的新特性, Module Federation 模块联邦
 
 这个功能可以跨应用做到模块共享。
+
+`const { ModuleFederationPlugin } = require('webpack').container`
 
 比如：a 应用要使用 b 应用的 list 组件，直接 `import('b/list')`
 
