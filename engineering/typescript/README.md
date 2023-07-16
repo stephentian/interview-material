@@ -1,15 +1,14 @@
 # typescript
 
-- [typescript](#typescript)
-  - [基础知识](#基础知识)
-    - [any](#any)
-    - [never](#never)
-    - [unknown](#unknown)
-    - [泛型](#泛型)
-      - [泛型过滤](#泛型过滤)
-  - [例题](#例题)
-    - [any 和 unknow](#any-和-unknow)
-    - [interface 和 type](#interface-和-type)
+- [基础知识](#基础知识)
+  - [any](#any)
+  - [never](#never)
+  - [unknown](#unknown)
+  - [泛型](#泛型)
+    - [泛型过滤](#泛型过滤)
+- [例题](#例题)
+  - [any 和 unknow](#any-和-unknow)
+  - [interface 和 type](#interface-和-type)
 
 ## 基础知识
 
