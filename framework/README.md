@@ -1,12 +1,11 @@
 # Framework 框架
 
-- [Framework 框架](#framework-框架)
-  - [Vue](#vue)
-    - [Vue 优缺点](#vue-优缺点)
-  - [React](#react)
-    - [React 优缺点](#react-优缺点)
-  - [Svelte](#svelte)
-  - [Flux(Vuex, Redux)](#fluxvuex-redux)
+- [Vue](#vue)
+  - [Vue 优缺点](#vue-优缺点)
+- [React](#react)
+  - [React 优缺点](#react-优缺点)
+- [Svelte](#svelte)
+- [Flux(Vuex, Redux)](#fluxvuex-redux)
 
 ## Vue
 
@@ -29,7 +28,7 @@
 - 依靠依赖收集, 可能有些乱定义变量, 但是变量也会有 watcher，增大无用代码
 - Object.definedProperty 数组修改, 无法监听等
 - mixin 混用，命名空间相同问题
-- 很多Vue2 问题 Vue3 解决了
+- 很多 Vue2 问题 Vue3 解决了
 
 ## React
 
@@ -46,7 +45,7 @@
 - 心智负担，甚至会影响业务逻辑的正确与否
 - 学习路线陡峭，很多 API 要熟悉
 - 私人封装，接手困难
-- this 绑定
+- this 绑定（用 hooks 不会）
 - this.setState 设计迷思
 - React 18 也优化了很多上述缺点
 
