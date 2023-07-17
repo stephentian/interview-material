@@ -5,6 +5,7 @@
 - [React](#react)
   - [React 优缺点](#react-优缺点)
 - [Svelte](#svelte)
+- [Solid](#solid)
 - [Flux(Vuex, Redux)](#fluxvuex-redux)
 
 ## Vue
@@ -19,7 +20,7 @@
 - 代码可读性，组件里有 html， js，css
 - 封装的很好，上手灵活，学习成本低
 - 便于团队维护，方便项目交接
-- 渲染速度快，虚拟DOM局部更新
+- 渲染速度快，虚拟 DOM 局部更新
 
 缺点
 
@@ -66,6 +67,21 @@
 
 1. 社区相对较小：相对于传统的前端框架，Svelte 的社区相对较小，可能存在缺乏相关资源和支持的问题。
 2. 缺乏生态系统：相对于 React 和 Vue 等传统前端框架，Svelte 缺乏成熟的生态系统，可能需要开发者自行实现一些功能。
+
+```js
+<!-- Svelte -->
+{#if xxx}
+  <h1 />
+{:else}
+  <div />
+{/if}
+```
+
+## Solid
+
+SolidJS 是一个语法像 React Function Component，内核像 Vue 的前端框架。
+
+SolidJS 通过利用细粒度的观察机制，将组件的渲染过程与 JavaScript 的响应式特性结合起来，实现了高效的界面更新。SolidJS 使用JavaScript 代码来描述界面的结构，而不是像其他框架那样使用模板语言。
 
 ## Flux(Vuex, Redux)
 

@@ -1,21 +1,20 @@
 # Vue vs React
 
-- [Vue vs React](#vue-vs-react)
-  - [MVVM](#mvvm)
-  - [Vue 和 React 区别](#vue-和-react-区别)
-    - [两者本质的区别](#两者本质的区别)
-    - [模板的区别](#模板的区别)
-    - [组件化的区别](#组件化的区别)
-    - [原理不同](#原理不同)
-    - [diff 算区别](#diff-算区别)
-  - [Vue 和 React 共同点](#vue-和-react-共同点)
-  - [key 值的作用](#key-值的作用)
-  - [虚拟 Dom(Virtual Dom)](#虚拟-domvirtual-dom)
-  - [Diff 算法](#diff-算法)
-  - [为什么都用 Hooks](#为什么都用-hooks)
-    - [React Hooks](#react-hooks)
-    - [Vue Hooks](#vue-hooks)
-  - [Router](#router)
+- [MVVM](#mvvm)
+- [Vue 和 React 区别](#vue-和-react-区别)
+  - [两者本质的区别](#两者本质的区别)
+  - [模板的区别](#模板的区别)
+  - [组件化的区别](#组件化的区别)
+  - [原理不同](#原理不同)
+  - [diff 算区别](#diff-算区别)
+- [Vue 和 React 共同点](#vue-和-react-共同点)
+- [key 值的作用](#key-值的作用)
+- [虚拟 Dom(Virtual Dom)](#虚拟-domvirtual-dom)
+- [Diff 算法](#diff-算法)
+- [为什么都用 Hooks](#为什么都用-hooks)
+  - [React Hooks](#react-hooks)
+  - [Vue Hooks](#vue-hooks)
+- [Router](#router)
 
 ## MVVM
 
@@ -36,7 +35,7 @@ ViewModel 监听模型数据的改变和控制视图行为、处理用户交互�
 Vue - 本质是 MVVM 框架， 由 MVC 发展来的
 React - 本质是前端组件化框架，由后端组件化发展来的
 
-Vue 使用的是传统 web开发更熟悉的模板语法
+Vue 使用的是传统 web 开发更熟悉的模板语法
 
 React 特色是函数式编程的理念
 

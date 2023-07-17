@@ -138,7 +138,7 @@ export 导出，导入时要加 大括号 { }
 
 ### CommonJS 和 ES6 Module区别
 
-- CommonJS 输出是一个值的拷贝, ES6 通过 export 是值的引用，export default 是值的拷贝
+- CommonJS 输出是一个值的拷贝, ES6 通过 export default 是值的拷贝，export 是值的引用
   - 值拷贝：把模块的值赋值给 `module.exports`，修改 require 的文件，当前文件不变
   - 引用：修改导入文件，当前文件会同步变化
 - CommonJS 运行时加载，ES6 是编译时输出
