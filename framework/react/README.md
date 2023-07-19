@@ -1,49 +1,50 @@
 # React
 
-- [React](#react)
-  - [基础知识](#基础知识)
-    - [React 发展历程](#react-发展历程)
-    - [React 生命周期](#react-生命周期)
-    - [React 实例过程](#react-实例过程)
-    - [React Fiber架构](#react-fiber架构)
-    - [React 设计思想](#react-设计思想)
-    - [React 三种开发模式](#react-三种开发模式)
-    - [JSX](#jsx)
-  - [setState](#setstate)
-    - [setState 到底是异步还是同步](#setstate-到底是异步还是同步)
-    - [setState 输出顺序](#setstate-输出顺序)
-  - [React 组件之间的通信](#react-组件之间的通信)
-  - [React 版本](#react-版本)
-    - [React 15](#react-15)
-    - [React 16](#react-16)
-    - [React 17](#react-17)
-    - [React 18](#react-18)
-      - [特征更新](#特征更新)
-  - [HOC 高阶组件](#hoc-高阶组件)
-  - [Hooks](#hooks)
-    - [Hooks API](#hooks-api)
-      - [useState](#usestate)
-      - [useEffects](#useeffects)
-    - [自定义 Hooks](#自定义-hooks)
-  - [Redux](#redux)
-    - [Redux 工作原理](#redux-工作原理)
-  - [React-Router](#react-router)
-    - [React-Router 工作原理](#react-router-工作原理)
-    - [为什么需要前端路由](#为什么需要前端路由)
-    - [前端路由解决的问题](#前端路由解决的问题)
-  - [常见问题](#常见问题)
-    - [StrictMode 模式是什么](#strictmode-模式是什么)
-    - [React 请求放哪个生命周期中](#react-请求放哪个生命周期中)
-    - [为什么 React bind(this)](#为什么-react-bindthis)
-    - [为什么 React 不推荐直接修改 state](#为什么-react-不推荐直接修改-state)
-    - [useEffect 和 useCallback 有什么差异？](#useeffect-和-usecallback-有什么差异)
-    - [为什么React自定义组件首字母要大写](#为什么react自定义组件首字母要大写)
+- [基础知识](#基础知识)
+  - [React 发展历程](#react-发展历程)
+  - [React 生命周期](#react-生命周期)
+  - [React 实例过程](#react-实例过程)
+  - [React Fiber架构](#react-fiber架构)
+  - [React 设计思想](#react-设计思想)
+  - [React 三种开发模式](#react-三种开发模式)
+  - [JSX](#jsx)
+- [setState](#setstate)
+  - [setState 到底是异步还是同步](#setstate-到底是异步还是同步)
+  - [setState 输出顺序](#setstate-输出顺序)
+- [React 组件之间的通信](#react-组件之间的通信)
+- [React 版本](#react-版本)
+  - [React 15](#react-15)
+  - [React 16](#react-16)
+  - [React 17](#react-17)
+  - [React 18](#react-18)
+    - [特征更新](#特征更新)
+- [HOC 高阶组件](#hoc-高阶组件)
+- [Hooks](#hooks)
+  - [Hooks API](#hooks-api)
+    - [useState](#usestate)
+    - [useEffects](#useeffects)
+  - [自定义 Hooks](#自定义-hooks)
+- [Redux](#redux)
+  - [Redux 工作原理](#redux-工作原理)
+- [React-Router](#react-router)
+  - [React-Router 工作原理](#react-router-工作原理)
+  - [为什么需要前端路由](#为什么需要前端路由)
+  - [前端路由解决的问题](#前端路由解决的问题)
+- [常见问题](#常见问题)
+  - [StrictMode 模式是什么](#strictmode-模式是什么)
+  - [React 请求放哪个生命周期中](#react-请求放哪个生命周期中)
+  - [为什么 React bind(this)](#为什么-react-bindthis)
+  - [为什么 React 不推荐直接修改 state](#为什么-react-不推荐直接修改-state)
+  - [useEffect 和 useCallback 有什么差异？](#useeffect-和-usecallback-有什么差异)
+  - [为什么React自定义组件首字母要大写](#为什么react自定义组件首字母要大写)
 
 ## 基础知识
 
 ### React 发展历程
 
 2013 React 发布
+
+2016 React 15
 
 2017 React 16
 
@@ -53,7 +54,7 @@
 
   1. React Hooks, 无需编写类即可使用状态和其他React功能的方法，不会产生 JSX 嵌套地狱
 
-2021 React 17
+2020 React 17
 
 2022 React 18
 
@@ -75,30 +76,30 @@
 
 卸载阶段
 
-- componentWillUnmount
+- `componentWillUnmount`
 
-constructor：组件实例化时被调用，可以进行组件的初始化工作，例如绑定事件处理程序、设置状态或实例化对象。
-static getDerivedStateFromProps(props, state)：在组件挂载之前被调用，用于根据 props 来更新组件的状态。它返回一个对象，表示要更新的组件状态，或者返回 null，表示不需要更新状态。
-render：根据当前的 props 和 state 渲染组件的 UI。
-componentDidMount：在组件挂载后被调用，可以进行异步请求、添加事件监听器或启动定时器等操作。
+`constructor`: 组件实例化时被调用，可以进行组件的初始化工作，例如绑定事件处理程序、设置状态或实例化对象。
+`static getDerivedStateFromProps(props, state)`：在组件挂载之前被调用，用于根据 props 来更新组件的状态。它返回一个对象，表示要更新的组件状态，或者返回 null，表示不需要更新状态。
+`render`：根据当前的 props 和 state 渲染组件的 UI。
+`componentDidMount`：在组件挂载后被调用，可以进行异步请求、添加事件监听器或启动定时器等操作。
 
-static getDerivedStateFromProps(props, state)：在组件更新之前被调用，用于根据 props 更新组件的状态。
-shouldComponentUpdate(nextProps, nextState)：在组件更新之前被调用，可以根据新的 props 和 state 判断是否需要重新渲染组件。返回 true 表示需要重新渲染，返回 false 表示不需要。
-render：根据新的 props 和 state 重新渲染组件的 UI。
-getSnapshotBeforeUpdate(prevProps, prevState)：在 render 方法之后、更新 DOM 之前被调用，可以获取组件更新前的一些信息。它返回一个值，该值会作为第三个参数传递给 componentDidUpdate 方法。
-componentDidUpdate(prevProps, prevState, snapshot)：在组件更新后被调用，可以进行 DOM 操作、网络请求或更新组件的状态等操作。
+`static getDerivedStateFromProps(props, state)`：在组件更新之前被调用，用于根据 props 更新组件的状态。
+`shouldComponentUpdate(nextProps, nextState)`：在组件更新之前被调用，可以根据新的 props 和 state 判断是否需要重新渲染组件。返回 true 表示需要重新渲染，返回 false 表示不需要。
+`render`：根据新的 props 和 state 重新渲染组件的 UI。
+`getSnapshotBeforeUpdate(prevProps, prevState)`：在 render 方法之后、更新 DOM 之前被调用，可以获取组件更新前的一些信息。它返回一个值，该值会作为第三个参数传递给 componentDidUpdate 方法。
+c`omponentDidUpdate(prevProps, prevState, snapshot)`：在组件更新后被调用，可以进行 DOM 操作、网络请求或更新组件的状态等操作。
 
-componentWillUnmount：在组件卸载之前被调用，可以清除定时器、移除事件监听器或取消网络请求等操作。
+`componentWillUnmount`：在组件卸载之前被调用，可以清除定时器、移除事件监听器或取消网络请求等操作。
 
 ### React 实例过程
 
-1. 创建一个 React 元素：首先，你需要使用 JSX（一种类似 HTML 的语法）来创建一个 React 元素。这个元素可以是任何 React 组件，例如一个简单的文本组件、一个包含子元素的组件等等。
+1. 创建一个 React 元素：使用 JSX（一种类似 HTML 的语法）来创建一个 React 元素。这个元素可以是任何 React 组件，例如一个简单的文本组件、一个包含子元素的组件等等。
 2. 创建 React 实例：使用 ReactDOM.render() 方法，将创建的 React 元素渲染到一个 DOM 元素中。ReactDOM.render() 方法需要两个参数：要渲染的 React 元素和一个 DOM 元素。这个 DOM 元素可以是页面中的一个 div 元素或者是一个已经存在的元素。
 3. 更新 React 实例：当需要更新 React 实例时，你需要调用 setState() 方法来更新组件的状态。React 会根据新的状态重新渲染组件，并更新 UI。
 
 ### React Fiber架构
 
-React16启用了全新的架构，叫做 Fiber。目的是解决大型React项目的性能问题，再顺手解决之前的一些痛点。
+React16 启用了全新的架构，叫做 Fiber。目的是解决大型 React 项目的性能问题，再顺手解决之前的一些痛点。
 
 让组件更新异步化，切分时间片，渲染之前的调度、diff、更新都只在指定时间片进行，如果超时就暂停放到下个时间片进行，中途给浏览器一个喘息的时间。
 
@@ -112,13 +113,13 @@ React16启用了全新的架构，叫做 Fiber。目的是解决大型React项�
 
 ### React 三种开发模式
 
-- Legacy 模式：通过 ReactDom.reander(.rootNode) 创建的应用遵循该模式。默认关闭StrictMode，和以前一样
-- Blocking 模式:通过 ReactDOM.createBlockingRoot(rootNode).render()，默认开启StrictMode，作为向第三种模式迁移的中间态(可以体验并发模式的部分功能)。
-- Concurrent 模式：通过 ReactDOM.createRoot(rootNode).render() 创建的应用，默认开启StrictMode ，这种模式开启了所有的新功能。
+- `Legacy` 模式：通过 `ReactDom.reander(.rootNode)` 创建的应用遵循该模式。默认关闭 `StrictMode`，和以前一样.
+- `Blocking` 模式:通过 `ReactDOM.createBlockingRoot(rootNode).render()`，默认开启 `StrictMode`，作为向第三种模式迁移的中间态(可以体验并发模式的部分功能)。
+- `Concurrent` 模式：通过 `ReactDOM.createRoot(rootNode).render()` 创建的应用，默认开启 `StrictMode` ，这种模式开启了所有的新功能。
 
 ### JSX
 
-JSX 是 react 的语法糖，它允许在html中写JS，它不能被浏览器直接识别，需要通过webpack、babel之类的编译工具转换为JS执行
+JSX 是 react 的语法糖，它允许在 HTML 中写 JS，它不能被浏览器直接识别，需要通过webpack、babel之类的编译工具转换为JS执行
 
 - 只要使用了jsx，就需要引用 react，因为 jsx 本质就是 React.createElement
 
@@ -138,7 +139,7 @@ JSX与JS的区别：
 
 摘自：<https://www.cxymsg.com/guide/react.html#setstate%E5%88%B0%E5%BA%95%E6%98%AF%E5%BC%82%E6%AD%A5%E8%BF%98%E6%98%AF%E5%90%8C%E6%AD%A5>
 
-setState是一个异步方法，但是在setTimeout/setInterval等定时器里逃脱了React对它的掌控，变成了同步方法。
+setState是一个异步方法，但是在 setTimeout/setInterval 等定时器里逃脱了 React 对它的掌控，变成了同步方法。
 
 所以有时表现出异步,有时表现出同步。异步指的是多个 state 会合并一起批量更新.
 
@@ -148,17 +149,17 @@ setState是一个异步方法，但是在setTimeout/setInterval等定时器里�
 
 原理
 
-1. setState 源码, 会根据 `isBatchingUpdates` 判断直接更新 `this.state` 还是放入队列中. `isBatchingUpdates` 默认 `false`
+1. `setState` 源码, 会根据 `isBatchingUpdates` 判断直接更新 `this.state` 还是放入队列中. `isBatchingUpdates` 默认 `false`
 2. `batchedUpdates` 会修改 `isBatchingUpdates` 为 `true`
 3. React 处理事件(`onClick` 事件处理函数等或 React 生命周期内), 会调用 `batchedUpdates`
 4. 造成 setState 不会同步更新
 
 原生事件和异步代码
 
-- 原生事件不会触发 react 的批处理机制，因而调用setState会直接更新
-- 异步代码中调用 setState，由于js的异步处理机制，异步代码会暂存，等待同步代码执行完毕再执行，此时react的批处理机制已经结束，因而直接更新
+- 原生事件不会触发 react 的批处理机制，因而调用 setState 会直接更新
+- 异步代码中调用 setState，由于 js 的异步处理机制，异步代码会暂存，等待同步代码执行完毕再执行，此时 react 的批处理机制已经结束，因而直接更新
 
-React18 以后，使用了createRoot api后，所有setState都是异步批量执行的
+React18 以后，使用了 createRoot api 后，所有 setState 都是异步批量执行的
 
 ### setState 输出顺序
 
@@ -199,9 +200,11 @@ class Example extends React.Component {
 2. 两次 setState 时，获取到 `this.state.val` 都是 0，所以执行时都是将 0 设置成 1，在 react 内部会被合并掉，只执行一次。设置完成后 state.val 值为 `1`
 3. `setTimeout` 中的代码，触发时 `isBatchingUpdates` 为 false，所以能够直接进行更新，所以连着输出 `2，3`
 
-输出： `0 0 1 1`
+输出： `0 0 2 3`
 
-注意: React 18 默认并发就是 `0011`，18 以下就是 `0023`
+注意: React 18 以下是 `0023`
+
+如果需要在 `setState` 更新后获取新的值，可以在 `setState` 的回调函数中进行操作
 
 ## React 组件之间的通信
 
@@ -240,7 +243,7 @@ React15 使用的是栈调和器，由于递归执行，所以更新一旦开始
 
 React16架构可以分为三层：
 
-- Scheduler（调度器）—— 调度任务的优先级，高优任务优先进入Reconciler
+- Scheduler（调度器）—— 调度任务的优先级，高优任务优先进入 Reconciler
 - Reconciler（协调器）—— 负责找出变化的组件
 - Renderer（渲染器）—— 负责将变化的组件渲染到页面上
 
@@ -255,7 +258,7 @@ React16架构可以分为三层：
    当前: 编写 JSX 代码将不再需要手动导入 React 包，编译器会针对 JSX 代码进行自动导入（React/jsx-runtime）
 
 2. 事件委托的变更
-   React17不再将事件添加在 document 上，而是添加到渲染 React 树的根 DOM 容器中:
+   React17 不再将事件添加在 document 上，而是添加到渲染 React 树的根 DOM 容器中:
 
    ```js
    // v17
@@ -274,9 +277,10 @@ React16架构可以分为三层：
 
 #### 特征更新
 
-- setState 自动批处理
+- setState 自动批处理（过时 API）
   - react17，只有 react 事件会进行批处理，原生js事件、promise，setTimeout、setInterval不会  
   - react18，将所有事件都进行批处理，即多次 setState 会被合并为1次执行，提高了性能，在数据层，将多个状态更新合并成一次处理（在视图层，将多次渲染合并成一次渲染）
+- 类组件（Component）过时，建议使用函数组件
 - 引入了新的 root API，支持 new concurrent renderer(并发模式的渲染)
   - 之前: `ReactDom.render` 将应用组件渲染到页面的根元素
   - 当前: 通过 `ReactDom.creatRoot` 创建根节点对象
@@ -290,7 +294,7 @@ React16架构可以分为三层：
     root.render(<App />);
     ```
 
-- 去掉了对IE浏览器的支持，使用 IE 要回退到 17版本
+- 去掉了对 IE 浏览器的支持，使用 IE 浏览器要回退到 17版本
 - flushSync 退出批量更新
 - Strict Mode
   - 当你使用严格模式（Strict Mode）时，React 会对每个组件进行两次渲染，以便你观察一些意想不到的结果。
@@ -392,7 +396,7 @@ HashRouter/BrowserRouter 路由器
 
 Route 路由匹配
 
-Link 链接，在html中是个锚点
+Link 链接，在 HTML 中是个锚点
 
 NavLink 当前活动链接
 
@@ -479,7 +483,7 @@ ES6 中, 箭头函数 this 默认指向函数的宿主对象(或者函数所绑�
 
 jsx通过babel转义时，调用了React.createElement函数，它接收三个参数，分别是type元素类型，props元素属性，children子元素。
 
-从jsx到真实DOM需要经历jsx->虚拟DOM->真实DOM。如果组件首字母为小写，它会被当成字符串进行传递，在创建虚拟DOM的时候，就会把它当成一个html标签，而html没有app这个标签，就会报错。组件首字母为大写，它会当成一个变量进行传递，React知道它是个自定义组件就不会报错了
+从jsx到真实DOM需要经历jsx->虚拟DOM->真实DOM。如果组件首字母为小写，它会被当成字符串进行传递，在创建虚拟DOM的时候，就会把它当成一个 HTML 标签，而 HTML 没有app这个标签，就会报错。组件首字母为大写，它会当成一个变量进行传递，React知道它是个自定义组件就不会报错了
 
 ```js
 <app>lyllovelemon</app>
