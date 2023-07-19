@@ -15,10 +15,12 @@
   - [变化](#变化)
   - [Vue3 组件通信](#vue3-组件通信)
   - [为什么 Vue3 不使用 defineProperty](#为什么-vue3-不使用-defineproperty)
-  - [Vue3.0性能提升主要是通过哪几方面体现的？](#vue30性能提升主要是通过哪几方面体现的)
+  - [Vue3.0 性能提升主要是通过哪几方面体现的？](#vue30-性能提升主要是通过哪几方面体现的)
 - [Vue-Router](#vue-router)
 - [Vuex](#vuex)
   - [Flux 架构](#flux-架构)
+- [问题](#问题)
+  - [为什么不推荐 v-if 和 v-for 一起用](#为什么不推荐-v-if-和-v-for-一起用)
 
 ## 基础知识
 
@@ -77,7 +79,6 @@ Vue 的响应式原理基于两个核心概念：依赖追踪 和 变化监听�
 依赖追踪：通过 Object.defineProperty() 方法对属性进行拦截。Vue 会递归地遍历其 data 对象中的所有属性，并使用 Object.defineProperty() 方法对每个属性设置拦截器。拦截器的作用是当属性被访问时，记录下访问者的信息，并通知订阅者该属性已被访问。这样，当一个属性的值发生变化时，所有依赖该属性的订阅者都会被通知，从而触发相应的操作。
 
 变化监听：在通知订阅者时，Vue 使用了一种称为 "发布订阅" 的模式。当一个属性的值发生变化时，Vue 会像订阅者发布一个事件，订阅者通过监听该事件来响应属性的变化。这种模式的实现依赖于 Vue 内部维护的一个事件队列，当属性发生变化时，Vue 会将该事件添加到队列中，然后逐个通知订阅者执行相应的操作。
-
 
 ## 虚拟 DOM
 
@@ -239,7 +240,7 @@ eventBus
 
 provide/inject
 
-vue 新增 api， 父组件中通过provide来提供变量, 然后再子组件中通过inject来注入变量。
+vue 新增 api， 父组件中通过 provide 来提供变量, 然后再子组件中通过 inject 来注入变量。
 
 ```js
 // 父组件
@@ -288,20 +289,20 @@ LRU：[LRU.js](../../algorithm/LRU.js)
 
 ### 变化
 
-1. `$children` 移除。要访问子组件实例，使用 `$refs`
-2. `data` 选项标准化，只能接受返回 `object` 的 `function`
+1. `$children` 移除。要访问子组件实例，使用模版引用 `ref`
+2. `data` 选项标准化，只能接受返回 `object` 的 `function`；在 2.x 中，定义 data 为 object 或者是 function；
 3. `Mixin` 合并行为变更，`data` 同名属性直接覆盖，而不是合并
 4. `$on, $off, $once` 被移除
    - 之前用于创建一个事件总线，`eventBus`
    - 事件总线模式可以被替换为使用外部的库，例如`tiny-emitter`
-5. 过滤器移除，使用 计算属性或者方法代替。
-6. 过渡类名 v-enter 修改为 v-enter-from、过渡类名 v-leave 修改为 v-leave-from
+5. 过滤器 `filters` 移除，使用 计算属性或者方法代替。
+6. 过渡类名 `v-enter` 修改为 `v-enter-from`、过渡类名 `v-leave` 修改为 `v-leave-from`
 7. `.sync` 的部分并将其替换为 `v-model`
-8. `v-if` 总是优先于 `v-for` 生效。
+8. 将全局的API，即：Vue.xxx 调整到应用实例（app）上，使用 app.xxx（如 app.use，app.config）
 
 ### Vue3 组件通信
 
-- Prop 和事件: 父子组件通信，兄弟节点通过父组件通信
+- Prop 和 emit : 父子组件通信，兄弟节点通过父组件通信
 - provide/inject: 组件和插槽通信，也能用于组件远距离通信
 - 全局状态管理：Vuex, pinia
 
@@ -315,7 +316,7 @@ LRU：[LRU.js](../../algorithm/LRU.js)
 - 3. 对象新增属性，要重新遍历对象，对新对象使用 `Object.defineProperty` 进行劫持
 - 4. `Proxy` 为新标准，浏览器会对其进行优化。
 
-### Vue3.0性能提升主要是通过哪几方面体现的？
+### Vue3.0 性能提升主要是通过哪几方面体现的？
 
 - 在 bundle 包大小方面（tree-shaking 减少了 41% 的体积）
 - 初始渲染速度方面（快了 55%）
@@ -331,3 +332,28 @@ LRU：[LRU.js](../../algorithm/LRU.js)
 ### Flux 架构
 
 数据流: view -> action -> dispatcher -> store
+
+## 问题
+
+### 为什么不推荐 v-if 和 v-for 一起用
+
+当它们同时存在于一个节点上时，v-if 比 v-for 的优先级更高。这意味着 v-if 的条件将无法访问到 v-for 作用域内定义的变量别名
+
+```js
+//  这会抛出一个错误，因为属性 todo 此时
+//  没有在该实例上定义
+
+<li v-for="todo in todos" v-if="!todo.isComplete">
+  {{ todo.name }}
+</li>
+```
+
+在外新包装一层 `<template>` 再在其上使用 v-for 可以解决这个问题 (这也更加明显易读)：
+
+```js
+<template v-for="todo in todos">
+  <li v-if="!todo.isComplete">
+    {{ todo.name }}
+  </li>
+</template>
+```
