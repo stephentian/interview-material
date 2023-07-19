@@ -10,7 +10,7 @@ class MVVM {
 		this._data = options.data
 		this._methods = options.methods
 
-		Object.keys.(this._data).foreach(key => {
+		Object.keys(this._data).foreach(key => {
 			this._proxy(key)
 		})
 
