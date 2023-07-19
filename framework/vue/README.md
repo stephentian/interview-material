@@ -1,25 +1,24 @@
 # Vue
 
-- [Vue](#vue)
-  - [基础知识](#基础知识)
-    - [Vue 发展史](#vue-发展史)
-    - [生命周期](#生命周期)
-    - [Vue 实例过程](#vue-实例过程)
-    - [Vue 的响应式原理](#vue-的响应式原理)
-  - [虚拟 DOM](#虚拟-dom)
-  - [组件中 name 选项作用](#组件中-name-选项作用)
-  - [nextTick 的原理](#nexttick-的原理)
-  - [父子组件渲染过程](#父子组件渲染过程)
-  - [组件之间的通信](#组件之间的通信)
-  - [keep-alive](#keep-alive)
-  - [Vue3](#vue3)
-    - [变化](#变化)
-    - [Vue3 组件通信](#vue3-组件通信)
-    - [为什么 Vue3 不使用 defineProperty](#为什么-vue3-不使用-defineproperty)
-    - [Vue3.0性能提升主要是通过哪几方面体现的？](#vue30性能提升主要是通过哪几方面体现的)
-  - [Vue-Router](#vue-router)
-  - [Vuex](#vuex)
-    - [Flux 架构](#flux-架构)
+- [基础知识](#基础知识)
+  - [Vue 发展史](#vue-发展史)
+  - [生命周期](#生命周期)
+  - [Vue 实例过程](#vue-实例过程)
+  - [Vue 的响应式原理](#vue-的响应式原理)
+- [虚拟 DOM](#虚拟-dom)
+- [组件中 name 选项作用](#组件中-name-选项作用)
+- [nextTick 的原理](#nexttick-的原理)
+- [父子组件渲染过程](#父子组件渲染过程)
+- [组件之间的通信](#组件之间的通信)
+- [keep-alive](#keep-alive)
+- [Vue3](#vue3)
+  - [变化](#变化)
+  - [Vue3 组件通信](#vue3-组件通信)
+  - [为什么 Vue3 不使用 defineProperty](#为什么-vue3-不使用-defineproperty)
+  - [Vue3.0性能提升主要是通过哪几方面体现的？](#vue30性能提升主要是通过哪几方面体现的)
+- [Vue-Router](#vue-router)
+- [Vuex](#vuex)
+  - [Flux 架构](#flux-架构)
 
 ## 基础知识
 
@@ -71,7 +70,7 @@
 
 当 vue 创建一个实例时, vue 会遍历 data 里的属性，使用 Object.defineProperty 给它们添加 getter/setter 属性。
 当被调用时，即触发 getter, Vue 会去 `Watcher` 收集依赖的所有 data。
-当被改动时，即触发 setter, Vue 会通知(Notify) `Watcher`, 然后 `Watcher` 去调用 render 函数更新相关组件。
+当被改动时，即触发 setter, Vue 会通知(`Notify`) `Watcher`, 然后 `Watcher` 去调用 render 函数更新相关组件。
 
 ## 虚拟 DOM
 

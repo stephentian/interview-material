@@ -205,7 +205,7 @@ document.body.appendChild(ulDom)
 vue 和 React Diff 算法复杂度为 O(n)：
 
 - 只比较同一层级，不跨级比较
-- tag不相同，则会直接删除重建，不再深度比较
+- tag 不相同，则会直接删除重建，不再深度比较
 
 ```js
 for(const i in old) {
