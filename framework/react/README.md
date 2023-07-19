@@ -32,11 +32,11 @@
   - [前端路由解决的问题](#前端路由解决的问题)
 - [常见问题](#常见问题)
   - [StrictMode 模式是什么](#strictmode-模式是什么)
-  - [React 请求放哪个生命周期中](#react-请求放哪个生命周期中)
-  - [为什么 React bind(this)](#为什么-react-bindthis)
+  - [类组件，React 请求放哪个生命周期中](#类组件react-请求放哪个生命周期中)
+  - [类组件，为什么 React bind(this)](#类组件为什么-react-bindthis)
   - [为什么 React 不推荐直接修改 state](#为什么-react-不推荐直接修改-state)
   - [useEffect 和 useCallback 有什么差异？](#useeffect-和-usecallback-有什么差异)
-  - [为什么React自定义组件首字母要大写](#为什么react自定义组件首字母要大写)
+  - [为什么 React 自定义组件首字母要大写](#为什么-react-自定义组件首字母要大写)
 
 ## 基础知识
 
@@ -367,7 +367,7 @@ dependencies 是一个数组，用于指定在哪些依赖项发生变化时重�
 
 ### 自定义 Hooks
 
-自定义 Hook 是一个函数，其名称以 “use” 开头，函数内部可以调用其他的 Hook。
+自定义 Hook 是一个函数，其名称以 use 开头，函数内部可以调用其他的 Hook。
 
 ## Redux
 
@@ -435,7 +435,9 @@ StrictMode，16.3 版本发布，为了规范代码，
 
 针对开发者编写的“不符合并发更新规范的代码”给出提示，逐步引导开发者编写规范的代码。比如使用以 will 开头的生命周期就会给出对应的报错提示。
 
-### React 请求放哪个生命周期中
+### 类组件，React 请求放哪个生命周期中
+
+类组件：
 
 以前：
 认为在 componentWillMount 中进行异步请求，避免白屏。
@@ -445,7 +447,11 @@ StrictMode，16.3 版本发布，为了规范代码，
 官方推荐：`componentDidMount`
 有特殊需要提前请求，也可以在 `constructor` 中请求。
 
-### 为什么 React bind(this)
+函数组件：
+
+`useEffect`
+
+### 类组件，为什么 React bind(this)
 
 原因在于 JavaScript 不在 React
 
@@ -479,7 +485,7 @@ ES6 中, 箭头函数 this 默认指向函数的宿主对象(或者函数所绑�
 2. 参数不同：useCallback 接受两个参数，一个是待缓存的函数，另一个是依赖项数组；useEffect 接受一个函数和一个依赖项数组（可选参数）。
 3. 执行方式不同：useCallback 在依赖项发生变化时重新创建缓存函数；useEffect 在依赖项发生变化时重新执行副作用操作。
 
-### 为什么React自定义组件首字母要大写
+### 为什么 React 自定义组件首字母要大写
 
 jsx通过babel转义时，调用了React.createElement函数，它接收三个参数，分别是type元素类型，props元素属性，children子元素。
 
