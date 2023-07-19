@@ -1,15 +1,14 @@
 # Vue-Router
 
-- [Vue-Router](#vue-router)
-  - [基础知识](#基础知识)
-    - [前端路由起源](#前端路由起源)
-    - [route 和 router 区别](#route-和-router-区别)
-  - [前端路由模式](#前端路由模式)
-    - [hash](#hash)
-    - [history](#history)
-    - [MemotyHistory (abstract)](#memotyhistory-abstract)
-  - [手写 Vue-Router](#手写-vue-router)
-  - [配置 history](#配置-history)
+- [基础知识](#基础知识)
+  - [前端路由起源](#前端路由起源)
+  - [route 和 router 区别](#route-和-router-区别)
+- [前端路由模式](#前端路由模式)
+  - [hash](#hash)
+  - [history](#history)
+  - [MemotyHistory (abstract)](#memotyhistory-abstract)
+- [手写 Vue-Router](#手写-vue-router)
+- [配置 history](#配置-history)
 
 ## 基础知识
 
@@ -42,6 +41,8 @@ const router = createRouter({
 })
 ```
 
+这种模式适用于不支持 HTML5 History API 的浏览器，如 IE9 及更早版本的浏览器。
+
 缺点: 在 SEO 中确实有不好的影响
 
 ### history
@@ -67,18 +68,20 @@ const router = createRouter({
 - `history.pushState()` 或 `history.replaceState()` 不会触发 `popstate` 事件。
 - 只有在做出浏览器动作时，比如点击后退、前进按钮【或者调用 JS 中的 `history.back()`、`history.forward()`、`history.go()`】才会触发该事件。
 
-缺点: 需要后台配置支持。不然返回 404。`nginx uri`
+缺点: 需要服务器端支持，否则会导致页面无法正常加载，返回 404。`nginx uri`
 
 ### MemotyHistory (abstract)
 
+这种模式适用于支持 Vue Router 的任何环境，包括浏览器、服务器端和原生移动应用等。
+
 - 创建一个基于内存的历史记录。这个历史记录的主要目的是处理 SSR.
-- 路由不变, 也不刷新
+- 需要 Vue Router 的支持，无法在其他框架或环境中使用。
 
 ## 手写 Vue-Router
 
 分析：
 
-- 实现一个插件, 包含 install 方法
+- 实现一个插件, 包含 `install` 方法
 - 两个全局组件 `router-link` 和 `router-view`
 - 监听 `url` 变化， 实现 hash 模式跳转
 - 嵌套子路由显示
