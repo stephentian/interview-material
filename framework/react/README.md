@@ -487,9 +487,9 @@ ES6 中, 箭头函数 this 默认指向函数的宿主对象(或者函数所绑�
 
 ### 为什么 React 自定义组件首字母要大写
 
-jsx通过babel转义时，调用了React.createElement函数，它接收三个参数，分别是type元素类型，props元素属性，children子元素。
+jsx 通过 babel 转义时，调用了 React.createElement 函数，它接收三个参数，分别是 type 元素类型，props 元素属性，children 子元素。
 
-从jsx到真实DOM需要经历jsx->虚拟DOM->真实DOM。如果组件首字母为小写，它会被当成字符串进行传递，在创建虚拟DOM的时候，就会把它当成一个 HTML 标签，而 HTML 没有app这个标签，就会报错。组件首字母为大写，它会当成一个变量进行传递，React知道它是个自定义组件就不会报错了
+从 jsx 到真实 DOM 需要经历 jsx->虚拟DOM->真实DOM。如果组件首字母为小写，它会被当成字符串进行传递，在创建虚拟DOM的时候，就会把它当成一个 HTML 标签，而 HTML 没有 app 这个标签，就会报错。组件首字母为大写，它会当成一个变量进行传递，React 知道它是个自定义组件就不会报错了
 
 ```js
 <app>lyllovelemon</app>
