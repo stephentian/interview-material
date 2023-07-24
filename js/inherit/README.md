@@ -1,26 +1,27 @@
 # 继承
 
-JavaScript 本身不提供 `class` 实现( es6 提供了语法糖)，想要继承得基于原型。
+JavaScript 本身不提供 `class` 实现( es6 提供了语法糖)，想要继承得基于原型 `prototype`。
+
+- [相关概念](#相关概念)
+  - [原型及原型链](#原型及原型链)
+  - [constructor](#constructor)
+  - [new](#new)
+  - [instanceof](#instanceof)
+- [继承方式](#继承方式)
+  - [原型链继承](#原型链继承)
+  - [构造函数继承](#构造函数继承)
+  - [组合继承](#组合继承)
+  - [原型式继承](#原型式继承)
+  - [寄生式继承](#寄生式继承)
+  - [寄生组合式继承](#寄生组合式继承)
+  - [ES6 extends](#es6-extends)
+- [问题](#问题)
+  - [constructor 没有调用 super() 会怎么样](#constructor-没有调用-super-会怎么样)
 
 继承都基于两种方式：
 
 - 原型链，即子类的原型指向父类的实例从而实现原型共享。
-- 构造函数，即通过js的apply、call实现子类调用父类的属性、方法；
-
-- [继承](#继承)
-  - [相关概念](#相关概念)
-    - [原型及原型链](#原型及原型链)
-    - [constructor](#constructor)
-    - [new](#new)
-    - [instanceof](#instanceof)
-  - [继承方式](#继承方式)
-    - [原型链继承](#原型链继承)
-    - [构造函数继承](#构造函数继承)
-    - [组合继承](#组合继承)
-    - [原型式继承](#原型式继承)
-    - [寄生式继承](#寄生式继承)
-    - [寄生组合式继承](#寄生组合式继承)
-    - [ES6 extends](#es6-extends)
+- 构造函数，即通过 js 的 apply, call 实现子类调用父类的属性、方法；
 
 ## 相关概念
 
@@ -253,7 +254,7 @@ function Child(age) {
 
 ## 问题
 
-### 如果子类constructor没有调用 super()
+### constructor 没有调用 super() 会怎么样
 
 ```js
 class Animal {

@@ -3,7 +3,6 @@
 - [JS 基础](#js-基础)
   - [特点](#特点)
   - [设计缺陷](#设计缺陷)
-  - [单线程](#单线程)
   - [类型](#类型)
   - [继承](#继承)
   - [垃圾回收](#垃圾回收)
@@ -46,7 +45,8 @@
   - [事件流](#事件流)
 - [函数式编程](#函数式编程)
   - [纯函数](#纯函数)
-- [常见例题](#常见例题)
+- [问题](#问题)
+  - [为什么设计成单线程？](#为什么设计成单线程)
   - [defer 和 async](#defer-和-async)
   - [考察 Event Loop 执行顺序](#考察-event-loop-执行顺序)
   - [闭包，使用场景，注意点及如何解决](#闭包使用场景注意点及如何解决)
@@ -74,23 +74,15 @@
 6. `new Date().getYear()` 返回是 1900 开始计算, 要用 `getFullYear`, `getMonth()` 确实获取月份减一
 7. `toFixed` 精度问题(`1.335.toFixed(2)`)
 
-### 单线程
-
-不想让浏览器变得太复杂
-
-1. JavaScript的诞生就是为了处理浏览器网页的交互
-2. 因为多线程需要共享资源、且有可能修改彼此的运行结果
-3. 两个线程修改了同一个DOM节点就会产生不必要的麻烦
-
 ### 类型
 
-基本类型: undefined, null, boolean, number, string, Symbol
+基本类型: `undefined`, `null`, `boolean`, `number`, `string`, `Symbol`
 
-引用类型: function, object, array
+引用类型: `function`, `object`, `array`
 
-undefined: 声明变量未初始化的值
+`undefined`: 声明变量未初始化的值
 
-null: 用来保存对象, 没有值。null 值表示一个空对象指针. `typeof null` 为 `object`
+`null`: 用来保存对象, 没有值. `null` 值表示一个空对象指针. `typeof null` 为 `object`
 
 ### 继承
 
@@ -948,7 +940,15 @@ windiw --> document --> html --> body --> ... --> 目标元素
 比如 `slice` 和 `splice`， 都可以做同样的操作，
 但是 `splice` 会修改参数，也就是传入的数组，所以不是纯函数，而 `slice` 是纯函数。
 
-## 常见例题
+## 问题
+
+### 为什么设计成单线程？
+
+作者布兰登，不想让浏览器变得太复杂
+
+1. JavaScript的诞生就是为了处理浏览器网页的交互
+2. 因为多线程需要共享资源、且有可能修改彼此的运行结果
+3. 两个线程修改了同一个DOM节点就会产生不必要的麻烦
 
 ### defer 和 async
 
