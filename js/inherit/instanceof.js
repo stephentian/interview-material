@@ -5,9 +5,9 @@
  **/
 
 function myInstanceof(target, origin) {
-  if (obj === null) return
+  if (target === null) return false
 
-  while (target) {
+  while (!!target) {
     if (target.__proto__ === origin.prototype) {
       return true
     }

@@ -21,7 +21,7 @@ JavaScript 本身不提供 `class` 实现( es6 提供了语法糖)，想要继�
 继承都基于两种方式：
 
 - 原型链，即子类的原型指向父类的实例从而实现原型共享。
-- 构造函数，即通过 js 的 apply, call 实现子类调用父类的属性、方法；
+- 构造函数，即通过 js 的 `apply`, `call` 实现子类调用父类的属性、方法；
 
 ## 相关概念
 
@@ -65,6 +65,22 @@ JavaScript 本身不提供 `class` 实现( es6 提供了语法糖)，想要继�
 
 a instanceof Fn
 判断: 沿着 `a.__proto__` 往上找, 同时沿着 B.prototype 找, 如果找到同一个引用, 即返回 true
+
+[instanceof](./instanceof.js)
+
+```js
+function myInstanceof(target, origin) {
+  if (target === null) return false
+
+  while (!!target) {
+    if (target.__proto__ === origin.prototype) {
+      return true
+    }
+    target = target.__proto__
+  }
+  return false
+}
+```
 
 ## 继承方式
 
