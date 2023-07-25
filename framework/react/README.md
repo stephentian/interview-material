@@ -36,6 +36,7 @@
   - [类组件，为什么 React bind(this)](#类组件为什么-react-bindthis)
   - [为什么 React 不推荐直接修改 state](#为什么-react-不推荐直接修改-state)
   - [useEffect 和 useCallback 有什么差异？](#useeffect-和-usecallback-有什么差异)
+  - [useEffect, useMemo, useCallback](#useeffect-usememo-usecallback)
   - [为什么 React 自定义组件首字母要大写](#为什么-react-自定义组件首字母要大写)
 
 ## 基础知识
@@ -484,6 +485,56 @@ ES6 中, 箭头函数 this 默认指向函数的宿主对象(或者函数所绑�
 1. 作用不同：useCallback 用于创建缓存的函数，以提高组件性能；useEffect 用于在组件渲染后执行副作用操作，如数据获取、订阅和 DOM 操作等。
 2. 参数不同：useCallback 接受两个参数，一个是待缓存的函数，另一个是依赖项数组；useEffect 接受一个函数和一个依赖项数组（可选参数）。
 3. 执行方式不同：useCallback 在依赖项发生变化时重新创建缓存函数；useEffect 在依赖项发生变化时重新执行副作用操作。
+
+### useEffect, useMemo, useCallback
+
+`useEffect`, `useMemo` 处理组件的状态和属性时具有不同的作用。
+
+`useEffect` 主要用于处理副作用，即那些在组件渲染后产生的附加影响。这些影响可以是订阅外部 API、发送网络请求或执行其他一些异步操作。`useEffect` 接受两个参数，第一个是副作用函数，它会在组件渲染后运行；第二个是依赖数组，用于指定依赖项，当依赖项发生变化时，副作用函数会重新运行。
+
+```js
+import React, { useEffect } from 'react';  
+  
+function Example() {  
+  useEffect(() => {  
+    // 订阅 API  
+  }, []);  
+  
+  return (  
+    // 组件渲染内容  
+  );  
+}
+```
+
+`useMemo` 则用于避免不必要的计算和渲染。当依赖项发生变化时，`useMemo` 会缓存结果，只有当依赖项发生变化时才会重新计算。这可以提高性能，特别是当计算成本很高时。
+
+```js
+import React, { useMemo } from 'react';  
+  
+function Example(props) {  
+  const largeArray = useMemo(() => {  
+    // 昂贵的计算  
+  }, [props.value]);  
+  
+  return (  
+    // 组件渲染内容  
+  );  
+}
+```
+
+`useMemo` 会缓存 `largeArray` 的计算结果，只有当 `props.value` 发生变化时才会重新计算。这样可以避免不必要的计算和渲染，提高性能。
+
+执行时机不同
+
+useMemo 的函数会在渲染期间执行，memo 是在 DOM 更新前触发的，就像官方所说的，类比生命周期就是 shouldComponentUpdate。
+
+useEffect 只能在 DOM 更新后并且浏览器渲染完成后再触发
+
+```js
+// useMemo
+// return生成DOM、渲染
+// useEffect
+```
 
 ### 为什么 React 自定义组件首字母要大写
 
