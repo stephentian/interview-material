@@ -380,7 +380,7 @@ useDebugValue: 用于在自定义 Hooks 中显示调试信息。
 
 - 跳过组件重新渲染
 - 防止频繁触发 `Effect`
-  - 用 `useCallback` 包裹 `Effect` 用到的依赖项（函数，对象等）
+  - 用 `useCallback` 包裹 `Effect` 用到的依赖项（函数）
 - 优化自定义 `Hook`
   - 编写自定义 `Hook`，建议将它返回的任何函数包裹在 `useCallback` 中
 
@@ -414,20 +414,16 @@ useDebugValue: 用于在自定义 Hooks 中显示调试信息。
 3. 缓存一个函数
 
     ```js
-    export default function Page1({ productId, referrer }) {
-      function handleSubmit(orderDetails) {
-        post('/product/' + productId + '/buy', {
-          referrer,
-          orderDetails
-        });
-      }
-
-      return <Form onSubmit={handleSubmit} />;
-    }
-
-    // function(){} 和 () => {} 会渲染一个新的不同的函数
-    // 可以缓存函数，避免重新渲染
-    export default function Page2({ productId, referrer }) {
+    export default function Page({ productId, referrer }) {
+      // function handleSubmit(orderDetails) {
+      //  post('/product/' + productId + '/buy', {
+      //    referrer,
+      //    orderDetails
+      //  });
+      // }
+      
+      // function(){} 和 () => {} 会渲染一个新的不同的函数
+      // 可以缓存函数，避免重新渲染
       const handleSubmit = useMemo(() => {
         return (orderDetails) => {
           post('/product/' + productId + '/buy', {
