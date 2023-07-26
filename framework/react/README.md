@@ -8,6 +8,7 @@
   - [React 设计思想](#react-设计思想)
   - [React 三种开发模式](#react-三种开发模式)
   - [JSX](#jsx)
+  - [副作用](#副作用)
 - [setState](#setstate)
   - [setState 到底是异步还是同步](#setstate-到底是异步还是同步)
   - [setState 输出顺序](#setstate-输出顺序)
@@ -22,7 +23,7 @@
 - [Hooks](#hooks)
   - [Hooks API](#hooks-api)
     - [useState](#usestate)
-    - [useEffects](#useeffects)
+    - [useEffect](#useeffect)
     - [useCallback](#usecallback)
     - [useMemo](#usememo)
   - [自定义 Hooks](#自定义-hooks)
@@ -127,10 +128,21 @@ JSX 是 react 的语法糖，它允许在 HTML 中写 JS，它不能被浏览器
 
 - 只要使用了jsx，就需要引用 react，因为 jsx 本质就是 React.createElement
 
-JSX与JS的区别：
+JSX 与 JS 的区别：
 
 - JS可以被打包工具直接编译，不需要额外转换，jsx需要通过babel编译，它是 React.createElement的 语法糖，使用jsx等价于R eact.createElement
 - jsx是js的语法扩展，允许在html中写JS；JS是原生写法，需要通过script标签引入
+
+### 副作用
+
+React 围绕纯函数的概念设计的。
+
+纯函数：
+
+- 只负责自己的任务。它不会更改在该函数调用前就已存在的对象或变量。
+- 输入相同，则输出相同。给定相同的输入，纯函数应总是返回相同的结果。
+
+但是有些组件，会获取外部其他组件或者发起请求获取的数据，那就会产生不同的结果，这就带来了不符合预期的后果。这就是 副作用。
 
 ## setState
 
@@ -334,18 +346,18 @@ useDebugValue: 用于在自定义 Hooks 中显示调试信息。
 
 #### useState
 
-useState 是一个 React Hook，它用于在函数组件中添加状态。当你调用 useState 时，它会返回一个数组，其中第一个元素是当前状态的值，第二个元素是一个回调函数，用于更新状态的值。当你调用第二个元素时，React 会比较新旧状态的值是否相同，如果不同，则会触发组件的重新渲染。
+`useState` 是一个 React Hook，它用于在函数组件中添加状态。当你调用 `useState` 时，它会返回一个数组，其中第一个元素是当前状态的值，第二个元素是一个回调函数，用于更新状态的值。当你调用第二个元素时，React 会比较新旧状态的值是否相同，如果不同，则会触发组件的重新渲染。
 
-useState 的唯一参数是 state 变量的初始值
+`useState` 的唯一参数是 state 变量的初始值
 
 当你调用 useState 时，你是在告诉 React 你想让这个组件记住一些东西：
 
 `const [index, setIndex] = useState(0);`
 
-- state 变量 (index) 会保存上次渲染的值。
-- state setter 函数 (setIndex) 可以更新 state 变量并触发 React 重新渲染组件。
+- `index` 会保存上次渲染的值。
+- `setIndex` 可以更新 `state` 变量并触发 `React` 重新渲染组件。
 
-#### useEffects
+#### useEffect
 
 `useEffect` 是一个用于在组件渲染后执行副作用（如数据获取、订阅和 DOM 操作等）的函数。
 
@@ -362,10 +374,27 @@ useState 的唯一参数是 state 变量的初始值
 
 #### useCallback
 
+`useCallback` 返回你已经传入的 `fn` 函数。不会调用此函数，而是返回此函数。你可以自己决定何时调用以及是否调用。
+
+`useCallback` 只应作用于性能优化。如果代码在没有它的情况下无法运行，请找到根本问题并首先修复它，然后再使用 `useCallback`。
+
 - 跳过组件重新渲染
-- 
+- 防止频繁触发 `Effect`
+  - 用 `useCallback` 包裹 `Effect` 用到的依赖项（函数，对象等）
+- 优化自定义 `Hook`
+  - 编写自定义 `Hook`，建议将它返回的任何函数包裹在 `useCallback` 中
 
 #### useMemo
+
+每次重新渲染的时候能够缓存计算的结果
+
+接受两个参数：
+
+- calculateValue：要缓存计算值的函数。
+- dependencies： 函数中使用的响应式变量组成的数组。
+  - 没有提供依赖项数组，useMemo 在每次渲染时都会计算新的值
+
+用法：
 
 - 跳过成本高的计算
 - 跳过组件的重新渲染
@@ -385,7 +414,20 @@ useState 的唯一参数是 state 变量的初始值
 3. 缓存一个函数
 
     ```js
-    export default function Page({ productId, referrer }) {
+    export default function Page1({ productId, referrer }) {
+      function handleSubmit(orderDetails) {
+        post('/product/' + productId + '/buy', {
+          referrer,
+          orderDetails
+        });
+      }
+
+      return <Form onSubmit={handleSubmit} />;
+    }
+
+    // function(){} 和 () => {} 会渲染一个新的不同的函数
+    // 可以缓存函数，避免重新渲染
+    export default function Page2({ productId, referrer }) {
       const handleSubmit = useMemo(() => {
         return (orderDetails) => {
           post('/product/' + productId + '/buy', {
@@ -399,7 +441,7 @@ useState 的唯一参数是 state 变量的初始值
     }
 
     // 记忆函数专门用 useCallback
-    export default function Page({ productId, referrer }) {
+    export default function Page3{ productId, referrer }) {
       const handleSubmit = useCallback((orderDetails) => {
         post('/product/' + productId + '/buy', {
           referrer,
@@ -535,13 +577,17 @@ ES6 中, 箭头函数 this 默认指向函数的宿主对象(或者函数所绑�
 
 ### useEffect, useMemo, useCallback 差异
 
-`useEffect`, `useMemo` 处理组件的状态和属性时具有不同的作用。
+- `useEffect` 会在组件渲染后执行，做 React 之外的事件处理
+- `useMemo` 每次重新渲染的时候能够缓存计算的结果，返回变量（计算结果）
+- `useCallback` 在多次渲染中缓存函数，返回一个函数
 
-`useEffect` 主要用于处理副作用，即那些在组件渲染后产生的附加影响。这些影响可以是订阅外部 API、发送网络请求或执行其他一些异步操作。`useEffect` 接受两个参数，第一个是副作用函数，它会在组件渲染后运行；第二个是依赖数组，用于指定依赖项，当依赖项发生变化时，副作用函数会重新运行。
+前者是处理组件里的副作用；后两者都是提高性能；
 
-`useMemo` 则用于避免不必要的计算和渲染。当依赖项发生变化时，`useMemo` 会缓存结果，只有当依赖项发生变化时才会重新计算。这可以提高性能，特别是当计算成本很高时。
+1. `useEffect` 主要用于处理副作用，即那些在组件渲染后产生的附加影响。这些影响可以是订阅外部 API、发送网络请求或执行其他一些异步操作。`useEffect` 接受两个参数，第一个是副作用函数，它会在组件渲染后运行；第二个是依赖数组，用于指定依赖项，当依赖项发生变化时，副作用函数会重新运行。
 
-`useMemo` 会缓存 `largeArray` 的计算结果，只有当 `props.value` 发生变化时才会重新计算。这样可以避免不必要的计算和渲染，提高性能。
+2. `useMemo` 则用于避免不必要的计算和渲染。当计算成本很高时。不使用 `useEffect`，使用 `useMemo` 缓存结果，只有当依赖项发生变化时才会重新计算，提高性能
+
+3. `useCallback` 用于避免频繁触发 Effect，组件重新渲染。`useMemo` 将调用 fn 函数并返回其结果，而 `useCallback` 将返回 fn 函数而不调用它。`useCallback(fn, deps) 相当于 useMemo(() => fn, deps)。`
 
 #### 如何判断计算成本高？
 
