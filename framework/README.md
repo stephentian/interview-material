@@ -6,7 +6,9 @@
   - [React 优缺点](#react-优缺点)
 - [Svelte](#svelte)
 - [Solid](#solid)
-- [Flux(Vuex, Redux)](#fluxvuex-redux)
+- [Flux](#flux)
+- [Redux](#redux)
+  - [Redux 基本思想](#redux-基本思想)
 
 ## Vue
 
@@ -83,7 +85,7 @@ SolidJS 是一个语法像 React Function Component，内核像 Vue 的前端框
 
 SolidJS 通过利用细粒度的观察机制，将组件的渲染过程与 JavaScript 的响应式特性结合起来，实现了高效的界面更新。SolidJS 使用JavaScript 代码来描述界面的结构，而不是像其他框架那样使用模板语言。
 
-## Flux(Vuex, Redux)
+## Flux
 
 设计思想: 把组件之间的共享状态抽出, 统一管理, 让这些状态的变化可以预测
 
@@ -113,3 +115,42 @@ Vux 流程: `Component --> Actions(http request) --> Mutations --> State`
 1. 组件发出请求 `store.dispatch()` 到 `Action` 或者直接 `store.commit()` 触发 `Mutations`
 2. `mutations` 收到更新 `state`
 3. `Component` 接受 `State` 变化更新视图
+
+## Redux
+
+Redux 是一个 JavaScript 库，用于管理应用程序的状态。它使应用程序的状态变得更加可预测和可控制，并且使得状态的变化变得更加可追踪和可调试。
+
+Redux 三个原则
+
+1. 单一状态：单一状态树可以更轻松地跟踪随时间的变化以及调试或检查应用程序。
+2. 状态只读： `immutable`，改变状态的唯一方法是触发一个动作。
+3. 纯函数： 不改变外部状态产生副作用，纯函数返回值取决于其参数值。
+
+### Redux 基本思想
+
+使用单例模式实现
+
+`Store`: 所有的状态都存储在 `Store` 对象中，只能通过返回一个新的 `Store` 去更改它。
+
+```js
+import { createStore } from 'redux'
+const store = createStore(reducer)
+```
+
+`Reducer`: 一个纯函数，它接收当前的状态 `state` 和发过来的 `action`，并返回新的状态。
+
+```js
+const reducer = function(prevState, action) {
+  ...
+  return newState;
+};
+```
+
+`Action`: `Redux` 通过 `dispatch` 来触发状态的更新，`dispatch` 方法接受一个 `action`，并将其传递给 `reducer` 来更新状态。
+
+```js
+store.dispatch({
+  type: 'ADD_ITEM',
+  payload: 'new item', // 可选属性
+})
+```

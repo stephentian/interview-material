@@ -4,7 +4,7 @@
   - [React 发展历程](#react-发展历程)
   - [React 生命周期](#react-生命周期)
   - [React 实例过程](#react-实例过程)
-  - [React Fiber架构](#react-fiber架构)
+  - [React Fiber](#react-fiber)
   - [React 设计思想](#react-设计思想)
   - [React 三种开发模式](#react-三种开发模式)
   - [JSX](#jsx)
@@ -27,8 +27,6 @@
     - [useCallback](#usecallback)
     - [useMemo](#usememo)
   - [自定义 Hooks](#自定义-hooks)
-- [Redux](#redux)
-  - [Redux 工作原理](#redux-工作原理)
 - [React-Router](#react-router)
   - [React-Router 工作原理](#react-router-工作原理)
   - [为什么需要前端路由](#为什么需要前端路由)
@@ -102,13 +100,19 @@ c`omponentDidUpdate(prevProps, prevState, snapshot)`：在组件更新后被调�
 2. 创建 React 实例：使用 ReactDOM.render() 方法，将创建的 React 元素渲染到一个 DOM 元素中。ReactDOM.render() 方法需要两个参数：要渲染的 React 元素和一个 DOM 元素。这个 DOM 元素可以是页面中的一个 div 元素或者是一个已经存在的元素。
 3. 更新 React 实例：当需要更新 React 实例时，你需要调用 setState() 方法来更新组件的状态。React 会根据新的状态重新渲染组件，并更新 UI。
 
-### React Fiber架构
+### React Fiber
 
-React16 启用了全新的架构，叫做 Fiber。目的是解决大型 React 项目的性能问题，再顺手解决之前的一些痛点。
+广义的 fiber，是指 React16 启用的架构。目的是解决大型 React 项目的性能问题。
+这套架构实现的话，是 React 也在 Virtual DOM 上重建了树和节点结构，叫做 fiber 树和 fiber 节点。并且加入了 `Scheduler` 调度器，通过调度器触发更新。
 
-让组件更新异步化，切分时间片，渲染之前的调度、diff、更新都只在指定时间片进行，如果超时就暂停放到下个时间片进行，中途给浏览器一个喘息的时间。
+背景：
+每次有 state 的变化 React 重新计算，如果计算量过大，浏览器主线程来不及做其他的事情
 
 浏览器是单线程，GUI 描绘，时间器处理，事件处理，JS 执行，远程资源加载统统放在一起。执行一个 task 的，要执行完才能执行渲染 reflow
+
+个人认为 fiber 其实是实现了一个 虚拟调用栈，可以控制渲染到真实DOM 过程。调度器使用了 `requestIdleCallback` API。
+
+让组件更新异步化，切分时间片，渲染之前的调度、diff、更新都只在指定时间片进行，如果超时就暂停放到下个时间片进行，中途给浏览器一个喘息的时间。
 
 ### React 设计思想
 
@@ -455,25 +459,7 @@ useDebugValue: 用于在自定义 Hooks 中显示调试信息。
 
 自定义 Hook 是一个函数，其名称以 use 开头，函数内部可以调用其他的 Hook。
 
-## Redux
 
-Redux 是当今市场上最流行的前端开发库之一。它是 JavaScript 应用程序的可预测状态容器，用于整个应用程序状态管理。使用 Redux 开发的应用程序易于测试，并且可以在不同环境中运行，表现出一致的行为。
-
-Redux 三个原则
-
-1. 单一事实来源：整个应用程序的状态存储在单个存储中的对象/状态树中。单一状态树可以更轻松地跟踪随时间的变化以及调试或检查应用程序。
-2. 状态是只读的： 改变状态的唯一方法是触发一个动作。操作是描述更改的普通 JS 对象。就像状态是数据的最小表示一样，动作是对该数据更改的最小表示。
-3. 使用纯函数进行更改： 为了指定状态树如何通过操作转换，您需要纯函数。纯函数是那些返回值仅取决于其参数值的函数。
-
-### Redux 工作原理
-
-使用单例模式实现
-
-Store 一个全局状态管理对象
-
-Reducer 一个纯函数，根据旧 state 和 props 更新新 state
-
-Action 改变状态的唯一方式是 dispatch action
 
 ## React-Router
 

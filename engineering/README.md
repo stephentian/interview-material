@@ -22,6 +22,7 @@
 - [ESbuild](#esbuild)
   - [为什么快](#为什么快)
 - [vite](#vite)
+  - [和 webpack 区别](#和-webpack-区别)
 - [TypeScript](#typescript)
 - [微前端](#微前端)
   - [微前端，每个团队都有自己的选择，浏览器加载多个框架和重复的组件代码？](#微前端每个团队都有自己的选择浏览器加载多个框架和重复的组件代码)
@@ -311,11 +312,17 @@ function foo(a) {
 
 vite 是构建工具的封装，内部是 rollup。
 
-为什么使用 vite 替代 webpack？
+### 和 webpack 区别
 
-- vite 生产基于 rollup，（打包体积小）
-- vite 开发环境，基于 ESBuild 进行预编译打包，并进行缓存，按需返回。
-- 总体构建比 webpack 快 10 - 100倍。
+- vite 开发模式，热更新快
+  - vite 开发环境，只更新修改的文件
+  - webpack 热更新需要整个模块链重新打包和替换
+- vite 打包效率更快
+  - webpack 会把所有的模块打包成一个 bundle，这会导致初次加载速度较慢；
+  - vite 则利用了浏览器对 ES Module 的原生支持，只打包和缓存实际改动的模块
+- vite 打包体积更小
+  - vite 生产基于 rollup，（打包体积小）
+- webpack 生态更好，插件更多；不过 vit 插件生态也在发展
 
 ## TypeScript
 
