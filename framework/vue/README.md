@@ -18,8 +18,6 @@
   - [为什么 Vue3 不使用 defineProperty](#为什么-vue3-不使用-defineproperty)
   - [Vue3.0 性能提升主要是通过哪几方面体现的？](#vue30-性能提升主要是通过哪几方面体现的)
 - [Vue-Router](#vue-router)
-- [Vuex](#vuex)
-  - [Flux 架构](#flux-架构)
 - [问题](#问题)
   - [为什么不推荐 v-if 和 v-for 一起用](#为什么不推荐-v-if-和-v-for-一起用)
 
@@ -335,12 +333,6 @@ LRU：[LRU.js](../../algorithm/LRU.js)
 ## Vue-Router
 
 见 [Vue-Router](./Vue-Router.md)
-
-## Vuex
-
-### Flux 架构
-
-数据流: view -> action -> dispatcher -> store
 
 ## 问题
 

@@ -7,8 +7,13 @@
 - [Svelte](#svelte)
 - [Solid](#solid)
 - [Flux](#flux)
+- [Vuex](#vuex)
+  - [Vuex 核心概念](#vuex-核心概念)
+  - [mutations 和 actions 区别](#mutations-和-actions-区别)
+  - [vuex 和 pinia 区别](#vuex-和-pinia-区别)
 - [Redux](#redux)
   - [Redux 基本思想](#redux-基本思想)
+- [pinia](#pinia)
 
 ## Vue
 
@@ -116,6 +121,33 @@ Vux 流程: `Component --> Actions(http request) --> Mutations --> State`
 2. `mutations` 收到更新 `state`
 3. `Component` 接受 `State` 变化更新视图
 
+## Vuex
+
+`Vuex` 是一个专门为 `Vue.js` 应用程序开发的状态管理库。以数据驱动的方式管理应用状态的机制，使得应用的状态更加可维护和可预测。
+
+### Vuex 核心概念
+
+`state`： 应用的状态数据被存储在状态对象中，它是不可变的，只能通过提交 `mutations` 来改变。
+`mutations`： 改变状态的方法，它们被定义在 `action` 之外，并且是不可直接调用的。只有通过 `commit` 才能调用。
+`actions`： 包含突变方法的对象，它们被提交到 `store` 来改变状态。
+`getters`： 基于当前状态计算派生出来的状态。
+`modules`： `Vuex` 允许我们将 `store` 分割成模块 `module`。每个模块拥有自己的 `state`、`mutation`、`action`、`getter`、甚至是嵌套子模块。
+
+### mutations 和 actions 区别
+
+两者都是用于修改 state 中的状态。
+
+1. `mutations` 是同步的，`actions` 处理异步操作。
+2. `mutations` 只能通过 `commit` 触发，`actions` 只能通过 `dispatch` 触发。
+3. `mutations` 直接修改状态，而 `actions` 是通过提交 `mutations` 来改变状态的。
+
+### vuex 和 pinia 区别
+
+1. `vuex` 基于 vue2 选项式 api，而 `pinia` 基于 `vue3` 组合式 api；
+2. pinia 没有 `mutations`，`actions` 支持同步异步；
+3. pinia state 是一个箭头函数返回一个对象。
+4. `pinia` 没有 `modules` ，每一个独立的模块都是 `definStore` 生成出来的
+
 ## Redux
 
 Redux 是一个 JavaScript 库，用于管理应用程序的状态。它使应用程序的状态变得更加可预测和可控制，并且使得状态的变化变得更加可追踪和可调试。
@@ -154,3 +186,5 @@ store.dispatch({
   payload: 'new item', // 可选属性
 })
 ```
+
+## pinia

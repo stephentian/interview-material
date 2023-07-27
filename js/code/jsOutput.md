@@ -5,36 +5,35 @@
  -->
 # js 输出
 
-- [js 输出](#js-输出)
-  - [作用域](#作用域)
-  - [闭包](#闭包)
-  - [this](#this)
-  - [运算符](#运算符)
-  - [模版字符串](#模版字符串)
-  - [对象字符串](#对象字符串)
-  - [模块导入导出](#模块导入导出)
-  - [import 顺序](#import-顺序)
-  - [Object.defineProperty](#objectdefineproperty)
-  - [reduce](#reduce)
-  - [generator 生成器](#generator-生成器)
-    - [yield 和 yield\*](#yield-和-yield)
-  - [异步函数](#异步函数)
-    - [promise](#promise)
-  - [async await](#async-await)
-  - [for await](#for-await)
-  - [解构赋值](#解构赋值)
-  - [let const](#let-const)
-  - [NaN](#nan)
-  - [Object.seal \& Object.freeze](#objectseal--objectfreeze)
+- [作用域](#作用域)
+- [闭包](#闭包)
+- [this](#this)
+- [运算符](#运算符)
+- [模版字符串](#模版字符串)
+- [对象字符串](#对象字符串)
+- [模块导入导出](#模块导入导出)
+- [import 顺序](#import-顺序)
+- [Object.defineProperty](#objectdefineproperty)
+- [reduce](#reduce)
+- [generator 生成器](#generator-生成器)
+  - [yield 和 yield\*](#yield-和-yield)
+- [异步函数](#异步函数)
+  - [promise](#promise)
+- [async await](#async-await)
+- [for await](#for-await)
+- [解构赋值](#解构赋值)
+- [let const](#let-const)
+- [NaN](#nan)
+- [Object.seal \& Object.freeze](#objectseal--objectfreeze)
 
 ## 作用域
 
 ```js
 function sayHi() {
-	console.log(name)
-	console.log(age)
-	var name = 'mike'
-	let age = 19
+  console.log(name)
+  console.log(age)
+  var name = 'mike'
+  let age = 19
 }
 sayHi()
 
