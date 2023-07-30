@@ -2,16 +2,17 @@
 
 - [基础知识](#基础知识)
   - [React 发展历程](#react-发展历程)
-  - [React 生命周期](#react-生命周期)
   - [React 实例过程](#react-实例过程)
   - [React Fiber](#react-fiber)
   - [React 设计思想](#react-设计思想)
   - [React 三种开发模式](#react-三种开发模式)
   - [JSX](#jsx)
   - [副作用](#副作用)
-- [setState](#setstate)
-  - [setState 到底是异步还是同步](#setstate-到底是异步还是同步)
-  - [setState 输出顺序](#setstate-输出顺序)
+- [类组件](#类组件)
+  - [React 生命周期](#react-生命周期)
+  - [setState](#setstate)
+    - [setState 到底是异步还是同步](#setstate-到底是异步还是同步)
+    - [setState 输出顺序](#setstate-输出顺序)
 - [React 组件之间的通信](#react-组件之间的通信)
 - [React 版本](#react-版本)
   - [React 15](#react-15)
@@ -61,38 +62,7 @@
 
 2022 React 18
 
-### React 生命周期
 
-挂载阶段
-
-- constructor
-- getDerivedStateFromProps
-- render
-- componentDidMount
-
-更新阶段
-
-- getDerivedStateFromProps
-- shouldComponentUpdate
-- render
-- getSnapshotBeforeUpdate
-
-卸载阶段
-
-- `componentWillUnmount`
-
-`constructor`: 组件实例化时被调用，可以进行组件的初始化工作，例如绑定事件处理程序、设置状态或实例化对象。
-`static getDerivedStateFromProps(props, state)`：在组件挂载之前被调用，用于根据 props 来更新组件的状态。它返回一个对象，表示要更新的组件状态，或者返回 null，表示不需要更新状态。
-`render`：根据当前的 props 和 state 渲染组件的 UI。
-`componentDidMount`：在组件挂载后被调用，可以进行异步请求、添加事件监听器或启动定时器等操作。
-
-`static getDerivedStateFromProps(props, state)`：在组件更新之前被调用，用于根据 props 更新组件的状态。
-`shouldComponentUpdate(nextProps, nextState)`：在组件更新之前被调用，可以根据新的 props 和 state 判断是否需要重新渲染组件。返回 true 表示需要重新渲染，返回 false 表示不需要。
-`render`：根据新的 props 和 state 重新渲染组件的 UI。
-`getSnapshotBeforeUpdate(prevProps, prevState)`：在 render 方法之后、更新 DOM 之前被调用，可以获取组件更新前的一些信息。它返回一个值，该值会作为第三个参数传递给 componentDidUpdate 方法。
-c`omponentDidUpdate(prevProps, prevState, snapshot)`：在组件更新后被调用，可以进行 DOM 操作、网络请求或更新组件的状态等操作。
-
-`componentWillUnmount`：在组件卸载之前被调用，可以清除定时器、移除事件监听器或取消网络请求等操作。
 
 ### React 实例过程
 
@@ -148,14 +118,49 @@ React 围绕纯函数的概念设计的。
 
 但是有些函数，会获取外部其他组件或者发起请求得到的数据，然后改变这些数据，就带来了不符合预期的后果。这就是 副作用。
 
-## setState
+## 类组件
+
+### React 生命周期
+
+挂载阶段
+
+- constructor
+- getDerivedStateFromProps
+- render
+- componentDidMount
+
+更新阶段
+
+- getDerivedStateFromProps
+- shouldComponentUpdate
+- render
+- getSnapshotBeforeUpdate
+
+卸载阶段
+
+- `componentWillUnmount`
+
+`constructor`: 组件实例化时被调用，可以进行组件的初始化工作，例如绑定事件处理程序、设置状态或实例化对象。
+`static getDerivedStateFromProps(props, state)`：在组件挂载之前被调用，用于根据 props 来更新组件的状态。它返回一个对象，表示要更新的组件状态，或者返回 null，表示不需要更新状态。
+`render`：根据当前的 props 和 state 渲染组件的 UI。
+`componentDidMount`：在组件挂载后被调用，可以进行异步请求、添加事件监听器或启动定时器等操作。
+
+`static getDerivedStateFromProps(props, state)`：在组件更新之前被调用，用于根据 props 更新组件的状态。
+`shouldComponentUpdate(nextProps, nextState)`：在组件更新之前被调用，可以根据新的 props 和 state 判断是否需要重新渲染组件。返回 true 表示需要重新渲染，返回 false 表示不需要。
+`render`：根据新的 props 和 state 重新渲染组件的 UI。
+`getSnapshotBeforeUpdate(prevProps, prevState)`：在 render 方法之后、更新 DOM 之前被调用，可以获取组件更新前的一些信息。它返回一个值，该值会作为第三个参数传递给 componentDidUpdate 方法。
+c`omponentDidUpdate(prevProps, prevState, snapshot)`：在组件更新后被调用，可以进行 DOM 操作、网络请求或更新组件的状态等操作。
+
+`componentWillUnmount`：在组件卸载之前被调用，可以清除定时器、移除事件监听器或取消网络请求等操作。
+
+### setState
 
 使用方法
 
 1. 接收改变对象 setState(obj, callback)
 2. 接受函数 setState(fn, callback), fn 有两个参数 `state` 和 `props`
 
-### setState 到底是异步还是同步
+#### setState 到底是异步还是同步
 
 摘自：<https://www.cxymsg.com/guide/react.html#setstate%E5%88%B0%E5%BA%95%E6%98%AF%E5%BC%82%E6%AD%A5%E8%BF%98%E6%98%AF%E5%90%8C%E6%AD%A5>
 
@@ -181,7 +186,7 @@ setState是一个异步方法，但是在 setTimeout/setInterval 等定时器里
 
 React18 以后，使用了 createRoot api 后，所有 setState 都是异步批量执行的
 
-### setState 输出顺序
+#### setState 输出顺序
 
 ```js
 class Example extends React.Component {
