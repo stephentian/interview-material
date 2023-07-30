@@ -27,6 +27,8 @@
     - [useEffect](#useeffect)
     - [useCallback](#usecallback)
     - [useMemo](#usememo)
+    - [useContext](#usecontext)
+    - [useReducer](#usereducer)
   - [自定义 Hooks](#自定义-hooks)
 - [React-Router](#react-router)
   - [React-Router 工作原理](#react-router-工作原理)
@@ -459,6 +461,82 @@ useDebugValue: 用于在自定义 Hooks 中显示调试信息。
     ```
 
     useCallback 的唯一好处是它可以让你避免在内部编写额外的嵌套函数。
+
+#### useContext
+
+可以让你读取和订阅组件中的 `context`。`Context` 允许父组件向其下层无论多深的任何组件提供信息，而无需通过 `props` 显式传递。
+
+#### useReducer
+
+允许你向组件里面添加一个 `reducer`。将组件的所有状态更新逻辑整合到一个外部函数中，这个函数叫作 `reducer`。
+
+`reducer` 是以数组上的 `reduce()` 方法命名的。`reduce` 的函数被称为 `reducer`。它接受 目前的结果 和 当前的值，然后返回 下一个结果。
+
+```js
+// function handleChangeTask(task) {
+//   setTasks(
+//     tasks.map((t) => {
+//       if (t.id === task.id) {
+//         return task;
+//       } else {
+//         return t;
+//       }
+//     })
+//   );
+// }
+
+// function handleDeleteTask(taskId) {
+//   setTasks(tasks.filter((t) => t.id !== taskId));
+// }
+
+// 第一步， dispatch action
+function handleChangeTask(task) {
+  dispatch({
+    // "action" 对象
+    type: 'changed',
+    task: task,
+  });
+}
+
+function handleDeleteTask(taskId) {
+  dispatch({
+    type: 'deleted',
+    id: taskId,
+  });
+}
+
+// reducer
+function tasksReducer(tasks, action) {
+  switch (action.type) {
+    case 'added': {
+      return [
+        ...tasks,
+        {
+          id: action.id,
+          text: action.text,
+          done: false,
+        },
+      ];
+    }
+    case 'changed': {
+      return tasks.map((t) => {
+        if (t.id === action.task.id) {
+          return action.task;
+        } else {
+          return t;
+        }
+      });
+    }
+    case 'deleted': {
+      return tasks.filter((t) => t.id !== action.id);
+    }
+    default: {
+      throw Error('未知 action: ' + action.type);
+    }
+  }
+}
+
+```
 
 ### 自定义 Hooks
 
