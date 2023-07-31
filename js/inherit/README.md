@@ -48,16 +48,18 @@ JavaScript 本身不提供 `class` 实现( es6 提供了语法糖)，想要继�
 
 2. 在一个 Class 类中只能有一个 `constructor` 方法, 用于创建和初始化 class 创建的对象的特殊方法
 
-  ```js
-  class Polygon{
-    constructor() {
-      this.name = 'Polygon'
+    ```js
+    class Polygon{
+      constructor() {
+        this.name = 'Polygon'
+      }
     }
-  }
-  const poly1 = new Polygon()
-  ```
+    const poly1 = new Polygon()
+    ```
 
 ### new
+
+new 关键字所形成的原型链关系是：实例.__proto__ === 构造函数.prototype
 
 [手写 new](./new.js)
 
@@ -84,13 +86,13 @@ function myInstanceof(target, origin) {
 
 ## 继承方式
 
-- 原型链继承
-- 构造函数继承
-- 组合继承
-- 原型式继承
-- 寄生式继承
-- 寄生组合式继承
-- ES6 extends
+[原型链继承](#原型链继承)  
+[构造函数继承](#构造函数继承)  
+[组合继承](#组合继承)  
+[原型式继承](#原型式继承)  
+[寄生式继承](#寄生式继承)  
+[寄生组合式继承](#寄生组合式继承)  
+[ES6 extends](#es6-extends)  
 
 ### 原型链继承
 
@@ -158,13 +160,16 @@ Child.prototype.constructor = Child
 
 要点：借用 中间对象 实现原型继承，本质是对象的浅复制(`Object.create()`)
 
+上面的函数得到的对象 subObj，拥有了对象 o 的全部属性（在原型链上），而修改 subObj 的属性，不会影响到o，相当于把 o 复制了一份。
+
 ```js
-function object(o){
+function createObject(o){
     function F(){}
-    F.prototype = o;
-    return new F();
+    F.prototype = o
+    const subObj = new F()
+    return subObj
 }
-Child = object(Parent)
+const Child = createObject(Parent)
 ```
 
 优点：
@@ -178,16 +183,18 @@ Child = object(Parent)
 
 ### 寄生式继承
 
+组合继承有一个小bug，实现的时候调用了两次超类（父类），于是“寄生继承”就出来了。寄生继承就是不用实例化父类了，直接实例化一个临时副本实现了相同的原型链继承。（即子类的原型指向父类副本的实例从而实现原型共享）
+
 要点：封装原型式继承，创建一个封装继承过程的函数
 
 ```js
-function object(o){
+function createObject(o){
     function F(){}
     F.prototype = o;
     return new F();
 }
 function inherit(o) {
-  let clone = object(o)
+  let clone = createObject(o)
   clone.say = function() {
     // ...
   }
@@ -210,6 +217,10 @@ function inherit(o) {
 
 要点：寄生继承跟组合继承的结合版
 
+原型链方式可以实现所有属性方法共享，但无法做到属性、方法独享（例如Sub1修改了父类的函数，其他所有的子类Sub2、Sub3...想调用旧的函数就无法实现了）；
+
+构造函数除了能独享属性、方法外还能在子类构造函数中传递参数，但代码无法复用。总体而言就是可以实现所有属性方法独享，但无法做到属性、方法共享（例如，Sub1新增了一个函数，然后想让Sub2、Sub3...都可以用的话就无法实现了，只能Sub2、Sub3...各自在构造函数中新增）。
+
 ```js
 // 1
 function Child(age) {
@@ -224,13 +235,13 @@ function Child(age) {
 })()
 
 // 2
-function object(o){
+function createObject(o){
     function F(){}
     F.prototype = o;
     return new F();
 }
 function inherit(child, parent) {
-  let prototype = object(parent.prototype)
+  let prototype = createObject(parent.prototype)
   prototype.constructor = child
   child.prototype = prototype
 }
