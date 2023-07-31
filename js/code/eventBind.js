@@ -6,8 +6,10 @@
 
 // 事件代理
 
+// 判断点击的是不是li（假设li里面的结构是不固定的），那么e.target就可能是p，也有可能是div
+// 指定到 li 上
 let ul = document.querySelector('list')
-list.addEventListner('click', e => {
+list.addEventListener('click', e => {
   let el = e.target
   while (e.target.toLowerCase() !== 'li') {
     el = el.parent
@@ -19,8 +21,8 @@ list.addEventListner('click', e => {
   el && console.log('点击了 xxx')
 })
 
-function delegate1(element, eventType, selector, fn) {
-  element.addEventListner(eventType, e => {
+function delegate(element, eventType, selector, fn) {
+  element.addEventListener(eventType, e => {
     let el = e.target
     while (!el.matches(selector)) {
       el = e.parentNode
