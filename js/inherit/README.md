@@ -16,7 +16,7 @@ JavaScript 本身不提供 `class` 实现( es6 提供了语法糖)，想要继�
   - [寄生组合式继承](#寄生组合式继承)
   - [ES6 extends](#es6-extends)
 - [问题](#问题)
-  - [constructor 没有调用 super() 会怎么样](#constructor-没有调用-super-会怎么样)
+  - [子类 constructor 没有调用 super() 会怎么样](#子类-constructor-没有调用-super-会怎么样)
 
 继承都基于两种方式：
 
@@ -281,7 +281,7 @@ function Child(age) {
 
 ## 问题
 
-### constructor 没有调用 super() 会怎么样
+### 子类 constructor 没有调用 super() 会怎么样
 
 ```js
 class Animal {
@@ -305,11 +305,11 @@ class Cat extends Animal {
   }
 }
 
-let cat = new Cat('Kitty', 'white');
-cat.meow(); // 输出 "Kitty is meowing"
-cat.eat(); // TypeError: Cannot read property 'eat' of undefined
+let cat = new Cat('Kitty', 'white'); // ReferenceError: Must call super constructor in derived class before accessing 'this'
 ```
 
+<!-- 
 定义了一个 Cat 类，它继承自 Animal 类。但是，Cat 类的 constructor 没有调用 super()，因此 Animal 类的 constructor 没有被调用，导致父类的属性和方法没有被初始化。当我们调用 cat.eat() 时，会抛出 TypeError，因为 cat 对象没有继承自 Animal 类。
 
-因此，在 JavaScript 的继承中，子类的 constructor 应该始终调用 super()，以确保父类的属性和方法被正确地初始化。如果子类没有自己的 constructor，JavaScript 会默认为它生成一个空的 constructor，并自动调用 super()。
+因此，在 JavaScript 的继承中，子类的 constructor 应该始终调用 super()，以确保父类的属性和方法被正确地初始化。
+如果子类没有自己的 constructor，JavaScript 会默认为它生成一个空的 constructor，并自动调用 super()。 -->
