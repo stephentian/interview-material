@@ -144,8 +144,9 @@ js 执行过程分为两个阶段：
 
 编译阶段（序列化-->抽象语法树-->可执行代码）， js 引擎做 3 件事
 
-- 词法分析 Scanner
-- 语法分析 Parser（生成 AST）
+- 词法分析 Lexical analyzer (Scanner)
+- 语法分析 Syntax analyzer (Parser 生成 AST)
+- 预编译
 - 字节码生成
 
 二、执行阶段
