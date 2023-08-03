@@ -145,14 +145,19 @@ js 执行过程分为两个阶段：
 编译阶段（序列化-->抽象语法树-->可执行代码）， js 引擎做 3 件事
 
 - 词法分析 Lexical analyzer (Scanner)
+  - 预编译(变量提升，函数提升)
+  - 将代码分解成各个模块， tokens
 - 语法分析 Syntax analyzer (Parser)
   - 生成 AST，检查语法
-  - 预编译(变量提升，函数提升)
 - 字节码生成
+
+参考文章：  
+[Blazingly fast parsing, part 2: lazy parsing](https://v8.dev/blog/preparser)  
+[JavaScript Execution Context and Hoisting Explained with Code Examples](https://www.freecodecamp.org/news/javascript-execution-context-and-hoisting/)
 
 二、执行阶段
 
-执行阶段会创建不同类型上下文：全局上下文、函数执行上下文
+<!-- 执行阶段会创建不同类型上下文：全局上下文、函数执行上下文
 
 - 初始化上下文
   - 创建全局变量 Global Object(GO)
@@ -162,7 +167,7 @@ js 执行过程分为两个阶段：
 - 执行上下文
   - 执行上下文栈 Execution Context Stack(ECS)
   - 全局执行栈 Global Execution Context(GEC)
-  - 函数执行上下文
+  - 函数执行上下文 -->
 
 ### 作用域
 
