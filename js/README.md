@@ -13,6 +13,8 @@
   - [词法作用域](#词法作用域)
   - [执行上下文](#执行上下文)
   - [词法环境](#词法环境)
+  - [变量环境](#变量环境)
+  - [为什么要有两个词法环境](#为什么要有两个词法环境)
   - [语法环境](#语法环境)
   - [作用域链](#作用域链)
   - [闭包](#闭包)
@@ -152,9 +154,12 @@ js 执行过程分为两个阶段：
   - 生成 AST，检查语法
 - 字节码生成
 
-参考文章：  
-[Blazingly fast parsing, part 2: lazy parsing](https://v8.dev/blog/preparser)  
-[JavaScript Execution Context and Hoisting Explained with Code Examples](https://www.freecodecamp.org/news/javascript-execution-context-and-hoisting/)
+参考文章：
+
+- [Blazingly fast parsing, part 2: lazy parsing](https://v8.dev/blog/preparser)  
+- [JavaScript Execution Context and Hoisting Explained with Code Examples](https://www.freecodecamp.org/news/javascript-execution-context-and-hoisting/)
+- [万字干货！详解JavaScript执行过程](https://blog.csdn.net/howgod/article/details/118097654?ydreferer=aHR0cHM6Ly9jbi5iaW5nLmNvbS8%3D)
+- [JavaScript的执行过程（深入执行上下文、GO、AO、VO和VE等概念）](https://www.cnblogs.com/MomentYY/p/15785719.html)
 
 二、执行阶段
 
@@ -216,11 +221,13 @@ func(18);
 
 ### 执行上下文
 
-执行上下文（Execution Contexts）
+执行上下文（Execution Contexts）。
 
-函数每调用一次，都会产生一个新的执行上下文环境。执行上下文是当前 JavaScript 代码被解析和执行时所在环境的抽象概念。
-具体指 函数调用时 产生的变量对象. 这个对象无法访问，但是可以访问其中的变量、this 等。当函数调用完成时，这个上下文环境
-以及其中的数据都会被消除（当然了闭包并不会乖乖就范），处于活动状态的执行上下文环境只有一个。
+JavaScript 中有三种执行上下文类型：
+
+- 全局执行上下文 (只有一个)
+- 函数执行上下文
+- eval
 
 每个执行上下文，都有三个重要属性：
 
@@ -230,9 +237,14 @@ func(18);
 
 上下文环境结构由：词法环境（Lexical Environments）和 变量环境（Variable Environment）
 
-js 执行两个阶段：编译阶段，执行阶段
+js 执行两个阶段：1.创建阶段 2.执行阶段
 
-- 当 JS 被编译时，一个执行上下文就被创建
+- 创建阶段
+  - 当 JS 被编译时，一个执行上下文就被创建
+  - 确定 this 的值，也被称为 This Binding
+  - LexicalEnvironment（词法环境） 组件被创建。
+  - VariableEnvironment（变量环境） 组件被创建。
+
 - 当执行上下文准备就绪，进入执行阶段
 
 ### 词法环境
@@ -241,7 +253,7 @@ js 执行两个阶段：编译阶段，执行阶段
 
 词法环境是在 JavaScript 解析（**代码编译阶段**）代码时创建的一个对象。每个函数和代码块都有它自己的词法环境，用于存储变量和函数的定义和值。包括以下成员：
 
-- 环境记录：用于记录变量和函数的定义和值；
+- 环境记录：environment record，用于记录变量和函数的定义和值；
 - 外部环境引用：用于指向外部环境，也就是包含当前词法环境的函数或代码块的词法环境。
 
 词法环境和四个类型的代码结构相对应:
@@ -251,6 +263,16 @@ js 执行两个阶段：编译阶段，执行阶段
 - eval：进入 eval 调用的代码有时会创建一个新的词法环境
 - with 结构：一个 with 结构块内也是自己一个词法环境
 - catch 结构：一个 catch 结构快内也是自己一个词环境
+
+### 变量环境
+
+变量环境也是一个词法环境，它具有上面定义的词法环境的所有属性，其 EnvironmentRecord 包含了由 VariableStatements 在此执行上下文创建的绑定。
+
+### 为什么要有两个词法环境
+
+变量环境组件（VariableEnvironment） 是用来登记var function变量声明，词法环境组件（LexicalEnvironment）是用来登记let const class等变量声明。
+
+在ES6之前都没有块级作用域，ES6之后我们可以用let const来声明块级作用域，有这两个词法环境是为了实现块级作用域的同时不影响var变量声明和函数声明。
 
 ### 语法环境
 
