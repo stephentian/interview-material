@@ -25,6 +25,9 @@
 - [let const](#let-const)
 - [NaN](#nan)
 - [Object.seal \& Object.freeze](#objectseal--objectfreeze)
+- [箭头函数](#箭头函数)
+- [函数声明和函数表达式](#函数声明和函数表达式)
+
 
 ## 作用域
 
@@ -510,7 +513,7 @@ Object.freeze(person);
 // Object.freeze 
 // 无法添加、修改或删除任何属性
 // 但它只是简单地冻结对象，如果属性是一个对象，那这个属性是可以修改的
-
+```
 
 ## 箭头函数
 
@@ -528,3 +531,21 @@ config = null;
 
 // 因此，尽管 config 对象已经被释放，但是定时器函数依然可以每秒调用一次，并输出 'Alert!'。
 ```
+
+## 函数声明和函数表达式
+
+```js
+a() // a
+// 函数声明
+function a() {
+  console.log('a');  
+}
+
+b() //b is not a function
+// 函数表达式
+var b = function () {
+    console.log('b');
+}
+```
+
+函数声明与函数表达式的最重要的区别就是是否会在词法分析阶段进行解析。函数声明会在词法分析阶段被解析，而函数表达式会先以变量的形式在词法分析阶段解析，然后在执行期进行赋值。
