@@ -1,12 +1,11 @@
 # node
 
-- [node](#node)
-	- [Event Loop](#event-loop)
-		- [process.nextTick](#processnexttick)
-		- [setImmediate 和 setTimeout](#setimmediate-和-settimeout)
-		- [保证 setImmediate 比 setTimeout 快](#保证-setimmediate-比-settimeout-快)
-		- [浏览器的 Event Loop 区别](#浏览器的-event-loop-区别)
-	- [require 和 fs.readFile 区别](#require-和-fsreadfile-区别)
+- [Event Loop](#event-loop)
+	- [process.nextTick](#processnexttick)
+	- [setImmediate 和 setTimeout](#setimmediate-和-settimeout)
+	- [保证 setImmediate 比 setTimeout 快](#保证-setimmediate-比-settimeout-快)
+	- [浏览器的 Event Loop 区别](#浏览器的-event-loop-区别)
+- [require 和 fs.readFile 区别](#require-和-fsreadfile-区别)
 
 ## Event Loop
 
