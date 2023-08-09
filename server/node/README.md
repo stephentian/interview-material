@@ -13,7 +13,7 @@
 
 1. `timer` (`setTimeout`, `setInterval`)
 2. `pending` 上一个未执行完的 I/O callbacks
-3. `idle`, prepare (系统内部)
+3. `idle`, prepare (系统内部)，处理 setInterval 的回调函数
 4. `poll` (检索新的 I/O 事件 callback)
 5. `check` (`setImmediate`)
 6. `close callbacks` (回调关闭, 比如 `socket.on('close'), http.close()`)
@@ -23,7 +23,7 @@
 
 ### process.nextTick
 
-不属于任何的 Event Loop 阶段，Node在遇到这个API时，Event Loop 根本就不会继续进行，会马上停下来执行 process.nextTick()
+不属于任何的 Event Loop 阶段，Node 在遇到这个 API 时，Event Loop 根本就不会继续进行，会马上停下来执行 process.nextTick()
 
 nextTick 执行完后才会继续 Event Loop
 
@@ -63,6 +63,7 @@ fs.readFile(path.resolve(__dirname, 'a.json'), (err) => {
 
 1. 浏览器环境下，microtask 的任务队列是每个 macrotask 执行完之后执行。
 2. node 中，microtask 会在事件循环的各个阶段之间执行，也就是一个阶段执行完毕，就会去执行 microtask 队列的任务。
+3. 浏览器事件环有 2 个事件队列(宏任务队列和微任务队列)，NodeJS 事件环有 6 个事件队列
 
 ## require 和 fs.readFile 区别
 
