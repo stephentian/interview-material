@@ -18,9 +18,9 @@
 
 ## webpack 构建流程
 
-1. 初始化: 读取与合并配置参数；加载 Plugin；实例化 Compiler
-2. 编译: （调用 Compiler 的 run）从 entry 出发，调用所有配置的 loader 对 module 进行翻译，再递归编译该 module 依赖的 module，最后将编译后的 module 组合成 chunk 及对应资源 assets
-3. 输出：把编译得到的 assets 输出到文件系统
+1. 初始化: 读取与合并配置 webpack.config 参数；加载 Plugin；实例化 Compiler
+2. 编译: （调用 Compiler 的 run）从 entry 出发，调用所有配置的 loader 对 module 进行编译，再递归编译该 module 依赖的 module，最后将编译后的 module 组合成 chunk 及对应资源 `assets`
+3. 输出：把编译得到的 `assets` 输出到文件系统
 
 ## 常见 loader 和 plugins
 
