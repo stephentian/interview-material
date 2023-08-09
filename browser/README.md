@@ -30,33 +30,33 @@
 
 ## 浏览器内核(渲染引擎)
 
-浏览器内核 ，可以理解为浏览器的心脏，是指浏览器最核心的部分，浏览器内核主要包含两部分：渲染引擎和 JS 引擎，但由于JS引擎越来越独立，浏览器内核就倾向于单指渲染引擎（Rendering Engine），所以我们常说的浏览器内核主要指的就是 **渲染引擎**。
+浏览器内核主要包含两部分：渲染引擎和 JS 引擎，但由于 JS 引擎越来越独立，浏览器内核就倾向于单指渲染引擎（Rendering Engine），所以我们常说的浏览器内核主要指的就是 **渲染引擎**。
 
 浏览器内核（browser kernel）常表示 浏览器的排版引擎(Rendering Engine，layout engine)，也称浏览器引擎，页面渲染引擎，渲染内核等。
 
 ![浏览器内核列表](./img/browser-core.png)
 
-- Trident： Microsoft，该内核被认为是在早期IE浏览器中占主导地位，但现在也存在于其他一些浏览器中，如Edge。它对真正的网页标准支持不太好，且存在一些安全漏洞。
-- Gecko：Mozilla，该内核主要用于 Firefox 火狐浏览器。它的优点是功能强大、丰富，可以支持很多复杂网页效果和浏览器扩展接口，但缺点是消耗较多的资源，如内存。
-- Presto：（已弃用）该内核被称为公认的浏览网页速度最快的内核，同时也是处理 JS 脚本最兼容的内核，能在 Windows、Mac 及 Linux操作系统下完美运行。
-- Webkit：Apple，该内核主要用于 Safari 浏览器，它的优点是具有清晰的源码结构、极快的渲染速度，但缺点是对网页代码的兼容性较低，可能导致一些编写不标准的网页无法正确显示。
-  - Chromium：Google，基于 Webkit 再深度改装的内核，除了 Chrome，目前广泛应用于Sogou、360极速、世界之窗极速、百度、淘宝、猎豹等浏览器
-  - Webkit2
-  - Blink: Webkit 的一个分支, google 目前在使用
+- `Trident`： Microsoft，该内核被认为是在早期IE浏览器中占主导地位，但现在也存在于其他一些浏览器中，如Edge。它对真正的网页标准支持不太好，且存在一些安全漏洞。
+- `Gecko`：Mozilla，该内核主要用于 Firefox 火狐浏览器。它的优点是功能强大、丰富，可以支持很多复杂网页效果和浏览器扩展接口，但缺点是消耗较多的资源，如内存。
+- `Presto`：（已弃用）该内核被称为公认的浏览网页速度最快的内核，同时也是处理 JS 脚本最兼容的内核，能在 Windows、Mac 及 Linux操作系统下完美运行。
+- `Webkit`：Apple，该内核主要用于 Safari 浏览器，它的优点是具有清晰的源码结构、极快的渲染速度，但缺点是对网页代码的兼容性较低，可能导致一些编写不标准的网页无法正确显示。
+  - `Chromium`：Google，基于 Webkit 再深度改装的内核，除了 Chrome，目前广泛应用于Sogou、360极速、世界之窗极速、百度、淘宝、猎豹等浏览器
+  - `Webkit2`
+  - `Blink`: Webkit 的一个分支, google 目前在使用
 
 ## JavaScript 引擎
 
-javascript 是一门高级语言，CPU 只能识别机器语言；
-JavaScript 引擎是用来渲染JavaScript的，javascript 引擎将 javascript 翻译成 CPU 指令，JavaScript的渲染速度越快，动态网页的展示也越快。
+JavaScript 是一门高级语言，CPU 只能识别机器语言；
+JavaScript 引擎是用来渲染 JavaScript 的, JavaScript 引擎将 JavaScript 翻译成 CPU 指令，JavaScript 的渲染速度越快，动态网页的展示也越快。
 
-- SpiderMonkey: Brendan Eich(js作者) 开发
-- JSCore: Webkit 中的 js 引擎，Apple 开发
-- V8: Google 开发，Blink
-- Chakra: 微软，IE 浏览器
+- `SpiderMonkey`: Brendan Eich(js作者) 开发
+- `JSCore`: Webkit 中的 js 引擎，Apple 开发
+- `V8`: Google 开发，Blink
+- `Chakra`: 微软，IE 浏览器
 
 ### v8
 
-V8是Google的开源高性能JavaScript和WebAssembly引擎，用C++编写，它实现ECMAScript和WebAssembly，可独立运行或嵌入到任何C++应用程序中，如Chrome和Node.js。
+V8 是 Google 的开源高性能 JavaScript 和 WebAssembly 引擎，用 `C++` 编写，它实现 ECMAScript 和 WebAssembly，可独立运行或嵌入到任何 C++ 应用程序中，如 Chrome 和 Node.js。
 
 ## Chromium 浏览器架构
 
@@ -64,9 +64,9 @@ chrome 架构图：
 
 ![chrome 架构图](./img/chromeArchitecture.jpeg)
 
-- WebCore：WebKit 加载和渲染网页的基础，是不同浏览器所使用的 WebKit 中共享的部分，包括HTML解析器、CSS解析器、SVG、布局、渲染树等等；
-- JavaScript引擎：JavaScript解析器，WebKit默认的引擎是JavaScriptCore，Google的Blink为V8引擎；
-- ebKit Ports：WebKit中的移植部分，包括网络栈、音视频解码、硬件加速等模块，这部分对WebKit的功能和性能影响比较大。
+- `WebCore`：WebKit 加载和渲染网页的基础，是不同浏览器所使用的 WebKit 中共享的部分，包括HTML解析器、CSS解析器、SVG、布局、渲染树等等；
+- `JavaScript 引擎`：JavaScript 解析器，WebKit 默认的引擎是 JavaScriptCore，Google 的 Blink 为V8 引擎；
+- `WebKit Ports`：WebKit中的移植部分，包括网络栈、音视频解码、硬件加速等模块，这部分对 WebKit 的功能和性能影响比较大。
 
 ## 浏览器渲染
 
@@ -237,22 +237,22 @@ Set-Cookie: H_PS_PSSID=34130_34099_33969_31253_33848_33607_26350; path=/; domain
 - cookie 产生原因：是用来做 状态存储 的，因为 http 是无状态的，不能记录数据状态，cookie 可以记录数据的状态。比如用户的id，密码，浏览过的页面等。
 - cookie 的优点：1. 记住数据的状态，密码等。2. 弥补的 HTTP 的无状态。
 - cookie 的缺点：
-  - 容量缺陷，只能存储4kb大小；
+  - 容量缺陷，只能存储 4kb 大小；
   - 安全问题，cookie是以文本的形式在浏览器和服务器之前传递信息，很有可能会被修改。
-  - 请求的Cookie文件容易被删除。 
+  - 请求的Cookie文件容易被删除。
   - 性能消耗大，cookie 是紧跟域名的，域名下的任意地址被修改都携带cookie到服务器。造成性能浪费。
 
 #### localStorage
 
 localStorage 存值的方式和 cookie 类似，都会存放在同一个域名下，localStorage 可以长期存储，没有时间的限制。可以通过localStorage.setItem()/getItem() 存取值。
 
-- localStorage 优点：1.扩展了 cookie 的存储大小，可以存放 5M 大小，不同浏览器不同；2.只存储在浏览器不会和服务器之间有通信解决了cookie 的安全问题和性能消耗问题。 
-- localStorage 缺点：1.需要手动删除保存的数据；2.只支持字符串类型，JSON 类型需要通过JSON.stringify() 转化。3. 同步的操作，写入大量的数据可以会导致页面卡顿。 
+- localStorage 优点：1.扩展了 cookie 的存储大小，可以存放 5M 大小，不同浏览器不同；2.只存储在浏览器不会和服务器之间有通信解决了cookie 的安全问题和性能消耗问题。
+- localStorage 缺点：1.需要手动删除保存的数据；2.只支持字符串类型，JSON 类型需要通过JSON.stringify() 转化。3. 同步的操作，写入大量的数据可以会导致页面卡顿。
 - localStorage 使用场景：利用 localStorage 可以存放一些稳定的资源和base64的图片等
 
 #### sessionStorage
 
-sessionStorage 和 localStorage 一致，唯一大的区别在于 sessionStorage 是会话级别的存储 会话级别的 sessionStorage 也就是在浏览器页面关闭后，这个存储也就消失了。 
+sessionStorage 和 localStorage 一致，唯一大的区别在于 sessionStorage 是会话级别的存储 会话级别的 sessionStorage 也就是在浏览器页面关闭后，这个存储也就消失了。
 
 sessionStorage 的场景：sessionStorage 可以用于保存一些临时的数据，防止页面消失后数据就没了，比如表单填写和用户的浏览器记录等。
 
@@ -402,7 +402,6 @@ worker.terminate() // 关闭Worker线程
 - 分配给 Worker 线程的脚本文件必须和主线程的脚本文件同源
 - Worker 不能读取本地文件（file://~），文件必须来自网络
 - web worker 处于外部文件，无法访问到 winodow、document等
-
 
 ## WebSocket
 
