@@ -10,10 +10,10 @@
 - [Vuex](#vuex)
   - [Vuex 核心概念](#vuex-核心概念)
   - [mutations 和 actions 区别](#mutations-和-actions-区别)
-  - [vuex 和 pinia 区别](#vuex-和-pinia-区别)
 - [Redux](#redux)
   - [Redux 基本思想](#redux-基本思想)
 - [pinia](#pinia)
+  - [vuex 和 pinia 区别](#vuex-和-pinia-区别)
 
 ## Vue
 
@@ -94,7 +94,7 @@ SolidJS 通过利用细粒度的观察机制，将组件的渲染过程与 JavaS
 
 设计思想: 把组件之间的共享状态抽出, 统一管理, 让这些状态的变化可以预测
 
-Vuex, Redux 等都是用于处理全局状态的工具库.
+Vuex, Redux 等都是用于处理全局状态的工具库。
 
 Flux 思想 单向数据流, 分成 4 个部分: `View Action Dispatcher Store`
 
@@ -141,13 +141,6 @@ Vux 流程: `Component --> Actions(http request) --> Mutations --> State`
 2. `mutations` 只能通过 `commit` 触发，`actions` 只能通过 `dispatch` 触发。
 3. `mutations` 直接修改状态，而 `actions` 是通过提交 `mutations` 来改变状态的。
 
-### vuex 和 pinia 区别
-
-1. `vuex` 基于 vue2 选项式 api，而 `pinia` 基于 `vue3` 组合式 api；
-2. pinia 没有 `mutations`，`actions` 支持同步异步；
-3. pinia state 是一个箭头函数返回一个对象。
-4. `pinia` 没有 `modules` ，每一个独立的模块都是 `definStore` 生成出来的
-
 ## Redux
 
 Redux 是一个 JavaScript 库，用于管理应用程序的状态。它使应用程序的状态变得更加可预测和可控制，并且使得状态的变化变得更加可追踪和可调试。
@@ -188,3 +181,12 @@ store.dispatch({
 ```
 
 ## pinia
+
+Pinia 是一个轻量级的 Vue 状态管理库，类似于 Redux 和 Vuex。它提供了一个简单而灵活的状态管理解决方案，可以轻松地管理应用中的全局状态或局部状态。
+
+### vuex 和 pinia 区别
+
+1. `vuex` 基于 vue2 选项式 api，而 `pinia` 基于 `vue3` 组合式 api；
+2. pinia 没有 `mutations`，`actions` 支持同步异步；
+3. pinia `state` 是一个箭头函数返回一个对象。
+4. `pinia` 没有 `modules` ，每一个独立的模块都是 `definStore` 生成出来的。
