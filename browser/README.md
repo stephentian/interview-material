@@ -17,7 +17,7 @@
     - [localStorage](#localstorage)
     - [sessionStorage](#sessionstorage)
   - [代理服务器缓存](#代理服务器缓存)
-  - [CDN缓存](#cdn缓存)
+  - [CDN 缓存](#cdn-缓存)
 - [事件循环 Event Loop](#事件循环-event-loop)
   - [setTimeout](#settimeout)
   - [requestAnimationFrame](#requestanimationframe)
@@ -85,29 +85,29 @@ chrome 架构图：
 
 - 浏览器缓存（http缓存）
 - 代理服务器缓存
-- CDN缓存
+- CDN 缓存
 - 数据库缓存
 - 应用层缓存（本地缓存）
 
 ### 浏览器缓存
 
-也叫 http 缓存
+也叫 `http` 缓存
 
-Web缓存的好处：
+Web 缓存的好处：
 
-- 减小网络延迟，加快页面打开速度--缓存比源服务器离客户端更近，所以，从缓存请求内容比从源服务器所用时间更少，缓存的使用可以明显加快页面打开速度，达到更好的体验。html
-- 下降服务器的压力--给网络资源设定有效期以后，用户能够重复使用本地的缓存，减小对源服务器的请求，间接下降服务器的压力。同时，搜索引擎的爬虫机器人也能根据过时机制下降爬取的频率，也能有效下降服务器的压力。
-- 减小网络带宽损耗--不管对于网站运营者或者用户，带宽都表明着金钱,当Web缓存副本被使用时，只会产生极小的网络流量，能够有效的下降运营成本。
+- 减小网络延迟，加快页面打开速度，从缓存请求内容比从源服务器所用时间更少，缓存的使用可以明显加快页面打开速度，达到更好的体验。
+- 下降服务器的压力，给网络资源设定有效期以后，用户能够重复使用本地的缓存，减小对源服务器的请求，间接下降服务器的压力。
+- 减小网络带宽损耗。不管对于网站运营者或者用户，带宽都表明着金钱。当 Web缓存副本被使用时，只会产生极小的网络流量，能够有效的下降运营成本。
 
 #### Service Worker
 
 用于浏览器缓存资源
 
-如果网站中注册了service worker那么它可以拦截当前网站所有的请求，进行判断（需要编写相应的判断程序），如果需要向服务器发起请求的就转给服务器，如果可以直接使用缓存的就直接返回缓存不再转给服务器。从而大大提高浏览体验。
+如果网站中注册了 Service Worker 那么它可以拦截当前网站所有的请求，进行判断（需要编写相应的判断程序），如果需要向服务器发起请求的就转给服务器，如果可以直接使用缓存的就直接返回缓存不再转给服务器。从而大大提高浏览体验。
 
-- 基于 web worker（一个独立于JavaScript主线程的独立线程，在里面执行需要消耗大量资源的操作不会堵塞主线程）
-- 在web worker的基础上增加了离线缓存的能力
-- 本质上充当Web应用程序（服务器）与浏览器之间的代理服务器（可以拦截全站的请求，并作出相应的动作->由开发者指定的动作）
+- 基于 web worker（一个独立于 JavaScript 主线程的独立线程，在里面执行需要消耗大量资源的操作不会堵塞主线程）
+- 在 web worker 的基础上增加了离线缓存的能力
+- 本质上充当 Web 应用程序（服务器）与浏览器之间的代理服务器（可以拦截全站的请求，并作出相应的动作->由开发者指定的动作）
 - 由事件驱动的,具有生命周期
 - 支持推送
 - 可以让开发者自己控制管理缓存的内容以及版本
@@ -118,62 +118,62 @@ sw 工作原理：
 
 **注意：**
 
-- Service Worker 运行在 worker上下文 --> 不能访问 DOM
-- 它设计为完全异步，同步API（如XHR和localStorage）不能在 Service Worker 中使用
+- Service Worker 运行在 worker 上下文 --> 不能访问 DOM
+- 它设计为完全异步，同步API（如 XHR 和 localStorage）不能在 Service Worker 中使用
 - 只能使用 HTTPS
 
 #### 强缓存
 
 强缓存是我们没有发送 HTTP 请求，而是直接从本地缓存中获取资源的一种行为。成功后返回状态码 200。
 
-Expires
+`Expires`
 
-http1.0 中一个页面的缓存字段，是一个格林时间。这个时间是浏览器强缓存资源失效的时间
+http1.0 中一个页面的缓存字段。这个时间是浏览器强缓存资源失效的时间
 
 ```js
 Expires: Wed, 22 Nov 2021 08:41:00 GMT
 ```
 
 - 绝对时间，修改本地客户端，会导致误判
-- 在 HTTP1.1 时 Expires 被放弃了
+- 在 HTTP1.1 时 `Expires` 被放弃了
 
-Cache-Control
+`Cache-Control`
 
-HTTP1.1 中页面的缓存字段。 如果 Expires和Cache-Control 都存在，那么Cache-Control的优先级更高。
+HTTP1.1 中页面的缓存字段。 如果 `Expires` 和 `Cache-Control` 都存在，那么 `Cache-Control` 的优先级更高。
 
 ```js
 Cache-Control: max-age = 3600
 // 表示距离上次请求的一小时内可以直接使用本地的缓存，不需要再次请求。
 ```
 
-- max-age 相对时间
-- public 表示可以被浏览器或代理服务器缓存
-- private 表示只能被浏览器缓存
-- no-cache 需要发送请求到服务器确认是否被缓存，这需要使用到协商缓存
-- no-store 表示禁止使用缓存，每一次都需要请求服务器
+- `max-age` 相对时间
+- `public` 表示可以被浏览器或代理服务器缓存
+- `private` 表示只能被浏览器缓存
+- `no-cache` 需要发送请求到服务器确认是否被缓存，这需要使用到协商缓存
+- `no-store` 表示禁止使用缓存，每一次都需要请求服务器
 
-如果你不希望重复使用响应，而是希望始终从服务器获取最新内容，则可以使用 no-cache 指令强制验证。
+如果你不希望重复使用响应，而是希望始终从服务器获取最新内容，则可以使用 `no-cache` 指令强制验证。
 
-no-cache 指令不会阻止响应的存储，而是阻止在没有重新验证的情况下重用响应。
+`no-cache` 指令不会阻止响应的存储，而是阻止在没有重新验证的情况下重用响应。
 
-no-store 指令阻止存储响应，但不会删除相同 URL 的任何已存储响应。不建议随意授予 no-store，因为你失去了 HTTP 和浏览器所拥有的许多优势，包括浏览器的后退/前进缓存。
+`no-store` 指令阻止存储响应，但不会删除相同 URL 的任何已存储响应。不建议随意授予 `no-store`，因为你失去了 `HTTP` 和浏览器所拥有的许多优势，包括浏览器的后退/前进缓存。
 
 #### 协商缓存
 
-浏览器携带 缓存的标识 tag 向服务器发送请求，服务器更具携带过来的标识判断是否使用缓存的这个过程就是 协商缓存。 浏览器请求服务器返回的结果有两种，
+浏览器携带 缓存的标识 `tag` 向服务器发送请求，服务器更具携带过来的标识判断是否使用缓存的这个过程就是 协商缓存。 浏览器请求服务器返回的结果有两种，
 
-- 一种 304 表示服务器的资源还没有更新直接使用浏览器本地的缓存即可。
+- 一种返回 304 表示服务器的资源还没有更新直接使用浏览器本地的缓存即可。
 - 另一种返回 200，表示服务器资源更新且携带新的资源返回给浏览器。
 
-Etag / If-None-Match
+`Etag / If-None-Match`
 
 ```js
 etag: W/"5357d2b3f63545926812b95658505315"
 ```
 
-Etag 时服务器响应请求时 返回的一个唯一标识。这个标识只能由服务器产生。etag值没有规定，可以是时间戳的哈希值，版本号等
+`Etag` 时服务器响应请求时 返回的一个唯一标识。这个标识只能由服务器产生。etag 值没有规定，可以是时间戳的哈希值，版本号等
 
-If-None-Match 时浏览器再次请求服务器时，会携带 Etag 标识值发送给服务器，服务器会将这个值和在服务器中的Etag比较，两个值相等那么返回304，如果不相等就返回 200 将新的资源返回。
+`If-None-Match` 时浏览器再次请求服务器时，会携带 Etag 标识值发送给服务器，服务器会将这个值和在服务器中的Etag比较，两个值相等那么返回 304，如果不相等就返回 200 将新的资源返回。
 
 ```js
 GET /index.html HTTP/1.1
@@ -184,7 +184,7 @@ If-None-Match: "deadbeef"
 
 如果服务器为请求的资源确定的 ETag 标头的值与请求中的 If-None-Match 值相同，则服务器将返回 304 Not Modified。
 
-Last-Modified/If-Modified-Since
+`Last-Modified/If-Modified-Since`
 
 ```js
 Last-Modified: Wed, 23 Nov 2021 08:41:00 GMT
@@ -192,23 +192,23 @@ Last-Modified: Wed, 23 Nov 2021 08:41:00 GMT
 
 Last-Modified，指的是返回请求的资源文件最后在服务器被修改的时间。
 
-If-Modified-Since，是浏览器再次请求资源时，会携带上一次返回的 Last-Modified 的时间发送给服务器。服务器将上一次最后修改的时间 和现在的最后修改的时间做对比。如果大于If-Modified-Since 的值，服务器就会返回新的资源 200，否则返回 304。
+If-Modified-Since，是浏览器再次请求资源时，会携带上一次返回的 Last-Modified 的时间发送给服务器。服务器将上一次最后修改的时间 和现在的最后修改的时间做对比。如果大于 If-Modified-Since 的值，服务器就会返回新的资源 200，否则返回 304。
 
 缺点：时间格式复杂且难以解析，分布式服务器难以同步文件更新时间。
 
 #### 浏览器缓存顺序
 
 1. Service Worker（不会自动发生，需要注册 ServiceWorker 拦截并网络请求，才能命中）
-2. 强缓存
-   1. Memory Cache
-   2. Disk Cache
+2. 强缓存(先 `cache-contrl`，再 `expires`)
+   1. Memory Cache(200 `from menory cache`)
+   2. Disk Cache(200 `from disk cache`)
 3. 协商缓存
-   1. Etag
-   2. Last-Modified
-4. Push Cache
+   1. `Etag`(304)
+   2. `Last-Modified`(304)
+4. `Push Cache`
 
 - 强缓存生效则使用强缓存，失效则进行协商缓存
-- cache-control 优先级高于 expires; etag 优先级高于 last-modified
+- `cache-control` 优先级高于 `expires`; `etag` 优先级高于 `last-modified`
 - 协商缓存有服务器决定。生效则返回 304。
 
 ![http cache](./img/httpCache.png)
@@ -223,36 +223,36 @@ memcached,redis 等
 
 storage
 
-浏览器的本地缓存主要分为 5 种，localStorage, sessionStorage, cookie, WebSql, indexedDB
+浏览器的本地缓存主要分为 5 种，localStorage, sessionStorage, Cookie, WebSql, indexedDB
 
 #### Cookie
 
-cookie 是服务器生成的，保存到浏览器的一个本地文件中。前端可以通过 Set-Cookie 设置 cookie，前端可以设置多个 Set-Cookie。 * cookie 可以设置过期的时间也可以不设置时间，浏览器关闭后就会失效。
+Cookie 是服务器生成的，保存到浏览器的一个本地文件中。前端可以通过 Set-Cookie 设置 Cookie，前端可以设置多个 Set-Cookie。Cookie 可以设置过期的时间也可以不设置时间，浏览器关闭后就会失效。
 
 ```js
 Set-Cookie: BDSVRTM=7; path=/
 Set-Cookie: H_PS_PSSID=34130_34099_33969_31253_33848_33607_26350; path=/; domain=.baidu.com
 ```
 
-- cookie 产生原因：是用来做 状态存储 的，因为 http 是无状态的，不能记录数据状态，cookie 可以记录数据的状态。比如用户的id，密码，浏览过的页面等。
-- cookie 的优点：1. 记住数据的状态，密码等。2. 弥补的 HTTP 的无状态。
-- cookie 的缺点：
+- Cookie 产生原因：是用来做状态存储的，因为 http 是无状态的，不能记录数据状态，Cookie 可以记录数据的状态。比如用户的 id，密码，浏览过的页面等。
+- Cookie 的优点：1. 记住数据的状态，密码等。2. 弥补的 HTTP 的无状态。
+- Cookie 的缺点：
   - 容量缺陷，只能存储 4kb 大小；
-  - 安全问题，cookie是以文本的形式在浏览器和服务器之前传递信息，很有可能会被修改。
-  - 请求的Cookie文件容易被删除。
-  - 性能消耗大，cookie 是紧跟域名的，域名下的任意地址被修改都携带cookie到服务器。造成性能浪费。
+  - 安全问题，Cookie 是以文本的形式在浏览器和服务器之前传递信息，很有可能会被修改。
+  - 请求的 Cookie 文件容易被删除。
+  - 性能消耗大，Cookie 是紧跟域名的，域名下的任意地址被修改都携带 Cookie 到服务器。造成性能浪费。
 
 #### localStorage
 
-localStorage 存值的方式和 cookie 类似，都会存放在同一个域名下，localStorage 可以长期存储，没有时间的限制。可以通过localStorage.setItem()/getItem() 存取值。
+localStorage 存值的方式和 Cookie 类似，都会存放在同一个域名下，localStorage 可以长期存储，没有时间的限制。可以通过 localStorage.setItem()/getItem() 存取值。
 
-- localStorage 优点：1.扩展了 cookie 的存储大小，可以存放 5M 大小，不同浏览器不同；2.只存储在浏览器不会和服务器之间有通信解决了cookie 的安全问题和性能消耗问题。
+- localStorage 优点：1.扩展了 Cookie 的存储大小，可以存放 5M 大小，不同浏览器不同；2.只存储在浏览器不会和服务器之间有通信解决了Cookie 的安全问题和性能消耗问题。
 - localStorage 缺点：1.需要手动删除保存的数据；2.只支持字符串类型，JSON 类型需要通过JSON.stringify() 转化。3. 同步的操作，写入大量的数据可以会导致页面卡顿。
 - localStorage 使用场景：利用 localStorage 可以存放一些稳定的资源和base64的图片等
 
 #### sessionStorage
 
-sessionStorage 和 localStorage 一致，唯一大的区别在于 sessionStorage 是会话级别的存储 会话级别的 sessionStorage 也就是在浏览器页面关闭后，这个存储也就消失了。
+sessionStorage 和 localStorage 一致，唯一大的区别在于 sessionStorage 是会话级别的存储 会话级别的。 sessionStorage 在浏览器页面关闭后，这个存储也就消失了。
 
 sessionStorage 的场景：sessionStorage 可以用于保存一些临时的数据，防止页面消失后数据就没了，比如表单填写和用户的浏览器记录等。
 
@@ -265,7 +265,7 @@ sessionStorage 的场景：sessionStorage 可以用于保存一些临时的数�
   - 浏览器端设置，窗口或页面关闭则清除
   - 同窗口才能获取
   
-- cookie
+- Cookie
   - 服务端设置，保存则客户端本地
   - 限制 4KB
 
@@ -277,7 +277,7 @@ sessionStorage 的场景：sessionStorage 可以用于保存一些临时的数�
 
 Squid，Nginx，Apache等
 
-### CDN缓存
+### CDN 缓存
 
 CDN（Content delivery networks）缓存，也叫网关缓存、反向代理缓存。CDN缓存通常是由网站管理员本身部署，为了让他们的网站更容易扩展并得到更好的性能。
 
@@ -285,25 +285,25 @@ CDN（Content delivery networks）缓存，也叫网关缓存、反向代理缓�
 
 ## 事件循环 Event Loop
 
-JavaScript 是单线程的, 为了防止用户交互, 脚本, UI 渲染和网络请求等行为, 防止主线程的不阻塞，Event Loop 的方案应用而生
+JavaScript 是单线程的, 浏览器为了防止用户交互, 脚本, UI 渲染和网络请求等行为, 防止主线程不阻塞，Event Loop 的方案应用而生
 
 Event Loop 包含两类
 
 - Browsing Context
 - Worker: 每一个 Web Worker 也有一个独立的 Event Loop
 
-任务队列 task queue
+任务队列 `task queue`
 
 为了协调事件循环中的同步任务和异步任务, 使用了任务队列机制
 
 - 一个事件循环有一个或多个任务队列
-- 任务队列是集合, 不是队列. 因为Event Loop第一步是选取队列中第一个可运行的任务, 而不是第一个任务
+- 任务队列是集合, 不是队列. 因为 Event Loop 第一步是选取队列中第一个可运行的任务, 而不是第一个任务
 - 微任务队列不是任务队列
 
 Event loop 每一次循环操作叫 `tick`
 
 1. 执行最先进入队列的任务
-2. 检查是否存在 microtack, 存在则不停执行, 直至清空 Mirotask queue
+2. 检查是否存在 微任务 microtack, 存在则不停执行, 直至清空 宏任务 Mirotask queue
 3. render 渲染
 4. requestAnimationFrame
 5. intersectionObserver
@@ -352,18 +352,18 @@ setTimeout:
 
 setTimeout 和 requestAnimationFrame 区别
 
-- 执行时机: requestAnimation 由系统决定执行时间, setTimeout的执行时间并不是确定的
+- 执行时机: requestAnimation 由系统决定执行时间, setTimeout 的执行时间并不是确定的
 - 节能: 页面未激活(隐藏, 最小化), requestAnimationFrame 暂停执行, setTimeout 会继续执行
 - 函数节流: 防止刷新阶段, 防止函数执行多次
 - 引擎: setTimeout JS 引擎, 存在事件队列. requestAnimationFrame 属于 GUI 引擎, 发生在渲染之前
 
 ### requestIdleCallback
 
-requestIdleCallback 由 React fiber 引起关注. 用来判断浏览器渲染之后的空闲时间
+`requestIdleCallback` 由 `React fiber` 引起关注. 用来判断浏览器渲染之后的空闲时间
 
-requestAnimationFrame 每次渲染都执行
+`requestAnimationFrame` 每次渲染都执行
 
-requestIdleCallback 渲染完空闲时才执行
+`requestIdleCallback` 渲染完空闲时才执行
 
 ## 浏览器的多线程
 
@@ -482,6 +482,6 @@ heartCheck() {
      - 遇到 script 标签，则 DOM 树的构建会暂停
   2. 构建 CSSOM 树
      - 解析 CSS 规则树时 js 执行将暂停，直至 CSS 规则树就绪
-  3. 结合 DOM 树和 CSS 规则树，生成渲染树
+  3. 结合 DOM 树和 CSS 规则树，生成渲染树 render tree
   4. Reflow: 回流/重排，元素内容、结构、位置发送变化
-  5. Repaint: 重绘，元素外观变化
+  5. Repaint: 重绘，元素外观变化(颜色)
