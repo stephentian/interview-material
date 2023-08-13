@@ -160,6 +160,7 @@ js 执行过程分为两个阶段：
 - [JavaScript Execution Context and Hoisting Explained with Code Examples](https://www.freecodecamp.org/news/javascript-execution-context-and-hoisting/)
 - [万字干货！详解JavaScript执行过程](https://blog.csdn.net/howgod/article/details/118097654?ydreferer=aHR0cHM6Ly9jbi5iaW5nLmNvbS8%3D)
 - [JavaScript的执行过程（深入执行上下文、GO、AO、VO和VE等概念）](https://www.cnblogs.com/MomentYY/p/15785719.html)
+- 《你不知道的 JavaScript》
 
 二、执行阶段
 
