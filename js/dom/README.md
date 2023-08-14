@@ -12,12 +12,12 @@
 
 | api                             | 含义                                                      |
 | ------------------------------- | --------------------------------------------------------- |
-| document.getElementById         | 根据ID查找, 只返回第一个                                  |
-| document.getElementsByClassName | 根据类名查找, 多个类名用空格分隔, 返回一个 HTMLCollection |
-| dodument.getElementsByTagName   | 根据标签查找, * 表示查找所有标签, 返回一个 HTMLCollection |
-| document.getElementsByName      | 根据元素name属性查找                                      |
+| document.getElementById         | 返回第一个匹配元素，根据ID查找     |
+| document.getElementsByClassName | 返回元素集合，伪数组, 一个 HTMLCollection；根据类名查找, 多个类名用空格分隔 |
+| dodument.getElementsByTagName   | 返回伪数组；根据标签查找, * 表示查找所有标签, 返回一个 HTMLCollection |
+| document.getElementsByName      | 返回伪数组；根据元素 name 属性查找                                      |
 | document.querySelector          | 返回单个 Node                                             |
-| document.querySelectorAll       | 返回一个 NodeList                                         |
+| document.querySelectorAll       | 返回伪数组，一个 NodeList                                      |
 
 ### 创建节点
 
