@@ -1,10 +1,9 @@
 # promise
 
-- [promise](#promise)
-	- [简介](#简介)
-	- [基本用法](#基本用法)
-	- [Promise.all](#promiseall)
-		- [使用 Promise.all 进行 5 个请求，若其中一个失败了，怎么让其他4个成功返回？](#使用-promiseall-进行-5-个请求若其中一个失败了怎么让其他4个成功返回)
+- [简介](#简介)
+- [基本用法](#基本用法)
+- [Promise.all](#promiseall)
+  - [过滤失败请求](#过滤失败请求)
 
 ## 简介
 
@@ -22,19 +21,21 @@ Promise 是异步编程的一种解决方案。类似一个容器，里面保存
 
 ```js
 const promise = new Promise((resolve, reject) => {
-	const success = ajax.get(xxx)
+  const success = ajax.get(xxx)
 
-	if (success) {
-		resolve(value)
-	} else {
-		reject('error')
-	}
+  if (success) {
+    resolve(value)
+  } else {
+    reject('error')
+  }
 })
 ```
 
 ## Promise.all
 
-### 使用 Promise.all 进行 5 个请求，若其中一个失败了，怎么让其他4个成功返回？
+### 过滤失败请求
+
+使用 Promise.all 进行 5 个请求，若其中一个失败了，怎么让其他4个成功返回？
 
 每个promise，都会在执行成功的时候resolve，执行失败时 reject，那么，只要我们在执行失败的时候，也返回一个变量而不执行 reject;
 
