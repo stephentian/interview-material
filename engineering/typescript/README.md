@@ -33,7 +33,7 @@ never 是 typescript 的唯一一个 bottom type，它能够表示任何类型�
 
 值为 never 的 key，使用索引访问接口，值是无法被访问到的
 
-```js
+```ts
 // type Value = {  
 //   name: "zero2one";   
 //   age: 23  
@@ -55,7 +55,7 @@ ts 所有基础类型的父类型，它是安全版本的 any 类型
 
  in 可以遍历枚举类型，可以理解为 JavaScript 中的 `for in`
 
-```js
+```ts
 type Keys = 'a' | 'b' | 'c' | 'd'  
 type Obj = {
   [T in Keys]: string;  // 遍历 Keys，把每个 key 都赋值 string 类型  
@@ -74,7 +74,7 @@ type Obj = {
 
 索引类型查询操作符，理解为 JavaScript 中的 Object.keys
 
-```js
+```ts
 interface Example {  
  a: string;  
   b: string;  
@@ -126,13 +126,13 @@ type C = Pick<A, 'a' | 'c'>  // 等价于 type C = { a: 1; c: 3 }
 
 ### 遍历一个对象类型，将不想要的类型标记为 never
 
-```js
+```ts
 type MarkUnwantedTypesAsNever<Source, Condition> ={  
   [K in keyof Source]: Source[K] extends Condition ? K : never  
 } 
 ```
 
-```js
+```ts
 interface Example {  
     a: string; // ✅   
     b: string; // ✅    
