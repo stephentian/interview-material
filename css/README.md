@@ -7,7 +7,7 @@
   - [CSS 继承元素](#css-继承元素)
   - [CSS 隐藏元素](#css-隐藏元素)
   - [position](#position)
-  - [CSS中(px, rem, vw)含义及优缺点](#css中px-rem-vw含义及优缺点)
+  - [px, rem, vw](#px-rem-vw)
   - [CSS选择器优先级](#css选择器优先级)
   - [clip-path](#clip-path)
 - [布局](#布局)
@@ -88,7 +88,7 @@
 4. fixed 绝对定位, 相对浏览器窗口定位
 5. inherit 从父元素继承 position 属性
 
-### CSS中(px, rem, vw)含义及优缺点
+### px, rem, vw
 
 | 单位 | 含义                                                |
 | ---- | --------------------------------------------------- |
