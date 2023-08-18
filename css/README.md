@@ -37,7 +37,7 @@
 
 1. CSS 实现圆角 `border-radius`， 阴影 `box-shadow`
 2. 旋转，缩放，等动画: `transform: rotate(90deg)`
-3. CSS 选择器，多背景， rgba()
+3. CSS 选择器，多背景， `rgba()`
 4. 新增伪元素 `selection`
 5. 媒体查询 `@media`，多栏布局 `flex`
 
