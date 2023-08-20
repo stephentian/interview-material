@@ -479,6 +479,30 @@ useDebugValue: 用于在自定义 Hooks 中显示调试信息。
 
 可以让你读取和订阅组件中的 `context`。`Context` 允许父组件向其下层无论多深的任何组件提供信息，而无需通过 `props` 显式传递。
 
+父组件初始化
+
+```tsx
+const Context = createContext(null);
+
+return (
+  <Context.Provider value={ 放要传递的数据 }>
+    接收数据的后代组件
+  </Provider>
+)
+```
+
+子组件使用
+
+```tsx
+import React, { useContext } from 'react'
+import { Context } from './index'
+
+const fc = () => {
+    const contextValue = useContext(Context) // contextValue 是根组件的 value
+    return (<></>)
+}
+```
+
 #### useReducer
 
 允许你向组件里面添加一个 `reducer`。将组件的所有状态更新逻辑整合到一个外部函数中，这个函数叫作 `reducer`。
