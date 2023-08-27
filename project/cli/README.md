@@ -1,7 +1,7 @@
 
 # cli
 
-> scaffold
+> scaffold 脚手架
 
 ## start
 
