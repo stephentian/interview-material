@@ -22,7 +22,7 @@
 - [tree 树形组件优化](#tree-树形组件优化)
   - [递归](#递归)
   - [优化](#优化)
-- [vconsole 插件](#vconsole-插件)
+- [vconsole 小程序调试插件](#vconsole-小程序调试插件)
 
 ## km-bundle-size
 
@@ -460,7 +460,7 @@ PostCSS 是一款编译 CSS 的工具，原理：接手一个 CSS 文件，提�
 
 - 虚拟列表
 
-## vconsole 插件
+## vconsole 小程序调试插件
 
 背景：vconsole 不能看到 network
 
