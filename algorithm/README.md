@@ -16,7 +16,7 @@
   - [21.合并两个有序链表](#21合并两个有序链表)
 - [贪心算法](#贪心算法)
 - [回溯](#回溯)
-  - [51. N 皇后](#51-n-皇后1)
+  - [51. N 皇后](#51-n-皇后)
 - [洗牌算法](#洗牌算法)
 - [LRU](#lru)
 - [经典例题](#经典例题)
@@ -669,7 +669,7 @@ var findContentChildren = function(g, s) {
 
 ### 51. N 皇后
 
-一、[51. N 皇后](#n%E7%9A%87%E5%90%8E)
+一、[51. N 皇后](https://leetcode.cn/problems/n-queens/)
 
 ## 洗牌算法
 
@@ -714,12 +714,46 @@ class LRUCache {
 
 ### 把一个数组旋转 K 步
 
+题目：
+
+1. 输入一个数组 `[1,2,3,4,5,6,7]`
+2. `K=3`,  即旋转 3 步（即最前面，旋转到最后面）
+3. 输出 `[5,6,7,1,2,3,4]`
+
 两种思路：
 
-- 数组 `unshift` 数组 `pop` 值
-- 数组分为两份，剪切数组尾部 k 个元素，放前面，`concat` 剩余的子数组
+- `pop`  队尾弹出，`unshift` 插入队首；时间复杂度 O(n^2)，unshift 时间复杂度 O(n); 空间复杂度 O(1)
+- 数组分为两份，剪切数组尾部 k 个元素，放前面，`concat` 剩余的子数组；时间复杂度 O(1)；空间复杂度 O(n)
 
 ```js
+// pop unshift
+function rotateArr(arr, k) {
+  const len = arr.length || 0
+  if (len === k) return
+
+  //1、abs表示取绝对值，如果传入的值是一个负数，那么会按照正数来进行处理，
+  // 2、如果key和arr.length相等，那么则原数组不变，从而这里进行一步取余处理;
+  // 3、如果key不是整数，那么在下方循环那么step就是NaN,NaN于任何值做比较都会返回false，下方循环就不会进入
+  const step = Math.abs(k%len)
+  for (let i = 0; i<step; i++) {
+    const p = arr.pop()
+    if (p != null) arr.unshift(p)
+  }
+
+  return arr
+}
+
+// pop 和 concat
+function rotateArr1(arr, k) {
+  const length = arr.length
+
+  if(!k || length === 0) return arr
+  const step = Math.abs(k % length)  //abs 取绝对值
+  const part1 = arr.slice(-step)
+  const part2 = arr.slice(0,length-step)
+  const part3 = part1.concat(part2)
+  return part3
+}
 
 ```
 
