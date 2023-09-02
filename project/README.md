@@ -464,3 +464,4 @@ PostCSS 是一款编译 CSS 的工具，原理：接手一个 CSS 文件，提�
 
 背景：vconsole 不能看到 network
 
+功能：可以查看 network ，并且可以看到缓存
