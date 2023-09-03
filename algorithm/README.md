@@ -11,6 +11,8 @@
 - [广度优先搜索](#广度优先搜索)
 - [滑动窗口](#滑动窗口)
 - [栈](#栈)
+- [树](#树)
+  - [94.二叉树的中序遍历](#94二叉树的中序遍历)
 - [队列](#队列)
 - [链表](#链表)
   - [206.反转链表](#206反转链表)
@@ -511,6 +513,33 @@ var isValid = function(s) {
 }
 ```
 
+## 树
+
+### 94.二叉树的中序遍历
+
+[94.二叉树的中序遍历](https://leetcode.cn/problems/binary-tree-inorder-traversal/)
+
+题目：给定一个二叉树的根节点 root ，返回 它的 中序 遍历 。
+
+```js
+// 迭代
+var inorderTraversal = function(root) {
+    const res = []
+    const stack = []
+
+    while(root || stack.length) {
+        while(root) {
+            stack.push(root)
+            root = root.left
+        }
+        root = stack.pop()
+        res.push(root.val)
+        root = root.right
+    }
+    return res
+}
+```
+
 ## 队列
 
 队列，先进先出的结构
@@ -680,6 +709,18 @@ var hasCycle = function(head) {
         head = head.next;
     }
     return false;
+
+    // 快慢指针
+    // if (head == null) return false
+    // let slow = head
+    // let fast = head.next
+    // while(slow != fast) {
+    //     if (fast == null || fast.next == null) return false
+
+    //     slow = slow.next
+    //     fast = fast.next.next // 只走一步，会陷入循环；快指针要多一步，才能追到慢指针
+    // }
+    // return true
 };
 ```
 
