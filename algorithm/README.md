@@ -28,6 +28,7 @@
 - [LRU](#lru)
 - [技巧](#技巧)
   - [位运算](#位运算)
+  - [169.多数元素](#169多数元素)
     - [136.只出现一次的数字](#136只出现一次的数字)
 - [经典例题](#经典例题)
   - [把一个数组旋转 K 步](#把一个数组旋转-k-步)
@@ -41,6 +42,8 @@
 
 1. 时间复杂度，空间复杂度
 2. 执行时间测试 `console.time()` 和 `console.timeEnd()`
+
+![时间复杂度图](./algorithm-time.png)
 
 ## 排序
 
@@ -494,11 +497,34 @@ var lengthOfLongestSubstring = function (s) {
 一、[20. 有效的括号](https://leetcode-cn.com/problems/valid-parentheses/)
 
 ```js
+// shift unshift
+var isValid = function(s) {
+    if (s && s.length%2 === 1) return false
+
+    const valMap = {
+        '(': ')',
+        '[': ']',
+        '{': '}'
+    }
+
+    const stack = []
+
+    for (let i = 0; i<s.length; i++) {
+        if (stack[0] && stack[0] === s[i]) {
+            stack.shift()
+        } else {
+            stack.unshift(valMap[s[i]])
+        }
+    }
+
+    return (stack.length === 0)
+};
+
 var isValid = function(s) {
   const len = s.length
   if (len % 2 === 1) return false
 
-  let map = {
+  const map = {
     "}": "{",
     "]": "[",
     ")": "("
@@ -520,14 +546,15 @@ var isValid = function(s) {
   return !stack.length
 }
 
+// pop push
 var isValid = function(s) {
     if(s.length%2 !== 0) return false
-    let map =  {
+    const map =  {
         '(': ')',
         '{': '}',
         '[': ']'
     }
-    let stack = [];
+    const stack = [];
     
     for (let i = 0; i < s.length; i++) {
         let el = s[i];
@@ -918,6 +945,30 @@ class LRUCache {
 3. 异或运算满足交换律和结合律，即 a⊕b⊕a=b⊕a⊕a=b⊕(a⊕a)=b⊕0=b。
 
 异或是机器码运算，相同为 0 不同为 1，不管数字先后，只要两个数字相同对应的二进制都会被异或为 00000000，最后剩下的就是所要找的值
+
+### 169.多数元素
+
+给定一个大小为 n 的数组 nums ，返回其中的多数元素。多数元素是指在数组中出现次数 大于 ⌊ n/2 ⌋ 的元素。
+
+你可以假设数组是非空的，并且给定的数组总是存在多数元素。
+
+```js
+var majorityElement = function(nums) {
+  // 栈降维
+  // 相同 + 1，不同 -1
+  // 因为相同的数大于一半, 所以剩下大于一半的那个
+  let x = 0
+  let m = 0
+
+  for (let n of nums) {
+    if (m === 0) x = n
+
+    m += x === n ? 1 : -1
+  }
+
+  return x
+};
+```
 
 #### 136.只出现一次的数字
 
