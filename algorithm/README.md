@@ -16,6 +16,7 @@
   - [206.反转链表](#206反转链表)
   - [21.合并两个有序链表](#21合并两个有序链表)
   - [160. 相交链表](#160-相交链表)
+  - [234. 回文链表](#234-回文链表)
 - [贪心算法](#贪心算法)
 - [回溯](#回溯)
   - [51. N 皇后](#51-n-皇后)
@@ -602,7 +603,7 @@ function reverseLinkList(head) {
       curNode = temp
   }
 
-    return preNode
+  return preNode
 }
 
 // 递归
@@ -614,6 +615,7 @@ var reverseList = function(head) {
     if (head == null || head.next == null) {
         return head;
     }
+
     const newHead = reverseList(head.next);
     head.next.next = head;
     head.next = null;
@@ -685,6 +687,56 @@ var getIntersectionNode = function(headA, headB) {
   }
 
   return a
+}
+```
+
+### 234. 回文链表
+
+[234. 回文链表](https://leetcode.cn/problems/palindrome-linked-list/)
+
+题目：给你一个单链表的头节点 head ，请你判断该链表是否为回文链表。如果是，返回 true ；否则，返回 false 。
+
+```js
+var isPalindrome = function(head) {
+    // 双指针
+    const reverseList = (head) => {
+        let prev = null;
+        let curr = head;
+        while (curr !== null) {
+            let nextTemp = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = nextTemp;
+        }
+        return prev;
+    }
+
+    const endOfFirstHalf = (head) => {
+        let fast = head;
+        let slow = head;
+        while (fast.next !== null && fast.next.next !== null) {
+            fast = fast.next.next;
+            slow = slow.next;
+        }
+        return slow;
+    }
+
+
+    // 找到前半部分链表的尾节点并反转后半部分链表
+    const firstHalfEnd = endOfFirstHalf(head);
+    const secondHalfStart = reverseList(firstHalfEnd.next);
+
+    // 判断是否回文
+    let p1 = head;
+    let p2 = secondHalfStart;
+    let result = true;
+    while (result && p2 != null) {
+        if (p1.val != p2.val) result = false;
+        p1 = p1.next;
+        p2 = p2.next;
+    }
+
+    return result
 }
 ```
 
