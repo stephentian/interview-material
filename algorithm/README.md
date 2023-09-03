@@ -13,6 +13,7 @@
 - [栈](#栈)
 - [队列](#队列)
 - [链表](#链表)
+  - [206.反转链表](#206反转链表)
   - [21.合并两个有序链表](#21合并两个有序链表)
   - [160. 相交链表](#160-相交链表)
 - [贪心算法](#贪心算法)
@@ -582,8 +583,14 @@ function createLinkList(arr) {
 
   return node
 }
+```
 
-// 反转链表
+### 206.反转链表
+
+[206.反转链表](https://leetcode.cn/problems/reverse-linked-list/)
+
+```js
+// 迭代
 function reverseLinkList(head) {
   let preNode = null
   let curNode = head
@@ -597,6 +604,21 @@ function reverseLinkList(head) {
 
     return preNode
 }
+
+// 递归
+// head(n) 的下一个节点(head(n+1))指向 head(n)
+// head.next.next = head
+// 并把下一个节点置空 head.next = null
+
+var reverseList = function(head) {
+    if (head == null || head.next == null) {
+        return head;
+    }
+    const newHead = reverseList(head.next);
+    head.next.next = head;
+    head.next = null;
+    return newHead;
+};
 ```
 
 ### 21.合并两个有序链表
