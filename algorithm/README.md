@@ -22,6 +22,8 @@
   - [160.相交链表](#160相交链表)
   - [234.回文链表](#234回文链表)
 - [贪心算法](#贪心算法)
+  - [121.买卖股票的最佳时机](#121买卖股票的最佳时机)
+  - [455.分发饼干](#455分发饼干)
 - [回溯](#回溯)
   - [51. N 皇后](#51-n-皇后)
 - [洗牌算法](#洗牌算法)
@@ -862,7 +864,40 @@ var isPalindrome = function(head) {
 
 ## 贪心算法
 
-例题：
+### 121.买卖股票的最佳时机
+
+[121. 买卖股票的最佳时机](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock/)
+
+给定一个数组 prices ，它的第 i 个元素 prices[i] 表示一支给定股票第 i 天的价格。
+
+你只能选择 某一天 买入这只股票，并选择在 未来的某一个不同的日子 卖出该股票。设计一个算法来计算你所能获取的最大利润。
+
+返回你可以从这笔交易中获取的最大利润。如果你不能获取任何利润，返回 0 。
+
+```js
+// 遍历
+// 贪心的想法就是取最左最小值，取最右最大值，那么得到的差值就是最大利润。
+var maxProfit = function(prices) {
+  if (prices.length <= 1) return 0
+  let inV = 0
+  let res = 0
+
+  for (let i = 1; i<prices.length; i++) {
+
+    if (prices[i] - prices[inV] > res) {
+      res = prices[i] - prices[inV]
+    }
+
+    if (prices[i] < prices[inV]) {
+      inV = i
+    }
+  }
+  return res
+};
+
+```
+
+### 455.分发饼干
 
 一、[455. 分发饼干](https://leetcode-cn.com/problems/assign-cookies/)
 
