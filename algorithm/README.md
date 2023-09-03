@@ -14,6 +14,7 @@
 - [队列](#队列)
 - [链表](#链表)
   - [21.合并两个有序链表](#21合并两个有序链表)
+  - [160. 相交链表](#160-相交链表)
 - [贪心算法](#贪心算法)
 - [回溯](#回溯)
   - [51. N 皇后](#51-n-皇后)
@@ -558,9 +559,10 @@ MyQueue.prototype.empty = function() {
 
 ## 链表
 
-类似数组，不过是无序存储结构
+类似数组，不过是无序存储结构。含义见 [链表](../dataStruct/README.md)
 
 ```js
+// 单链表
 function createLinkList(arr) {
   const len = arr.length
   if (!len) throw new Error('arr is empty')
@@ -633,6 +635,34 @@ var mergeTwoLists = function(list1, list2) {
   
   cur.next = list1 !== null ? list1: list2
   return head.next
+}
+```
+
+### 160. 相交链表
+
+[160. 相交链表](https://leetcode.cn/problems/intersection-of-two-linked-lists/)
+
+方法：1. hashMap；2.双指针；3.暴力法
+
+```js
+// 双指针
+/**
+ * @param {ListNode} headA
+ * @param {ListNode} headB
+ * @return {ListNode}
+ */
+var getIntersectionNode = function(headA, headB) {
+  if (!headA || !headB) return null
+
+  let a=headA
+  let b=headB
+
+  while(a !== b) {
+      a = a === null ? headB : a.next
+      b = b === null ? headA : b.next
+  }
+
+  return a
 }
 ```
 
