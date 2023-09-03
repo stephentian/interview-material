@@ -3,6 +3,7 @@
 - [基础知识](#基础知识)
 - [排序](#排序)
 - [二分查找](#二分查找)
+  - [35.搜索插入位置](#35搜索插入位置)
 - [动态规划](#动态规划)
 - [排列组合](#排列组合)
 - [深度优先遍历](#深度优先遍历)
@@ -25,6 +26,9 @@
   - [51. N 皇后](#51-n-皇后)
 - [洗牌算法](#洗牌算法)
 - [LRU](#lru)
+- [技巧](#技巧)
+  - [位运算](#位运算)
+    - [136.只出现一次的数字](#136只出现一次的数字)
 - [经典例题](#经典例题)
   - [把一个数组旋转 K 步](#把一个数组旋转-k-步)
   - [24.交换链表节点](#24交换链表节点)
@@ -104,6 +108,33 @@ const binarySearch1 = function(
   } else {
     return midIndex;
   }
+};
+```
+
+### 35.搜索插入位置
+
+[35.搜索插入位置](https://leetcode.cn/problems/search-insert-position/)
+
+题目：给定一个排序数组和一个目标值，在数组中找到目标值，并返回其索引。如果目标值不存在于数组中，返回它将会被按顺序插入的位置。
+
+请必须使用时间复杂度为 O(log n) 的算法。
+
+```js
+var searchInsert = function(nums, target) {
+    let len = nums.length
+    let left = 0, right = len - 1, ans = len
+
+    while(left <= right) {
+        let mid = left + Math.ceil((right - left)/2)
+
+        if (target <= nums[mid]) {
+          ans = mid
+          right = mid - 1
+        } else {
+          left = mid + 1
+        }
+    }
+    return ans
 };
 ```
 
@@ -873,6 +904,49 @@ class LRUCache {
     this.data.set(domain, info)
     return info
   }
+}
+```
+
+## 技巧
+
+### 位运算
+
+异或运算有以下三个性质：
+
+1. 任何数和 000 做异或运算，结果仍然是原来的数，即 a⊕0=aa \oplus 0=aa⊕0=a。
+2. 任何数和其自身做异或运算，结果是 000，即 a⊕a=0a \oplus a=0a⊕a=0。
+3. 异或运算满足交换律和结合律，即 a⊕b⊕a=b⊕a⊕a=b⊕(a⊕a)=b⊕0=b。
+
+异或是机器码运算，相同为 0 不同为 1，不管数字先后，只要两个数字相同对应的二进制都会被异或为 00000000，最后剩下的就是所要找的值
+
+#### 136.只出现一次的数字
+
+[136.只出现一次的数字](https://leetcode.cn/problems/single-number/)
+
+题目：给你一个 非空 整数数组 nums ，除了某个元素只出现一次以外，其余每个元素均出现两次。找出那个只出现了一次的元素。
+
+异或运算满足交换律, a^b^a=a^a^b=b, 因此 ans 相当于 nums[0]^nums[1]^nums[2]^nums[3]^nums[4]
+
+0^任意值 = 任意值
+
+```js
+// hashMap
+
+// 暴力法
+
+// 排序 nlog(n)
+
+// 异或
+var singleNumber = function(nums) {
+    let a = nums[0]
+
+    if (nums.length > 1) {
+        for (let i = 1; i<nums.length; i++) {
+            a = a ^ nums[i]
+        }
+    }
+
+    return a
 }
 ```
 
