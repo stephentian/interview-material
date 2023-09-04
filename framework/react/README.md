@@ -356,7 +356,7 @@ React v16.8.0 引入的新特性，它使函数组件能够拥有状态和其他
 
 在 React 中，useState 以及任何其他以 “use” 开头的函数都被称为 Hook。只能在组件或自定义 Hook 的最顶层调用。
 
-### Hooks API
+Hooks API
 
 useState: 用于在函数组件中添加状态。
 useEffect: 用于在函数组件中添加副作用。
@@ -369,7 +369,7 @@ useImperativeHandle: 用于在函数组件中公开 ref。
 useLayoutEffect: 与 useEffect 相同，但在 DOM 更新之前同步执行。
 useDebugValue: 用于在自定义 Hooks 中显示调试信息。
 
-#### useState
+### useState
 
 `useState` 是一个 React Hook，它用于在函数组件中添加状态。当你调用 `useState` 时，它会返回一个数组，其中第一个元素是当前状态的值，第二个元素是一个回调函数，用于更新状态的值。当你调用第二个元素时，React 会比较新旧状态的值是否相同，如果不同，则会触发组件的重新渲染。
 
@@ -382,14 +382,14 @@ useDebugValue: 用于在自定义 Hooks 中显示调试信息。
 - `index` 会保存上次渲染的值。
 - `setIndex` 可以更新 `state` 变量并触发 `React` 重新渲染组件。
 
-#### useEffect
+### useEffect
 
 `useEffect` 是一个用于在组件渲染后执行副作用（如数据获取、订阅和 DOM 操作等）的函数。
 
 接受两个参数：
 
 - 一个 `setup` 函数
-  - 返回一个 清理函数（`cleanup`），其 `cleanup` 代码用来与该系统断开连接。
+  - 返回一个 清理函数（`cleanup`），清除副作用。用来与该系统断开连接，清除定时器，清除事件监听等。
 - 一个依赖项数组。
   - 可选的，用于指定在哪些依赖项发生变化时重新运行函数。
   - 省略此参数，则在每次重新渲染组件后，将重新运行函数。
@@ -397,7 +397,11 @@ useDebugValue: 用于在自定义 Hooks 中显示调试信息。
 
 **注意：** useEffect 在每次组件渲染后都会执行，因此应该避免在 useEffect 中执行过多的副作用操作，以免影响性能。此外，为了避免副作用操作之间的相互依赖，应该将副作用操作拆分成多个 useEffect 函数，并在依赖项中分别指定。
 
-#### useCallback
+#### useEffect 第二个参数内部是如何比较
+
+内部是浅比较，源码中用 for 循环配合 Object.is 实现。
+
+### useCallback
 
 `useCallback` 返回你已经传入的 `fn` 函数。不会调用此函数，而是返回此函数。你可以自己决定何时调用以及是否调用。
 
@@ -409,7 +413,7 @@ useDebugValue: 用于在自定义 Hooks 中显示调试信息。
 - 优化自定义 `Hook`
   - 编写自定义 `Hook`，建议将它返回的任何函数包裹在 `useCallback` 中
 
-#### useMemo
+### useMemo
 
 每次重新渲染的时候能够缓存计算的结果(值，函数或对象)
 
@@ -476,7 +480,7 @@ useDebugValue: 用于在自定义 Hooks 中显示调试信息。
 
     useCallback 的唯一好处是它可以让你避免在内部编写额外的嵌套函数。
 
-#### useContext
+### useContext
 
 可以让你读取和订阅组件中的 `context`。`Context` 允许父组件向其下层无论多深的任何组件提供信息，而无需通过 `props` 显式传递。
 
@@ -504,7 +508,7 @@ const fc = () => {
 }
 ```
 
-#### useReducer
+### useReducer
 
 允许你向组件里面添加一个 `reducer`。将组件的所有状态更新逻辑整合到一个外部函数中，这个函数叫作 `reducer`。
 
