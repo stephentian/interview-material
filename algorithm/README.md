@@ -36,6 +36,7 @@
   - [把一个数组旋转 K 步](#把一个数组旋转-k-步)
   - [24.交换链表节点](#24交换链表节点)
   - [N 数之和](#n-数之和)
+    - [15.三数之和](#15三数之和)
   - [394.字符串解码](#394字符串解码)
   - [51.N皇后](#51n皇后)
   - [403.青蛙过河](#403青蛙过河)
@@ -1144,7 +1145,7 @@ var swapPairs = function(head) {
     }
     ```
 
-二、**三数之和**
+#### 15.三数之和
 
 地址: [3sum](https://leetcode-cn.com/problems/3sum/)
 
@@ -1155,30 +1156,40 @@ var swapPairs = function(head) {
     // 时间复杂度 O(n^2)
     // sort 排序可以做到 nlogn (nlogn < n^2)
     const threeSum = function(nums) {
-      if (nums === null || nums.length < 3) return []
       let res = []
       const len = nums.length
+      if (nums === null || nums.length < 3) return res
+
       nums.sort((a, b) => a - b)
 
-      for(let i = 0; i < len; i++) {
-        if (nums[i] > 0) break; // 和为 0
-        if (i>0 && nums[i] == nums[i-1]) continue // 去重
+      for (let i =0; i<len; i++) {
+        // 排序后 i 从左边遍历，作为第一个数
+        // 当前数字大于 0，则三数之和大于0
+        if (nums[i] > 0) break
+        if (i>0 && nums[i] === nums[i-1]) continue; // 跳过，去重
 
-        let L = i + 1
-        let R = len - 1
-        while(L < R) {
-          const sum = nums[i] + num[L] + nums[R]
-          if(sum == 0) {
-            res.push([nums[i], nums[L], nums[R]])
-            while(L < R && nums[L] === nums[L+1]) L++  // 去重
-            while(L < R && nums[R] === nums[R-1]) R--  // 去重
-            L++;
-            R--
+        let l = i + 1
+        let r = len - 1
+
+        while(l<r) {
+          const sum = nums[i] + nums[l] + nums[r]
+          if (sum === 0) {
+            res.push([nums[i], nums[l], nums[r]])
+            while (l < r && nums[l] === nums[l+1]) l++
+            while (l < r && nums[r] === nums[r-1]) r--
+
+            l++
+            r--
           }
-          else if (sum < 0) L++;
-          else if (sum > 0) R--
+          if (sum < 0) {
+            l++
+          }
+          if (sum > 0) {
+            r--
+          }
         }
       }
+
       return res
     }
     ```
