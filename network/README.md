@@ -3,7 +3,7 @@
 - [五层网络模型](#五层网络模型)
 - [同源策略及限制](#同源策略及限制)
 - [前后端通信方式](#前后端通信方式)
-- [如何创建 Ajax](#如何创建-ajax)
+- [Ajax](#ajax)
 - [跨域](#跨域)
   - [跨域通信的方式](#跨域通信的方式)
   - [CORS 跨域原理](#cors-跨域原理)
@@ -19,7 +19,8 @@
   - [HTTP1.1 区别](#http11-区别)
   - [HTTP2](#http2)
   - [HTTP3.0](#http30)
-- [HTTPS](#https)
+- [SSL/TLS/HTTPS](#ssltlshttps)
+  - [HTTPS](#https)
   - [HTTPS 建立连接](#https-建立连接)
 - [HTTP 中 GET 和 POST 有什么区别？](#http-中-get-和-post-有什么区别)
 - [缓存](#缓存)
@@ -38,6 +39,7 @@
   - [XSS 和 CSRF 区别](#xss-和-csrf-区别)
 - [文件上传下载](#文件上传下载)
 - [分片传输](#分片传输)
+- [网络性能优化](#网络性能优化)
 
 ## 五层网络模型
 
@@ -68,7 +70,9 @@ AJAX 无法发送
 3. CORS
   支持不同源通信
 
-## 如何创建 Ajax
+## Ajax
+
+创建 Ajax
 
 ```js
 let request = new XMLHttpRequest
@@ -404,9 +408,17 @@ TCP 缺点：
 
 UDP ：不可靠传输协议，但是 QUIC 在UDP的基础上做了些改造，使得他提供了和 TCP 类似的可靠性。
 
-## HTTPS
+## SSL/TLS/HTTPS
 
-HTTPS 协议是由 SSL+HTTP 协议构建的可进行加密传输、身份认证的网络协议
+SSL/TLS是一种密码通信框架，他是世界上使用最广泛的密码通信方法。
+
+安全套接层（Secure Sockets Layer，缩写：SSL）是一种安全协议，目的是为互联网通信，提供安全及数据完整性保障。
+
+传输层安全协议（英语：Transport Layer Security，缩写：TLS），是 IETF 在 SSL3.0 基础上设计的协议，实际上相当于SSL的后续版本。
+
+### HTTPS
+
+HTTPS 协议是由 `SSL+HTTP` 协议构建的可进行加密传输、身份认证的网络协议
 
 1. HTTPS 协议需要到 CA 申请证书，一般免费证书很少，需要交费。
 2. HTTP 协议运行在 TCP 之上，所有传输的内容都是明文，HTTPS 运行在 SSL/TLS 之上，SSL/TLS 运行在 TCP 之上，所有传输的内容都经过加密的。
@@ -590,4 +602,12 @@ TODO:
 
 ## 文件上传下载
 
+TODO:
+
 ## 分片传输
+
+TODO:
+
+## 网络性能优化
+
+TODO:
