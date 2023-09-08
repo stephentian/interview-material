@@ -1,16 +1,12 @@
 # 排序
 
-## 目录
-
-- [排序](#排序)
-  - [目录](#目录)
-  - [冒泡排序](#冒泡排序)
-    - [改进](#改进)
-  - [快速排序](#快速排序)
-  - [插入排序](#插入排序)
-  - [选择排序](#选择排序)
-  - [希尔排序](#希尔排序)
-  - [归并排序](#归并排序)
+- [冒泡排序](#冒泡排序)
+  - [改进](#改进)
+- [快速排序](#快速排序)
+- [插入排序](#插入排序)
+- [选择排序](#选择排序)
+- [希尔排序](#希尔排序)
+- [归并排序](#归并排序)
 
 ## 冒泡排序
 
@@ -63,6 +59,8 @@ function bubbleSort(arr) {
        }
        i = pos
      }
+
+     return arr
    }
    ```
 
@@ -108,8 +106,9 @@ const quickSort = function (arr) {
     return arr
   }
   // 基准位置(理论上可以选取任意位置)
-  let midIndex = Math.floor(arr.length / 2)
-  let pivot = arr.splice(midIndex, 1)[0]
+  // let midIndex = Math.floor(arr.length / 2)
+  // let pivot = arr.splice(midIndex, 1)[0]
+  let pivot = arr[0]
   let left = []
   let right = []
   for (let i = 0; i < arr.length; i++) {
@@ -119,7 +118,8 @@ const quickSort = function (arr) {
       right.push(arr[i])
     }
   }
-  return quickSort(left).concat([pivot], quickSort(right))
+  // return quickSort(left).concat([pivot], quickSort(right))
+  return [...quickSort(left), pivot, ...quickSort(right)]
 }
 ```
 
@@ -194,6 +194,7 @@ function insertSort(arr) {
   for (let i = 1; i < arr.length; i++) {
     let key = arr[i]
     let j = i - 1
+
     while (j >= 0 && arr[j] > key) {
       arr[j + 1] = arr[j]
       j--
@@ -218,9 +219,8 @@ function insertSort(arr) {
 
 ```js
 function selection(arr) {
-  if (arr.length <= 1) {
-    return arr
-  }
+  if (arr.length <= 1) return arr
+
   let minIndex, temp
   for (let i = 0; i < arr.length - 1; i++) {
     minIndex = i
@@ -230,6 +230,7 @@ function selection(arr) {
         minIndex = j
       }
     }
+
     // 找到最小数后和 arr[i] 互换位置
     temp = arr[i]
     arr[i] = arr[minIndex]
