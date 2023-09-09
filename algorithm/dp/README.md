@@ -6,8 +6,52 @@ DP（dynamic program）
 
 常见题目: 爬楼梯, 斐波那契数列 等
 
+- [剑指 Offer 10- I. 斐波那契数列](#剑指-offer-10--i-斐波那契数列)
 - [70.爬楼梯](#70爬楼梯)
 - [打家劫舍](#打家劫舍)
+
+## 剑指 Offer 10- I. 斐波那契数列
+
+[剑指 Offer 10- I. 斐波那契数列](https://leetcode.cn/problems/fei-bo-na-qi-shu-lie-lcof/)
+
+写一个函数，输入 n ，求斐波那契（Fibonacci）数列的第 n 项（即 F(N)）。斐波那契数列的定义如下：
+
+`F(0) = 0,   F(1) = 1`
+`F(N) = F(N - 1) + F(N - 2), 其中 N > 1.`
+
+```js
+// 动态规划
+// f(n+1) = f(n) + f(n-1)
+var fib = function(n) {
+  if (n <= 1) return n
+
+  const MOD = 1000000007
+  const dp = []
+  dp[0] = 0
+  dp[1] = 1
+  for (let i=2; i<=n; i++) {
+    dp[i] = (dp[i-1] + dp[i-2])%MOD
+  }
+  return dp[n]
+};
+
+// 优化
+var fib = function(n) {
+  if (n <= 1) return n
+
+  const MOD = 1000000007
+  let dp0 = 0,
+  dp1 = 0,
+  res = 1
+
+  for (let i=2; i<=n; i++) {
+    dp0 = dp1
+    dp1 = res
+    res = (dp0 + dp1)%MOD
+  }
+  return res
+};
+```
 
 ## 70.爬楼梯
 
