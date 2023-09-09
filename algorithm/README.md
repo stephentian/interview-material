@@ -40,7 +40,8 @@
   - [394.字符串解码](#394字符串解码)
   - [51.N皇后](#51n皇后)
   - [403.青蛙过河](#403青蛙过河)
-  - [剑指 Offer 22. 链表中倒数第k个节点](#剑指-offer-22-链表中倒数第k个节点)
+  - [剑指 Offer 22.链表中倒数第k个节点](#剑指-offer-22链表中倒数第k个节点)
+  - [122.买卖股票的最佳时机 II](#122买卖股票的最佳时机-ii)
 
 ## 基础知识
 
@@ -866,6 +867,13 @@ var isPalindrome = function(head) {
 
 ## 贪心算法
 
+贪心算法（Greedy Algorithm）是一种在每一步选择中都采取在当前状态下最好或最优（即最有利）的选择，从而希望导致结果是全局最好或最优的算法。贪心算法通常有**自顶向下**的搜索方式，以迭代的方式做出相继的选择，每做一次选择就将所求问题简化为一个规模更小的子问题。
+
+贪心算法的主要特点是：
+
+贪心选择性质：所求问题的整体最优解可以通过一系列局部最优的选择来达到。
+最优子结构性质：当一个问题的最优解包含其子问题的最优解时，称此问题具有最优子结构性质。
+
 ### 121.买卖股票的最佳时机
 
 [121. 买卖股票的最佳时机](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock/)
@@ -1384,7 +1392,7 @@ var helper = function (stones, index, k, set) {
 }
 ```
 
-### 剑指 Offer 22. 链表中倒数第k个节点
+### 剑指 Offer 22.链表中倒数第k个节点
 
 输入一个链表，输出该链表中倒数第k个节点。为了符合大多数人的习惯，本题从1开始计数，即链表的尾节点是倒数第1个节点。
 
@@ -1425,5 +1433,63 @@ var getKthFromEnd = function(head, k) {
       node = node.next;
   }
   return node;
+};
+```
+
+### 122.买卖股票的最佳时机 II
+
+给你一个整数数组 prices ，其中 prices[i] 表示某支股票第 i 天的价格。
+
+在每一天，你可以决定是否购买和/或出售股票。你在任何时候 最多 只能持有 一股 股票。你也可以先购买，然后在 同一天 出售。
+
+返回 你能获得的 最大 利润 。
+
+输入：`prices = [7,1,5,3,6,4]`
+输出：7
+解释：在第 2 天（股票价格 = 1）的时候买入，在第 3 天（股票价格 = 5）的时候卖出, 这笔交易所能获得利润 = 5 - 1 = 4 。
+     随后，在第 4 天（股票价格 = 3）的时候买入，在第 5 天（股票价格 = 6）的时候卖出, 这笔交易所能获得利润 = 6 - 3 = 3 。
+     总利润为 4 + 3 = 7 。
+
+```js
+// 动态规划
+// dp[i][0] 表示第 i 天交易完后手里没有股票的最大利润，dp[i][1] 表示第 i 天交易完后手里持有一支股票的最大利润（i 从 0 开始）。
+// dp[i][0] = max{dp[i-1][0], dp[i-1][1] + prices[i]}
+// dp[i][1] = max{dp[i-1][1], dp[i-1][0] - prices[i]}
+var maxProfit = function(prices) {
+  const n = prices.length;
+  // const dp = new Array(n).fill(0).map(v => new Array(2).fill(0));
+  // dp[0][0] = 0, dp[0][1] = -prices[0];
+  // for (let i = 1; i < n; ++i) {
+  //     dp[i][0] = Math.max(dp[i - 1][0], dp[i - 1][1] + prices[i]);
+  //     dp[i][1] = Math.max(dp[i - 1][1], dp[i - 1][0] - prices[i]);
+  // }
+  // return dp[n - 1][0];
+
+  let dp0 = 0, dp1 = -prices[0]
+
+  for (let i = 1; i<n; i++) {
+    let newDp0 = Math.max(dp0, dp1 + prices[i])
+    let newDp1 = Math.max(dp1, dp0 - prices[i])
+
+    dp0 = newDp0
+    dp1 = newDp1
+  }
+
+  return dp0
+};
+
+// 贪心
+// 求最大利润，而不求操作
+// 所以 能赚钱，就头天买
+// 第一天，盈利为 0
+// 第二天，
+// 如果 减前一天为 负，昨天不买入；今天不卖出，盈利为 0
+// 为正数，昨天买入，今日卖出，盈利为正数
+var maxProfit = function(prices) {
+  let ans = 0
+  for (let i =1, len = prices.length; i<len; i++) {
+    ans = ans + Math.max(0, prices[i] - prices[i-1])
+  }
+  return ans
 };
 ```
