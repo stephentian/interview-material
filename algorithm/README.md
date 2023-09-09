@@ -14,6 +14,8 @@
 - [栈](#栈)
 - [树](#树)
   - [94.二叉树的中序遍历](#94二叉树的中序遍历)
+  - [104.二叉树的最大深度](#104二叉树的最大深度)
+  - [226.翻转二叉树](#226翻转二叉树)
 - [队列](#队列)
 - [链表](#链表)
   - [206.反转链表](#206反转链表)
@@ -601,6 +603,72 @@ var inorderTraversal = function(root) {
     }
     return res
 }
+```
+
+### 104.二叉树的最大深度
+
+[104. 二叉树的最大深度](https://leetcode.cn/problems/maximum-depth-of-binary-tree/)
+
+
+
+```js
+// DFS
+// 深度遍历
+var maxDepth = function(root) {
+  if (!root) return 0
+
+  const left = maxDepth(root.left)
+  const right = maxDepth(root.right)
+
+  return Math.max(left, right) + 1
+};
+```
+
+### 226.翻转二叉树
+
+[226. 翻转二叉树](https://leetcode.cn/problems/invert-binary-tree/)
+
+给你一棵二叉树的根节点 root ，翻转这棵二叉树，并返回其根节点。
+
+```js
+// 递归
+// 基于 DFS
+var invertTree = function(root) {
+  if (!root) return root
+
+  const temp = root.left
+  root.left = root.right
+  root.right = temp
+
+  invertTree(root.left)
+  invertTree(root.right)
+
+  return root
+};
+
+// 遍历 BFS
+// 层序遍历
+// 根节点入列，然后出列，出列就交接左右子节点
+// 然后左右子节点入列
+// 直到队列为空
+var invertTree = function(root) {
+  if (!root) return root
+
+  const queue = [root]
+
+  while(queue.length) {
+    const cur = queue.shift();
+    // [cur.left, cur.right] = [cur.right, cur.left]
+    const temp = cur.left
+    cur.left = cur.right
+    cur.right = temp
+
+    if (cur.left) queue.push(cur.left)
+    if (cur.right) queue.push(cur.right) 
+  }
+
+  return root
+};
 ```
 
 ## 队列
