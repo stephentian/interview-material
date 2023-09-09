@@ -6,15 +6,15 @@
   - [35.搜索插入位置](#35搜索插入位置)
 - [动态规划](#动态规划)
 - [排列组合](#排列组合)
-- [深度优先遍历](#深度优先遍历)
-  - [200.岛屿数量](#200岛屿数量)
-  - [257.二叉树的所有路径](#257二叉树的所有路径)
-- [广度优先搜索](#广度优先搜索)
 - [滑动窗口](#滑动窗口)
 - [栈](#栈)
 - [树](#树)
-  - [94.二叉树的中序遍历](#94二叉树的中序遍历)
-  - [104.二叉树的最大深度](#104二叉树的最大深度)
+  - [DFS 深度优先遍历](#dfs-深度优先遍历)
+    - [200.岛屿数量](#200岛屿数量)
+    - [257.二叉树的所有路径](#257二叉树的所有路径)
+  - [BFS 广度优先搜索](#bfs-广度优先搜索)
+    - [94.二叉树的中序遍历](#94二叉树的中序遍历)
+    - [104.二叉树的最大深度](#104二叉树的最大深度)
   - [226.翻转二叉树](#226翻转二叉树)
 - [队列](#队列)
 - [链表](#链表)
@@ -33,7 +33,7 @@
 - [技巧](#技巧)
   - [位运算](#位运算)
   - [169.多数元素](#169多数元素)
-    - [136.只出现一次的数字](#136只出现一次的数字)
+  - [136.只出现一次的数字](#136只出现一次的数字)
 - [经典例题](#经典例题)
   - [把一个数组旋转 K 步](#把一个数组旋转-k-步)
   - [24.交换链表节点](#24交换链表节点)
@@ -223,255 +223,6 @@ function combine(...chunks) {
 combine(names, colors, storages)
 ```
 
-## 深度优先遍历
-
-DFS Depth-First Search
-
-- 利用栈特性, 先入后出, push, pop
-- 以纵向的维度对 DOM 树进行遍历, 从最顶向左下遍历
-- 直到所有子节点遍历完毕, 再返回遍历兄弟节点
-
-比如遍历一个 DOM 结构, 从算法的角度
-
-| 1       | 2   | 3      |
-| :------ | --- | ------ |
-| -       | div | -      |
-| ui      | p   | button |
-| li - li |
-| a       |
-
-```js
-let tree =  {
-  id: '1',
-  title: 'div',
-  children: [
-    {
-      id: '1-1',
-      title: 'ul',
-      children: [
-        {
-          id: '1-1-1',
-          title: 'li',
-          children: [
-            {
-              id: '1-1-1-1',
-              title: 'a'
-            }
-          ]
-        },
-        {
-          id: '1-1-2',
-          title: 'li'
-        }
-      ]
-    }, 
-    {
-      id: '1-2',
-      title: 'p'
-    },
-    {
-      id: '1-3',
-      title: 'button'
-    }
-  ]
-}
-```
-
-1. 递归版本
-
-    ```js
-    function dfs(node, nodeList = []) {
-      if (node) {
-        nodeList.push(node)
-        if(node.children && node.children.length>0){
-          const child = node.children
-          for(let i = 0; i<child.length; i++) {
-            dfs(child[i], nodeList)
-          }
-        }
-      }
-      return nodeList
-    }
-    // div ul li a li p button
-    ```
-
-2. 非递归版
-
-    ```js
-    function dfs(node) {
-      let nodes = []
-
-      if (node) {
-        let stack = []
-        stack.push(node)
-
-        while(stack.length) {
-          const item = stack.pop()
-          const child = item.children
-          
-          nodes.push(item)
-          if (child && child.length > 0) {
-            for(let i = child.length - 1; i >= 0; i--) {
-              stack.push(child[i])
-            }
-          }
-        }
-      }
-
-      return nodes
-    }
-    ```
-
-例题：
-
-### 200.岛屿数量
-
-leetcode: [200. 岛屿数量](https://leetcode.cn/problems/number-of-islands/)
-
-思路: 把当前为 1 的点变为 0, 并使用  dfs 查找出来上下左右的点 变为 0
-
-```js
-var numIslands = function(grid) {
-    let res = 0
-    const row = grid.length
-    const col = grid[0].length
-
-    function dfs(x, y) {
-        grid[x][y] = 0
-        if (x > 0 && grid[x - 1][y] === "1") dfs(x - 1, y)
-        if (x < row -1 && grid[x + 1][y] === "1") dfs(x + 1, y)
-        if (grid[x][y - 1] === "1") dfs(x, y - 1)
-        if (grid[x][y + 1] === "1") dfs(x, y + 1)
-    }
-      
-    for (let i = 0; i < row; i ++) {
-        for (let j = 0; j < col; j++) {
-            if (grid[i][j] === "1") {
-                dfs(i, j)
-                res ++
-            }
-        }
-    }
-    return res
-};
-```
-
-### 257.二叉树的所有路径
-
-leetcode: [257. 二叉树的所有路径](https://leetcode-cn.com/problems/binary-tree-paths/)
-
-给定一个二叉树，返回所有从根节点到叶子节点的路径
-
-```js
-
-var binaryTreePaths = function(root) {
-  const res = []
-  const helper = (root, path) => {
-    if (root) {
-      path += root.val.toString()
-      
-      if (root.left === null && root.right === null) {
-        res.push(path)
-      } else {
-        path += "->"
-        helper(root.left, path)
-        helper(root.right, path)
-      }
-    }
-  }
-
-  helper(root, "")
-  return res
-};
-```
-
-## 广度优先搜索
-
-BFS Breath-First Search
-
-- 维护一个 queue 队列, 先进先出 push, shift
-- 在读取子节点的时候同时把发现的孙子节点 push 到队列中，但是先不处理，
-- 等到这一轮队列中的子节点处理完成以后
-- 下一轮再继续处理的就是孙子节点了，这就实现了层序遍历
-
-1. 递归版本
-
-    ```js
-    function bfs(node, nodeList = []) {
-      if (node) {
-        nodeList.push(node)
-        if(node.children && node.children.length>0){
-          const child = node.children
-          for(let i = 0; i<child.length; i++) {
-            bfs(child[i], nodeList)
-          }
-        }
-        while(node) {
-          bfs()
-          node.children
-        }
-      }
-      return nodeList
-    }
-
-    ```
-
-2. 非递归版
-
-    ```js
-    function bfs(node) {
-      let nodes = []
-
-      if (node) {
-        let queue = []
-        queue.unshift(node)
-
-        while(queue.length) {
-          const item = queue.shift()
-          const child = item.children
-          
-          nodes.push(item)
-          if (child && child.length > 0) {
-            for(let i = 0; i < child.length; i++) {
-              queue.push(child[i])
-            }
-          }
-        }
-      }
-
-      return nodes
-    }
-    ```
-
-例题：
-
-一、[515. 在每个树行中找最大值](https://leetcode-cn.com/problems/find-largest-value-in-each-tree-row/)
-
-```js
-var largestValues = function(root) {
-  if (!root) return []
-  
-  const res = []
-  const queue = [root]
-
-  while(queue.length) {
-    const len = queue.length
-    let cur = Number.MIN_SAFE_INTEGER
-
-    for (let i = 0; i < len; i++) {
-      // 取出当前 node
-      const node = queue.shift()
-      cur = Math.max(cur, node.val)
-
-      node.left && queue.push(node.left)
-      node.right && queue.push(node.right)
-    }
-    res.push(cur)
-  }
-  return res
-}
-```
-
 ## 滑动窗口
 
 其实也是 双指针，left 和 right， 形成一个窗口
@@ -580,7 +331,246 @@ var isValid = function(s) {
 
 ## 树
 
-### 94.二叉树的中序遍历
+### DFS 深度优先遍历
+
+DFS Depth-First Search
+
+- 利用栈特性, 先入后出, push, pop
+- 以纵向的维度对 DOM 树进行遍历, 从最顶向左下遍历
+- 直到所有子节点遍历完毕, 再返回遍历兄弟节点
+
+比如遍历一个 DOM 结构, 从算法的角度
+
+| 1       | 2   | 3      |
+| :------ | --- | ------ |
+| -       | div | -      |
+| ui      | p   | button |
+| li - li |
+| a       |
+
+```js
+let tree =  {
+  id: '1',
+  title: 'div',
+  children: [
+    {
+      id: '1-1',
+      title: 'ul',
+      children: [
+        {
+          id: '1-1-1',
+          title: 'li',
+          children: [
+            {
+              id: '1-1-1-1',
+              title: 'a'
+            }
+          ]
+        },
+        {
+          id: '1-1-2',
+          title: 'li'
+        }
+      ]
+    }, 
+    {
+      id: '1-2',
+      title: 'p'
+    },
+    {
+      id: '1-3',
+      title: 'button'
+    }
+  ]
+}
+```
+
+1. 递归版本
+
+    ```js
+    function dfs(node, nodeList = []) {
+      if (node) {
+        nodeList.push(node)
+        if(node.children && node.children.length>0){
+          const child = node.children
+          for(let i = 0; i<child.length; i++) {
+            dfs(child[i], nodeList)
+          }
+        }
+      }
+      return nodeList
+    }
+    // div ul li a li p button
+    ```
+
+2. 非递归版
+
+    ```js
+    function dfs(node) {
+      let nodes = []
+
+      if (node) {
+        let stack = []
+        stack.push(node)
+
+        while(stack.length) {
+          const item = stack.pop()
+          const child = item.children
+          
+          nodes.push(item)
+          if (child && child.length > 0) {
+            for(let i = child.length - 1; i >= 0; i--) {
+              stack.push(child[i])
+            }
+          }
+        }
+      }
+
+      return nodes
+    }
+    ```
+
+例题：
+
+#### 200.岛屿数量
+
+leetcode: [200. 岛屿数量](https://leetcode.cn/problems/number-of-islands/)
+
+思路: 把当前为 1 的点变为 0, 并使用  dfs 查找出来上下左右的点 变为 0
+
+```js
+var numIslands = function(grid) {
+    let res = 0
+    const row = grid.length
+    const col = grid[0].length
+
+    function dfs(x, y) {
+        grid[x][y] = 0
+        if (x > 0 && grid[x - 1][y] === "1") dfs(x - 1, y)
+        if (x < row -1 && grid[x + 1][y] === "1") dfs(x + 1, y)
+        if (grid[x][y - 1] === "1") dfs(x, y - 1)
+        if (grid[x][y + 1] === "1") dfs(x, y + 1)
+    }
+      
+    for (let i = 0; i < row; i ++) {
+        for (let j = 0; j < col; j++) {
+            if (grid[i][j] === "1") {
+                dfs(i, j)
+                res ++
+            }
+        }
+    }
+    return res
+};
+```
+
+#### 257.二叉树的所有路径
+
+leetcode: [257. 二叉树的所有路径](https://leetcode-cn.com/problems/binary-tree-paths/)
+
+给定一个二叉树，返回所有从根节点到叶子节点的路径
+
+```js
+
+var binaryTreePaths = function(root) {
+  const res = []
+  const helper = (root, path) => {
+    if (root) {
+      path += root.val.toString()
+      
+      if (root.left === null && root.right === null) {
+        res.push(path)
+      } else {
+        path += "->"
+        helper(root.left, path)
+        helper(root.right, path)
+      }
+    }
+  }
+
+  helper(root, "")
+  return res
+};
+```
+
+### BFS 广度优先搜索
+
+BFS Breath-First Search
+
+- 维护一个 queue 队列, 先进先出 push, shift
+- 在读取子节点的时候同时把发现的孙子节点 push 到队列中，但是先不处理，
+- 等到这一轮队列中的子节点处理完成以后
+- 下一轮再继续处理的就是孙子节点了，这就实现了层序遍历
+
+1. 递归版本
+
+    ```js
+    function bfs(node, nodeList = []) {
+      if (node) {
+        nodeList.push(node)
+        if(node.children && node.children.length>0){
+          const child = node.children
+          for(let i = 0; i<child.length; i++) {
+            bfs(child[i], nodeList)
+          }
+        }
+        while(node) {
+          bfs()
+          node.children
+        }
+      }
+      return nodeList
+    }
+
+    ```
+
+2. 非递归版
+
+    ```js
+    function bfs(root) {
+      const queue = [root]
+
+      while (queue.length > 0) {  
+        const node = queue.shift(); // 取出队首元素并移除  
+        console.log(node.value); // 访问当前节点  
+        if (node.left !== null) queue.push(node.left); // 将左子节点入队  
+        if (node.right !== null) queue.push(node.right); // 将右子节点入队  
+      }  
+
+      return root
+    }
+    ```
+
+例题：
+
+一、[515. 在每个树行中找最大值](https://leetcode-cn.com/problems/find-largest-value-in-each-tree-row/)
+
+```js
+var largestValues = function(root) {
+  if (!root) return []
+  
+  const res = []
+  const queue = [root]
+
+  while(queue.length) {
+    const len = queue.length
+    let cur = Number.MIN_SAFE_INTEGER
+
+    for (let i = 0; i < len; i++) {
+      // 取出当前 node
+      const node = queue.shift()
+      cur = Math.max(cur, node.val)
+
+      node.left && queue.push(node.left)
+      node.right && queue.push(node.right)
+    }
+    res.push(cur)
+  }
+  return res
+}
+```
+
+#### 94.二叉树的中序遍历
 
 [94.二叉树的中序遍历](https://leetcode.cn/problems/binary-tree-inorder-traversal/)
 
@@ -605,7 +595,7 @@ var inorderTraversal = function(root) {
 }
 ```
 
-### 104.二叉树的最大深度
+#### 104.二叉树的最大深度
 
 [104. 二叉树的最大深度](https://leetcode.cn/problems/maximum-depth-of-binary-tree/)
 
@@ -1081,7 +1071,7 @@ var majorityElement = function(nums) {
 };
 ```
 
-#### 136.只出现一次的数字
+### 136.只出现一次的数字
 
 [136.只出现一次的数字](https://leetcode.cn/problems/single-number/)
 
