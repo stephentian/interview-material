@@ -70,9 +70,9 @@
 
 代码:
 
-1. [call](call.js)
-2. [apply](apply.js)
-3. [bind](bind.js)
+1. [call](06.call.js)
+2. [apply](05.apply.js)
+3. [bind](07.bind.js)
 
 ## 判断 Array 类型
 

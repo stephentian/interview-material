@@ -50,6 +50,7 @@
   - [事件流](#事件流)
 - [函数式编程](#函数式编程)
   - [纯函数](#纯函数)
+  - [柯里化](#柯里化)
 - [问题](#问题)
   - [为什么设计成单线程？](#为什么设计成单线程)
   - [defer 和 async](#defer-和-async)
@@ -1061,6 +1062,45 @@ windiw --> document --> html --> body --> ... --> 目标元素
 我们就把这个函数叫做纯函数
 比如 `slice` 和 `splice`， 都可以做同样的操作，
 但是 `splice` 会修改参数，也就是传入的数组，所以不是纯函数，而 `slice` 是纯函数。
+
+### 柯里化
+
+柯里化：只传递函数一部分参数来调用它，让它返回一个函数去处理剩余参数。
+
+简单来说，就是调用函数，它可以接收一部分参数，并返回一个函数，直到收到所有参数为止就输出。
+
+作用：
+
+1. 参数复用
+2. 提前返回
+3. 延迟执行
+
+```js
+// 1. 实现 add(1)(2)(3)
+
+// 箭头函数
+
+// const add = x => y => z => x + y + z;
+
+// 支持以下功能
+// add(1, 2, 3)
+// add(1, 2)(3)
+// add(1)(2, 3)
+
+function add(...args) {
+  let sum = args.reduce((res, cur) => res + res)
+  return function (...next) {
+    return next.length ? add(sum, ...next) : sum
+  }
+}
+
+const curry = (fn, ...args) => {
+  args.length >= fn.length ? fn(...args)
+   : (..._args) => curry(fn, ...args, ..._args)
+
+}
+
+```
 
 ## 问题
 
