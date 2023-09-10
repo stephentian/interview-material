@@ -6,6 +6,8 @@
   - [35.搜索插入位置](#35搜索插入位置)
 - [动态规划](#动态规划)
 - [排列组合](#排列组合)
+- [双指针](#双指针)
+  - [415.字符串相加](#415字符串相加)
 - [滑动窗口](#滑动窗口)
 - [栈](#栈)
 - [树](#树)
@@ -221,6 +223,40 @@ function combine(...chunks) {
 }
 
 combine(names, colors, storages)
+```
+
+## 双指针
+
+### 415.字符串相加
+
+[415.字符串相加](https://leetcode.cn/problems/add-strings/)
+
+```js
+// 模拟加法
+// 从两个数最低位开始： i, j 指向 num1, num2 尾部
+// 相加计算是否进位： add 为上一步超出 10 的部分， add = res%10
+// 添加当前位：对位数较短的数字进行 补零操作
+var addStrings = function(num1, num2) {
+    let i = num1.length - 1
+    let j = num2.length - 1
+    let add = 0
+    const ans = []
+    
+    while (i >= 0 || j >= 0 || add != 0) {
+        const x = i >= 0 ? num1.charAt(i) - '0' : 0;
+        const y = j >= 0 ? num2.charAt(j) - '0' : 0;
+
+        const result = x + y + add;
+        ans.push(result % 10);
+
+        add = Math.floor(result / 10);
+
+        i--;
+        j--;
+    }
+
+    return ans.reverse().join('');
+};
 ```
 
 ## 滑动窗口
