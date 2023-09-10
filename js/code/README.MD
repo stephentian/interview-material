@@ -14,23 +14,36 @@
 
 ## 大数相加
 
-链接: [1.BigNumAdd.js](1.BigNumAdd.js)
+链接: [01.BigNumAdd.js](01.BigNumAdd.js)
 
-- 1. 补 0
-- 2. temp = num1 + num2 + carry
-- 3. 进位 carry = temp > 9 ? 1 : 0
-- 4. 当前位 sum = temp % 10 + sum
-- 5. 最终 sum = carry === '1' ? '1' + sum : sum
+JS 在存放整数的时候是有一个安全范围的，一旦数字超过这个范围便会损失精度。
+
+```js
+console.log(Math.pow(2, 53)); // 9007199254740992
+console.log(Math.pow(2,53) + 1); //9007199254740992
+console.log(-Math.pow(2, 53)); // -9007199254740992
+console.log(-Math.pow(2, 53) - 1); //-9007199254740992
+```
+
+`2^53 + 1` 数值超过了JS的整数限制，造成了数值溢出。负数也是同样的原因。
+
+使用字符串的方式实现相加。或者引入 `ES2020` 新增的数据类型 `BigInt` 来计算
+
+1. 补 0
+2. temp = num1 + num2 + carry
+3. 进位 carry = temp > 9 ? 1 : 0
+4. 当前位 sum = temp % 10 + sum
+5. 最终 sum = carry === '1' ? '1' + sum : sum
 
 ## 事件订阅 EventEmitter
 
-链接: [2.EventEmitter.js](2.EventEmitter.js)
+链接: [02.EventEmitter.js](02.EventEmitter.js)
 
 核心方法: on, emit, off, once
 
 ## 异步并发调度器
 
-链接: [3.Scheduler](3.Scheduler.js)
+链接: [03.Scheduler](03.Scheduler.js)
 
 思路:
 
@@ -40,7 +53,7 @@
 
 ## 柯里化
 
-链接: [4.Curry](4.Curry.js)
+链接: [04.Curry](04.Curry.js)
 
 ## 防抖和节流
 

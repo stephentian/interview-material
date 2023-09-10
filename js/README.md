@@ -3,7 +3,7 @@
 - [JS 基础](#js-基础)
   - [特点](#特点)
   - [设计缺陷](#设计缺陷)
-  - [类型](#类型)
+  - [数据类型](#数据类型)
   - [继承](#继承)
   - [垃圾回收](#垃圾回收)
   - [eval](#eval)
@@ -79,15 +79,23 @@
 6. `new Date().getYear()` 返回是 1900 开始计算, 要用 `getFullYear`, `getMonth()` 确实获取月份减一
 7. `toFixed` 精度问题(`1.335.toFixed(2)`)
 
-### 类型
+### 数据类型
 
-基本类型: `undefined`, `null`, `boolean`, `number`, `string`, `Symbol`
+基本类型 7 种：
 
-引用类型: `function`, `object`, `array`
+1. `undefined`: 声明变量未初始化的值
+2. `null`: 用来保存对象, 没有值. `null` 值表示一个空对象指针. `typeof null` 为 `object`
+3. `boolean`
+4. `number`
+5. `string`
+6. `Symbol`
+7. `BigInt`: ES2020
 
-`undefined`: 声明变量未初始化的值
+引用类型 3 种:
 
-`null`: 用来保存对象, 没有值. `null` 值表示一个空对象指针. `typeof null` 为 `object`
+1. `Function`
+2. `Object`
+3. `Array`
 
 ### 继承
 
