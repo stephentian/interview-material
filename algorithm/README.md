@@ -43,6 +43,7 @@
     - [15.三数之和](#15三数之和)
   - [394.字符串解码](#394字符串解码)
   - [51.N皇后](#51n皇后)
+  - [165.比较版本号](#165比较版本号)
   - [403.青蛙过河](#403青蛙过河)
   - [剑指 Offer 22.链表中倒数第k个节点](#剑指-offer-22链表中倒数第k个节点)
   - [122.买卖股票的最佳时机 II](#122买卖股票的最佳时机-ii)
@@ -1452,6 +1453,54 @@ var solveNQueens = function(n) {
   dfs(res, queens, n, 0)
   return res
 }
+```
+
+### 165.比较版本号
+
+[165. 比较版本号](https://leetcode.cn/problems/compare-version-numbers/)
+
+```js
+var compareVersion = function(version1, version2) {
+  // 字符串分割
+  // const v1 = version1.split('.');
+  // const v2 = version2.split('.');
+  // for (let i = 0; i < v1.length || i < v2.length; ++i) {
+  //     let x = 0, y = 0;
+  //     if (i < v1.length) {
+  //         x = parseInt(v1[i]);
+  //     }
+  //     if (i < v2.length) {
+  //         y = parseInt(v2[i]);
+  //     }
+  //     if (x > y) {
+  //         return 1;
+  //     }
+  //     if (x < y) {
+  //         return -1;
+  //     }
+  // }
+  // return 0;
+  
+  // 双指针
+  const n = version1.length, m = version2.length;
+  let i = 0, j = 0;
+  while (i < n || j < m) {
+      let x = 0;
+      for (; i < n && version1[i] !== '.'; ++i) {
+          x = x * 10 + version1[i].charCodeAt() - '0'.charCodeAt();
+      }
+      ++i; // 跳过点号
+      let y = 0;
+      for (; j < m && version2.charAt(j) !== '.'; ++j) {
+          y = y * 10 + version2[j].charCodeAt() - '0'.charCodeAt();
+      }
+      ++j; // 跳过点号
+      if (x !== y) {
+          return x > y ? 1 : -1;
+      }
+  }
+  return 0;
+};
 ```
 
 ### 403.青蛙过河

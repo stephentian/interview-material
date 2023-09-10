@@ -18,7 +18,8 @@
   - [语法环境](#语法环境)
   - [作用域链](#作用域链)
   - [闭包，使用场景，注意点](#闭包使用场景注意点)
-- [JS 语法](#js-语法)
+- [语法 及 API](#语法-及-api)
+  - [charCodeAt()](#charcodeat)
   - [箭头函数](#箭头函数)
   - [padStart 和 padEnd](#padstart-和-padend)
   - [模板字符串](#模板字符串)
@@ -382,7 +383,41 @@ js 执行两个阶段：1.创建阶段 2.执行阶段
 
 5. 避免循环引用：在使用闭包时，应避免出现循环引用的情况，即闭包和外部变量相互引用，从而导致内存泄漏。可以使用函数参数或全局变量来解决这个问题。
 
-## JS 语法
+## 语法 及 API
+
+### charCodeAt()
+
+返回指定位置的字符的 Unicode 编码，返回值是 0 - 65535 之间的整数。
+
+示例：
+
+```js
+"ABC".charCodeAt(0); // 返回 65
+```
+
+使用场景：
+
+1. 判断大小写
+
+    ```js
+    function isUpper(ch) {
+      var charCode = ch.charCodeAt(0)
+      return charCode >= 65 && charCode <= 90
+    }
+    isUpper('A')
+    // => true
+    isUpper('a')
+    // => false
+    ```
+
+2. 字符串转数字运算
+
+```js
+num = num * 10 + s[i].charCodeAt() - '0'.charCodeAt();
+//等价于
+num = num * 10 +Number(s[i])
+```
+
 
 ### 箭头函数
 
