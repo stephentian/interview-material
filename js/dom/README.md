@@ -1,10 +1,81 @@
 # DOM
 
+- [Event](#event)
+- [事件委托](#事件委托)
+- [事件模型](#事件模型)
+- [事件流](#事件流)
 - [DOM 操作](#dom-操作)
   - [节点查找](#节点查找)
   - [创建节点](#创建节点)
 - [DOM 事件](#dom-事件)
   - [DOM 事件级别](#dom-事件级别)
+
+## Event
+
+```js
+event.preventDefault()  // 例如阻止链接跳转
+event.stopPropagation()
+event.stopImmediatePropagation()  // 阻止事件冒泡, 并且阻止之后相同事件的其他函数执行
+event.currentTarget() // 获取到的是绑定事件的标签元素
+event.target()  // 获取的是触发事件的标签元素
+```
+
+## 事件委托
+
+完美版，防止点击了子元素  
+1
+
+```js
+let delegate = function(element, eventType, selector, fn) {
+  element.addEventListener(eventType, e => {
+    let el = e.target
+    while (!el.matches(selector)) {
+      el = el.parentNode
+      if(element === el) {
+        el = null
+        break
+      }
+    }
+    el && fn.call(el, e, el)
+  })
+  return element
+}
+```
+
+2
+
+```js
+var element = document.querySelector('.list')
+element.addEventListener('click', e => {
+  let el = e.target
+  while(el.tagName.toLowerCase() !== 'li') {
+    el = el.parent
+    if (el === element) {
+      el = null
+      break
+    }
+  }
+  el && console.log('点击了 xxx')
+})
+```
+
+## 事件模型
+
+DOM 事件模型分为捕获和冒泡
+
+## 事件流
+
+三个阶段
+
+1.事件的捕获阶段
+
+```js
+windiw --> document --> html --> body --> ... --> 目标元素
+```
+
+2.事件目标阶段
+
+3.事件冒泡阶段
 
 ## DOM 操作
 

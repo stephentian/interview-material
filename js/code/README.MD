@@ -11,6 +11,10 @@
 - [判断 Array 类型](#判断-array-类型)
 - [实现一个 const](#实现一个-const)
 - [实现一个 JSON.parse](#实现一个-jsonparse)
+- [toString 和 valueOf](#tostring-和-valueof)
+  - [让 (a===1 \& a===2 \&\& a===3) 的值为true](#让-a1--a2--a3-的值为true)
+  - [实现一个无限累加函数](#实现一个无限累加函数)
+  - [柯里化多参累加](#柯里化多参累加)
 
 ## 大数相加
 
@@ -150,3 +154,64 @@ function parse (json) {
 }
 // 相关地址：https://link.juejin.cn/?target=https%3A%2F%2Fgithub.com%2Fdouglascrockford%2FJSON-js%2Fblob%2Fmaster%2Fjson2.js%23L373
 ```
+
+## toString 和 valueOf
+
+### 让 (a===1 & a===2 && a===3) 的值为true
+
+```js
+// 重写 valueOf
+class A {
+    constructor(value) {
+        this.value = value;
+    }
+    valueOf() {
+        return this.value++;
+    }
+}
+const a = new A(1);
+if (a == 1 && a == 2 && a == 3) {
+    console.log("Hi Libai!");
+}
+
+// 数据劫持
+let value = 1;
+Object.defineProperty(window, 'a', {
+    get() {
+        return value++
+    }
+})
+if (a === 1 && a === 2 && a === 3) {
+    console.log("Hi Libai!")
+}
+```
+
+### 实现一个无限累加函数
+
+```js
+add(1); // 1
+add(1)(2);  // 3
+add(1)(2)(3)； // 6
+add(1)(2)(3)(4)； // 10 
+
+// 以此类推
+function add(a) {
+    function sum(b) { // 使用闭包
+        a = b ? a + b : a; // 累加
+        return sum;
+    }
+    sum.toString = function() { // 只在最后一次调用
+        return a;
+    }
+    return sum; // 返回一个函数
+}
+
+add(1)              // 1
+add(1)(2)           // 3
+add(1)(2)(3)        // 6
+add(1)(2)(3)(4)     // 10 
+```
+
+### 柯里化多参累加
+
+[04.Curry](04.Curry.js)

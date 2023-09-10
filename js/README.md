@@ -19,6 +19,7 @@
   - [作用域链](#作用域链)
   - [闭包，使用场景，注意点](#闭包使用场景注意点)
 - [语法 及 API](#语法-及-api)
+  - [toStrng 和 valueOf](#tostrng-和-valueof)
   - [charCodeAt()](#charcodeat)
   - [箭头函数](#箭头函数)
   - [padStart 和 padEnd](#padstart-和-padend)
@@ -44,10 +45,6 @@
   - [for await of](#for-await-of)
   - [try catch](#try-catch)
 - [DOM](#dom)
-  - [Event](#event)
-  - [事件委托](#事件委托)
-  - [事件模型](#事件模型)
-  - [事件流](#事件流)
 - [函数式编程](#函数式编程)
   - [纯函数](#纯函数)
   - [柯里化](#柯里化)
@@ -393,6 +390,40 @@ js 执行两个阶段：1.创建阶段 2.执行阶段
 5. 避免循环引用：在使用闭包时，应避免出现循环引用的情况，即闭包和外部变量相互引用，从而导致内存泄漏。可以使用函数参数或全局变量来解决这个问题。
 
 ## 语法 及 API
+
+### toStrng 和 valueOf
+
+toString: 返回该对象的字符串
+
+valueOf: 返回该对象的原始值
+
+```js
+// 判断类型
+toString.call(()=>{})       // [object Function]
+toString.call([])           // [object Array]
+toString.call('')           // [object String]
+toString.call({})           // [object Object]
+toString.call(22)           // [object Number]
+toString.call(new Date)     // [object Date]
+toString.call(Math)         // [object Math]
+toString.call(window)       // [object Window]
+
+let c = [1, 2, 3]
+let d = {a:2}
+
+console.log(c.valueOf())    // [1, 2, 3]
+console.log(d.valueOf())    // {a:2}
+```
+
+共同点: 在输出对象的时候会自动调用
+
+不同点: 默认返回值不同，存在优先级关系
+
+在二者并存的情况下，数值运算时，优先调用 `valueOf`，字符串运算时，优先调用 `toString`
+
+```js
+
+```
 
 ### charCodeAt()
 
@@ -984,73 +1015,6 @@ catch 块接收参数 x
 ## DOM
 
 文档：[DOM](./dom/README.md)
-
-### Event
-
-```js
-event.preventDefault()  // 例如阻止链接跳转
-event.stopPropagation()
-event.stopImmediatePropagation()  // 阻止事件冒泡, 并且阻止之后相同事件的其他函数执行
-event.currentTarget() // 获取到的是绑定事件的标签元素
-event.target()  // 获取的是触发事件的标签元素
-```
-
-### 事件委托
-
-完美版，防止点击了子元素  
-1
-
-```js
-let delegate = function(element, eventType, selector, fn) {
-  element.addEventListener(eventType, e => {
-    let el = e.target
-    while (!el.matches(selector)) {
-      el = el.parentNode
-      if(element === el) {
-        el = null
-        break
-      }
-    }
-    el && fn.call(el, e, el)
-  })
-  return element
-}
-```
-
-2
-
-```js
-var element = document.querySelector('.list')
-element.addEventListener('click', e => {
-  let el = e.target
-  while(el.tagName.toLowerCase() !== 'li') {
-    el = el.parent
-    if (el === element) {
-      el = null
-      break
-    }
-  }
-  el && console.log('点击了 xxx')
-})
-```
-
-### 事件模型
-
-DOM 事件模型分为捕获和冒泡
-
-### 事件流
-
-三个阶段
-
-1.事件的捕获阶段
-
-```js
-windiw --> document --> html --> body --> ... --> 目标元素
-```
-
-2.事件目标阶段
-
-3.事件冒泡阶段
 
 ## 函数式编程
 
