@@ -22,13 +22,13 @@
     - [特征更新](#特征更新)
 - [HOC 高阶组件](#hoc-高阶组件)
 - [Hooks](#hooks)
-  - [Hooks API](#hooks-api)
-    - [useState](#usestate)
-    - [useEffect](#useeffect)
-    - [useCallback](#usecallback)
-    - [useMemo](#usememo)
-    - [useContext](#usecontext)
-    - [useReducer](#usereducer)
+  - [useState](#usestate)
+  - [useEffect](#useeffect)
+    - [useEffect 第二个参数内部是如何比较](#useeffect-第二个参数内部是如何比较)
+  - [useCallback](#usecallback)
+  - [useMemo](#usememo)
+  - [useContext](#usecontext)
+  - [useReducer](#usereducer)
   - [自定义 Hooks](#自定义-hooks)
 - [React-Router](#react-router)
   - [React-Router 工作原理](#react-router-工作原理)
@@ -43,6 +43,7 @@
     - [如何判断计算成本高？](#如何判断计算成本高)
   - [为什么 React 自定义组件首字母要大写](#为什么-react-自定义组件首字母要大写)
   - [列举几个用到的自定义 Hooks](#列举几个用到的自定义-hooks)
+  - [为什么不能在 if 里面写 hook](#为什么不能在-if-里面写-hook)
 
 ## 基础知识
 
