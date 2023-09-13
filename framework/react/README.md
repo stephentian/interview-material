@@ -34,11 +34,13 @@
   - [React-Router 工作原理](#react-router-工作原理)
   - [为什么需要前端路由](#为什么需要前端路由)
   - [前端路由解决的问题](#前端路由解决的问题)
-- [常见问题](#常见问题)
+- [问题](#问题)
   - [StrictMode 模式是什么](#strictmode-模式是什么)
   - [类组件，React 请求放哪个生命周期中](#类组件react-请求放哪个生命周期中)
   - [类组件，为什么 React bind(this)](#类组件为什么-react-bindthis)
   - [为什么 React 不推荐直接修改 state](#为什么-react-不推荐直接修改-state)
+  - [为什么使用 hooks](#为什么使用-hooks)
+  - [Hooks 实现方式](#hooks-实现方式)
   - [useEffect, useMemo, useCallback 差异](#useeffect-usememo-usecallback-差异)
     - [如何判断计算成本高？](#如何判断计算成本高)
   - [为什么 React 自定义组件首字母要大写](#为什么-react-自定义组件首字母要大写)
@@ -342,8 +344,8 @@ React16架构可以分为三层：
   - 当你使用严格模式（Strict Mode）时，React 会对每个组件进行两次渲染，以便你观察一些意想不到的结果。
   - React 17 中，取消了其中一次渲染的控制台日志，以便让日志更容易阅读。
 - react组件返回值更新
-  - 在react17中，返回空组件只能返回null，显式返回undefined会报错
-  - 在react18中，支持null和undefined返回
+  - 在react17中，返回空组件只能返回 null，显式返回 undefined 会报错
+  - 在react18中，支持 null 和undefined 返回
 
 ## HOC 高阶组件
 
@@ -623,7 +625,7 @@ HashRouter 使用 URL 的 hash 属性控制路由跳转
 2. 单页面对服务端来说就是一套资源，怎么做到不同的URL映射不同的视图内容
 3. 拦截用户的刷新操作，避免不必要的资源请求；感知URL的变化
 
-## 常见问题
+## 问题
 
 ### StrictMode 模式是什么
 
@@ -672,6 +674,22 @@ ES6 中, 箭头函数 this 默认指向函数的宿主对象(或者函数所绑�
 1. Debugging：直接修改 state 可能会导致不可预测的行为和难以调试的问题。因为 React 会将组件的 state 看作是一致的，如果直接修改，可能会导致状态不一致，从而导致错误的行为和难以查找的调试问题。
 2. 性能问题：直接修改 state 可能会导致性能问题，因为 React 需要在组件层面进行 Diff 和 Re-render。如果直接在 state 中修改数据，React 无法检测到变化，导致组件不会重新渲染。
 3. 更简单实现：React 不像 vue，不依赖数据变化，不需要劫持数据的属性。
+
+### 为什么使用 hooks
+
+类组件经常遇到的问题：
+
+1. 很难复用逻辑（只能用HOC，或者render props），会导致组件树层级很深
+2. 大型组件很难拆分和重构，也很难测试。
+3. 业务逻辑分散在组件的各个方法之中，导致重复逻辑或关联逻辑。
+4. 方法需要 bind，this 指向不明确
+
+函数组件可以很好地进行逻辑复用，但是函数组件是无状态的，只能作为【纯组件】展示，不能处理局部state。
+
+Hooks 让函数组件拥有了 state 和 life-cycles，可以处理状态逻辑，以及使用 custom hooks 复用业务逻辑。
+
+### Hooks 实现方式
+
 
 ### useEffect, useMemo, useCallback 差异
 
