@@ -4,6 +4,13 @@
 
 *待更新动画演示*
 
+- [关于 sort](#关于-sort)
+- [验证 sort 随机性](#验证-sort-随机性)
+- [解决方案](#解决方案)
+  - [1. 使用 Fisher–Yates shuffle](#1-使用-fisheryates-shuffle)
+  - [2. 进阶方案](#2-进阶方案)
+
+
 ## 关于 sort
 
 JavaScript 开发中有时会遇到要将一个数组随机排序（shuffle）的需求，一般采用array.sort()方法，传入一个比较函数
