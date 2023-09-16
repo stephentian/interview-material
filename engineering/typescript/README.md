@@ -9,8 +9,8 @@
   - [Pick](#pick)
   - [泛型](#泛型)
 - [例题](#例题)
-  - [any 和 unknow 异同](#any-和-unknow-异同)
-  - [interface 和 type 异同](#interface-和-type-异同)
+  - [any 和 unknow](#any-和-unknow)
+  - [interface 和 type](#interface-和-type)
   - [遍历一个对象类型，将不想要的类型标记为 never](#遍历一个对象类型将不想要的类型标记为-never)
   - [TS 类型过滤](#ts-类型过滤)
 
@@ -109,11 +109,12 @@ type C = Pick<A, 'a' | 'c'>  // 等价于 type C = { a: 1; c: 3 }
 
 ## 例题
 
-### any 和 unknow 异同
+### any 和 unknow
 
-- any 会绕过类型检查，unknown 必须判断完类型才能使用
+- any 会绕过类型检查
+- unknown 必须判断完类型才能使用
 
-### interface 和 type 异同
+### interface 和 type
 
 共同点：都可以用来定义 对象或者 函数 的形状
 
