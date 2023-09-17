@@ -4,6 +4,10 @@
   - [React 发展历程](#react-发展历程)
   - [React 实例过程](#react-实例过程)
   - [React Fiber](#react-fiber)
+    - [reconcile](#reconcile)
+    - [schedule](#schedule)
+    - [commit](#commit)
+    - [fiber 总结](#fiber-总结)
   - [React 设计思想](#react-设计思想)
   - [React 三种开发模式](#react-三种开发模式)
   - [JSX](#jsx)
@@ -40,7 +44,7 @@
   - [类组件，为什么 React bind(this)](#类组件为什么-react-bindthis)
   - [为什么 React 不推荐直接修改 state](#为什么-react-不推荐直接修改-state)
   - [为什么使用 hooks](#为什么使用-hooks)
-  - [Hooks 实现方式](#hooks-实现方式)
+  - [Hooks 实现原理](#hooks-实现原理)
   - [useEffect, useMemo, useCallback 差异](#useeffect-usememo-usecallback-差异)
     - [如何判断计算成本高？](#如何判断计算成本高)
   - [为什么 React 自定义组件首字母要大写](#为什么-react-自定义组件首字母要大写)
@@ -76,21 +80,35 @@
 ### React Fiber
 
 广义的 fiber，是指 React16 启用的架构。目的是解决大型 React 项目的性能问题。
-狭义上，指这套架构实现调度算法（reconciliation algorithm）。
+狭义上，指这套架构实现调度算法（reconciliation algorithm）和对应的数据结构。
 
 **背景：**
 
-每次有 state 的变化 React 重新计算，如果计算量过大，浏览器主线程来不及做其他的事情
+在 v16 之前的 React 里，是直接递归遍历 vdom，通过 dom api 增删改 dom 的方式来渲染的。但当 vdom 过大，频繁调用 dom api 会比较耗时，而且递归又不能打断，所以有性能问题。
 
-浏览器是单线程，GUI 描绘，时间器处理，事件处理，JS 执行，远程资源加载统统放在一起。执行一个 task 的，要执行完才能执行渲染 reflow。
+引入了 fiber 架构，先把 vdom 树转成 fiber 链表，然后再渲染 fiber。
 
 **fiber 设计思路：**
 
 React Fiber 将渲染过程拆分成多个小片，每执行完一段渲染过程就将控制权交还给 React 负责任务协调的模块，看看有没有其他紧急任务要做。这种处理方式使得 React 能够更好地利用浏览器的时间片，避免了长时间占用 JavaScript 线程的情况，提高了页面响应度。
 
-还在 Virtual DOM 上重建了树和节点结构，叫做 fiber 树和 fiber 节点。并且加入了 `Scheduler` 调度器，通过调度器触发更新。
+#### reconcile
 
-个人任务 fiber 实现了一个类似 虚拟调用栈，可以控制 数据变化渲染到真实 DOM 过程。调度器使用了 `requestIdleCallback` API。利用浏览器每一帧的工作特性。在浏览器空闲的时候, 去执行未完成的任务。
+vdom 转 fiber 的过程叫做 reconcile，是可打断的
+
+#### schedule
+
+React 加入了 schedule 的机制在空闲时调度 reconcile，reconcile 的过程中会做 diff，打上增删改的标记（effectTag），并把对应的 dom 创建好。
+
+#### commit
+
+然后就可以一次性把 fiber 渲染到 dom，也就是 commit。
+
+这个 schdule、reconcile、commit 的流程就是 fiber 架构。当然，对应的这个数据结构也叫 fiber。
+
+#### fiber 总结
+
+个人认为 fiber 实现了一个类似 虚拟调用栈，可以控制 数据变化渲染到真实 DOM 过程。调度器使用了 `requestIdleCallback` API。利用浏览器每一帧的工作特性。在浏览器空闲的时候, 去执行未完成的任务。
 
 还引入了优先级控制机制，给不同的任务赋予了不同的优先级。优先级高的任务可以中断低优先级的任务，从而更好地控制渲染过程。
 
@@ -688,7 +706,8 @@ ES6 中, 箭头函数 this 默认指向函数的宿主对象(或者函数所绑�
 
 Hooks 让函数组件拥有了 state 和 life-cycles，可以处理状态逻辑，以及使用 custom hooks 复用业务逻辑。
 
-### Hooks 实现方式
+### Hooks 实现原理
+
 
 
 ### useEffect, useMemo, useCallback 差异
