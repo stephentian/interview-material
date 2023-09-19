@@ -70,6 +70,10 @@ AJAX 无法发送
 3. CORS
   支持不同源通信
 
+## 鉴权方式
+
+[用户鉴权方式](./authentication.md)
+
 ## Ajax
 
 创建 Ajax
