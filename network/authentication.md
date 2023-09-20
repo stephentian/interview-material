@@ -1,12 +1,13 @@
 # Authentication
+
 > 身份验证
 
 ## OAUTH
 
 第三方登录鉴权方式，需要先去 开放平台注册应用获取 应用 ID 和 APP Secret 密钥。
 
-流程
-比如通过微博登录网站 A
+流程： 比如通过微博登录网站 A
+
 1. 用户点击 A 上的微博登录，跳转微博授权页，跳转链接：`https://api.weibo.com/oauth2/authorize?app_id=123050457758183&redirect_uri=http://abc.com`
    - app_id: 申请授权应用 id
    - redirect_uri: 授权成功跳转地址
@@ -17,6 +18,7 @@
 ## JWT
 
 流程：
+
 1. 用户输入用户名，密码
 2. 服务器鉴权，服务器给客户端分配一个加密的 token
 3. 客户端保存 token，以后每次请求，在 Authorization 头部使用 Bearer 模式添加JWT，格式 Authorization: Bearer <token>
@@ -27,6 +29,7 @@
 JWT 结构
 
 JWT 内容用 . 连接成三个部分信息
+
 - Header 头部：Base64Url （token 类型，加密算法）
 - Payload 负载：Base64Url（用户信息）
 - Signature 签名：算法，密钥
