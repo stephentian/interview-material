@@ -36,4 +36,15 @@ JWT 内容用 . 连接成三个部分信息
   
 ## session
 
-流程
+基于 cookie 和 sessionId
+
+1、用户第一次请求服务器的时候，服务器根据用户提交的相关信息，创建对应的 Session
+2、请求返回时将此 Session 的唯一标识信息 SessionID 返回给浏览器
+3、浏览器接收到服务器返回的 SessionID 信息后，会将此信息存入到 Cookie 中，同时 Cookie 记录此 SessionID 属于哪个域名
+4、当用户第二次访问服务器的时候，请求会自动判断此域名下是否存在 Cookie 信息，如果存在自动将 Cookie 信息也发送给服务端，服务端会从 Cookie 中获取 SessionID，再根据 SessionID 查找对应的 Session 信息，如果没有找到说明用户没有登录或者登录失效，如果找到 Session 证明用户已经登录可执行后面操作。
+
+## 总结
+
+Session 是一种认证机制
+Token、JWT是认证授权机制
+OAuth2 是授权框架
