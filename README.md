@@ -2,6 +2,7 @@
 
 ## 目录
 
+- [algorithm](./algorithm/README.md)
 - [html](./html/README.md)
 - [css](./css/README.md)
 - [js](./js/README.md)
