@@ -21,3 +21,6 @@
 17. [server](./server/README.md)
 
 ## 顺序
+
+1. HTML
+2. CSS
