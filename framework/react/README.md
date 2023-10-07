@@ -708,7 +708,9 @@ Hooks 让函数组件拥有了 state 和 life-cycles，可以处理状态逻辑�
 
 ### Hooks 实现原理
 
+Hooks 的实现就是基于 fiber 的，会在 fiber 节点上放一个链表，每个节点的 memorizedState 属性上存放了对应的数据，然后不同的 hooks api 使用对应的数据来完成不同的功能。
 
+查看源码，Hooks 数据在 fiber 节点对象的 memorizedState 属性里。它是一个 next 指向下一个 memorizedState 的链表。
 
 ### useEffect, useMemo, useCallback 差异
 
