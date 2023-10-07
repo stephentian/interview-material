@@ -27,3 +27,4 @@
 3. JS
 4. framework(vue, react)
 5. code
+6. questions
