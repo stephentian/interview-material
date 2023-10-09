@@ -30,6 +30,9 @@ class Scheduler {
     })
   }
 }
+
+// 用例
+
 const timeout = time =>
   new Promise(resolve => {
     setTimeout(resolve, time)
