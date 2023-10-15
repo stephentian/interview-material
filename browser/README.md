@@ -20,10 +20,11 @@
   - [CDN 缓存](#cdn-缓存)
 - [事件循环 Event Loop](#事件循环-event-loop)
   - [setTimeout](#settimeout)
+- [一帧发生的事情](#一帧发生的事情)
 - [requestAnimationFrame](#requestanimationframe)
   - [执行时机](#执行时机)
   - [setTimeout 和 requestAnimationFrame 区别](#settimeout-和-requestanimationframe-区别)
-  - [requestIdleCallback](#requestidlecallback)
+- [requestIdleCallback](#requestidlecallback)
 - [浏览器的多线程](#浏览器的多线程)
 - [Web Worker](#web-worker)
 - [WebSocket](#websocket)
@@ -287,7 +288,7 @@ CDN（Content delivery networks）缓存，也叫网关缓存、反向代理缓�
 
 ## 事件循环 Event Loop
 
-JavaScript 是单线程的, 浏览器为了防止用户交互, 脚本, UI 渲染和网络请求等行为, 防止主线程不阻塞，Event Loop 的方案应用而生
+JavaScript 是单线程的, 浏览器为了防止用户交互, 脚本, UI 渲染和网络请求等行为, 协调事件中的同步任务和异步任务，防止主线程不阻塞，Event Loop 的方案应用而生
 
 Event Loop 包含两类
 
@@ -296,8 +297,6 @@ Event Loop 包含两类
 
 任务队列 `task queue`
 
-为了协调事件循环中的同步任务和异步任务, 使用了任务队列机制
-
 - 一个事件循环有一个或多个任务队列
 - 任务队列是集合, 不是队列. 因为 Event Loop 第一步是选取队列中第一个可运行的任务, 而不是第一个任务
 - 微任务队列不是任务队列
@@ -305,12 +304,12 @@ Event Loop 包含两类
 Event loop 每一次循环操作叫 `tick`
 
 1. 执行最先进入队列的任务
-2. 检查是否存在 微任务 microtack, 存在则不停执行, 直至清空 宏任务 Mirotask queue
+2. 检查是否存在 微任务 microtask, 存在则不停执行, 直至清空 微任务 microtask queue
 3. render 渲染
-4. requestAnimationFrame
-5. intersectionObserver
-6. render 渲染
-7. requestIdeleCallback 取第一个, 执行
+   1. requestAnimationFrame
+   2. intersectionObserver
+4. 检查 宏任务队列，存在则执行
+5. requestIdleCallback 取第一个, 执行
 
 宏任务 task: script(整体代码), setTimeout, setInterval, setImmediate
 
@@ -345,6 +344,9 @@ setTimeout:
 - 经过 5 重嵌套定时器之后，时间间隔被强制设定为至少 4 毫秒。
 - 同步任务执行过久, 可能 setTimeout 时间不准
 
+## 一帧发生的事情
+
+
 ## requestAnimationFrame
 
 - 回调执行与 宏任务微任务无关, 与浏览器是否渲染有关, 它是在浏览器渲染之前, 微任务执行后执行。
@@ -356,16 +358,16 @@ setTimeout:
 
 stackoverflow 一些回答说 RAF 被归为宏任务，但它可能不一定按任务队列执行，会因为不同浏览器而执行结果不同。
 
-谷歌浏览器和火狐官方文档是实现了在 css渲染之前执行。
+谷歌浏览器和火狐官方文档是实现了在 css 渲染之前执行。
 
 ### setTimeout 和 requestAnimationFrame 区别
 
 - 执行时机: requestAnimation 由系统决定执行时间, setTimeout 的执行时间并不是确定的
 - 节能: 页面未激活(隐藏, 最小化), requestAnimationFrame 暂停执行, setTimeout 会继续执行
 - 函数节流: 防止刷新阶段, 防止函数执行多次
-- 引擎: setTimeout JS 引擎, 存在事件队列. requestAnimationFrame 属于 GUI 引擎, 发生在渲染之前
+- 引擎: setTimeout JS 引擎线程, 存在事件队列. requestAnimationFrame 属于 GUI 引擎线程, 发生在渲染之前
 
-### requestIdleCallback
+## requestIdleCallback
 
 `requestIdleCallback` 由 `React fiber` 引起关注. 用来判断浏览器渲染之后的空闲时间
 
