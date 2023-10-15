@@ -20,7 +20,9 @@
   - [CDN 缓存](#cdn-缓存)
 - [事件循环 Event Loop](#事件循环-event-loop)
   - [setTimeout](#settimeout)
-  - [requestAnimationFrame](#requestanimationframe)
+- [requestAnimationFrame](#requestanimationframe)
+  - [执行时机](#执行时机)
+  - [setTimeout 和 requestAnimationFrame 区别](#settimeout-和-requestanimationframe-区别)
   - [requestIdleCallback](#requestidlecallback)
 - [浏览器的多线程](#浏览器的多线程)
 - [Web Worker](#web-worker)
@@ -343,14 +345,20 @@ setTimeout:
 - 经过 5 重嵌套定时器之后，时间间隔被强制设定为至少 4 毫秒。
 - 同步任务执行过久, 可能 setTimeout 时间不准
 
-### requestAnimationFrame
+## requestAnimationFrame
 
 - 回调执行与 宏任务微任务无关, 与浏览器是否渲染有关, 它是在浏览器渲染之前, 微任务执行后执行。
 - 一般显示器屏幕为 60hz, 大约 16.7ms 执行一次
 
 [深入requestAnimationFrame 执行机制](https://blog.51cto.com/feng/5289890)
 
-setTimeout 和 requestAnimationFrame 区别
+### 执行时机
+
+stackoverflow 一些回答说 RAF 被归为宏任务，但它可能不一定按任务队列执行，会因为不同浏览器而执行结果不同。
+
+谷歌浏览器和火狐官方文档是实现了在 css渲染之前执行。
+
+### setTimeout 和 requestAnimationFrame 区别
 
 - 执行时机: requestAnimation 由系统决定执行时间, setTimeout 的执行时间并不是确定的
 - 节能: 页面未激活(隐藏, 最小化), requestAnimationFrame 暂停执行, setTimeout 会继续执行
