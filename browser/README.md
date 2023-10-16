@@ -19,8 +19,8 @@
   - [代理服务器缓存](#代理服务器缓存)
   - [CDN 缓存](#cdn-缓存)
 - [事件循环 Event Loop](#事件循环-event-loop)
-- [setTimeout](#settimeout)
 - [一帧发生的事情](#一帧发生的事情)
+- [setTimeout](#settimeout)
 - [requestAnimationFrame](#requestanimationframe)
   - [执行时机](#执行时机)
   - [setTimeout 和 requestAnimationFrame 区别](#settimeout-和-requestanimationframe-区别)
@@ -336,6 +336,17 @@ async function async1() {
 
 - chrome 70 版本以上, await 将直接使用 Promise.resolve() 相同语义
 
+## 一帧发生的事情
+
+[life of a frame](./img/life-of-a-frame.png)
+
+1. 处理输入事件
+2. js 解析
+3. 开始帧渲染，窗口，滚动
+4. rAF(requestAnimationFrame)
+5. 布局
+6. 绘制
+
 ## setTimeout
 
 setTimeout:
@@ -348,10 +359,6 @@ setTimeout 0ms 为什么浏览器不是 0ms 执行：
 
 1. 是不是 0ms 依赖于浏览器，不同浏览器的最低时延会不一致；浏览器还要有其他任务需要执行，所以不是 0ms。
 2. 如果浏览器允许 0ms，会导致 JavaScript 引擎过度循环，也就是说如果浏览器架构是单进程的，那么可能网站很容易无响应。因为浏览器本身也是建立在 event loop 之上的，如果速度很慢的 JavaScript engine 通过 0ms timer 不断安排唤醒系统，那么 event loop 就会被阻塞。
-
-## 一帧发生的事情
-
-TODO:
 
 ## requestAnimationFrame
 
@@ -379,7 +386,9 @@ stackoverflow 一些回答说 RAF 被归为宏任务，但它可能不一定按�
 
 `requestAnimationFrame` 每次渲染都执行
 
-`requestIdleCallback` 渲染完空闲时才执行
+`requestIdleCallback` 渲染完空闲时才执行，假如浏览器一直处于非常忙碌的状态，requestIdleCallback 注册的任务有可能永远不会执行。此时可通过设置 timeout 来保证执行。
+
+`requestIdleCallback(myNonEssentialWork, { timeout: 2000 });`
 
 ## 浏览器的多线程
 
