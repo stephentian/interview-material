@@ -35,7 +35,7 @@
 - [问题](#问题)
   - [为什么设计成单线程？](#为什么设计成单线程)
   - [defer 和 async](#defer-和-async)
-  - [考察 Event Loop 执行顺序](#考察-event-loop-执行顺序)
+  - [Event Loop 执行顺序](#event-loop-执行顺序)
 - [代码题](#代码题)
 
 ## JS 基础
@@ -654,7 +654,7 @@ defer 和 async 在网络读取（下载）这块儿是一样的，都是异步�
 - defer: 会在整个文档解析完成后, document 的 DOMContentLoaded 之前执行
 - async: js 在下载完后会立即执行
 
-### 考察 Event Loop 执行顺序
+### Event Loop 执行顺序
 
 ```js
 console.log(0)
@@ -686,7 +686,7 @@ async1()
 console.log(10)
 ```
 
-打印顺序: `0 3 4 7 9 10 5 8 2 6 1`
+打印顺序: `0 3 4 7 9 10 5 8 2 1 6`
 
 ## 代码题
 

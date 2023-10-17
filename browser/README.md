@@ -23,7 +23,7 @@
 - [setTimeout](#settimeout)
 - [requestAnimationFrame](#requestanimationframe)
   - [执行时机](#执行时机)
-  - [setTimeout 和 requestAnimationFrame 区别](#settimeout-和-requestanimationframe-区别)
+  - [setTimeout 和 rAF](#settimeout-和-raf)
 - [requestIdleCallback](#requestidlecallback)
 - [浏览器的多线程](#浏览器的多线程)
 - [Web Worker](#web-worker)
@@ -373,9 +373,10 @@ stackoverflow 一些回答说 RAF 被归为宏任务，但它可能不一定按�
 
 谷歌浏览器和火狐官方文档是实现了在 css 渲染之前执行。
 
-### setTimeout 和 requestAnimationFrame 区别
+### setTimeout 和 rAF
 
 - 执行时机: requestAnimation 由系统决定执行时间, setTimeout 的执行时间并不是确定的
+- requestAnimationFrame 受系统的绘制频率影响，即屏幕分辨率 和 屏幕尺寸，setTimeout 受任务队列和页面渲染有关
 - 节能: 页面未激活(隐藏, 最小化), requestAnimationFrame 暂停执行, setTimeout 会继续执行
 - 函数节流: 防止刷新阶段, 防止函数执行多次
 - 引擎: setTimeout JS 引擎线程, 存在事件队列. requestAnimationFrame 属于 GUI 引擎线程, 发生在渲染之前
@@ -386,9 +387,7 @@ stackoverflow 一些回答说 RAF 被归为宏任务，但它可能不一定按�
 
 `requestAnimationFrame` 每次渲染都执行
 
-`requestIdleCallback` 渲染完空闲时才执行，假如浏览器一直处于非常忙碌的状态，requestIdleCallback 注册的任务有可能永远不会执行。此时可通过设置 timeout 来保证执行。
-
-`requestIdleCallback(myNonEssentialWork, { timeout: 2000 });`
+`requestIdleCallback` 渲染完空闲时才执行，假如浏览器一直处于非常忙碌的状态，requestIdleCallback 注册的任务有可能永远不会执行。此时可通过设置 timeout 来保证执行。`requestIdleCallback(myNonEssentialWork, { timeout: 2000 });`
 
 ## 浏览器的多线程
 
