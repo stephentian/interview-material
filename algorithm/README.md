@@ -9,7 +9,9 @@
 - [双指针](#双指针)
   - [415.字符串相加](#415字符串相加)
 - [滑动窗口](#滑动窗口)
+  - [3.无重复字符的最长子串](#3无重复字符的最长子串)
 - [栈](#栈)
+  - [20.有效的括](#20有效的括)
 - [树](#树)
   - [DFS 深度优先遍历](#dfs-深度优先遍历)
     - [200.岛屿数量](#200岛屿数量)
@@ -264,9 +266,9 @@ var addStrings = function(num1, num2) {
 
 其实也是 双指针，left 和 right， 形成一个窗口
 
-例题：
+### 3.无重复字符的最长子串
 
-一、[3. 无重复字符的最长子串](https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/)
+[无重复字符的最长子串](https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/)
 
 ```js
 var lengthOfLongestSubstring = function (s) {
@@ -287,9 +289,9 @@ var lengthOfLongestSubstring = function (s) {
 
 ## 栈
 
-例题：
+### 20.有效的括
 
-一、[20. 有效的括号](https://leetcode-cn.com/problems/valid-parentheses/)
+[20. 有效的括号](https://leetcode-cn.com/problems/valid-parentheses/)
 
 ```js
 // shift unshift
