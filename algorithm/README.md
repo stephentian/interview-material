@@ -6,6 +6,8 @@
   - [35.搜索插入位置](#35搜索插入位置)
 - [动态规划](#动态规划)
 - [排列组合](#排列组合)
+  - [77.组合](#77组合)
+  - [SKU 对象排列组合](#sku-对象排列组合)
 - [双指针](#双指针)
   - [415.字符串相加](#415字符串相加)
 - [滑动窗口](#滑动窗口)
@@ -31,7 +33,6 @@
   - [121.买卖股票的最佳时机](#121买卖股票的最佳时机)
   - [455.分发饼干](#455分发饼干)
 - [回溯](#回溯)
-  - [51. N 皇后](#51-n-皇后)
 - [洗牌算法](#洗牌算法)
 - [LRU](#lru)
 - [技巧](#技巧)
@@ -44,7 +45,7 @@
   - [N 数之和](#n-数之和)
     - [15.三数之和](#15三数之和)
   - [394.字符串解码](#394字符串解码)
-  - [51.N皇后](#51n皇后)
+  - [51.N 皇后](#51n-皇后)
   - [165.比较版本号](#165比较版本号)
   - [403.青蛙过河](#403青蛙过河)
   - [剑指 Offer 22.链表中倒数第k个节点](#剑指-offer-22链表中倒数第k个节点)
@@ -161,31 +162,37 @@ var searchInsert = function(nums, target) {
 
 排列组合例题，递归回溯法
 
-例题：
+### 77.组合
 
-一、组合-77
+[77. 组合](https://leetcode.cn/problems/combinations/)
 
 给定两个整数 n 和 k，返回 1 ... n 中所有可能的 k 个数的组合。
 
+思想：
+
+1. 直接方法是 for 循环，k 层循环。
+2. 第二个方法是 回溯
+   1. 将问题抽象为 树形结构（N叉树）
+   2. n 为树的宽度，k 为树的深度
+   3. 把到达 子叶点的结果收集起来，求得 组合集合
+
 ```js
+
 const combine = function(n, k) {
   let res = []
 
-  function helper(start, pre) {
-    let len = pre.length
-    if (len == k) {
-      res.push(pre)
+  function helper(start, path) { // start是枚举选择的起点 path是当前构建的路径（组合）
+    if (path.length === k) {
+      res.push(path.slice()) // 拷贝一份path，推入res
       return
     }
 
     // 还有 rest 个位置待填补
-    let rest = k - prev.length
-    for (let i = start; i < n; i++) {
-
-      if (n - i + 1 < rest) {
-        continue
-      }
-      helper(i+1, pre.concat(i))
+    // let rest = k - path.length
+    for (let i = start; i <= n; i++) {
+      path.push(i)
+      helper(i + 1, path)
+      path.pop()
     }
   }
 
@@ -194,7 +201,32 @@ const combine = function(n, k) {
 }
 ```
 
-二、对象排列组合
+方法二
+
+```js
+var combine = function(n, k) {
+  let result = []
+  let path = []
+
+  const combineHelper  = (n, k, startIndex) => {
+    if (path.length === k) {
+      result.push([...path])
+      return
+    }
+
+    for (let i = startIndex; i<= n - (k-path.length) + 1; i++) {
+      path.push(i)
+      combineHelper(n, k, i+1)
+      path.pop()
+    }
+  }
+
+  combineHelper(n, k, 1)
+  return result
+}
+```
+
+### SKU 对象排列组合
 
 ```js
 let names = ["iPhone X", "iPhone XS"]
@@ -268,7 +300,7 @@ var addStrings = function(num1, num2) {
 
 ### 3.无重复字符的最长子串
 
-[无重复字符的最长子串](https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/)
+地址：[3. 无重复字符的最长子串](https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/)
 
 ```js
 var lengthOfLongestSubstring = function (s) {
@@ -291,7 +323,7 @@ var lengthOfLongestSubstring = function (s) {
 
 ### 20.有效的括
 
-[20. 有效的括号](https://leetcode-cn.com/problems/valid-parentheses/)
+地址：[20. 有效的括号](https://leetcode-cn.com/problems/valid-parentheses/)
 
 ```js
 // shift unshift
@@ -1025,15 +1057,17 @@ var findContentChildren = function(g, s) {
 
 ## 回溯
 
-- 遍历枚举出所有可能的选择。
-- 依次尝试这些选择：作出一种选择，并往下递归。
+如果解决一个问题有多个步骤，每一个步骤有多种方法，题目又要我们找出所有的方法，可以使用回溯算法；回溯是在一颗树上 深度优先遍历（要找出所有的解）；
+
+- 遍历枚举出所有可能的选择。（根据起点，画出二叉树）
+- 依次尝试这些选择：作出一种选择，并往下递归。（剪枝）
 - 如果这个选择产生不出正确的解，要撤销这个选择，回到之前的状态，并作出下一个可用的选择。
 
 例题：
 
-### 51. N 皇后
+一、51. N 皇后
 
-一、[51. N 皇后](https://leetcode.cn/problems/n-queens/)
+见下面: [51.N 皇后](#51n-皇后)
 
 ## 洗牌算法
 
@@ -1408,7 +1442,7 @@ var decodeString = function(s) {
 };
 ```
 
-### 51.N皇后
+### 51.N 皇后
 
 链接: [51. N 皇后](https://leetcode-cn.com/problems/n-queens/)
 
