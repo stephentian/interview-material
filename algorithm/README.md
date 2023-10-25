@@ -177,22 +177,19 @@ var searchInsert = function(nums, target) {
    3. 把到达 子叶点的结果收集起来，求得 组合集合
 
 ```js
-
 const combine = function(n, k) {
   let res = []
 
   function helper(start, path) { // start是枚举选择的起点 path是当前构建的路径（组合）
     if (path.length === k) {
-      res.push(path.slice()) // 拷贝一份path，推入res
+      res.push(path.slice()) // 拷贝一份 path，推入 res
       return
     }
 
-    // 还有 rest 个位置待填补
-    // let rest = k - path.length
     for (let i = start; i <= n; i++) {
       path.push(i)
       helper(i + 1, path)
-      path.pop()
+      path.pop() // 撤销选择
     }
   }
 
