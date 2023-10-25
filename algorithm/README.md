@@ -4,6 +4,7 @@
 - [排序](#排序)
 - [二分查找](#二分查找)
   - [35.搜索插入位置](#35搜索插入位置)
+  - [69.x 的平方根](#69x-的平方根)
 - [动态规划](#动态规划)
 - [排列组合](#排列组合)
   - [77.组合](#77组合)
@@ -151,6 +152,32 @@ var searchInsert = function(nums, target) {
         }
     }
     return ans
+};
+```
+
+### 69.x 的平方根
+
+[69. x 的平方根](https://leetcode.cn/problems/sqrtx/description/)
+
+```js
+var mySqrt = function(x) {
+  if (x < 2) return x
+  let left = 1, right = x
+
+  while(left <= right) {
+    let mid = Math.floor(left + (right + left) / 2)
+
+    if (mid <= x/mid) {
+      
+      if (mid + 1 > x/(mid+1)) return mid
+
+      left = mid + 1
+    } else {
+      right = mid - 1
+    }
+  }
+
+  return 0
 };
 ```
 
