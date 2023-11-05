@@ -1136,7 +1136,7 @@ class LRUCache {
     if(this.map.has(key)) this.map.delete(key)
 
     if(this.data.size >= this.size) {
-      // 删除最不常用数据
+      // 删除最久没有用到的数据
       const firstKey= [...this.data.keys()][0]
       this.data.delete(firstKey)
     }
