@@ -444,6 +444,62 @@ var isValid = function(s) {
 
 ## 树
 
+二叉树，非线性数据结构；根节点，表示最顶层节点；叶节点，表示没有子节点的节点；
+
+深度：从根节点开始，沿着树的路径，逐层向下递增，直到到达叶节点；
+
+```js
+class TreeNode {
+  constructor(val) {
+    this.val = val || 0
+    this.left = null
+    this.right = null
+  }
+}
+
+// 插入和删除节点
+let node = new TreeNode(1)
+let n1 = new TreeNode(2)
+let n2 = new TreeNode(3)
+// n1 和 n2 中间插入 node
+n1.left = node
+node.left = n2;
+n1.left = n2;
+
+class BinarySearchTree {
+  constructor() {
+    this.root = null
+  }
+
+  insert(val) {
+    let node = new TreeNode(val)
+
+    if (!this.root) {
+      this.root = node
+      return
+    }
+
+    let cur = this.root
+    while (cur) {
+      if (val < cur.val) {
+        if (!cur.left) {  
+          cur.left = node
+          return
+        }
+        cur = cur.left
+      } else {
+        if (!cur.right) {
+          cur.right = node
+          return
+        }
+        cur = cur.right
+      }
+    }
+  }
+}
+
+```
+
 ### DFS 深度优先遍历
 
 DFS Depth-First Search
@@ -462,7 +518,7 @@ DFS Depth-First Search
 | a       |
 
 ```js
-// zhushi
+// DOM 树
 let tree =  {
   id: '1',
   title: 'div',
