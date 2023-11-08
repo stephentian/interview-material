@@ -665,6 +665,8 @@ var binaryTreePaths = function(root) {
 
 ### BFS 广度优先搜索
 
+广度优先遍历 breadth-first traversal，一行一行遍历，借助 “队列”实现，队列 “先进先出”，遍历则 “逐层推进”
+
 BFS Breath-First Search
 
 - 维护一个 queue 队列, 先进先出 push, shift
