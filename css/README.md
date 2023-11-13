@@ -330,10 +330,10 @@ content, padding, border, margin
 
 ### 两种模型及区别
 
-标准模型
+默认值，标准盒子模型
 width = content
 
-怪异(IE)模型
+怪异模型，IE 盒模型
 width = content + padding + border
 
 ### CSS 如何设置这两种模型
