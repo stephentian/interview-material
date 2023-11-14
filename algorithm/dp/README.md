@@ -8,7 +8,7 @@ DP（dynamic program）
 
 - [剑指 Offer 10- I. 斐波那契数列](#剑指-offer-10--i-斐波那契数列)
 - [70.爬楼梯](#70爬楼梯)
-- [打家劫舍](#打家劫舍)
+- [198.打家劫舍](#198打家劫舍)
 
 ## 剑指 Offer 10- I. 斐波那契数列
 
@@ -94,7 +94,7 @@ var climbStairs = function(n) {
 };
 ```
 
-## 打家劫舍
+## 198.打家劫舍
 
 [198. 打家劫舍](https://leetcode.cn/problems/house-robber/)
 
