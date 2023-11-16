@@ -247,7 +247,7 @@ eventBus
 
 provide/inject
 
-vue 新增 api， 父组件中通过 provide 来提供变量, 然后再子组件中通过 inject 来注入变量。
+vue 新增 api， 父组件中通过 `provide` 来提供变量, 然后再子组件中通过 `inject` 来注入变量。
 
 ```js
 // 父组件
