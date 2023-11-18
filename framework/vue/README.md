@@ -61,11 +61,11 @@
 1. Vue 构造函数执行，全局数据和根组件属性合并
 2. 初始化生命周期
 3. 初始化自定义事件
-4. 执行 beforeCreate
-5. 初始化模板，解析 插槽，render(h) 方法
+4. 执行 `beforeCreate`
+5. 初始化模板，解析 插槽，`render(h)` 方法
 6. 初始化响应式数据
-7. 执行 created
-8. 执行 mount 挂载 el dom元素
+7. 执行 `created`
+8. 执行 `mount` 挂载 `el dom` 元素
 
 ### 数据响应式原理
 
