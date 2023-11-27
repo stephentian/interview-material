@@ -2,6 +2,11 @@
 
 > 身份验证
 
+- [OAUTH](#oauth)
+- [JWT](#jwt)
+- [session](#session)
+- [总结](#总结)
+
 ## OAUTH
 
 第三方登录鉴权方式，需要先去 开放平台注册应用获取 应用 ID 和 APP Secret 密钥。
