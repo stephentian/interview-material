@@ -88,7 +88,7 @@
 
 ### eval
 
-eval() 函数可以将一个字符串作为 JavaScript 代码来执行。
+`eval` 函数可以将一个字符串作为 `JavaScript` 代码来执行。
 
 用法：
 
