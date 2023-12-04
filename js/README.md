@@ -137,10 +137,10 @@ js 执行过程分为两个阶段：
 
 编译阶段（序列化-->抽象语法树-->可执行代码）， js 引擎做 3 件事
 
-- 词法分析 Lexical analyzer (Scanner)
+- 词法分析 Lexical analyzer (`Scanner`)
   - 预编译(变量提升，函数提升)
   - 将代码分解成各个模块， tokens
-- 语法分析 Syntax analyzer (Parser)
+- 语法分析 Syntax analyzer (`Parser`)
   - 生成 AST，检查语法
 - 字节码生成
 
