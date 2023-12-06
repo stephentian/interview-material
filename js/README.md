@@ -53,10 +53,10 @@
 ### 设计缺陷
 
 1. this 的设计
-2. type null  = object
-3. instanceof 只检查原型，只适用于对象。"a" instanceof String === false, "a" 不是字符串？
-4. 隐式转换 [] + {} 返回 "[object Object]"
-5. == 类型转换规则极复杂
+2. `type null  = object`
+3. `instanceof` 只检查原型，只适用于对象，不适用基础类型。"a" instanceof String === false, "a" 不是字符串？
+4. 隐式转换 `[] + {}` 返回 `"[object Object]"`
+5. `==` 类型转换规则极复杂
 6. `new Date().getYear()` 返回是 1900 开始计算, 要用 `getFullYear`, `getMonth()` 确实获取月份减一
 7. `toFixed` 精度问题(`1.335.toFixed(2)`)
 
