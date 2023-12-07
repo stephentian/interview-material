@@ -17,7 +17,7 @@
   - [HTTP 消息](#http-消息)
   - [HTTP 状态码](#http-状态码)
   - [HTTP 优化](#http-优化)
-  - [HTTP1.1 区别](#http11-区别)
+  - [HTTP1.0 与 HTTP1.1](#http10-与-http11)
   - [HTTP2](#http2)
   - [HTTP3.0](#http30)
 - [SSL/TLS/HTTPS](#ssltlshttps)
@@ -375,7 +375,7 @@ e.g.
 - 拼接 js, 把多个js 合并为一个大文件
 - 分片，（把 资源分散到多个服务器上，走不同的域名）
 
-### HTTP1.1 区别
+### HTTP1.0 与 HTTP1.1
 
 1. **缓存处理**
    - HTTP1.0 为 If-Modified-Since,Expires
@@ -387,7 +387,7 @@ e.g.
 
 3. Host 头处理
 4. 长连接
-   - HTTP1.1 支持长连接，默认开启 Connection： keep-alive，一个 TCP 连接上可以传送多个 HTTP 请求和响应
+   - HTTP1.1 支持长连接，默认开启 `Connection: keep-alive`，一个 TCP 连接上可以传送多个 HTTP 请求和响应
 
 ### HTTP2
 
