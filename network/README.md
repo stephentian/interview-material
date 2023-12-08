@@ -190,7 +190,7 @@ ws.onclose = function (evt) {
 
 五、CORS
 
-全称是"跨域资源共享"(Cross-origin resource sharing)
+全称是"跨域资源共享"(Cross Origin Resource Sharing)
 可以理解为支持 跨域 的 ajax
 
 ```js
