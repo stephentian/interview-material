@@ -28,5 +28,17 @@ uniapp 项目模板
 │   └── styles
 │       ├──...
 ├── utils
-│   ├──...
+│   ├── util.js
+│   └── util.test.js
+├── views
+│   ├── common
+│   │   ├──...
+│   ├── pages
+│   │   ├──...
+│   └── utils
+│       ├──...
+├── package.json
+├── package-lock.json
+└── uni.scss
+
 ```
