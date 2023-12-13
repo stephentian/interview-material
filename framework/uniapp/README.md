@@ -4,7 +4,7 @@ uniapp 项目模板
 
 ## 项目结构
 
-```
+```json
 ├── README.md
 ├── app.json
 ├── app.js
@@ -39,6 +39,5 @@ uniapp 项目模板
 │       ├──...
 ├── package.json
 ├── package-lock.json
-└── uni.scss
 
 ```
