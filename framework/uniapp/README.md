@@ -29,7 +29,6 @@ uniapp 项目模板
 │       ├──...
 ├── utils
 │   ├── util.js
-│   └── util.test.js
 ├── views
 │   ├── common
 │   │   ├──...
