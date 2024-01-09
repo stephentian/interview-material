@@ -25,7 +25,7 @@
   - [清除浮动](#清除浮动)
 - [IFC](#ifc)
 - [Flex](#flex)
-  - [Flex 属性](#flex-属性)
+  - [Flex 布局属性](#flex-布局属性)
 - [媒体查询](#媒体查询)
 - [例题](#例题)
   - [1.实现一个三角形（或扇形）](#1实现一个三角形或扇形)
@@ -485,24 +485,37 @@ Inline Formatting Context，行内格式化上下文。
 
 通常称为 flexbox 或 flex，也称为弹性盒子或弹性布局
 
-flex 有两根轴线，分别是主轴(main axis：项目排列布局的方向，默认是水平方向 `row`)和交叉轴，主轴的方向由 `flex-diretion` 属性控制，交叉轴始终垂直于主轴
+flex 有两根轴线，分别是主轴(`main axis`：项目排列布局的方向，默认是水平方向 `row`)和交叉轴，主轴的方向由 `flex-direction` 属性控制，交叉轴始终垂直于主轴
 
-### Flex 属性
+### Flex 布局属性
 
 1. `flex-wrap: nowrap | wrap | wrap-reverse;`  
   用于指定项目太多超过一行的时候是否换行，默认 `nowrap` 不换行
-2. `flex-flow`  
+2. `flex-direction`: row | row-reverse | column | column-reverse;  
+3. `flex-flow`  
   是 flex-direction 和 flex-wrap 的合并简写
-3. `flew-grow`  
+4. `flew-grow`  
   让项目放大。默认 0 不放大
-4. `flex-shrink`
+5. `flex-shrink`
   缩小程度。但不是按比例缩小。默认1，同比例收缩
-5. `flex-basis`  
+6. `flex-basis`  
   项目占据尺寸。默认 auto，自动计算
-6. `flex`  
-  是 flex-grow flex-shrink flex-basis 合并简写。默认值：`flex: 0 1 auto`
+7. `flex`  
+  是 flex-grow flex-shrink flex-basis 合并简写。默认值：`flex: 0 1 auto`  
 
-7. `align-item` 和 `align-content` 区别
+布局属性
+
+1. `justify-content`
+
+    ```css
+    justify-content: center; /* 居中排列 */
+    justify-content: space-between; /* 均匀排列每个元素
+                                   首个元素放置于起点，末尾元素放置于终点 */
+    justify-content: space-around; /* 均匀排列每个元素
+                                      每个元素周围分配相同的空间 */
+    ```
+
+2. `align-item` 和 `align-content` 区别
    align-items 是针对每一个子项起作用居中，`align-content` 用于多行。
 
 ## 媒体查询
