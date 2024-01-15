@@ -468,9 +468,9 @@ MDN: 是块盒子的布局过程发生的区域, 也是浮动元素与其他元�
 
 ## IFC
 
-Inline Formatting Context，行内格式化上下文。
+`Inline Formatting Context`，行内格式化上下文。
 
-创建一个 IFC: 块级元素中仅包含内联级别元素；设置其为 inline-block 则会在外层产生 IFC
+创建一个 IFC: 块级元素中仅包含内联级别元素；设置其为 `inline-block` 则会在外层产生 IFC
 
 作用: 解决元素垂直居中
 
