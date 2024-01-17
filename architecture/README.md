@@ -37,6 +37,13 @@ qiankun 封装了一个 `import-html-entry` 插件，实现了像 `iframe` 一�
 
 iframe 是最早的微前端技术，通过 iframe 加载子应用（页面）， 通过 `postMessage` 进行通信。
 
+优点：
+
+1. 简单
+2. 安全
+3. 隔离
+4. 独立部署
+
 ## 渲染方式
 
 ### SSR
