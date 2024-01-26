@@ -36,7 +36,7 @@ qiankun 封装了一个 `import-html-entry` 插件，实现了像 `iframe` 一�
 
 ### iframe
 
-iframe 是最早的微前端技术，通过 iframe 加载子应用（页面）， 通过 `postMessage` 进行通信。
+`iframe` 是最早的微前端技术，通过 iframe 加载子应用（页面）， 通过 `postMessage` 进行通信。
 
 优点：
 
@@ -53,8 +53,8 @@ iframe 是最早的微前端技术，通过 iframe 加载子应用（页面）�
 
 模块联邦是一种去中心化的思想，可以用来做组件的拆分及复用。
 
-- webpack: module federation
-- vite: vite-plugin-federation
+- webpack: `module federation`
+- vite: `vite-plugin-federation`
 
 ## 渲染方式
 
