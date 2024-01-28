@@ -48,6 +48,7 @@ qiankun 封装了一个 `import-html-entry` 插件，实现了像 `iframe` 一�
 缺点：
 
 1. url，浏览器刷新，iframe url 丢失；
+2. UI 样式不同步，iframe 中弹窗不好处理；
 
 ### 模块联邦
 
