@@ -5,6 +5,7 @@
   - [qiankun](#qiankun)
   - [iframe](#iframe)
   - [模块联邦](#模块联邦)
+  - [web component](#web-component)
 - [渲染方式](#渲染方式)
   - [SSR](#ssr)
   - [CSR](#csr)
@@ -59,6 +60,10 @@ qiankun 封装了一个 `import-html-entry` 插件，实现了像 `iframe` 一�
 
 - webpack: `module federation`
 - vite: `vite-plugin-federation`
+
+### web component
+
+重写前端应用，将前端应用转换为 web component，基于 CustomEvent 通信。
 
 ## 渲染方式
 
