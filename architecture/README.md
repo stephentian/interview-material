@@ -64,7 +64,7 @@ qiankun 封装了一个 `import-html-entry` 插件，实现了像 `iframe` 一�
 
 ### web component
 
-重写前端应用，将前端应用转换为 web component，基于 CustomEvent 通信。
+重写前端应用，将前端应用转换为 web component，基于 CustomEvent 通信
 
 - [Web Components](https://developer.mozilla.org/zh-CN/docs/Web/Web_Components)
 
