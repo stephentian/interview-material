@@ -58,7 +58,6 @@ qiankun 封装了一个 `import-html-entry` 插件，实现了像 `iframe` 一�
 
 模块联邦是一种去中心化的思想，可以用来做组件的拆分及复用。
 
-
 - webpack: `module federation`
 - vite: `vite-plugin-federation`
 
@@ -66,13 +65,24 @@ qiankun 封装了一个 `import-html-entry` 插件，实现了像 `iframe` 一�
 
 重写前端应用，将前端应用转换为 web component，基于 CustomEvent 通信
 
-- [Web Components](https://developer.mozilla.org/zh-CN/docs/Web/Web_Components)
+web components 由 3 个部分组成：
+
+- Custom Element（自定义元素）
+  - 一组 JS API，定义自定义元素及行为；
+- Shadow DOM（影子DOM）
+  - 一组 JS API，封装影子DOM 树到元素上，与主文档DOM 分开呈现；
+- HTML Template（HTML 模版）
+  - `<template>` 和 `<slot>` 用于定义元素的结构和样式；
+
+资料：
+
+- [MDN - Web Component](https://developer.mozilla.org/zh-CN/docs/Web/Web_Components)
 
 ## 渲染方式
 
 ### SSR
 
-Server Side Rendering，服务器端渲染
+Server Side Rendering，服务器端渲染s
 
 ### CSR
 
