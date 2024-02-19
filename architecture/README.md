@@ -74,6 +74,28 @@ web components 由 3 个部分组成：
 - HTML Template（HTML 模版）
   - `<template>` 和 `<slot>` 用于定义元素的结构和样式；
 
+实现方式：
+
+- `customElements.define()` 定义自定义元素；
+- `<slot>` 定义元素的结构和样式；
+- `<template>` 定义元素的结构和样式；
+- `Shadow DOM` 定义元素的结构和样式；
+- `CustomEvent` 定义元素的结构和样式；
+
+```html
+<element-details>
+  <span slot="element-name">slot</span>
+  <span slot="description">A placeholder inside a web
+    component that users can fill with their own markup,
+    with the effect of composing different DOM trees
+    together.</span>
+  <dl slot="attributes">
+    <dt>name</dt>
+    <dd>The name of the slot.</dd>
+  </dl>
+</element-details>
+```
+
 资料：
 
 - [MDN - Web Component](https://developer.mozilla.org/zh-CN/docs/Web/Web_Components)
