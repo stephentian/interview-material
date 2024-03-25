@@ -86,9 +86,7 @@ web components 由 3 个部分组成：
 <element-details>
   <span slot="element-name">slot</span>
   <span slot="description">A placeholder inside a web
-    component that users can fill with their own markup,
-    with the effect of composing different DOM trees
-    together.</span>
+    component.</span>
   <dl slot="attributes">
     <dt>name</dt>
     <dd>The name of the slot.</dd>
