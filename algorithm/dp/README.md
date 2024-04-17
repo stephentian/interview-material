@@ -8,13 +8,13 @@ DP（dynamic program）
 
 常见题目: 爬楼梯, 斐波那契数列 等
 
-- [剑指 Offer 10- I. 斐波那契数列](#剑指-offer-10--i-斐波那契数列)
+- [斐波那契数列](#斐波那契数列)
 - [70.爬楼梯](#70爬楼梯)
 - [198.打家劫舍](#198打家劫舍)
 
-## 剑指 Offer 10- I. 斐波那契数列
+## 斐波那契数列
 
-[剑指 Offer 10- I. 斐波那契数列](https://leetcode.cn/problems/fei-bo-na-qi-shu-lie-lcof/)
+[斐波那契数列](https://leetcode.cn/problems/fei-bo-na-qi-shu-lie-lcof/)
 
 写一个函数，输入 n ，求斐波那契（Fibonacci）数列的第 n 项（即 F(N)）。斐波那契数列的定义如下：
 
