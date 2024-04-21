@@ -1,3 +1,15 @@
+/**
+ * author: stephentian
+ * email: tianre96@gmail.com
+ * day: 2024-04-21
+ **/
+
+/**
+ * 该函数用于将两个二进制字符串相加。
+ * @param {string} a - 第一个二进制字符串。
+ * @param {string} b - 第二个二进制字符串。
+ * @returns {string} - 两个二进制字符串相加后的结果。
+ */
 var addBinary = function (a, b) {
   let ans = ''
   let num = 0 // 进位
