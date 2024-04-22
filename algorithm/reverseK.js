@@ -50,7 +50,7 @@ function reverseK2(arr, k) {
 
     const step = Math.abs(k % len)
     for(let i = 0; i < step; i++) {
-        const temp = arr.[i]
+        const temp = arr[i]
         arr[i] = arr[len - step]
         arr[len - step] = temp
     }
