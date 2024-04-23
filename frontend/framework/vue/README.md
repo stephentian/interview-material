@@ -17,6 +17,7 @@
   - [Vue3 组件通信](#vue3-组件通信)
   - [为什么 Vue3 不使用 defineProperty](#为什么-vue3-不使用-defineproperty)
   - [Vue3.0 性能提升主要是通过哪几方面体现的？](#vue30-性能提升主要是通过哪几方面体现的)
+  - [watch 和 watchEffect](#watch-和-watcheffect)
 - [Vue-Router](#vue-router)
 - [问题](#问题)
   - [为什么不推荐 v-if 和 v-for 一起用](#为什么不推荐-v-if-和-v-for-一起用)
@@ -329,6 +330,60 @@ LRU：[LRU.js](../../algorithm/LRU.js)
 - 初始渲染速度方面（快了 55%）
 - 更新速度方面（快了 133%）
 - 内存占用方面（减少了 54%）
+
+### watch 和 watchEffect
+
+watch 和 watchEffect 都用于监听数据然后响应变化。
+
+watch
+
+- 可以访问变化前后的数据
+- 需要手动指定监听的数据
+- 使用场景：1. 观察特定的数据变化，并执行相应的逻辑时。2. 需要访问变化前后的数据时。
+
+```js
+import { ref, watch } from 'vue';  
+  
+export default {  
+  setup() {  
+    const count = ref(0);  
+  
+    watch(count, (newVal, oldVal) => {  
+      console.log(`Count changed from ${oldVal} to ${newVal}`);  
+    });  
+  
+    return {  
+      count,  
+    };  
+  },  
+};
+```
+
+watchEffect
+
+- 自动收集依赖，不需要手动指定监听的数据
+- 无法访问变化前后的数据
+- 使用场景：1. 当不确定需要观察哪些数据时。2. 需要自动收集依赖时。
+
+```js
+import { ref, watchEffect } from 'vue';  
+  
+export default {  
+  setup() {  
+    const count = ref(0);  
+    const doubleCount = computed(() => count.value * 2);  
+  
+    watchEffect(() => {  
+      console.log(`Double count is ${doubleCount.value}`);  
+    });  
+  
+    return {  
+      count,  
+      doubleCount,  
+    };  
+  },  
+};
+```
 
 ## Vue-Router
 
