@@ -42,9 +42,29 @@ program
     if (!template) {
       // 如果没有指定模板，启动交互式提问
       inquirer.prompt([
-        // 提问选项
+        {
+          type: 'input',
+          name: 'projectName',
+          message: '请输入项目名称:',
+          validate: (input) => {
+            if (/^([A-Za-z\-\\_\d])+$/.test(input)) return true;
+            return '项目名称只能包含字母、数字、下划线和破折号';
+          },
+        },
+        {
+          type: 'confirm',
+          name: 'useTs',
+          message: '是否需要添加 TypeScript？',
+          default: false,
+        },
+        {
+          type: 'confirm',
+          name: 'useSass',
+          message: '是否使用 Sass？',
+          default: false,
+        },
       ]).then(answers => {
-        generateProject(answers.template);
+        generateProject(template, answers);
       });
     } else {
       generateProject(template);
@@ -65,6 +85,9 @@ program.parse(process.argv);
 使用inquirer库编写交互式提问逻辑，让用户选择要生成的项目模板。
 
 ```javascript
+const fs = require('fs-extra');
+const path = require('path');
+
 // 示例提问配置
 const questions = [
   {
@@ -76,10 +99,51 @@ const questions = [
 ];
 
 // 根据用户选择生成项目
-function generateProject(template) {
-  console.log(`Generating project from template: ${template}...`);
-  // 实际逻辑应包含根据模板下载或复制相应文件结构到新目录
+async function generateProject(template, options = {}) {
+  const projectName = options.projectName;
+  const projectPath = path.join(process.cwd(), projectName);
+
+  // 检查项目目录是否存在
+  if (fs.existsSync(projectPath)) {
+    console.error('项目已存在，请选择其他名称。');
+    return;
+  }
+
+  // 基础Vue模板克隆地址
+  let templateUrl = 'https://github.com/vuejs/vue-cli-template-simple.git'; // 示例地址，实际应替换为合适的Vue模板仓库
+
+  // 根据选项调整模板URL或后续处理逻辑
+  if (options.useTs) templateUrl += '-ts'; // 假设存在一个支持TS的分支或标签
+  if (options.useSass) {
+    // 在项目生成后手动添加Sass配置，或寻找支持Sass的模板
+    console.log('项目创建后，将手动添加Sass配置。');
+  }
+
+  try {
+    // 克隆模板到指定目录
+    await execAsync(`git clone ${templateUrl} ${projectName}`);
+
+    // 进入项目目录，安装依赖
+    process.chdir(projectName);
+    await execAsync('npm install');
+
+    console.log(`项目 "${projectName}" 初始化完成。`);
+  } catch (error) {
+    console.error('项目初始化失败:', error.message);
+  }
 }
 
 // 在没有指定模板时调用此提问逻辑
 ```
+
+## handlebars
+
+使用handlebars库生成模板文件，包括package.json、.gitignore、README.md等。
+
+- 简单实现：可以预先准备各模板的基本文件结构在本地或远程仓库，然后根据用户选择复制或下载这些文件。
+- 高级实现：利用Git克隆模板仓库，或直接从GitHub等托管服务下载zip包并解压。
+
+## 测试和发布
+
+本地测试：通过node index.js运行脚手架，在命令行中尝试各种命令确保一切正常。
+打包发布：使用npm pack将项目打包成.tgz文件，然后发布到npm仓库，或直接在项目根目录下运行npm publish。
