@@ -3,7 +3,7 @@
 
 > scaffold 脚手架 `fe-cli`
 
-## start
+## 新建项目
 
 初始化Node.js项目： 使用npm init或yarn init创建一个新的Node.js项目，填写必要的信息。
 
@@ -21,7 +21,7 @@ npm init -y
 npm install commander inquirer handlebars --save
 ```
 
-## commander
+## 命令设计
 
 使用commander库定义命令结构，包括init, help, 和-v或--version。
 
@@ -80,7 +80,7 @@ program.on('--help', () => {
 program.parse(process.argv);
 ```
 
-## inquirer
+## 提问交互
 
 使用inquirer库编写交互式提问逻辑，让用户选择要生成的项目模板。
 
@@ -136,7 +136,7 @@ async function generateProject(template, options = {}) {
 // 在没有指定模板时调用此提问逻辑
 ```
 
-## handlebars
+## 项目模版
 
 使用handlebars库生成模板文件，包括package.json、.gitignore、README.md等。
 
