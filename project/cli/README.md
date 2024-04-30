@@ -138,12 +138,32 @@ async function generateProject(template, options = {}) {
 
 ## 项目模版
 
-使用handlebars库生成模板文件，包括package.json、.gitignore、README.md等。
+使用`handlebars`库生成模板文件，包括 package.json、.gitignore、README.md 等。
 
 - 简单实现：可以预先准备各模板的基本文件结构在本地或远程仓库，然后根据用户选择复制或下载这些文件。
-- 高级实现：利用Git克隆模板仓库，或直接从GitHub等托管服务下载zip包并解压。
+- 高级实现：利用 Git 克隆模板仓库，或直接从 GitHub 等托管服务下载 zip 包并解压。
+
+## 修改 package.json
+
+```json
+{  
+  "name": "fe-cli",  
+  "version": "1.0.0",  
+  "description": "前端脚手架工具",  
+  "bin": {  
+    "fe-cli": "./bin/fe-cli"  
+  },  
+  "scripts": {  
+    "test": "echo \"Error: no test specified\" && exit 1"  
+  },  
+  "dependencies": {  
+    "commander": "^x.x.x",  
+    "inquirer": "^x.x.x"  
+  }  
+}
+```
 
 ## 测试和发布
 
-本地测试：通过node index.js运行脚手架，在命令行中尝试各种命令确保一切正常。
-打包发布：使用npm pack将项目打包成.tgz文件，然后发布到npm仓库，或直接在项目根目录下运行npm publish。
+本地测试：通过 node index.js 运行脚手架，在命令行中尝试各种命令确保一切正常。
+打包发布：使用 npm pack 将项目打包成.tgz文 件，然后发布到npm仓库，或直接在项目根目录下运行npm publish。
