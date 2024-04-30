@@ -33,10 +33,9 @@ chmod +x bin/fe-cli
 
 ### 命令设计
 
-使用commander库定义命令结构，包括init, help, 和-v或--version。
+在 `bin/fe-cli` 中使用 commander 库定义命令结构，包括init, help, 和-v或--version。
 
 ```javascript
-// index.js
 #!/usr/bin/env node
 const { program } = require('commander');
 const inquirer = require('inquirer');
@@ -86,13 +85,25 @@ program
     }
   });
 
+// 显示帮助信息  
 program.on('--help', () => {
   console.log('\nExamples:');
-  console.log('  $ fe-cli init');
-  console.log('  $ fe-cli init vue');
+  console.log('');  
+  console.log('    $ fe-cli init vue');  
+  console.log('    $ fe-cli init react');  
+  console.log('    $ fe-cli init vue-ts');  
+  console.log('    $ fe-cli init react-ts');  
+  console.log('    $ fe-cli init uniapp');  
+  console.log('');
 });
 
+// 解析命令行参数 
 program.parse(process.argv);
+
+// 如果未指定命令，则显示帮助信息  
+if (!process.argv.slice(2).length) {  
+  program.outputHelp();  
+} 
 ```
 
 ## 提问交互
