@@ -21,18 +21,33 @@ npm init -y
 npm install commander inquirer handlebars --save
 ```
 
-## 命令设计
+## 创建入口文件
+
+在项目的新建 bin 目录，在bing 目录下创建 fe-cli 文件，并设置其可执行权限。这个文件是脚手架的入口点。
+
+```bash
+mkdir bin  
+touch bin/fe-cli  
+chmod +x bin/fe-cli
+```
+
+### 命令设计
 
 使用commander库定义命令结构，包括init, help, 和-v或--version。
 
 ```javascript
 // index.js
+#!/usr/bin/env node
 const { program } = require('commander');
 const inquirer = require('inquirer');
 const generateProject = require('./generateProject');
 
+// 版本号  
+const pkg = require('../package.json');  
+const version = pkg.version; 
+
 program
-  .version('0.1.0', '-v, --version')
+  .version(version, '-v, --version')
   .description('Frontend CLI for initializing various project templates.')
   
 program
@@ -162,6 +177,8 @@ async function generateProject(template, options = {}) {
   }  
 }
 ```
+
+注意：将 commander 和 inquirer 的版本号替换为实际的版本号。
 
 ## 测试和发布
 
