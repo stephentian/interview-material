@@ -21,7 +21,7 @@ npm init -y
 npm install commander inquirer handlebars --save
 ```
 
-## 创建入口文件
+## 项目代码编写
 
 在项目的新建 bin 目录，在bing 目录下创建 fe-cli 文件，并设置其可执行权限。这个文件是脚手架的入口点。
 
@@ -106,7 +106,7 @@ if (!process.argv.slice(2).length) {
 } 
 ```
 
-## 提问交互
+### 提问交互
 
 使用inquirer库编写交互式提问逻辑，让用户选择要生成的项目模板。
 
@@ -162,14 +162,14 @@ async function generateProject(template, options = {}) {
 // 在没有指定模板时调用此提问逻辑
 ```
 
-## 项目模版
+### 项目模版
 
 使用`handlebars`库生成模板文件，包括 package.json、.gitignore、README.md 等。
 
 - 简单实现：可以预先准备各模板的基本文件结构在本地或远程仓库，然后根据用户选择复制或下载这些文件。
 - 高级实现：利用 Git 克隆模板仓库，或直接从 GitHub 等托管服务下载 zip 包并解压。
 
-## 修改 package.json
+### 修改 package.json
 
 ```json
 {  
