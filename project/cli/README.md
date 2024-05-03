@@ -31,9 +31,11 @@ touch bin/fe-cli
 chmod +x bin/fe-cli
 ```
 
-### 命令设计
+### 入口文件
 
 在 `bin/fe-cli` 中使用 commander 库定义命令结构，包括init, help, 和-v或--version。
+
+使用 inquirer 库编写交互式提问逻辑，让用户选择要生成的项目模板。
 
 ```javascript
 #!/usr/bin/env node
@@ -106,9 +108,7 @@ if (!process.argv.slice(2).length) {
 } 
 ```
 
-### 提问交互
-
-使用inquirer库编写交互式提问逻辑，让用户选择要生成的项目模板。
+### 生成项目方法
 
 ```javascript
 const fs = require('fs-extra');
