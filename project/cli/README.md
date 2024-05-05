@@ -194,4 +194,4 @@ async function generateProject(template, options = {}) {
 ## 测试和发布
 
 本地测试：通过 node index.js 运行脚手架，在命令行中尝试各种命令确保一切正常。
-打包发布：使用 npm pack 将项目打包成.tgz文 件，然后发布到npm仓库，或直接在项目根目录下运行npm publish。
+打包发布：使用 npm pack 将项目打包成.tgz文 件，然后发布到npm仓库，或直接在项目根目录下运行 npm publish
