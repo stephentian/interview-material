@@ -20,6 +20,7 @@
   - [5.标签要摆好](#5标签要摆好)
   - [6.降维来优化](#6降维来优化)
 - [页面运行性能优化](#页面运行性能优化)
+- [页面加载性能参数指标](#页面加载性能参数指标)
 
 ## 性能测评工具
 
@@ -234,3 +235,84 @@ Mac 下打开 Chrome 任务管理器的方式是选择 Chrome 顶部导航 > 窗
    - 使用事件代理，避免批量绑定事件
 6. 可以使用WebWorker进行辅助计算
 7. 不要覆盖原生方法
+
+## 页面加载性能参数指标
+
+firstPaint：白屏时间，也就是开始解析DOM到页面上能显示内容的时间，包括解析和渲染的过程。
+loadTime：加载总时间，几乎代表了用户等待页面可用的时间，包括白屏时间和首屏加载时间。
+unloadEventTime：Unload事件耗时，页面卸载时触发。
+loadEventTime：执行onload回调函数的时间，只有浏览器完成图片、视频等资源的加载，并执行了onload回调函数后，才会触发这个事件。
+domReadyTime：用户可操作时间。
+firstScreen：首屏时间，用户在没有滚动时候看到的内容渲染完成并且可以交互的时间，记录载入时间最长的图片。
+parseDomTime：解析DOM树结构的时间，期间要加载内嵌资源。
+initDomTreeTime：请求完毕至DOM加载耗时。
+readyStart：准备新页面时间耗时。
+redirectTime：重定向的时间。
+appcacheTime：DNS缓存耗时。
+lookup：域名解析所花费的时间。
+
+前端页面加载性能是衡量用户体验的关键因素之一。以下是常见的前端页面加载性能参数指标，并说明如何使用JavaScript来获取这些指标：
+
+1. **firstPaint (白屏时间)**
+
+- 定义：用户在没有滚动时看到的内容渲染完成并且可以交互的时间。
+- 获取方法：由于浏览器的API限制，直接获取`firstPaint`的时间并不直接。但可以使用`performance.timing`中的`domLoading`和`domInteractive`等属性结合其他手段来估算。
+
+2. **loadTime (加载总时间)**
+   - 定义：用户等待页面完全加载并可用的时间。
+   - 获取方法：通过`window.performance.timing.loadEventEnd - window.performance.timing.navigationStart`来获取。
+3. **unloadEventTime (Unload事件耗时)**
+
+- 定义：前一个页面unload事件开始到结束的时间。
+- 获取方法：`window.performance.timing.unloadEventStart` 和 `window.performance.timing.unloadEventEnd`。
+
+4. **loadEventTime (执行onload回调函数的时间)**
+
+- 定义：从`load`事件开始到结束的时间。
+- 获取方法：`window.performance.timing.loadEventStart` 和 `window.performance.timing.loadEventEnd`。
+
+5. **domReadyTime (用户可操作时间)**
+
+- 定义：DOM结构解析完成，不需要等待样式表、图片和子框架完成加载，就可以执行脚本的时间。
+- 获取方法：`window.performance.timing.domContentLoadedEventStart`。
+
+6. **firstScreen (首屏时间)**
+
+- 定义：用户在没有滚动时看到的内容（包括图片）渲染完成并且可以交互的时间。
+- 获取方法：这通常需要对页面中的图片绑定`onload`事件，并记录最后加载完成的图片的时间。
+
+7. **parseDomTime (解析DOM树结构的时间)**
+
+- 定义：解析DOM树结构的时间，期间可能包括加载内嵌资源。
+- 获取方法：这个值通常不容易直接获取，但可以通过`domLoading`和`domInteractive`等事件来估算。
+
+8. **initDomTreeTime (请求完毕至DOM加载耗时)**
+
+- 定义：从请求资源完毕到DOM加载完成的时间。
+- 获取方法：这可能需要结合`fetchStart`和`domComplete`等属性来估算。
+
+9. **readyStart (准备新页面时间耗时)**
+
+- 定义：文档开始解析的时间。
+- 获取方法：`window.performance.timing.domLoading`。
+
+10. **redirectTime (重定向的时间)**
+
+- 定义：如果页面有重定向，这是重定向所花费的时间。
+- 获取方法：`window.performance.timing.redirectStart` 和 `window.performance.timing.redirectEnd`。
+
+11. **appcacheTime (DNS缓存耗时)**
+
+- 定义：通常与DNS查询相关的时间。
+- 获取方法：`window.performance.timing.domainLookupStart` 和 `window.performance.timing.domainLookupEnd`。
+
+使用JavaScript获取这些参数指标，你可以通过`window.performance.timing`对象来获取大部分的时间戳。然后，你可以根据这些时间戳来计算不同的性能参数。
+
+例如，要获取`loadTime`，你可以使用以下代码：
+
+```javascript
+const loadTime = window.performance.timing.loadEventEnd - window.performance.timing.navigationStart;
+console.log('Load Time:', loadTime);
+```
+
+注意：由于跨域和隐私限制，某些性能数据可能无法在所有浏览器中获取。
