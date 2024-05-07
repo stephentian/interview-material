@@ -242,6 +242,30 @@ Mac 下打开 Chrome 任务管理器的方式是选择 Chrome 顶部导航 > 窗
 
    - 定义：用户在没有滚动时看到的内容渲染完成并且可以交互的时间。
    - 获取方法：由于浏览器的API限制，直接获取`firstPaint`的时间并不直接。但可以使用 `performance.timing` 中的`domLoading`和 `domInteractive` 等属性结合其他手段来估算。
+   - 在 head 标签开始加一段脚本，用于记录白屏开始时间，在 head 标签结束之前，加一段脚本，用于计算白屏时间
+
+   ```html
+   <!DOCTYPE html>
+   <html lang="en">
+   <head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>白屏时间计算-常规方法</title>
+   <script>
+      window.pageStartTime = Date.now()
+   </script>
+   <link rel="stylesheet" href="https://b-gold-cdn.xitu.io/ionicons/2.0.1/css/ionicons.min.css">
+   <link rel="stylesheet" href="https://b-gold-cdn.xitu.io/asset/fw-icon/1.0.9/iconfont.css">
+   <script>
+      window.firstPaint = Date.now()
+      console.log(`白屏时间：${window.firstPaint - window.pageStartTime}`)
+   </script>
+   </head>
+   <body>
+   <div>这是常规计算白屏时间的示例页面</div>
+   </body>
+   </html>
+   ```
 
 2. **First Contentful Paint (FCP) - 首屏时间**
 
