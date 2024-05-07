@@ -238,19 +238,10 @@ Mac 下打开 Chrome 任务管理器的方式是选择 Chrome 顶部导航 > 窗
 
 ## 页面加载性能参数指标
 
-1. First Contentful Paint (FCP) - 首次内容绘制
-2. Largest Contentful Paint (LCP) - 最大内容绘制
-3. Time to Interactive (TTI) - 交互 readiness 时间：页面首次可以响应用户输入的时间，即页面达到可交互状态所需的时间。
-4. First Meaningful Paint (FMP) - 首次有效绘制onload回调函数后，才会触发这个事件。用户感知到页面主要内容开始呈现的时间点，尽管这个指标已被LCP取代，但在某些场景下仍有参考价值。
-5. Speed Index - 速度指数
-6. DOMContentLoaded 和 Load 事件时间。DOM树构建完成，不等待样式表、图片等异步资源加载完成。
-
-前端页面加载性能是衡量用户体验的关键因素之一。以下是常见的前端页面加载性能参数指标，并说明如何使用JavaScript来获取这些指标：
-
 1. **firstPaint (FP) 白屏时间**
 
    - 定义：用户在没有滚动时看到的内容渲染完成并且可以交互的时间。
-   - 获取方法：由于浏览器的API限制，直接获取`firstPaint`的时间并不直接。但可以使用`performance.timing`中的`domLoading`和`domInteractive`等属性结合其他手段来估算。
+   - 获取方法：由于浏览器的API限制，直接获取`firstPaint`的时间并不直接。但可以使用 `performance.timing` 中的`domLoading`和 `domInteractive` 等属性结合其他手段来估算。
 
 2. **First Contentful Paint (FCP) - 首屏时间**
 
@@ -286,7 +277,6 @@ Mac 下打开 Chrome 任务管理器的方式是选择 Chrome 顶部导航 > 窗
 
    - 定义：从`load`事件开始到结束的时间。
    - 获取方法：`window.performance.timing.loadEventStart` 和 `window.performance.timing.loadEventEnd`。
-
 
 例如，要获取`loadTime`，你可以使用以下代码：
 
