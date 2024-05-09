@@ -254,8 +254,8 @@ Mac 下打开 Chrome 任务管理器的方式是选择 Chrome 顶部导航 > 窗
    <script>
       window.pageStartTime = Date.now()
    </script>
-   <link rel="stylesheet" href="https://b-gold-cdn.xitu.io/ionicons/2.0.1/css/ionicons.min.css">
-   <link rel="stylesheet" href="https://b-gold-cdn.xitu.io/asset/fw-icon/1.0.9/iconfont.css">
+   <link rel="stylesheet" href="xxx.css">
+   <link rel="stylesheet" href="xxx.css">
    <script>
       window.firstPaint = Date.now()
       console.log(`白屏时间：${window.firstPaint - window.pageStartTime}`)
