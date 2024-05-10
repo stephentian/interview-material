@@ -21,6 +21,11 @@
   - [6.降维来优化](#6降维来优化)
 - [页面运行性能优化](#页面运行性能优化)
 - [页面加载性能参数指标](#页面加载性能参数指标)
+  - [1. firstPaint (FP) 白屏时间](#1-firstpaint-fp-白屏时间)
+  - [2. First Contentful Paint (FCP) - 首屏时间](#2-first-contentful-paint-fcp---首屏时间)
+  - [3. Largest Contentful Paint (LCP) - 最大内容绘制](#3-largest-contentful-paint-lcp---最大内容绘制)
+  - [4. Time to Interactive (TTI) - 交互 readiness 时间](#4-time-to-interactive-tti---交互-readiness-时间)
+  - [5. loadEventTime (执行onload回调函数的时间)](#5-loadeventtime-执行onload回调函数的时间)
 
 ## 性能测评工具
 
@@ -238,11 +243,12 @@ Mac 下打开 Chrome 任务管理器的方式是选择 Chrome 顶部导航 > 窗
 
 ## 页面加载性能参数指标
 
-1. **firstPaint (FP) 白屏时间**
+### 1. firstPaint (FP) 白屏时间
 
-   - 定义：用户在没有滚动时看到的内容渲染完成并且可以交互的时间。
-   - 获取方法：由于浏览器的API限制，直接获取`firstPaint`的时间并不直接。但可以使用 `performance.timing` 中的`domLoading`和 `domInteractive` 等属性结合其他手段来估算。
-   - 在 head 标签开始加一段脚本，用于记录白屏开始时间，在 head 标签结束之前，加一段脚本，用于计算白屏时间
+- 定义：用户第一次看到页面的时间。
+- 定义：用户在没有滚动时看到的内容渲染完成并且可以交互的时间。
+- 获取方法：由于浏览器的API限制，直接获取`firstPaint`的时间并不直接。但可以使用 `performance.timing` 中的`domLoading`和 `domInteractive` 等属性结合其他手段来估算。
+- 在 head 标签开始加一段脚本，用于记录白屏开始时间，在 head 标签结束之前，加一段脚本，用于计算白屏时间
 
    ```html
    <!DOCTYPE html>
@@ -267,19 +273,19 @@ Mac 下打开 Chrome 任务管理器的方式是选择 Chrome 顶部导航 > 窗
    </html>
    ```
 
-2. **First Contentful Paint (FCP) - 首屏时间**
+### 2. First Contentful Paint (FCP) - 首屏时间
 
-   - 定义：页面首次渲染任何文本、图像（包括背景图片）、非空白 canvas 或 SVG 的时间点。
-   - 获取方法：
+- 定义：页面首次渲染任何文本、图像（包括背景图片）、非空白 canvas 或 SVG 的时间点。
+- 获取方法：
 
       ```js
       performance.getEntriesByType("paint").find(p => p.name === "first-contentful-paint")?.startTime;
       ```
 
-3. **Largest Contentful Paint (LCP) - 最大内容绘制**
+### 3. Largest Contentful Paint (LCP) - 最大内容绘制
 
-   - 定义：页面加载过程中，渲染的最大文本块或图像（影响用户体验的关键内容）的时间。
-   - 获取方法：
+- 定义：页面加载过程中，渲染的最大文本块或图像（影响用户体验的关键内容）的时间。
+- 获取方法：
 
       ```js
       const lcpEntry = performance.getEntriesByType("largest-contentful-paint")[0];
@@ -288,19 +294,20 @@ Mac 下打开 Chrome 任务管理器的方式是选择 Chrome 顶部导航 > 窗
       }
       ```
 
-4. **Time to Interactive (TTI) - 交互 readiness 时间**
-   - 定义：页面首次可以响应用户输入的时间，即页面达到可交互状态所需的时间。
-   - 获取方法：
+### 4. Time to Interactive (TTI) - 交互 readiness 时间
+
+- 定义：页面首次可以响应用户输入的时间，即页面达到可交互状态所需的时间。
+- 获取方法：
 
        ```js
        // TTI的计算较为复杂，通常需要考虑多个因素，如长任务、RAIL模型等。
       // 直接使用Web Vitals库或者PerformanceObserver来更准确地获取。
        ```
 
-5. **loadEventTime (执行onload回调函数的时间)**
+### 5. loadEventTime (执行onload回调函数的时间)
 
-   - 定义：从`load`事件开始到结束的时间。
-   - 获取方法：`window.performance.timing.loadEventStart` 和 `window.performance.timing.loadEventEnd`。
+- 定义：从`load`事件开始到结束的时间。
+- 获取方法：`window.performance.timing.loadEventStart` 和 `window.performance.timing.loadEventEnd`。
 
 例如，要获取`loadTime`，你可以使用以下代码：
 
