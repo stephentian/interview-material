@@ -19,9 +19,9 @@
   - [4.资源要复用](#4资源要复用)
   - [5.标签要摆好](#5标签要摆好)
   - [6.降维来优化](#6降维来优化)
-- [页面运行性能优化](#页面运行性能优化)
+- [页面运行性能优化方法](#页面运行性能优化方法)
 - [页面加载性能参数指标](#页面加载性能参数指标)
-  - [1. firstPaint (FP) 白屏时间](#1-firstpaint-fp-白屏时间)
+  - [白屏](#白屏)
   - [2. First Contentful Paint (FCP) - 首屏时间](#2-first-contentful-paint-fcp---首屏时间)
   - [3. Largest Contentful Paint (LCP) - 最大内容绘制](#3-largest-contentful-paint-lcp---最大内容绘制)
   - [4. Time to Interactive (TTI) - 交互 readiness 时间](#4-time-to-interactive-tti---交互-readiness-时间)
@@ -220,7 +220,7 @@ Mac 下打开 Chrome 任务管理器的方式是选择 Chrome 顶部导航 > 窗
 
 使用高版本的HTTP协议，如：HTTP2，可以充分利用其二进制分帧、多路复用、头部压缩、服务器推送、数据流优先级的特性来提升页面的加载性能
 
-## 页面运行性能优化
+## 页面运行性能优化方法
 
 1. 避免编写复杂的CSS选择器
 2. 尽量使用flex或者grid进行布局
@@ -243,7 +243,9 @@ Mac 下打开 Chrome 任务管理器的方式是选择 Chrome 顶部导航 > 窗
 
 ## 页面加载性能参数指标
 
-### 1. firstPaint (FP) 白屏时间
+### 白屏
+
+firstPaint (FP) 白屏时间
 
 - 定义：用户第一次看到页面的时间。
 - 定义：用户在没有滚动时看到的内容渲染完成并且可以交互的时间。
