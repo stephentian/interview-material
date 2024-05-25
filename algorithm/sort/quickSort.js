@@ -25,6 +25,23 @@ const quickSort = function (arr) {
   return quickSort(left.concat([pivot], quickSort(right)))
 }
 
+const quicksort = (arr) => {
+  const len = arr.length
+  if (!len || len == 1) return arr
+
+  let midI = Math.floor(len / 2)
+  let pivot = arr.splice(midI, 1)
+  let l = [], r = []
+  for (let i = 0; i < len; i++) {
+    if (arr[i] < pivot) {
+      left.push(arr[i]) 
+      } else {
+        right.push(arr[i])
+      }
+  }
+  return quickSort(left.concat([pivot], quickSort(right)))
+}
+
 // 非递归快排
 // 利用栈实现
 
