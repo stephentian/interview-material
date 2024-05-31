@@ -172,6 +172,52 @@ function quickSort(arr) {
   }  
   return result;  
 }
+
+function quickSort2(arr) {
+  let stack = [];
+  let result = [];
+  let temp = [];
+  let len = arr.length;
+  let stackTop;
+  let leftEnd;
+  let rightEnd;
+  let pivot;
+  let i;
+  let j;
+
+  while(stack.length > 0 || arr.length > 1) {
+    if (arr.lenth) {
+      stackTop = stack.pop();
+      leftEnd = stackTop[0];
+      rightEnd = stackTop[1];
+      pivot = arr.splice(Math.floor(arr.length / 2), 1)[0];
+
+      for(i = leftEnd; i < arr.length; i++) {
+        if(arr[i] < pivot) {
+          temp.push(arr[i]);
+        } else {
+          break;
+        }
+      }
+
+      for(j = arr.length - 1; j >= rightEnd; j--) {
+        if (arr[j] > pivot) {
+          arr.splice(j + 1, 0, pivot);
+        } else {
+          break;
+        }
+      }
+
+      arr = temp.concat(arr.slice(leftEnd, rightEnd), temp);
+      reulst = result.concat(arr.slice(leftEnd, rightEnd));
+      arr = arr.slice(leftEnd + 1, rightEnd).concat([pivot]).concat(arr.slice(rightEnd + 1));
+    } else {
+      stack.push([0, arr.length - 1]);
+    }
+  }
+
+  return result;
+}
 ```
 
 ## 插入排序
