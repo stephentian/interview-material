@@ -1,7 +1,7 @@
 # 排序
 
 - [冒泡排序](#冒泡排序)
-  - [改进](#改进)
+  - [优化](#优化)
 - [快速排序](#快速排序)
 - [插入排序](#插入排序)
 - [选择排序](#选择排序)
@@ -38,7 +38,7 @@ function bubbleSort(arr) {
 }
 ```
 
-### 改进
+### 优化
 
 1. 记录最后一次交换的位置 pos。因为最后一次交换位置之后项，都已经排好序了，所以下次遍历的时候
    遍历到这个位置 pos 就好了，不需要遍历整个数组。
@@ -105,11 +105,15 @@ const quickSort = function (arr) {
   if (arr.length <= 1) {
     return arr
   }
+  
   // 基准位置(理论上可以选取任意位置)
   // let midIndex = Math.floor(arr.length / 2)
+  // splice 复杂度 O(n)
   // let pivot = arr.splice(midIndex, 1)[0]
+  // 直接下标访问，复杂度 O(1)
   let pivot = arr[0]
-  let left = []
+
+let left = []
   let right = []
   // for (let i = 0; i < arr.length; i++) {
   for (let i = 1; i < arr.length; i++) {
@@ -127,7 +131,7 @@ const quickSort = function (arr) {
 循环来实现快速排序
 
 ```js
-function quickSort(arr) {  
+function quickSort(arr) {
   let stack = [];  
   let result = [];  
   let temp = [];  
