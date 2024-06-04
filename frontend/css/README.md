@@ -566,16 +566,17 @@ flex 有两根轴线，分别是主轴(`main axis`：项目排列布局的方向
 
 扇形
 
-- border-radius 和 border-width 相同, 100%
+- `border-radius` 和 `border-width` 相同, 100%
+- 尖头朝上的扇形
 
 ```css
 .sector {
   width: 0;
   height: 0;
-  border-width: 100px;
+  border-width: 20px;
   border-style: solid;
   border-color: transparent transparent green;
-  border-radius: 100px;
+  border-radius: 20px;
 }
 ```
 
