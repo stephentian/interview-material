@@ -29,7 +29,7 @@
 - [媒体查询](#媒体查询)
 - [例题](#例题)
   - [1.实现一个三角形（或扇形）](#1实现一个三角形或扇形)
-  - [2.如何消除 img 或者 行内元素 (inline-block) 之间的间隙？](#2如何消除-img-或者-行内元素-inline-block-之间的间隙)
+  - [2.消除行内元素 (inline-block) 之间的间隙](#2消除行内元素-inline-block-之间的间隙)
   - [3.文本溢出省略号](#3文本溢出省略号)
 
 ## 基础知识
@@ -580,12 +580,30 @@ flex 有两根轴线，分别是主轴(`main axis`：项目排列布局的方向
 }
 ```
 
-### 2.如何消除 img 或者 行内元素 (inline-block) 之间的间隙？
+### 2.消除行内元素 (inline-block) 之间的间隙
 
 消除字符间距
 
-1. `letter-spacing: 0`
-2. `font-size: 0`
+1. 父元素：`font-size: 0`
+2. 父元素：`display: flex;`
+3. 子元素浮动：`float: left;`
+
+```html
+<div class="parent">
+  <div class="child">child1</div>
+  <div class="child">child2</div>
+</div>
+```
+
+```css
+.parent .child {
+  display: inline-block;
+  background-color: #fdfd04;
+  width: 100px;
+  height: 100px;
+}
+
+```
 
 ### 3.文本溢出省略号
 
