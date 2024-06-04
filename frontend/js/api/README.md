@@ -1,4 +1,4 @@
-# grammar
+# 内置对象及语句
 
 - [toStrng 和 valueOf](#tostrng-和-valueof)
 - [charCodeAt()](#charcodeat)

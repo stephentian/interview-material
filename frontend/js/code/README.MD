@@ -15,6 +15,7 @@
   - [让 (a===1 \& a===2 \&\& a===3) 的值为true](#让-a1--a2--a3-的值为true)
   - [实现一个无限累加函数](#实现一个无限累加函数)
   - [柯里化多参累加](#柯里化多参累加)
+- [消除 await 里的 try catch](#消除-await-里的-try-catch)
 
 ## 大数相加
 
@@ -224,3 +225,15 @@ add(1)(2)(3)(4)     // 10
 ### 柯里化多参累加
 
 [04.Curry](04.Curry.js)
+
+## 消除 await 里的 try catch
+
+```js
+function to(promise) {
+  return promise.then(res => {
+    return [null, res]
+  }).catch(err => {
+    return [err, undefined]
+  })
+}
+```
