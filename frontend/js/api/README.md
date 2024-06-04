@@ -16,7 +16,6 @@
 - [Class](#class)
 - [async 和 await](#async-和-await)
 
-
 ## toStrng 和 valueOf
 
 toString: 返回该对象的字符串
