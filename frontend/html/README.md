@@ -13,9 +13,10 @@ HTML5 是 2006年 发布的，新特性：
 
 ## HTML5 新增标签
 
-1. `audio, video, source, track, embed`
-2. `datalist, output, keygen`
-3. `header, section, aside, footer`
+1. 多媒体：`audio, video`
+2. 内嵌内容：`source`为 picture、audio 或 video 元素指定多个媒体资源；`embed` 将外部内容嵌入文档中的指定位置。
+3. 表单元素：`datalist, output, keygen`
+4. 布局：`header, aside, footer`，`nav` 导航部分， `article` 内容，`section` 内容某个区域
 
 ## HTML5 语义化
 
