@@ -74,7 +74,12 @@
 - 元素文本类：`line-height`, `color`
 - 元素可见性: `visibility`
 
+非继承属性：
 
+- 盒子类型: `display`
+- 盒子属性: `width`, `height`, `margin`, `padding`, `border`
+- 背景属性: `background-color`, `background-image`, `background-repeat`
+- 元素定位: `position`, `float`
 
 ### CSS 隐藏元素
 
