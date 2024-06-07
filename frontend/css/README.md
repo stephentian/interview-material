@@ -4,7 +4,7 @@
   - [CSS3 新特性](#css3-新特性)
   - [伪类](#伪类)
   - [伪元素](#伪元素)
-  - [CSS 继承元素](#css-继承元素)
+  - [继承及非继承属性](#继承及非继承属性)
   - [CSS 隐藏元素](#css-隐藏元素)
   - [position](#position)
   - [px, rem, vw](#px-rem-vw)
@@ -66,11 +66,15 @@
 3. ::before 某元素之前
 4. ::after 某元素之后
 
-### CSS 继承元素
+### 继承及非继承属性
 
-- font: font-family, font-weight, font-size
-- 文本系列属性: line-height, color
-- 元素可见性：visibility
+继承属性：
+
+- 字体：`font`, `font-family`, `font-weight`, `font-size`
+- 元素文本类：`line-height`, `color`
+- 元素可见性: `visibility`
+
+
 
 ### CSS 隐藏元素
 
