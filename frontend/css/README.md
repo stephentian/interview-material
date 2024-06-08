@@ -44,27 +44,27 @@
 
 ### 伪类
 
-用于向某些选择器添加特殊效果
+选择器的一种，用于选择特定状态的元素
 
-1. :hover 鼠标悬浮
-2. :active 被激活元素
-3. :focus 获得焦点元素
-4. :link 未被访问链接
-5. :visited 被访问过链接
-6. :first-child 第一个子元素
-7. :first-of-type 父元素的首个子元素
-8. :nth-child 父元素的第 n 个子元素
-9. :not() 非某元素的每个原生
-10. :disabled 禁用状态
+1. `:hover` 鼠标悬浮
+2. `:active` 被激活元素
+3. `:focus` 获得焦点元素
+4. `:link` 未被访问链接
+5. `:visited` 被访问过链接
+6. `:first-child` 第一个子元素
+7. `:first-of-type` 父元素的首个子元素
+8. `:nth-child` 父元素的第 n 个子元素
+9. `:not()` 非某元素的每个原生
+10. `:disabled` 禁用状态
 
 ### 伪元素
 
-代表某个元素的子元素，逻辑上存在，但是不存在文档树中
+代表某个元素的子元素，逻辑上存在；可以给元素添加内容
 
-1. ::first-letter 文本首字母
-2. ::first-line 文本首行
-3. ::before 某元素之前
-4. ::after 某元素之后
+1. `::first-letter` 文本首字母
+2. `::first-line` 文本首行
+3. `::before` 某元素之前
+4. `::after` 某元素之后
 
 ### 继承及非继承属性
 
