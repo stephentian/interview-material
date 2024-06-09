@@ -92,11 +92,11 @@
 
 ### position
 
-1. static 默认值, 在正常文档流
-2. absolute 绝对定位, 相对于 static 定位以外的第一个父元素定位
-3. relative 相对定位, 相对正常位置定位
-4. fixed 绝对定位, 相对浏览器窗口定位
-5. inherit 从父元素继承 position 属性
+1. `static` 默认值, 在正常文档流
+2. `absolute` 绝对定位, 相对于 `static` 定位以外的第一个父元素定位
+3. `relative` 相对定位, 相对正常位置定位
+4. `fixed` 绝对定位, 相对浏览器窗口定位
+5. `inherit` 从父元素继承 `position` 属性
 
 ### px, rem, vw
 
