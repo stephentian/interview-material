@@ -158,7 +158,7 @@ p {
 
 从右往左匹配，如果有多个选择器匹配到同一个元素，则以最后一个为准。
 
-比如： `#div p span.span1{color:red;}`，浏览器先查找所有 class="span1" 的 span 元素，再查找其父元素为 p 元素，最后查找 p 标签的 带 id="div" 的父元素.
+比如： `#div p span.span1{color:red;}`，浏览器先查找所有 class="span1" 的 span 元素，再查找其父元素为 p 元素，最后查找 p 标签的 带 id="div" 的父元素。
 
 ### clip-path
 
@@ -185,7 +185,7 @@ p {
 
 水平垂直居中:
 
-1. transform
+1. 绝对定位 + transform
 
     ```css
     position: absolute;
@@ -193,6 +193,29 @@ p {
     left: 50%;
     transform: translate(-50%, -50%);
     ```
+
+2. flex 布局
+
+    ```css
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    ```
+
+3. Grid 布局
+
+   ```css
+   display: grid;
+   juestify-content: center;
+   align-items: center;
+   height: 100%;
+
+   <!-- 单行 -->
+   display: grid;
+   place-items: center;
+   height: 100%;
+   ```
 
 ### 三栏布局
 
