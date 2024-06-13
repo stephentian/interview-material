@@ -13,7 +13,7 @@
 - [组件之间的通信](#组件之间的通信)
 - [keep-alive](#keep-alive)
 - [Vue3](#vue3)
-  - [变化](#变化)
+  - [vue3 更新](#vue3-更新)
   - [Vue3 组件通信](#vue3-组件通信)
   - [为什么 Vue3 不使用 defineProperty](#为什么-vue3-不使用-defineproperty)
   - [Vue3.0 性能提升主要是通过哪几方面体现的？](#vue30-性能提升主要是通过哪几方面体现的)
@@ -295,7 +295,7 @@ LRU：[LRU.js](../../algorithm/LRU.js)
 
 ## Vue3
 
-### 变化
+### vue3 更新
 
 1. `$children` 移除。要访问子组件实例，使用模版引用 `ref`
 2. `data` 选项标准化，只能接受返回 `object` 的 `function`；在 2.x 中，定义 data 为 object 或者是 function；
