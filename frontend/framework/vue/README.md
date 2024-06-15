@@ -310,8 +310,8 @@ LRU：[LRU.js](../../algorithm/LRU.js)
 
 ### Vue3 组件通信
 
-- Prop 和 emit : 父子组件通信，兄弟节点通过父组件通信
-- provide/inject: 组件和插槽通信，也能用于组件远距离通信
+- props 和 emit (defineProps 和 defineEmits): 父子组件通信，兄弟节点通过父组件通信
+- provide/inject: 父组件 provide，所有后代子组件注入 inject
 - 全局状态管理：Vuex, pinia
 
 ### 为什么 Vue3 不使用 defineProperty
