@@ -310,7 +310,7 @@ LRU：[LRU.js](../../algorithm/LRU.js)
 
 ### Vue3 组件通信
 
-- props 和 emit (defineProps 和 defineEmits): 父子组件通信，兄弟节点通过父组件通信
+- `props` 和 emit (defineProps 和 defineEmits): 父子组件通信，兄弟节点通过父组件通信
 - provide/inject: 父组件 provide，所有后代子组件注入 inject
 - 全局状态管理：Vuex, pinia
 
