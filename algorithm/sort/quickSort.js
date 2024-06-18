@@ -22,7 +22,7 @@ const quickSort = function (arr) {
       right.push(arr[i])
     }
   }
-  return quickSort(left.concat([pivot], quickSort(right)))
+  return quickSort(left).concat([pivot], quickSort(right))
 }
 
 // 非递归快排

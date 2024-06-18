@@ -43,26 +43,28 @@ function bubbleSort(arr) {
 1. 记录最后一次交换的位置 pos。因为最后一次交换位置之后项，都已经排好序了，所以下次遍历的时候
    遍历到这个位置 pos 就好了，不需要遍历整个数组。
 
-   ```js
-   function bubbleSort(arr) {
-     let i = arr.length - 1
-     while (i > 0) {
-       let pos = 0
-       for (let j = 0; j < i; j++) {
-         if (arr[j] > arr[j + 1]) {
-           pos = j
-           // 交换
-           let temp = arr[j]
-           arr[j] = arr[j + 1]
-           arr[j + 1] = temp
-         }
-       }
-       i = pos
-     }
+    ```js
+    function bubbleSort2(arr) {
+      let i = arr.length - 1
 
-     return arr
-   }
-   ```
+      while (i > 0) {
+        let pos = 0
+        for (let j = 0; j < i; j++) {
+          if (arr[j] > arr[j+1]) {
+            pos = j
+
+            let temp = arr[j]
+            arr[j] = arr[j+1]
+            arr[j+1] = temp
+          }
+        }
+
+        i = pos
+      }
+
+      return arr
+    }
+    ```
 
 2. 冒泡排序每一次排序可以得到最大值，或者最小值。可以考虑利用每次排序使用正向和反向冒泡，这样一次可以得出最大值和最小值；排序次数可以少几乎一半。
 
