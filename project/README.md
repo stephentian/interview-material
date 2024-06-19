@@ -236,7 +236,7 @@ ANALYZE_MODE = 'analyze'
   - target: element 需要监听元素
   - config: 需要监听的属性
 - disconnect: 停止实例接收通知, 且回调函数不会被调用
-- takeRecords: 删除所有待处理的通知，并将它们返回到MutationRecord 对象的新 Array 中
+- takeRecords: 删除所有待处理的通知，并将它们返回到 MutationRecord 对象的新 Array 中
 
 可监听属性
 
