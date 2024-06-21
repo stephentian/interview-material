@@ -7,6 +7,10 @@
   - [懒加载(可视区加载)](#懒加载可视区加载)
   - [虚拟列表](#虚拟列表)
   - [动态监听 DOM 高度变化](#动态监听-dom-高度变化)
+    - [MutationObserver](#mutationobserver)
+    - [IntersectionObserver](#intersectionobserver)
+    - [ResizeObserver](#resizeobserver)
+    - [iframe](#iframe)
 - [首屏优化](#首屏优化)
 - [设计一个前端统计](#设计一个前端统计)
   - [分析需求](#分析需求)
@@ -210,7 +214,7 @@ ANALYZE_MODE = 'analyze'
 
 1. 滚动过快有白屏
    1. 通过增加缓存区, 也就是增加渲染区域, 大于可视区
-   2. skeleton加载骨架屏, 部分渲染, 白屏会变成 loading 状态
+   2. skeleton 加载骨架屏, 部分渲染, 白屏会变成 loading 状态
 
 ### 动态监听 DOM 高度变化
 
@@ -226,11 +230,14 @@ ANALYZE_MODE = 'analyze'
 4. iframe
 5. 资源 onload 事件
 
-一. MutationObserver
+#### MutationObserver
 
 该 API 提供监听对 DOM 树变化的能力
 
-方法
+- MutationObserver(callback)
+  - 返回一个 MutationObserver 实例，callback 会在 DOM 树发生变动时触发
+
+实例方法
 
 - observe(target, config)
   - target: element 需要监听元素
@@ -265,14 +272,14 @@ observer.disconnect();
 
 缺点:
 
-1. 是用 maxHeight 没有设置 height, 所以没有元素属性的变化, 监听不到
-2. 使用动画 animation 改变容器, 也会监听不到
+1. 是用 `maxHeight` 没有设置 `height`, 所以没有元素属性的变化, 监听不到
+2. 使用动画 `animation` 改变容器, 也会监听不到
 
-二. IntersectionObserver
+#### IntersectionObserver
 
 可以监听一个元素是否进入用户视野
 
-三. ResizeObserver
+#### ResizeObserver
 
 监听到 Element 的内容区域或 SVGElement的边界框改变。内容区域则需要减去内边距 padding. 直接监听元素尺寸变化
 
@@ -286,7 +293,7 @@ observer.disconnect();
 
   1. 兼容性不够, 使用它 ResizeObserver-polyfill 完成兼容
 
-四. iframe
+#### iframe
 
 `ResizeObserver-polyfill` 源码中使用的方案, 监听 resize 变化
 
