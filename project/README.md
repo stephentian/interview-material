@@ -250,22 +250,36 @@ ANALYZE_MODE = 'analyze'
 ```js
 const config = {
     childList: true, // 子节点的变动（新增、删除或者更改）
-    attributes: true, // 属性的变动
-    characterData: true, // 节点内容或节点文本的变动
-    subtree: true, // 是否将观察器应用于该节点的所有后代节点
+    attributes: true, // 元素的属性变化
+    subtree: true, // 后代元素的变化
+    attributeOldValue: true, // 观察目标节点的属性是否已更改
+    characterData: true, // 观察目标节点的文本内容是否已更改
+    characterDataOldValue: true, // 观察目标节点的文本内容是否已更改
 }
 ```
 
 ```js
-// 创建实例 并传入回调函数
-const observer = new MutationObserver((mutationList) => {
-    if (height !== contentRef.current?.clientHeight) {
-        console.log("高度变化了！");
-        setHeight(contentRef.current.clientHeight);
+// 需要监听的节点
+const targetNode = document.getElementById("content");
+
+// 回调函数
+const callback = function (mutationsList, observer) {
+  // Use traditional 'for loops' for IE 11
+  for (let mutation of mutationsList) {
+    if (mutation.type === "childList") {
+      console.log("A child node has been added or removed.");
+    } else if (mutation.type === "attributes") {
+      console.log("The " + mutation.attributeName + " attribute was modified.");
     }
-});
+  }
+};
+
+// 创建实例 并传入回调函数
+const observer = new MutationObserver(callback);
+
 // 开始监听节点
 observer.observe(targetNode, config);
+
 // 停止观察
 observer.disconnect();
 ```

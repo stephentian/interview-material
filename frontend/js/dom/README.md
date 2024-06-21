@@ -9,6 +9,7 @@
   - [创建节点](#创建节点)
 - [DOM 事件](#dom-事件)
   - [DOM 事件级别](#dom-事件级别)
+- [MutationObserver](#mutationobserver)
 
 ## Event
 
@@ -152,3 +153,18 @@ el.addEventListener(event, callback, useCapture)
 - 合成事件，当为IME（输入法编辑器）输入字符时触发，如：compositionstart
 - 变动事件，当底层DOM结构发生变化时触发，如：DOMsubtreeModified
 - 同时DOM3级事件也允许使用者自定义一些事件
+
+## MutationObserver
+
+MutationObserver 是一个用于监听 DOM 变化的接口，它可以检测到 DOM 元素的增删改查等操作。
+
+DOM 事件同步触发，MutationObserver 异步触发，不会阻塞页面的渲染。
+
+应用场景:
+
+1. 子节点变化，比如添加、删除、替换节点，修改属性值等。
+2. 表单验证，比如用户输入内容时，实时验证是否符合要求。
+3. 响应式布局，比如根据屏幕宽度动态调整布局。
+4. 滚动监听，比如监听滚动条的位置，判断是否滚动到顶部、底部等。
+
+执行时机：
