@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MutationObserver 测试</title>
+</head>
+<body>
+  <div id="app">
+  </div>
+
+  <script>
+    const app = document.getElementById('app')
+
+    const observer = new MutationObserver(function (mutations) {
+      console.timeEnd('mutation time')
+      console.log('mutations', mutations)
+    })
+
+    console.log('1 observer', observer)
+
+    Promise.resolve(2).then((a) => {
+      console.log('then', a)
+    }).then((a) => {
+      console.log('then2', a)
+    })
+
+    observer.observe(app, {
+      attributes: true,
+      childList: true,
+      subtree: true
+    })
+
+    console.time('mutation time')
+    console.time('for time')
+    for(let i = 0; i < 1000; i++) {
+      const child = document.createElement('div')
+      child.innerHTML = `div = ` + i
+      app.appendChild(child)
+    }
+
+    Promise.resolve(3).then((a) => {
+      console.log('then', a)
+    }).then((a) => {
+      console.log('then2', a)
+    })
+
+    console.timeEnd('for time')
+
+    setTimeout(() => {
+      console.log('setTimeout')
+      // observer.disconnect()
+    }, 0)
+</script>
+</body>
+</html>

@@ -1,5 +1,7 @@
 # HTML
 
+HTML 标准文档：https://html.spec.whatwg.org/multipage/
+
 ## HTML5 新特性
 
 HTML5 是 2006年 发布的，新特性：
