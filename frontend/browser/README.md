@@ -22,7 +22,6 @@
 - [一帧发生的事情](#一帧发生的事情)
 - [setTimeout](#settimeout)
 - [requestAnimationFrame](#requestanimationframe)
-  - [执行时机](#执行时机)
   - [setTimeout 和 rAF](#settimeout-和-raf)
 - [requestIdleCallback](#requestidlecallback)
 - [浏览器的多线程](#浏览器的多线程)
@@ -367,7 +366,7 @@ setTimeout 0ms 为什么浏览器不是 0ms 执行：
 
 [深入requestAnimationFrame 执行机制](https://blog.51cto.com/feng/5289890)
 
-### 执行时机
+**执行时机**:
 
 stackoverflow 一些回答说 RAF 被归为宏任务，但它可能不一定按任务队列执行，会因为不同浏览器而执行结果不同。
 
