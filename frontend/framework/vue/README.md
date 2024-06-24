@@ -31,14 +31,14 @@
 1. 和 `Angular` 一样，把 `template` 扔给浏览器渲染，有点像 `jQuery`。
 2. 异步请求库用 `vue-resource`
 
-2016年，Vue2.0  
+2016年，Vue2.0
 
 1. 吸收了 React 虚拟 DOM 的方案，将 `template` 编译为 `render` 函数，`render` 返回 `Virtual DOM`，然后 `patch` 对比差异，最后渲染。
 2. runtime 版本（使用 render 渲染）和 compiler 版本(使用 template)
 3. 支持服务端渲染；
 4. 异步请求库用 `axios`
 
-2020年，Vue3.0  
+2020年，Vue3
 
 1. 源码使用 `TypeScript` 重写，原来是 `Flow`
 2. `Virtual Dom` 重构
