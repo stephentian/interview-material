@@ -64,6 +64,8 @@
 
 ### 数据类型
 
+8 种数据类型
+
 基本类型 7 种：
 
 1. `undefined`: 声明变量未初始化的值
@@ -72,13 +74,9 @@
 4. `number`
 5. `string`
 6. `Symbol`
-7. `BigInt`: ES2020
+7. `BigInt`: ES2020，大于 `2^53 - 1` 的整数
 
-引用类型 3 种:
-
-1. `Function`
-2. `Object`
-3. `Array`
+还有一个 `Object`
 
 ### 继承
 
