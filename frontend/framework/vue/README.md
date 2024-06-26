@@ -52,14 +52,29 @@
 
 ### 生命周期
 
+选项式：
+
 - beforeCreate
 - created
 - beforeMount
 - mounted
 - beforeUpdate
 - updated
-- beforeDestroy
-- destroyed
+- beforeUnmount
+- unmounted
+
+组合式：
+
+- setup(选项式的 created 里面的写在 setup 里面即可)
+- beforeCreate
+- 初始化选项式 api
+- create
+- 检查是否存在模版，存在模版，即时编译模版
+- onBeforeMount
+- onMounted
+- 挂载
+  - 数据变化时，触发 `onBeforeUpdate` 和 `onUpdated`
+- 取消挂载，`onBeforeUnmount` 和 `onUnmounted`
 
 ### Vue 实例过程
 
