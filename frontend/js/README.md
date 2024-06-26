@@ -54,15 +54,17 @@
 
 ### 设计缺陷
 
-1. this 的设计
+1. `this` 的设计
 2. `type null  = object`
-3. `instanceof` 只检查原型，只适用于对象，不适用基础类型。"a" instanceof String === false, "a" 不是字符串？
+3. `instanceof` 只检查原型，只适用于对象，不适用基础类型。`"a" instanceof String === false`, `"a"` 不是字符串？
 4. 隐式转换 `[] + {}` 返回 `"[object Object]"`
 5. `==` 类型转换规则极复杂
-6. `new Date().getYear()` 返回是 1900 开始计算, 要用 `getFullYear`, `getMonth()` 确实获取月份减一
-7. `toFixed` 精度问题(`1.335.toFixed(2)`)
+6. `new Date().getYear()` 返回是 1900 开始计算, 要用 `getFullYear`, 月份为 `getMonth() - 1`
+7. `toFixed` 精度问题(`1.335.toFixed(2) = 1.33`，`1.135.toFixed(2) = 1.14`)
 
 ### 数据类型
+
+8 种数据类型
 
 基本类型 7 种：
 
@@ -72,13 +74,9 @@
 4. `number`
 5. `string`
 6. `Symbol`
-7. `BigInt`: ES2020
+7. `BigInt`: ES2020，大于 `2^53 - 1` 的整数
 
-引用类型 3 种:
-
-1. `Function`
-2. `Object`
-3. `Array`
+还有一个 `Object`
 
 ### 继承
 
@@ -492,7 +490,7 @@ D: ReferenceError
 
 `for in`: 遍历**可枚举属性**数据。得到 key
 
-- **任意顺序**遍历一个对象的除Symbol以外的**可枚举属性**
+- **任意顺序**遍历一个对象的除 Symbol 以外的**可枚举属性**
 - 遍历数组, 字符串
 - 可枚举属性: Object 属性的 `enumerable`
 
