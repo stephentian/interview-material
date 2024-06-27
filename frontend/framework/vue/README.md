@@ -33,12 +33,16 @@
 
 2016年，Vue2.0
 
+文档地址：https://v2.cn.vuejs.org/v2/guide/
+
 1. 吸收了 React 虚拟 DOM 的方案，将 `template` 编译为 `render` 函数，`render` 返回 `Virtual DOM`，然后 `patch` 对比差异，最后渲染。
 2. runtime 版本（使用 render 渲染）和 compiler 版本(使用 template)
 3. 支持服务端渲染；
 4. 异步请求库用 `axios`
 
 2020年，Vue3
+
+文档地址：https://cn.vuejs.org/guide/introduction.html
 
 1. 源码使用 `TypeScript` 重写，原来是 `Flow`
 2. `Virtual Dom` 重构
@@ -48,14 +52,29 @@
 
 ### 生命周期
 
+选项式：
+
 - beforeCreate
 - created
 - beforeMount
 - mounted
 - beforeUpdate
 - updated
-- beforeDestroy
-- destroyed
+- beforeUnmount
+- unmounted
+
+组合式：
+
+- setup(选项式的 created 里面的写在 setup 里面即可)
+- beforeCreate
+- 初始化选项式 api
+- create
+- 检查是否存在模版，存在模版，即时编译模版
+- onBeforeMount
+- onMounted
+- 挂载
+  - 数据变化时，触发 `onBeforeUpdate` 和 `onUpdated`
+- 取消挂载，`onBeforeUnmount` 和 `onUnmounted`
 
 ### Vue 实例过程
 
