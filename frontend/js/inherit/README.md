@@ -33,6 +33,7 @@ JavaScript 本身不提供 `class` 实现( es6 提供了语法糖)，想要继�
 
 - 每个对象（基础类型也有，`null` 除外）都有 `__proto__` 属性，指向创建该对象的函数的原型(`prototype`)。
 - 使用场景: 原型链的实现。
+- 非标准实现，ES6 引入了 `Object.getPrototypeOf()` 方法，用于读取对象的隐式原型。
 
 显示原型 `prototype`
 
