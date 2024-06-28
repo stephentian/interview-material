@@ -15,10 +15,10 @@ function myNew1(obj) {
 }
 
 function myNew2() {
-  let obj = {}
+  let subObj = {}
   // 拿到构造函数, 删除数组第一项，并返回删除项
   let fn = [].shift.call(arguments)
-  obj.__proto__ = fn.prototype
-  let res = fn.apply(obj, arguments)
+  subObj.__proto__ = fn.prototype
+  let res = fn.apply(subObj, arguments)
   return typeof res === 'object' ? res : subObj
 }

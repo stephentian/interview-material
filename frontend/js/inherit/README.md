@@ -68,14 +68,13 @@ JavaScript 本身不提供 `class` 实现( es6 提供了语法糖)，想要继�
 
 ### new
 
-new 关键字所形成的原型链关系是：实例.__proto__ === 构造函数.prototype
+new 关键字所形成的原型链关系是：`实例.__proto__` === `构造函数.prototype`
 
 [手写 new](./new.js)
 
 ### instanceof
 
-a instanceof Fn
-判断: 沿着 `a.__proto__` 往上找, 同时沿着 B.prototype 找, 如果找到同一个引用, 即返回 true
+`a instanceof Fn`: 沿着 `a.__proto__` 往上找, 同时沿着 `B.prototype` 找, 如果找到同一个引用, 即返回 true
 
 [instanceof](./instanceof.js)
 
