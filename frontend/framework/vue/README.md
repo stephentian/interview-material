@@ -304,16 +304,18 @@ LRU：[LRU.js](https://github.com/stephentian/interview-material/blob/1e031bc07c
 ### vue3 更新
 
 1. 提供了组合式API composition API 书写风格 ，和 `setup` 搭配使用
-2. `$children` 移除。要访问子组件实例，使用模版引用 `ref`
-3. `Mixin` 合并行为变更，`data` 同名属性直接覆盖，而不是合并
-4. `$on, $off, $once` 被移除
-   - 之前用于创建一个事件总线，`eventBus`
-   - 事件总线模式可以被替换为使用外部的库，例如`tiny-emitter`
-5. 过滤器 `filters` 移除，使用 计算属性或者方法代替。
-6. 过渡类名 `v-enter` 修改为 `v-enter-from`、过渡类名 `v-leave` 修改为 `v-leave-from`
-7. 提供了 `defineAsyncComponent` 方法，用于异步加载组件
-8. 增加了内置组件 `suspense`，用于在组件异步加载时，提供加载状态。
-9. 将全局的API，即：Vue.xxx 调整到应用实例（app）上，使用 app.xxx（如 app.use，app.config）
+2. 生命周期 `destroyed` 变为 `unmounted`, `beforeDestroy` 变为 `beforeUnmount`
+3. `$children` 移除。要访问子组件实例，使用模版引用 `ref`
+4. `Mixin` 合并行为变更，`data` 同名属性直接覆盖，而不是合并
+5. `$on, $off, $once` 被移除
+   - 使用 `provide/inject`
+   - 替换使用外部的库，例如`mitt tiny-emitter`
+   - 全局状态管理, `pinia`
+6. 过滤器 `filters` 移除，使用 计算属性或者方法代替
+7. 过渡类名 `v-enter` 修改为 `v-enter-from`、过渡类名 `v-leave` 修改为 `v-leave-from`
+8. 提供了 `defineAsyncComponent` 方法，用于异步加载组件
+9. 增加了内置组件 `suspense`，用于在组件异步加载时，提供加载状态。
+10. 将全局的API，即：Vue.xxx 调整到应用实例（app）上，使用 app.xxx（如 app.use，app.config）
 
 ### Vue3 组件通信
 
