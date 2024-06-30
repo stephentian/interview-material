@@ -8,7 +8,7 @@
   - [双向绑定原理](#双向绑定原理)
 - [虚拟 DOM](#虚拟-dom)
 - [组件中 name 选项作用](#组件中-name-选项作用)
-- [nextTick 的原理](#nexttick-的原理)
+- [nextTick 原理](#nexttick-原理)
 - [父子组件渲染过程](#父子组件渲染过程)
 - [组件之间的通信](#组件之间的通信)
 - [keep-alive](#keep-alive)
@@ -16,7 +16,7 @@
   - [vue3 更新](#vue3-更新)
   - [Vue3 组件通信](#vue3-组件通信)
   - [为什么 Vue3 不使用 defineProperty](#为什么-vue3-不使用-defineproperty)
-  - [Vue3.0 性能提升主要是通过哪几方面体现的？](#vue30-性能提升主要是通过哪几方面体现的)
+  - [Vue3.0 性能提升](#vue30-性能提升)
   - [watch 和 watchEffect](#watch-和-watcheffect)
 - [Vue-Router](#vue-router)
 - [问题](#问题)
@@ -109,9 +109,7 @@ Vue 重点响应式是通过数据劫持和发布-订阅模型来实现的。
 
 ## 虚拟 DOM
 
-什么是 虚拟DOM
-
-Virtual DOM, 用 js 对象来描述真实 DOM 结构
+`Virtual DOM`, 用 js 对象来描述真实 DOM 结构
 
 ```js
 {
@@ -124,33 +122,24 @@ Virtual DOM, 用 js 对象来描述真实 DOM 结构
 }
 ```
 
-虚拟DOM 作用
+作用:
 
 1. 在负责视图中提升渲染性能
 2. 维护视图和状态之间的关系
-3. 可以支持服务端渲染 ssr, 框架跨平台, 原生应用 rn, 小程序等
+3. 可以支持服务端渲染 `ssr`, 框架跨平台, 原生应用 rn, 小程序等
 
 为什么需要虚拟 DOM
 
-现代前端框架有两种方式侦测变化,一种是 pull 一种是 push。
-
-Pull: 代表就是 React。
-React 要调用 `setState` 去手动更新，然后 React 会一层一层的虚拟 DOM Diff 找出差异，
-然后 Patch 到 DOM 上。就是一开始不知道哪里变化了，需要 pull 下最新的代码，才知道哪里变化了。
-
-Push: 代表就是 Vue 的响应式系统。
-当 Vue 实例化时会对数据 data 进行依赖的收集，一旦数据发生变化，响应式系统就会得知。
-不过缺点是绑定一个数据就需要一个 `Watcher`，绑定的数据很多，就会产生大量的 `Wather`，会带来内存和依赖追踪的开销。所以 Vue 的使用是选择中小型项目。
-在组件之间是进行 push 的方式侦测，但是侦测组件内部，使用 虚拟 DOM 检查差异性能比较好。而虚拟 DOM Diff 则是 pull 操作。
-Vue 则是 push + pull 结合的方式侦测变化。
+1. 使用 虚拟 DOM 检查差异性能比较好。
+2. DOM 对象创建和销毁非常耗费性能。用虚拟 DOM 减少 DOM 创建和销毁。
 
 ## 组件中 name 选项作用
 
 1. 允许组件模板递归调用自身。
-2. 项目使用 keep-alive 是，可使用组件的 name 进行过滤
+2. 项目使用 `keep-alive`，可使用组件的 name 进行过滤
 3. 便于调试，有名字的组件有更友好的警告信息，搭配 `dev-tools`。
 
-## nextTick 的原理
+## nextTick 原理
 
 - Vue 是异步渲染 DOM，修改数据，立马获取 DOM 元素是不变的。
 - 有时候业务需要必须对数据更改后的 DOM 做相应的处理，这时候就可以使用 Vue.nextTick。
@@ -158,7 +147,7 @@ Vue 则是 push + pull 结合的方式侦测变化。
 实现:
 
 - 源码首先使用 `promise, MutationOberver` 微任务去实现
-- 如果不支持, 就是使用 `setImmediate` 和 `setTimeout`, 等待当前微/宏任务执行完, 再执行回调.
+- 如果不支持, 就是使用 `setImmediate` 和 `setTimeout`, 等待当前微/宏任务执行完, 再执行回调
 - 一次事件循环是一个 tick, UI 渲染是在两个 tick 之间。
 
 ## 父子组件渲染过程
@@ -170,8 +159,6 @@ Vue 则是 push + pull 结合的方式侦测变化。
 - child mounted
 - parent mounted
 
-原因:
-
 1. Vue 源码中, 回递归组件, 先递归到创建父组件, 有子组件就创建子组件
 2. 子组件被创建完, 如果没有子组件, 会添加 `mounted` 钩子到队列中, 等 `patch` 结束后执行. 然后再去父组件执行挂载 `mounted`
 
@@ -179,14 +166,14 @@ Vue 则是 push + pull 结合的方式侦测变化。
 
 4 种方式:
 
-1. props/$emit
-2. eventBus
-3. provide/inject
-4. ref/$refs
+1. `props/$emit`
+2. `eventBus`
+3. `provide/inject`
+4. `ref/$refs`
 
 props/$emit
 
-该方法适用于**父子组件**
+适用于**父子组件**
 
 ```js
 // 父组件
@@ -310,22 +297,23 @@ this.$refs.child1
 2. 将不经常用的缓存组件放前面，常用的放后面
 3. 缓存消耗内存，会设一个 max 值，如果超过 max 就将第一个 `key` 删除，对应 `cache` 对象里也删除该节点。
 
-LRU：[LRU.js](../../algorithm/LRU.js)
+LRU：[LRU.js](https://github.com/stephentian/interview-material/blob/1e031bc07cd58f7f122cddc787e1672efd9395c0/algorithm/LRU.js)
 
 ## Vue3
 
 ### vue3 更新
 
-1. `$children` 移除。要访问子组件实例，使用模版引用 `ref`
-2. `data` 选项标准化，只能接受返回 `object` 的 `function`；在 2.x 中，定义 data 为 object 或者是 function；
+1. 提供了组合式API composition API 书写风格 ，和 `setup` 搭配使用
+2. `$children` 移除。要访问子组件实例，使用模版引用 `ref`
 3. `Mixin` 合并行为变更，`data` 同名属性直接覆盖，而不是合并
 4. `$on, $off, $once` 被移除
    - 之前用于创建一个事件总线，`eventBus`
    - 事件总线模式可以被替换为使用外部的库，例如`tiny-emitter`
 5. 过滤器 `filters` 移除，使用 计算属性或者方法代替。
 6. 过渡类名 `v-enter` 修改为 `v-enter-from`、过渡类名 `v-leave` 修改为 `v-leave-from`
-7. `.sync` 的部分并将其替换为 `v-model`
-8. 将全局的API，即：Vue.xxx 调整到应用实例（app）上，使用 app.xxx（如 app.use，app.config）
+7. 提供了 `defineAsyncComponent` 方法，用于异步加载组件
+8. 增加了内置组件 `suspense`，用于在组件异步加载时，提供加载状态。
+9. 将全局的API，即：Vue.xxx 调整到应用实例（app）上，使用 app.xxx（如 app.use，app.config）
 
 ### Vue3 组件通信
 
@@ -343,7 +331,7 @@ LRU：[LRU.js](../../algorithm/LRU.js)
 - 3. 对象新增属性，要重新遍历对象，对新对象使用 `Object.defineProperty` 进行劫持
 - 4. `Proxy` 为新标准，浏览器会对其进行优化
 
-### Vue3.0 性能提升主要是通过哪几方面体现的？
+### Vue3.0 性能提升
 
 - 在 bundle 包大小方面（tree-shaking 减少了 41% 的体积）
 - 初始渲染速度方面（快了 55%）
