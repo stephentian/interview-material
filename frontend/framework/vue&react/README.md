@@ -6,11 +6,11 @@
   - [模板的区别](#模板的区别)
   - [组件化的区别](#组件化的区别)
   - [原理不同](#原理不同)
-  - [diff 算区别](#diff-算区别)
+  - [diff 算法](#diff-算法)
 - [Vue 和 React 共同点](#vue-和-react-共同点)
 - [key 值的作用](#key-值的作用)
 - [虚拟 Dom(Virtual Dom)](#虚拟-domvirtual-dom)
-- [Diff 算法](#diff-算法)
+- [Diff 算法](#diff-算法-1)
 - [为什么都用 Hooks](#为什么都用-hooks)
   - [React Hooks](#react-hooks)
   - [Vue Hooks](#vue-hooks)
@@ -113,7 +113,7 @@ Vue 也支持组件化，不过是在 MVVM 上的扩展
 vue 使用响应式系统 + 虚拟 Dom；
 React 使用 虚拟 Dom 进行 diff 检查差异。
 
-### diff 算区别
+### diff 算法
 
 两者都使用来 Virtual Dom
 
@@ -128,7 +128,7 @@ React 使用 虚拟 Dom 进行 diff 检查差异。
   - 第二步, newIndex <= oldIndex, 不动; newIndex > oldIndex, 把节点往右移动.
   - 每一个节点与前一个节点的先后顺序与在 Real DOM 中的顺序进行比较，如果顺序相同，则不必移动；如果 index 大于之前的节点, 就节点右移
 
-- Vue
+- Vue2
   - 建立新序列（Virtual DOM）头（NS）尾（NE）、老序列（Real DOM）头（OS）尾（OE）一共4个指针，然后让NS/NE与OS/OE比较；
   - 双向遍历的方式，加速了遍历的速度
   - compile 阶段的 optimize 标记了static 点,可以减少 differ 次数,而且是采用双向遍历方法;

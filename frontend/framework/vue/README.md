@@ -15,7 +15,7 @@
 - [Vue3](#vue3)
   - [vue3 更新](#vue3-更新)
   - [Vue3 组件通信](#vue3-组件通信)
-  - [为什么 Vue3 不使用 defineProperty](#为什么-vue3-不使用-defineproperty)
+  - [defineProperty 缺点](#defineproperty-缺点)
   - [Vue3.0 性能提升](#vue30-性能提升)
   - [watch 和 watchEffect](#watch-和-watcheffect)
 - [Vue-Router](#vue-router)
@@ -323,7 +323,7 @@ LRU：[LRU.js](https://github.com/stephentian/interview-material/blob/1e031bc07c
 - provide/inject: 父组件 provide，所有后代子组件注入 inject
 - 全局状态管理：Vuex, pinia
 
-### 为什么 Vue3 不使用 defineProperty
+### defineProperty 缺点
 
 - 1. 监控数组麻烦
   - 使用 `Object.defineProperty` 无法监听数组变更,之前是通过 `push、pop、shift、unshift、splice、sort、reverse` 监控
