@@ -64,7 +64,7 @@ React - 使用 JSX
 模板分离上，我更倾向于 Vue
 
 ```js
-// React:
+// React
 class Todo extends Component {
   constructor(props) {
     super(props)
@@ -76,9 +76,10 @@ class Todo extends Component {
     )
   }
 }
+```
 
-// Vue:
-// 组合式
+```html
+<!-- Vue  -->
 <script setup>
 import { ref, onMounted } from 'vue'
 
@@ -132,9 +133,10 @@ React 使用 虚拟 Dom 进行 diff 检查差异。
   - 建立新序列（Virtual DOM）头（NS）尾（NE）、老序列（Real DOM）头（OS）尾（OE）一共4个指针，然后让NS/NE与OS/OE比较；
   - 双向遍历的方式，加速了遍历的速度
   - compile 阶段的 optimize 标记了static 点,可以减少 differ 次数,而且是采用双向遍历方法;
-- Vue3.0
+
+- Vue3
   - 核心是最长递增子序列, 这个算法是找到连续最多一段没有改变的列表, 然后移动它, 其他的更新.
-  - 给新列表, map 一个 source 数组, 数组的值全为 -1; 遍历旧列表, 将旧列表出现, 并且新列表存在, 则用旧列表的 index 替换 source 数组的值; 这样 数组里为 -1 的就是不存在的节点, 有值的 就是移动的节点; 找到最长的一段递增，说明这段不需要移动.
+  - 给新列表, 映射了一个 source 数组, 数组的值全为 -1; 遍历旧列表, 将旧列表出现, 并且新列表存在, 则用旧列表的 index 替换 source 数组的值; 这样 数组里为 -1 的就是不存在的节点, 有值的 就是移动的节点; 找到最长的一段递增，说明这段不需要移动.
 
 ## Vue 和 React 共同点
 
