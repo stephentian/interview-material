@@ -5,6 +5,12 @@
 **/
 
 // bind
+// 2024-07-01
+const bind = function(context, ...args) {
+  return (...args2) => {
+    return this.apply(context, args.concat(args2))
+  }
+}
 
 // ES5
 
@@ -37,10 +43,8 @@ function myBind2(obj, ...arg1) {
 
 function myBind3(obj, ...arg1) {
   return (...arg2) => {
-    let args = arg1.concat(arg2)
-    let result
     obj.fn = this
-    result = obj.fn(...args)
+    let result = obj.fn(arg1.concat(arg2))
     delete obj.fn
     return result
   }
