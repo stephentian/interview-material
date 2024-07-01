@@ -4,6 +4,21 @@
 * day: 2019-8-5
 **/
 
+
+// 2024-07-01
+const call = function(context, ...args) {
+  context = context || window
+
+  const key = Symbol('key')
+  context[key] = this
+
+  const res = context[key](...args)
+
+  delete context[key]
+
+  return res
+}
+
 // ES5
 
 function myCall(context) {
