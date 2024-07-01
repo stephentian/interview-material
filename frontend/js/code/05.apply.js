@@ -6,6 +6,18 @@
 
 // apply
 
+const apply = function(context, args) {
+  context = context || window
+  const key = Symbol('key')
+  context[key] = this
+
+  const res = args ? context[key](...args) : context[key]()
+
+  delete context[key]
+
+  return res
+}
+
 // ES5
 
 function myApply(context, arr) {

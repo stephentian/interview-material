@@ -80,6 +80,8 @@
 
 ### 继承
 
+前置知识： `call, apply, bind`
+
 [JS 继承](./inherit/README.md)
 
 ### 垃圾回收
