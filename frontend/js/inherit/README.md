@@ -12,11 +12,11 @@ JavaScript 本身不提供 `class` 实现( es6 提供了语法糖)，想要继�
   - [构造函数继承](#构造函数继承)
   - [组合继承](#组合继承)
   - [原型式继承](#原型式继承)
-  - [寄生式继承](#寄生式继承)
+  - [寄生继承](#寄生继承)
   - [寄生组合式继承](#寄生组合式继承)
   - [ES6 extends](#es6-extends)
 - [问题](#问题)
-  - [子类 constructor 没有调用 super() 会怎么样](#子类-constructor-没有调用-super-会怎么样)
+  - [子类不调用 super()](#子类不调用-super)
 
 继承都基于两种方式：
 
@@ -98,7 +98,7 @@ function myInstanceof(target, origin) {
 [构造函数继承](#构造函数继承)  
 [组合继承](#组合继承)  
 [原型式继承](#原型式继承)  
-[寄生式继承](#寄生式继承)  
+[寄生继承](#寄生继承)  
 [寄生组合式继承](#寄生组合式继承)  
 [ES6 extends](#es6-extends)  
 
@@ -168,7 +168,7 @@ Child.prototype.constructor = Child
 
 要点：借用 中间对象 实现原型继承，本质是对象的浅复制(`Object.create()`)
 
-上面的函数得到的对象 subObj，拥有了对象 o 的全部属性（在原型链上），而修改 subObj 的属性，不会影响到o，相当于把 o 复制了一份。
+subObj 拥有了对象 o 的全部属性（在原型链上），而修改 subObj 的属性，不会影响到 o，相当于把 o 复制了一份。
 
 ```js
 function createObject(o){
@@ -189,9 +189,9 @@ const Child = createObject(Parent)
 - 不能传参
 - 子类原型共享问题
 
-### 寄生式继承
+### 寄生继承
 
-组合继承有一个小bug，实现的时候调用了两次超类（父类），于是“寄生继承”就出来了。寄生继承就是不用实例化父类了，直接实例化一个临时副本实现了相同的原型链继承。（即子类的原型指向父类副本的实例从而实现原型共享）
+组合继承，问题是实现的时候调用了两次超类（父类）。寄生继承就是不用实例化父类了，直接实例化一个临时副本实现了相同的原型链继承。（即子类的原型指向父类副本的实例从而实现原型共享）
 
 要点：封装原型式继承，创建一个封装继承过程的函数
 
@@ -221,13 +221,11 @@ function inherit(o) {
 
 ### 寄生组合式继承
 
-最常用的继承模式
+要点：寄生继承 + 组合继承
 
-要点：寄生继承跟组合继承的结合版
+原型链方式可以实现 属性方法共享，但无法做到属性、方法独享（例如 Sub1 修改了父类的函数，其他所有的子类 Sub2、Sub3 调用的旧方法失效）；
 
-原型链方式可以实现 属性方法共享，但无法做到属性、方法独享（例如Sub1修改了父类的函数，其他所有的子类Sub2、Sub3 调用的旧方法失效）；
-
-构造函数除了能 独享属性、方法外还能在子类构造函数中传递参数，但代码无法复用。总体而言就是可以实现所有属性方法独享，但无法做到属性、方法共享（例如，Sub1新增了一个函数，然后想让Sub2、Sub3...都可以用的话就无法实现了，只能Sub2、Sub3...各自在构造函数中新增）。
+构造函数除了能 独享属性、方法外还能在子类构造函数中传递参数，但代码无法复用。总体而言就是可以实现所有属性方法独享，但无法做到属性、方法共享（例如，Sub1新增了一个函数，然后想让 Sub2、Sub3...都可以用的话就无法实现了，只能Sub2、Sub3...各自在构造函数中新增）。
 
 ```js
 // 1
@@ -260,11 +258,11 @@ inherit(Child, Parent)
 
 
 // 3
-Child.prototype = Object.create(Parent.prototype)
-Child.prototype.constructor = Child
 function Child(age) {
   Parent.call(this, age)
 }
+Child.prototype = Object.create(Parent.prototype)
+Child.prototype.constructor = Child
 ```
 
 优点：
@@ -279,6 +277,15 @@ function Child(age) {
 
 要点：class 语法糖, super
 
+```js
+class Child extends Parent {
+  constructor(name, age) {
+    super(name);
+    this.age = age;
+  }
+}
+```
+
 优点：
 
 - 简单，易懂
@@ -289,7 +296,9 @@ function Child(age) {
 
 ## 问题
 
-### 子类 constructor 没有调用 super() 会怎么样
+### 子类不调用 super()
+
+必须 显式的调用 super(), 不调用代码执行会报错
 
 ```js
 class Animal {
@@ -313,11 +322,8 @@ class Cat extends Animal {
   }
 }
 
-let cat = new Cat('Kitty', 'white'); // ReferenceError: Must call super constructor in derived class before accessing 'this'
+let cat = new Cat('Kitty', 'white'); 
+
+// 报错
+// ReferenceError: Must call super constructor in derived class before accessing 'this' or returning from derived constructor
 ```
-
-<!-- 
-定义了一个 Cat 类，它继承自 Animal 类。但是，Cat 类的 constructor 没有调用 super()，因此 Animal 类的 constructor 没有被调用，导致父类的属性和方法没有被初始化。当我们调用 cat.eat() 时，会抛出 TypeError，因为 cat 对象没有继承自 Animal 类。
-
-因此，在 JavaScript 的继承中，子类的 constructor 应该始终调用 super()，以确保父类的属性和方法被正确地初始化。
-如果子类没有自己的 constructor，JavaScript 会默认为它生成一个空的 constructor，并自动调用 super()。 -->
