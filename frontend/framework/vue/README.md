@@ -34,7 +34,7 @@
 
 2016年，Vue2.0
 
-文档地址：https://v2.cn.vuejs.org/v2/guide/
+文档地址：[https://v2.cn.vuejs.org/v2/guide/](https://v2.cn.vuejs.org/v2/guide/)
 
 1. 吸收了 React 虚拟 DOM 的方案，将 `template` 编译为 `render` 函数，`render` 返回 `Virtual DOM`，然后 `patch` 对比差异，最后渲染。
 2. runtime 版本（使用 render 渲染）和 compiler 版本(使用 template)
@@ -43,7 +43,7 @@
 
 2020年，Vue3
 
-文档地址：https://cn.vuejs.org/guide/introduction.html
+文档地址：[https://cn.vuejs.org/guide/introduction.html](https://cn.vuejs.org/guide/introduction.html)
 
 1. 源码使用 `TypeScript` 重写，原来是 `Flow`
 2. `Virtual Dom` 重构
@@ -324,7 +324,7 @@ vue2
 
 1. 进行新老节点头尾对比，头与头、尾与尾对比，寻找未移动的节点。
 2. 新老节点头尾对比完后，进行交叉对比，头与尾、尾与头对比，这一步即寻找移动后可复用的节点。
-3. 在剩余新老结点中对比寻找可复用节点，创建一个老节点keyToIndex的哈希表map记录 key，然后继续遍历新节点索引通过 key 查找可以复用的旧的节点。
+3. 在剩余新老结点中对比寻找可复用节点，创建一个老节点 keyToIndex 的哈希表map 记录 key，然后继续遍历新节点索引通过 key 查找可以复用的旧的节点。
 4. 节点遍历完成后，通过新老索引，进行移除多余老节点或者增加新节点的操作。
 
 vue3
@@ -336,13 +336,13 @@ vue3
 差别
 
 - 处理完首尾节点后，对剩余节点的处理方式。
-- vue2 是通过对旧节点列表建立一个 { key, oldVnode }的映射表，然后遍历新节点列表的剩余节点，根据newVnode.key在旧映射表中寻找可复用的节点，然后打补丁并且移动到正确的位置。
+- vue2 是通过对旧节点列表建立一个 `{ key, oldVnode }` 的映射表，然后遍历新节点列表的剩余节点，根据 newVnode.key 在旧映射表中寻找可复用的节点，然后打补丁并且移动到正确的位置。
 - vue3 则是建立一个存储新节点数组中的剩余节点在旧节点数组上的索引的映射关系数组，建立完成这个数组后也即找到了可复用的节点，然后通过这个数组计算得到最长递增子序列，这个序列中的节点保持不动，然后将新节点数组中的剩余节点移动到正确的位置。
 
 ### Vue3 组件通信
 
-- `props` 和 emit (defineProps 和 defineEmits): 父子组件通信，兄弟节点通过父组件通信
-- provide/inject: 父组件 provide，所有后代子组件注入 inject
+- `props` 和 `emit` (`defineProps 和 defineEmits`): 父子组件通信，兄弟节点通过父组件通信
+- `provide/inject`: 父组件 provide，所有后代子组件注入 inject
 - 全局状态管理：Vuex, pinia
 
 ### defineProperty 缺点
@@ -449,6 +449,6 @@ export default {
 
 存在以下问题：
 
-- 性能损耗：如前所述，每次循环迭代时都需要执行v-if条件判断，对于大数据量或复杂度高的场景，这会增加不必要的计算负担。
+- 性能损耗：如前所述，每次循环迭代时都需要执行 v-if 条件判断，对于大数据量或复杂度高的场景，这会增加不必要的计算负担。
 
-- 代码可读性与维护性：同时使用v-if和v-for在单个元素上可能会使模板逻辑变得复杂，不易于其他开发者理解与维护。这种混杂的条件与循环逻辑容易引发混淆，尤其是在处理较复杂的业务场景时。
+- 代码可读性与维护性：同时使用 v-if 和 v-for 在单个元素上可能会使模板逻辑变得复杂，不易于其他开发者理解与维护。这种混杂的条件与循环逻辑容易引发混淆，尤其是在处理较复杂的业务场景时。
