@@ -1,6 +1,6 @@
 # JS
 
-官方文档地址：https://tc39.es/ecma262/
+官方文档地址：[https://tc39.es/ecma262/](https://tc39.es/ecma262/)
 
 - [JS 基础](#js-基础)
   - [特点](#特点)

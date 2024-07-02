@@ -19,12 +19,13 @@
 
 ## toStrng 和 valueOf
 
-toString: 返回该对象的字符串
+`toString`: 返回该对象的字符串
 
-valueOf: 返回该对象的原始值
+`valueOf`: 返回该对象的原始值
 
 ```js
-// 判断类型
+// toString 常用来判断类型
+// Object.prototype.toString.call(obj)
 toString.call(()=>{})       // [object Function]
 toString.call([])           // [object Array]
 toString.call('')           // [object String]
