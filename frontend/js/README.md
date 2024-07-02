@@ -8,7 +8,7 @@
   - [数据类型](#数据类型)
   - [继承](#继承)
   - [垃圾回收](#垃圾回收)
-  - [eval](#eval)
+  - [内置对象，方法及语句](#内置对象方法及语句)
 - [JS 执行过程](#js-执行过程)
   - [参数，变量提升，函数提升](#参数变量提升函数提升)
   - [作用域](#作用域)
@@ -88,45 +88,9 @@
 
 [垃圾回收](./gc.md)
 
-### eval
+### 内置对象，方法及语句
 
-`eval` 函数可以将一个字符串作为 `JavaScript` 代码来执行。
-
-用法：
-
-1. 动态执行 JavaScript 代码，实现动态更新页面的效果；
-
-    ```js
-    // 动态生成 HTML 元素
-    var str = "<div>动态生成的元素</div>";
-    eval("document.body.innerHTML += '" + str + "';");
-    ```
-
-2. 将字符串转换为 JavaScript 对象；
-
-    ```js
-    // 将 JSON 字符串转换为 JavaScript 对象
-    var jsonStr = '{ "name": "张三", "age": 20 }';
-    var jsonObj = eval("(" + jsonStr + ")");
-    console.log(jsonObj.name); // 输出："张三"
-    ```
-
-3. 实现动态加载 JavaScript 文件:
-
-    ```js
-    // 动态加载 JavaScript 文件
-    var scriptUrl = "http://example.com/script.js";
-    var xhr = new XMLHttpRequest();
-    xhr.open("GET", scriptUrl, false);
-    xhr.send(null);
-    eval(xhr.responseText);
-    ```
-
-问题：
-
-1. 安全问题：由于 `eval` 函数会将字符串解析为 js 代码并在当前作用域中执行，因此如果传入的字符串来源不可信，就可能会导致代码注入等安全问题。
-2. 性能问题：由于 `eval` 函数的执行需要解析字符串并执行 JavaScript 代码，所以会比直接执行 JavaScript 代码要慢一些，尤其是在循环中多次执行时，性能影响会更明显。
-3. 作用域问题：由于 `eval` 函数在当前作用域中执行代码，因此可能会导致变量名和函数名冲突等问题。
+[内置对象，方法及语句](./api/README.md)
 
 ## JS 执行过程
 
