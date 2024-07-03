@@ -47,14 +47,14 @@ React - 使用 JSX
 模板语法上，我更倾向于 React
 
 ```html
-// React:
-// 只需要知道一点， {} 里放 js 表达式
+<!-- // React -->
+<!-- // 只需要知道一点， {} 里放 js 表达式 -->
 <div>
   { ok ? <h1>Yes</h1> : <h1>No</h1>}
 </div>
 
-// Vue:
-// 需要学习 vue 语法
+<!-- // Vue -->
+<!-- // 需要学习 vue 语法 -->
 <div>
   <h1 v-if="ok">Yes</h1>
   <h1 v-else>Yes</h1>
