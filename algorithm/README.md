@@ -52,6 +52,7 @@
   - [剑指 Offer 22.链表中倒数第k个节点](#剑指-offer-22链表中倒数第k个节点)
   - [122.买卖股票的最佳时机 II](#122买卖股票的最佳时机-ii)
   - [67.二进制求和](#67二进制求和)
+  - [300. 最长递增子序列](#300-最长递增子序列)
 
 ## 基础知识
 
@@ -522,8 +523,8 @@ DFS Depth-First Search
 | :------ | --- | ------ |
 | -       | div | -      |
 | ui      | p   | button |
-| li - li |
-| a       |
+| li - li | - | - |
+| a       | - | - |
 
 ```js
 // DOM 树
@@ -1885,4 +1886,39 @@ var addBinary = function(a, b) {
   ans = ans + (num == 1 ? num : '') // 判断最后是否进位
   return ans.split('').reverse().join('');
 };
+```
+
+### 300. 最长递增子序列
+
+[300. 最长递增子序列](https://leetcode.cn/problems/longest-increasing-subsequence/)
+
+```js
+/**
+ * @param {number[]} nums
+ * @return {number}
+**/
+
+var lengthOfLIS = function(nums) {
+  let f = [nums[0]]
+  const binarySearch = (num) => {
+    let left = 0, right = f.length;
+    while (left < right) {
+      let mid = left + ((right - left) >> 1);
+      if (f[mid] < num) left = mid + 1;
+      else right = mid;
+    }
+    return left
+  }
+
+  for (let i = 1; i < nums.length; i++) {
+    if (nums[i] > f[f.length - 1]) {
+      f.push(nums[i])
+    } else {
+      f[binarySearch(nums[i])] = nums[i]
+    }
+  }
+
+  return f.length
+}
+
 ```
