@@ -363,6 +363,39 @@ console.log(wm1.get(o1));
 
 ## WeakSet
 
+`WeakSet` 是可被垃圾回收的值的集合，包括对象和`Symbol``。WeakSet` 中的值只能出现一次。
+
+- WeakSet 弱引用：WeakSet 中对象的引用为弱引用。如果没有其他的对 WeakSet 中对象的引用存在，那么这些对象会被垃圾回收。
+- WeakSet 只能是对象和符号的集合， Set 可以包含任何类型的任意值
+
+```js
+// 使用场景：检测循环引用
+function execRecursively(fn, subject, _res= new WeakSet()) {
+  // 避免无限递归
+  if (_res.has(subject)) return
+
+  fn(subject)
+
+  if (typeof subject === 'object') {
+    _res.add(subject)
+
+    for (const key in subject) {
+      execRecursively(fn, subject[key], _res)
+    }
+  }
+}
+
+const foo = {
+  foo: "Foo",
+  bar: {
+    bar: "Bar",
+  },
+}
+
+foo.bar.baz = foo; // 循环引用！
+execRecursively((obj) => console.log(obj), foo);
+```
+
 ## Promise
 
 链接: [promise](./promise/README.md)
