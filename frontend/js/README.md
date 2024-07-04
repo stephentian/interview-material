@@ -465,6 +465,8 @@ D: ReferenceError
 - Array，Map，Set，String，arguments 等
 - 可迭代: 对象 `[Symbol.iterator]` 有 `next` 方法
 
+总结：
+
 `for in` 是为遍历对象属性而构建的，**不建议与数组一起使用**。一般用于去检查对象属性，处理有 `key-value` 数据。比如配合 `hasOwnProperty()` 来确定某属性是否是对象本身的属性。
 
 比如遍历数组, `for in` 遍历出是 `key(0, 1, 2)`(array 自身的属性), `for of` 遍历出是 `value(a b c)`。
