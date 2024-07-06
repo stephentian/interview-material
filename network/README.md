@@ -256,15 +256,16 @@ TCP: Transmission Control Protocl 传输控制协议
 
 四次挥手目的: **FIN 表示不再发送数据, ACK 表明不再接收数据。直接 Close，服务端未必把全部数据都发送出来了。**
 
-- 客户端 发送一个FIN，用来关闭 客户端 到 服务端 的数据传送，客户端 进入FIN_WAIT_1状态
+- 客户端 发送一个 FIN，用来关闭 客户端 到 服务端 的数据传送，客户端 进入 FIN_WAIT_1 状态
 - 服务端 收到 FIN 后，发送一个 ACK 给 客户端，确认收到
 - 服务端 发送一个 FIN，用来关闭 服务端 到 客户端 的数据传送
-- 客户端 收到FIN后，客户端进入 TIME_WAIT 状态，接着发送一个 ACK 给 服务端，确认收到
+- 客户端 收到 FIN 后，客户端进入 TIME_WAIT 状态，接着发送一个 ACK 给 服务端，确认收到
 
 注释:
 
 - SYN (Synchronize Sequence Numbers): 同步序列编号
 - ACK (Acknowledge character): 确认字符
+- FIN (Finish): 停止发送数据
 
 ## UDP
 
