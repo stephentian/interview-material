@@ -27,6 +27,7 @@
   - [运算符](#运算符)
   - [typeof](#typeof)
 - [语句和声明](#语句和声明)
+  - [let 和 const](#let-和-const)
   - [for in 和 for of](#for-in-和-for-of)
   - [for await of](#for-await-of)
   - [try catch](#try-catch)
@@ -418,6 +419,12 @@ D: ReferenceError
 `typeof null === 'object'`: 对象的类型标签是 0。由于 null 代表的是空指针（大多数平台下值为 0x00），因此，null 的类型标签是 0，typeof null 也因此返回 "object"。
 
 ## 语句和声明
+
+### let 和 const
+
+1. 两者都是声明变量，但是 `let` 是声明变量，可以重新赋值；`const` 是声明常量，需要在声明的时候就要初始化。
+2. 两者都是块级作用域，声明前不可访问；
+3. 也会有提升，但是不会像 `var` 一样提升变量为 `undefined`；它们的提升表现为改变了作用域，让当前作用域存在“暂时性死区”；也可以认为不提升，因为暂时性死区严格禁止在声明之前使用变量。访问会报引用错误。
 
 ### for in 和 for of
 
