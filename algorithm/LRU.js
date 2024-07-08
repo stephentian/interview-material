@@ -31,7 +31,7 @@ class LRU {
 	}
 }
 
-// es5
+// ES5
 
 function LRUCache(size) {
   this.size = size
