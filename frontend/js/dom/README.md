@@ -12,7 +12,7 @@
 - [MutationObserver](#mutationobserver)
   - [执行时机](#执行时机)
 
-DOM 标准文档: [whatwg DOM](https://dom.spec.whatwg.org/)
+DOM 标准文档地址: [whatwg DOM](https://dom.spec.whatwg.org/)
 
 ## Event
 
@@ -156,9 +156,9 @@ el.addEventListener(event, callback, useCapture)
 
 ## MutationObserver
 
-MutationObserver 是一个用于监听 DOM 变化的接口，它可以检测到 DOM 元素的增删改查等操作。
+`MutationObserver` 是一个用于监听 DOM 变化的接口，它可以检测到 DOM 元素的增删改查等操作。
 
-DOM 事件同步触发，MutationObserver 异步触发，不会阻塞页面的渲染。
+DOM 事件同步触发，`MutationObserver` 异步触发，不会阻塞页面的渲染。
 
 应用场景:
 

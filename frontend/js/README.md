@@ -403,16 +403,19 @@ D: ReferenceError
 
 ### typeof
 
-输出结果
+`typeof` 可能的返回值
 
 1. `number`
 2. `string`
 3. `boolean`
 4. `undefined`
-5. `object`
-6. `function`
-7. `symbol`
+5. `symbol`
+6. `bigint`
+7. `object`
+8. `function`
 ``
+
+`typeof null === 'object'`: 对象的类型标签是 0。由于 null 代表的是空指针（大多数平台下值为 0x00），因此，null 的类型标签是 0，typeof null 也因此返回 "object"。
 
 ## 语句和声明
 
