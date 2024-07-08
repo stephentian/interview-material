@@ -25,7 +25,7 @@
   - [this](#this)
   - [属性访问](#属性访问)
   - [运算符](#运算符)
-- [typeof](#typeof)
+  - [typeof](#typeof)
 - [语句和声明](#语句和声明)
   - [for in 和 for of](#for-in-和-for-of)
   - [for await of](#for-await-of)
@@ -371,7 +371,7 @@ Javascript 函数中的 `this` 表现与其他语言不同。此外，在严格�
 
 1. 全局环境下，指向 `window`，严格模式下为 `undefined`
 2. 对象静态方法，指向调用者
-3. 箭头函数中, this 不变, 在声明的位置时确定 this
+3. 箭头函数中, `this` 不变, 在声明的位置时确定 `this`
 
 ### 属性访问
 
@@ -401,7 +401,7 @@ D: ReferenceError
 
 [运算符](./operator.md)
 
-## typeof
+### typeof
 
 输出结果
 
