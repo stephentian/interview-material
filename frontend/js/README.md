@@ -368,11 +368,61 @@ JavaScript 是一种动态类型语言：我们没有指定某些变量的类型
 
 Javascript 函数中的 `this` 表现与其他语言不同。此外，在严格模式和非严格模式之间也会有一些差别。
 
-大多数情况，函数的调用方式决定了 this 的值（运行时绑定）。为当前执行上下文（global、function 或 eval）的一个属性，在非严格模式下，总是指向一个对象，在严格模式下可以是任意值。
+1. 全局作用域
+   1. 非严格模式，浏览器指向 `window`，node 环境指向 `global`
+   2. 严格模式下为 `undefined`
+2. 函数作用域
+   1. 非严格模式，指向全局对象
+   2. 严格模式，指向 `undefined`
+3. 对象方法，指向调用者(谁调用指向谁)
+4. 构造函数，指向 `new` 创建的对象实例，用 `this` 来设置实例的属性
+5. 箭头函数
+   1. 本身没有 `this`, 不能当构造函数；
+   2. 从外层作用域继承, 在声明的位置时确定 `this`；
+   3. 并且不会被 `bind` 改变
+6. 类 Class
+   1. `this` 指向类的实例，类的静态方法里指向类；
+   2. 如果将实例方法解构出来调用会报错 `undefined`，需要在定义的时候 `bind` 绑定 `this` 或使用箭头函数
 
-1. 全局环境下，指向 `window`，严格模式下为 `undefined`
-2. 对象静态方法，指向调用者
-3. 箭头函数中, this 不变, 在声明的位置时确定 this
+    ```js
+    class Foo {
+      sayName(name) {
+        this.say(name)
+      }
+
+      say(name) {
+        console.log("foo name: ", name)
+      }
+    }
+
+    const foo = new Foo()
+    foo.sayName("foo") // foo name:  foo
+    const { sayName } = foo
+    sayName("foo1") // TypeError: Cannot read properties of undefined (reading 'say')
+    const sayName2 = foo.sayName
+    sayName2("foo2") // TypeError: Cannot read properties of undefined (reading 'say')
+
+    class Foo1 {
+      constructor() {
+        this.sayName = this.sayName.bind(this)
+      }
+
+      sayName(name) {
+        this.say(name)
+      }
+
+      say(name) {
+        console.log("foo1 name: ", name)
+      }
+    }
+
+    const foo1 = new Foo1()
+    foo1.sayName("foo1")
+    const { sayName: sayNameFoo1 } = foo1
+    sayNameFoo1("foo2")
+    const sayName3 = foo1.sayName
+    sayName3("foo3")
+    ```
 
 ### 属性访问
 
