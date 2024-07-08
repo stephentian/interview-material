@@ -22,6 +22,7 @@ class LRU {
 
 		if (this.cache.size >= this.size) {
 			// 删除最不常用数据
+			// 可迭代对象的第一个值
 			// this.cache.delete(this.cache.keys().next().value);
 			const firstKey = [...this.cache.keys()][0]
 			this.cache.delete(firstKey)

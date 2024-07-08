@@ -1185,13 +1185,13 @@ var findContentChildren = function(g, s) {
 
 ## LRU
 
-最久未使用 (least recently used)，LRU 算法又叫淘汰算法,根据数据历史访问记录进行淘汰数据；
+最久未使用 (`least recently used`)，LRU 算法又叫淘汰算法,根据数据历史访问记录进行淘汰数据；
 
 核心思想： “如果数据最近被访问过, 那么将来被访问的几率也更高”。
 
 LRU 在 Vue 的 `keep-alive` 中有使用
 
-利用 Map 的 key 的有序性
+利用 Map 的 key 的有序性，Map 会记住键值对的插入顺序。
 
 ```js
 class LRUCache {
