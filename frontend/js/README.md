@@ -184,7 +184,7 @@ func(18);
 
 ### 执行上下文
 
-执行上下文（Execution Contexts）。
+执行上下文（`Execution Contexts`）。
 
 JavaScript 中有三种执行上下文类型：
 
@@ -194,25 +194,25 @@ JavaScript 中有三种执行上下文类型：
 
 每个执行上下文，都有三个重要属性：
 
-- 变量对象(Variable object，VO)
+- 变量对象(`Variable Object`，VO)
 - 作用域链(Scope chain)
 - this
 
-上下文环境结构由：词法环境（Lexical Environments）和 变量环境（Variable Environment）
+上下文环境结构由：词法环境（`Lexical Environments`）和 变量环境（`Variable Environment`）
 
-js 执行两个阶段：1.创建阶段 2.执行阶段
+js 执行上下文两个阶段：1.创建阶段 2.执行阶段
 
 - 创建阶段
   - 当 JS 被编译时，一个执行上下文就被创建
   - 确定 this 的值，也被称为 This Binding
-  - LexicalEnvironment（词法环境） 组件被创建。
-  - VariableEnvironment（变量环境） 组件被创建。
+  - `Lexical Environment`（词法环境） 组件被创建。
+  - `Variable Environment`（变量环境） 组件被创建。
 
 - 当执行上下文准备就绪，进入执行阶段
 
 ### 词法环境
 
-词法环境（Lexical Environment）
+词法环境（`Lexical Environment`）
 
 词法环境是在 JavaScript 解析（**代码编译阶段**）代码时创建的一个对象。每个函数和代码块都有它自己的词法环境，用于存储变量和函数的定义和值。包括以下成员：
 
