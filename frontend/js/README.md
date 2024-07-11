@@ -104,12 +104,13 @@ js 执行过程分为两个阶段：
 
 编译阶段（序列化-->抽象语法树-->可执行代码）， js 引擎做 3 件事
 
-- 词法分析 Lexical analyzer (`Scanner`)
-  - 预编译(变量提升，函数提升)
+- 词法分析 `Lexical analyzer` (`Scanner`)
+  - 预编译：变量提升，函数提升
   - 将代码分解成各个模块， tokens
-- 语法分析 Syntax analyzer (`Parser`)
+- 语法分析 `Syntax analyzer` (`Parser`)
   - 生成 AST，检查语法
 - 字节码生成
+- 即时编译 JIT：发现某个函数或代码块被频繁执行，就会将其编译成高度优化的机器码
 
 参考文章：
 
@@ -204,7 +205,7 @@ js 执行上下文两个阶段：1.创建阶段 2.执行阶段
 
 - 创建阶段
   - 当 JS 被编译时，一个执行上下文就被创建
-  - 确定 this 的值，也被称为 This Binding
+  - 确定 this 的值，也被称为 `This Binding`
   - `Lexical Environment`（词法环境） 组件被创建。
   - `Variable Environment`（变量环境） 组件被创建。
 
