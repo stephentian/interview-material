@@ -153,13 +153,17 @@ js 执行过程分为两个阶段：
 
 ```js
 function func(age) {
-    console.log(age);   // ƒ age() {}
+    console.log(age);
     var age = 25;
-    console.log(age);   // 25
+    console.log(age);
     function age() {}
-    console.log(age);   //  25
+    console.log(age);
 }
 func(18);
+
+// ƒ age() {}
+// 25
+// 25
 
 // var 换成 let 和 const 会报错: SyntaxError: Identifier 'age' has already been declared
 // 因为 let 和 const 是块级作用域，会改变当前作用域
@@ -173,13 +177,15 @@ func(18);
 
 编程语言中, 作用域有两种: 词法作用域, 动态作用域
 
-`JavaScript` 的作用域是词法作用域
+`JavaScript` 的作用域是词法作用域（静态作用域）
 
-最外层是 全局作用域, 由 `{}` 包裹为块级作用域
+- 全局作用域
+- 函数作用域
+- 块作用域
 
 ### 词法作用域
 
-也叫 静态作用域, 指作用域是由代码写在哪里来决定的；
+也叫 静态作用域, 指作用域是在函数声明的位置确定，即代码写在哪里来决定的；
 
 无论函数在哪里被调用, 它如何被调用，它的词法作用域都只由函数被声明时所处的位置决定
 
