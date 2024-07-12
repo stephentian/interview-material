@@ -173,41 +173,41 @@ var searchInsert = function(nums, target) {
 解释：8 的算术平方根是 2.82842..., 由于返回类型是整数，小数部分将被舍去。
 
 ```js
-// 一、
-// var mySqrt = function(x) {
-//     if (x < 2) return x
+// 一
+var mySqrt = function(x) {
+    if (x < 2) return x
 
-//     let l = 1, r = x
+    let l = 1, r = x
 
-//     while (l <= r) {
-//         let mid = Math.floor(l + (r - l)/2)
+    while (l <= r) {
+        let mid = Math.floor(l + (r - l)/2)
 
-//         if (mid * mid === x) return mid
+        if (mid * mid === x) return mid
 
-//         if (mid * mid < x) {
-//             l = mid + 1
-//             if (l * l > x) return mid
-//         } else {
-//             r = mid - 1
-//         }
-//     }
-// };
+        if (mid * mid < x) {
+            l = mid + 1
+            if (l * l > x) return mid
+        } else {
+            r = mid - 1
+        }
+    }
+};
 
 // 二
-var mySqrt = function(x) {
-  if (x < 2) return x
-  let left = 2, mid, right = Math.floor(x / 2);
-  while (left <= right) {
-    mid = Math.floor(left + (right - left) / 2)
-    if (mid * mid === x) return mid
-    if (mid * mid < x) {
-        left = mid + 1
-    }else {
-        right = mid - 1
-    }
-  }
-  return right
-};
+// var mySqrt = function(x) {
+//   if (x < 2) return x
+//   let left = 2, mid, right = Math.floor(x / 2);
+//   while (left <= right) {
+//     mid = Math.floor(left + (right - left) / 2)
+//     if (mid * mid === x) return mid
+//     if (mid * mid < x) {
+//         left = mid + 1
+//     }else {
+//         right = mid - 1
+//     }
+//   }
+//   return right
+// };
 ```
 
 ## 动态规划
