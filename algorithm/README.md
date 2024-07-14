@@ -1785,6 +1785,7 @@ var helper = function (stones, index, k, set) {
  * @return {ListNode}
  */
 var getKthFromEnd = function(head, k) {
+  // 方式一：利用 map
   // const arr = new Map()
   // let i = 0
 
@@ -1796,6 +1797,7 @@ var getKthFromEnd = function(head, k) {
 
   // return arr.get(i - k)
 
+  // 方式二：双指针
   let node = head, n = 0;
   while (node) {
       node = node.next;
