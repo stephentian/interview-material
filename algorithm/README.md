@@ -296,6 +296,8 @@ function combine(...chunks) {
     let isLast = chunkIndex === chunks.length - 1
 
     for (let val of chunk) {
+      // push 的返回值是数组长度
+      // concat 的返回值是合并后的数组，所以用 concat
       let cur = pre.concat(val)
 
       if (isLast) {
