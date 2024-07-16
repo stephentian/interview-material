@@ -202,7 +202,7 @@ JavaScript 中有三种执行上下文类型：
 每个执行上下文，都有三个重要属性：
 
 - 变量对象(`Variable Object`，VO)
-- 作用域链(Scope chain)
+- 作用域链(`Scope chain`)
 - this
 
 上下文环境结构由：词法环境（`Lexical Environments`）和 变量环境（`Variable Environment`）
@@ -236,13 +236,13 @@ js 执行上下文两个阶段：1.创建阶段 2.执行阶段
 
 ### 变量环境
 
-变量环境也是一个词法环境，它具有上面定义的词法环境的所有属性，其 EnvironmentRecord 包含了由 VariableStatements 在此执行上下文创建的绑定。
+变量环境也是一个词法环境，它具有上面定义的词法环境的所有属性，其 `EnvironmentRecord` 包含了由 `VariableStatements` 在此执行上下文创建的绑定。
 
 ### 为什么要有两个词法环境
 
-变量环境组件（VariableEnvironment） 是用来登记 var function 变量声明，词法环境组件（LexicalEnvironment）是用来登记 let const class 等变量声明。
+变量环境组件（VariableEnvironment） 是用来登记 `var function` 变量声明，词法环境组件（LexicalEnvironment）是用来登记 `let const class` 等变量声明。
 
-在ES6之前都没有块级作用域，ES6之后我们可以用let const来声明块级作用域，有这两个词法环境是为了实现块级作用域的同时不影响var变量声明和函数声明。
+在 ES6 之前都没有块级作用域，ES6之后我们可以用 `let const` 来声明块级作用域，有这两个词法环境是为了实现块级作用域的同时不影响 var 变量声明和函数声明。
 
 ### 语法环境
 
@@ -252,7 +252,7 @@ js 执行上下文两个阶段：1.创建阶段 2.执行阶段
 
 - 变量环境：用于存储变量和函数的定义和值；
 - 外部环境引用：用于指向外部环境，也就是包含当前语法环境的函数或代码块的语法环境；
-- this 值：用于存储当前执行上下文中的 this 值。
+- this：用于存储当前执行上下文中的 this 值。
 
 ### 作用域链
 
