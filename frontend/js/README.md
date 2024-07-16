@@ -105,8 +105,8 @@ js 执行过程分为两个阶段：
 编译阶段（序列化-->抽象语法树-->可执行代码）， js 引擎做 3 件事
 
 - 词法分析 `Lexical analyzer` (`Scanner`)
-  - 预编译：变量提升，函数提升
   - 将代码分解成各个模块， tokens
+  - 预编译：变量提升，函数提升
 - 语法分析 `Syntax analyzer` (`Parser`)
   - 生成 AST，检查语法
 - 字节码生成
@@ -118,7 +118,7 @@ js 执行过程分为两个阶段：
 - [JavaScript Execution Context and Hoisting Explained with Code Examples](https://www.freecodecamp.org/news/javascript-execution-context-and-hoisting/)
 - [万字干货！详解JavaScript执行过程](https://blog.csdn.net/howgod/article/details/118097654?ydreferer=aHR0cHM6Ly9jbi5iaW5nLmNvbS8%3D)
 - [JavaScript的执行过程（深入执行上下文、GO、AO、VO和VE等概念）](https://www.cnblogs.com/MomentYY/p/15785719.html)
-- 《你不知道的 JavaScript》词法分析
+- [You-Dont-Know-JS - Compiling Code](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/scope-closures/ch1.md)
 
 二、执行阶段
 
@@ -147,7 +147,7 @@ js 执行过程分为两个阶段：
   - 接收实参，添加到 AO 属性中，覆盖之前的 undefined
 - 分析变量声明  
   - 在分析变量声明时，如果 AO 上已经有该属性了 则不作任何修改
-  - 如果 AO 上还没有该属性 则为 undefined
+  - 如果 AO 上还没有该属性 则为 `undefined`
 - 分析函数声明  
   - 分析函数声明时 如果 AO 上已经有该属性了 则会覆盖掉
 
@@ -191,7 +191,7 @@ func(18);
 
 ### 执行上下文
 
-执行上下文（`Execution Contexts`）。
+执行上下文（`Execution Contexts`）是 js 执行时创建的一个环境。
 
 JavaScript 中有三种执行上下文类型：
 
@@ -211,7 +211,7 @@ js 执行上下文两个阶段：1.创建阶段 2.执行阶段
 
 - 创建阶段
   - 当 JS 被编译时，一个执行上下文就被创建
-  - 确定 this 的值，也被称为 `This Binding`
+  - `This Binding`，确定 `this` 的值
   - `Lexical Environment`（词法环境） 组件被创建。
   - `Variable Environment`（变量环境） 组件被创建。
 
@@ -223,7 +223,7 @@ js 执行上下文两个阶段：1.创建阶段 2.执行阶段
 
 词法环境是在 JavaScript 解析（**代码编译阶段**）代码时创建的一个对象。每个函数和代码块都有它自己的词法环境，用于存储变量和函数的定义和值。包括以下成员：
 
-- 环境记录：environment record，用于记录变量和函数的定义和值；
+- 环境记录：`environment record`，用于记录变量和函数的定义和值；
 - 外部环境引用：用于指向外部环境，也就是包含当前词法环境的函数或代码块的词法环境。
 
 词法环境和四个类型的代码结构相对应:
