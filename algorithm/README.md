@@ -363,7 +363,7 @@ var lengthOfLongestSubstring = function (s) {
   let res = 0
   let map = new Map()
 
-  for (let r = 0; r < s.length; r ++) {
+  for (let r = 0; r < s.length; r++) {
     if (map.has(s[r]) && map.get(s[r]) >= left) {
       left = map.get(s[r]) + 1
     }
