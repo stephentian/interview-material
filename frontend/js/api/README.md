@@ -35,6 +35,8 @@ toString.call(22)           // [object Number]
 toString.call(new Date)     // [object Date]
 toString.call(Math)         // [object Math]
 toString.call(window)       // [object Window]
+toString.call(undefined)    // [object Undefined]
+toString.call(null)         // [object Null]
 
 let c = [1, 2, 3]
 let d = {a:2}
@@ -301,7 +303,7 @@ for (let item of set.values()) {
 
 ## Map
 
-js 中的对象，本质是键值对的集合（Hash结构），只能用 字符串当作键名
+js 中的对象，键值对的集合（Hash结构），只能用字符串当作键名
 
 Map 结构, 键名不限于字符串，各种类型都可以当键名。
 
