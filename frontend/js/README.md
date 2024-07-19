@@ -489,15 +489,15 @@ D: ReferenceError
 
 ### for in 和 for of
 
-`for in`: 遍历**可枚举属性**数据。得到 key
+`for in`: 遍历**可枚举属性**数据，得到 `key`
 
-- **任意顺序**遍历一个对象的除 Symbol 以外的**可枚举属性**
+- **任意顺序**遍历一个对象的除 `Symbol` 以外的**可枚举属性**
 - 遍历数组, 字符串
-- 可枚举属性: Object 属性的 `enumerable`
+- 可枚举属性: 对象属性的 `enumerable` 为 `true`
 
-`for of`: 遍历**可迭代对象**定义要迭代的数据。得到 value
+`for of`: 遍历**可迭代对象**定义要迭代的数据, 得到 `value`
 
-- Array，Map，Set，String，arguments 等
+- `Array，Map，Set，String，arguments` 等
 - 可迭代: 对象 `[Symbol.iterator]` 有 `next` 方法
 
 总结：
@@ -571,11 +571,9 @@ D: 1 undefined undefined
 
 答案： `A`
 
-catch 块接收参数 x
-这与变量的 x 不同。这个变量 x 是属于 catch 作用域的
-我们将这个块级作用域的变量设置为 1, 并设置变量 y 的值.
-现在，我们打印块级作用域的变量 x, 它等于 1
-在 catch 块之外，x 仍然是 undefined，而 y 是 2.
+catch 块接收参数 `x`, 这个变量 x 是属于 catch 作用域。
+将这个块级作用域的变量 x 设置为 1, 并设置变量 y 的值为 2。
+在 catch 块之外，x 仍然是 undefined，而 y 是 2。
 
 ## DOM
 
@@ -587,16 +585,16 @@ catch 块接收参数 x
 
 面向对象编程是假设一个实体，然后给它属性，方法。
 
-而函数式编程是造工具，把运算过程写成一套函数调用。
+而函数式编程是造工具，把运算过程写成一套函数调用。不用管什么对象使用。
 
 ### 纯函数
 
-对于一个函数，
+纯函数：
 
 1. 相同的输入，永远会得到相同的输出；
 2. 不产生副作用；
 3. 不依赖外部状态；
-我们就把这个函数叫做纯函数
+
 比如 `slice` 和 `splice`， 都可以做同样的操作，
 但是 `splice` 会修改参数，也就是传入的数组，所以不是纯函数，而 `slice` 是纯函数。
 
@@ -624,19 +622,27 @@ catch 块接收参数 x
 // add(1, 2)(3)
 // add(1)(2, 3)
 
-function add(...args) {
-  let sum = args.reduce((res, cur) => res + res)
-  return function (...next) {
-    return next.length ? add(sum, ...next) : sum
+// function addCurry(...args) {
+//   let sum = args.reduce((res, cur) => res + cur)
+//   return function (...next) {
+//     return next.length ? addCurry(sum, ...next) : sum
+//   }
+// }
+// addCurry(1, 2, 3)()
+
+const add = (x, y, z) => x + y + z
+const curry = (fn, ...args) => {
+  return args.length >= fn.length ? fn(...args)
+   : (..._args) => curry(fn, ...args, ..._args)
+}
+const curry = (fn) => {
+  return function curried(...args) {
+    return args.length >= fn.length ? fn(...args) : (_args) => curried(...args, ..._args)
   }
 }
 
-const curry = (fn, ...args) => {
-  args.length >= fn.length ? fn(...args)
-   : (..._args) => curry(fn, ...args, ..._args)
-
-}
-
+const curriedAdd = curry(add)
+curriedAdd(1, 2, 3) // 6
 ```
 
 ## 问题
