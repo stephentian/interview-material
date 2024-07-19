@@ -477,7 +477,7 @@ D: ReferenceError
 8. `function`
 ``
 
-`typeof null === 'object'`: 对象的类型标签是 0。由于 null 代表的是空指针（大多数平台下值为 0x00），因此，null 的类型标签是 0，typeof null 也因此返回 "object"。
+`typeof null === 'object'`: js 最开始设计是，对象的类型标签是 0。由于 null 代表的是空指针（大多数平台下值为 0x00），因此，null 的类型标签是 0，typeof null 也因此返回 "object"。出自 [MDN typeof null](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/typeof)
 
 ## 语句和声明
 
