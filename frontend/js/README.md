@@ -635,9 +635,9 @@ const curry = (fn, ...args) => {
   return args.length >= fn.length ? fn(...args)
    : (..._args) => curry(fn, ...args, ..._args)
 }
-const curry = (fn) => {
+const curryFn = (fn) => {
   return function curried(...args) {
-    return args.length >= fn.length ? fn(...args) : (_args) => curried(...args, ..._args)
+    return args.length >= fn.length ? fn(...args) : (..._args) => curried(...args, ..._args)
   }
 }
 
@@ -649,7 +649,7 @@ curriedAdd(1, 2, 3) // 6
 
 ### 为什么设计成单线程？
 
-作者布兰登，不想让浏览器变得太复杂
+作者布兰登的书《JavaScript 20 years》写道，不想让浏览器变得太复杂
 
 1. JavaScript的诞生就是为了处理浏览器网页的交互
 2. 因为多线程需要共享资源、且有可能修改彼此的运行结果
@@ -659,7 +659,7 @@ curriedAdd(1, 2, 3) // 6
 
 defer 和 async 在网络读取（下载）这块儿是一样的，都是异步的（相较于 HTML 解析）
 
-- defer: 会在整个文档解析完成后, document 的 DOMContentLoaded 之前执行
+- defer: 会在整个文档解析完成后, `document` 的 `DOMContentLoaded` 之前执行
 - async: js 在下载完后会立即执行
 
 ### Event Loop 执行顺序

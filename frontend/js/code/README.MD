@@ -12,7 +12,7 @@
 - [实现一个 const](#实现一个-const)
 - [实现一个 JSON.parse](#实现一个-jsonparse)
 - [toString 和 valueOf](#tostring-和-valueof)
-  - [让 (a===1 \& a===2 \&\& a===3) 的值为true](#让-a1--a2--a3-的值为true)
+  - [让 a===1，a===2，a===3 同时为true](#让-a1a2a3-同时为true)
   - [实现一个无限累加函数](#实现一个无限累加函数)
   - [柯里化多参累加](#柯里化多参累加)
 - [消除 await 里的 try catch](#消除-await-里的-try-catch)
@@ -158,7 +158,9 @@ function parse (json) {
 
 ## toString 和 valueOf
 
-### 让 (a===1 & a===2 && a===3) 的值为true
+### 让 a===1，a===2，a===3 同时为true
+
+a 是原始类型，不能同时等于 1，2，3。但是可以利用调用顺序，让 a === 1 && a === 2 && a === 3 为true
 
 ```js
 // 重写 valueOf
@@ -171,6 +173,7 @@ class A {
     }
 }
 const a = new A(1);
+// a 为对象, 用 == 
 if (a == 1 && a == 2 && a == 3) {
     console.log("Hi Libai!");
 }
@@ -189,13 +192,14 @@ if (a === 1 && a === 2 && a === 3) {
 
 ### 实现一个无限累加函数
 
-```js
-add(1)              // 1
-add(1)(2)           // 3
-add(1)(2)(3)        // 6
-add(1)(2)(3)(4)     // 10
+利用 闭包 和 toString 实现
 
-// 以此类推
+```js
+// add(1)              // 1
+// add(1)(2)           // 3
+// add(1)(2)(3)        // 6
+// add(1)(2)(3)(4)     // 10
+
 function add(a) {
     function sum(b) { // 使用闭包
         a = b ? a + b : a; // 累加
