@@ -405,30 +405,28 @@ var isValid = function(s) {
 };
 
 var isValid = function(s) {
-  const len = s.length
-  if (len % 2 === 1) return false
-
-  const map = {
-    "}": "{",
-    "]": "[",
-    ")": "("
-  }
-
-  const stack = []
-
-  for (let c of s) {
-    if (map[c]) {
-      if (!stack.length || stack[stack.length - 1] !== map[c]) {
-        return false
-      }
-      stack.pop()
-    } else {
-      stack.push(c)
+    if (!s || s.length < 2) return false
+    
+    let stack = []
+    const map = {
+        "}": "{",
+        "]": "[",
+        ")": "("
     }
-  }
 
-  return !stack.length
-}
+    for (let i of s) {
+        let len = stack.length
+        if (map[i]) {
+            if (!len || stack[len - 1] !== map[i]) return false
+
+            stack.pop()
+        } else {
+            stack.push(i)
+        }
+    }
+
+    return !stack.length
+};
 
 // pop push
 var isValid = function(s) {
