@@ -18,12 +18,19 @@ class EventEmitter {
     cbs.forEach(fn => fn.call(this, ...arg))
   }
   off(name, fn) {
-    if (!name || !this.events[name]) return false
+    if (!name) {
+      throw new Error('Event name is required !')
+    }
+
+    if (!this.events[name]) {
+      throw new Error(`Event ${name} does not exist !`)
+    }
 
     if (!fn || (fn && !~this.events[name].indexOf(fn))) {
-      this.events[name] = null
-      return
+      this.events[name] = []
+      return true
     }
+
     const index = this.events[name].indexOf(fn)
     this.events[name].splice(index, 1)
   }
