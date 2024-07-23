@@ -44,17 +44,19 @@ console.log(-Math.pow(2, 53) - 1); //-9007199254740992
 
 链接: [02.EventEmitter.js](02.EventEmitter.js)
 
-核心方法: on, emit, off, once
+核心方法: `on, emit, off, once`
 
 ## 异步并发调度器
+
+实现一个异步并发调度器，并有并发限制，最多同时运行 2个任务。 `add` 方法添加任务，`run` 执行任务
 
 链接: [03.Scheduler](03.Scheduler.js)
 
 思路:
 
-- tasks 等待执行队列
-- working 正在执行的
-- 超过 并发数 则 push 进 tasks
+- `tasks` 等待执行队列
+- `working` 正在执行的
+- 超过 并发数 则 `push` 进 `tasks`
 
 ## 柯里化
 
