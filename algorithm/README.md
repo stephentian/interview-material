@@ -490,6 +490,7 @@ class BinarySearchTree {
     this.root = null
   }
 
+  // 插入节点
   insert(val) {
     let node = new TreeNode(val)
 
@@ -515,13 +516,31 @@ class BinarySearchTree {
       }
     }
   }
+
+  find(val) {
+    if (!this.root) return null
+
+    let cur = this.root
+
+    while (cur) {
+      if (val === cur.val) return cur
+
+      if (val < cur.val) {
+        cur = cur.left
+      } else {
+        cur = cur.right
+      }
+    }
+
+    return null
+  }
 }
 
 ```
 
 ### DFS 深度优先遍历
 
-DFS Depth-First Search
+`DFS Depth-First Search`
 
 - 利用栈特性, 先入后出, push, pop
 - 以纵向的维度对 DOM 树进行遍历, 从最顶向左下遍历
