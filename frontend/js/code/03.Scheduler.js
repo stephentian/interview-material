@@ -1,5 +1,6 @@
-// 异步并发调度器
-
+/**
+ * 异步任务调度器类，用于控制并发执行的任务数量。
+ */
 class Scheduler {
   constructor() {
     this.tasks = []
@@ -8,6 +9,7 @@ class Scheduler {
   }
   add(promiseCreator) {
     return new Promise((resolve, reject) => {
+      // 为任务函数添加resolve方法，用于任务完成后通知调度器
       promiseCreator.resolve = resolve
 
       if (this.working.length < this.maxCount) {
