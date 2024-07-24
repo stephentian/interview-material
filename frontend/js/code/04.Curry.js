@@ -11,12 +11,14 @@
 // add(1, 2)(3)
 // add(1)(2, 3)
 
+// 无限累加
 // function add(...args) {
 //   let sum = args.reduce((res, cur) => res + res)
 //   return function (...next) {
 //     return next.length ? add(sum, ...next) : sum
 //   }
 // }
+// 最后需要调用，传入空参数触发
 
 function curry(fn, ...args) {
   // fn.length 表示 fn 接收参数个数
@@ -25,6 +27,26 @@ function curry(fn, ...args) {
   return args.length === fn.length ? fn(...args) : (..._args) => curry(fn, ...args, ..._args)
 }
 
+const curryFn = (fn) => {
+  return function curried(...args) {
+    return args.length >= fn.length ? fn(...args) : (..._args) => curried(...args, ..._args)
+  }
+}
+
+const curry2 = (fn) => {
+  return curried = (...args) => {
+    return args.length >= fn.length ? fn(...args) : (..._args) => curried(...args, ..._args)
+  }
+}
+
 function add(x, y, z) {
   return x + y + z
 }
+
+// test
+
+const curriedAdd = curry2(add)
+
+console.log("curriedAdd(1, 2, 3)", curriedAdd(1, 2, 3))
+console.log("curriedAdd(1, 2)(3)", curriedAdd(1, 2)(3))
+console.log("curriedAdd(1)(2, 3)", curriedAdd(1)(2, 3))
