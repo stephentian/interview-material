@@ -15,63 +15,41 @@ function throttle(fn, time) {
 
     const now = Date.now()
     const timeSiceLastCall = now - lastCall
-    if (timeSiceLastCall < time) {
-
-      return
-    }
+    if (timeSiceLastCall < time) return
 
     lastCall = now
     fn.apply(context, args)
 
-    // if (!timer) {
-    //   timer = setTimeout(() => {
-    //     fn.apply(context, args)
-    //     timer = null
-    //   }, time);
-    // }
-    timer = setTimeout(() => {
-      fn.apply(context, args)
-      timer = null
-    }, time);
+    if (!timer) {
+      timer = setTimeout(() => {
+        fn.apply(context, args)
+        timer = null
+      }, time);
+    }
   }
 }
 
+// 方法执行完回调版
 function throttle1(fn, delay) {
   let canUse = true
-  return function () {
+  let timer = null
+  return function (...args) {
     if (canUse) {
-      fn.apply(this, arguments)
+      fn.apply(this, args)
       canUse = false
-      setTimeout(() => {
+
+      if (timer) clearTimeout(timer)
+
+      timer = setTimeout(() => {
+        timer = null
         canUse = true
       }, delay);
     }
   }
 }
 
-function throttle2(func, limit) {  
-  let lastFunc;  
-  let lastRan;  
-  return function() {  
-      const context = this;  
-      const args = arguments;  
-      if (!lastRan) {  
-          func.apply(context, args);  
-          lastRan = Date.now();  
-      } else {  
-          clearTimeout(lastFunc);  
-          lastFunc = setTimeout(function() {  
-              if ((Date.now() - lastRan) >= limit) {  
-                  func.apply(context, args);  
-                  lastRan = Date.now();  
-              }  
-          }, limit - (Date.now() - lastRan));  
-      }  
-  };  
-}
-
 // underscore 版本
-function throttle3(func, wait, options) {  
+function throttleUnderscore(func, wait, options) {  
   var context, args, result;  
   var timeout = null;  
   var previous = 0;  
@@ -112,9 +90,9 @@ function logTime(...args) {
   console.log("logTime: ", args + " - " + new Date().toLocaleTimeString());  
 }
 
-const throttledLogTime = throttle1(logTime, 1000); // 限制为每秒调用一次 
+const throttledLogTime = throttleUnderscore(logTime, 1000);
 
-const throttleFn = throttle2(function(...args) {
+const throttleFn = throttle(function(...args) {
   console.log('throttle called：' + args);
 }, 500);
 
@@ -123,17 +101,10 @@ const throttleFn = throttle2(function(...args) {
 // throttleFn(3);
 
 console.time("throttleFn")
-for (let i = 0; i < 10; i++) {
+for (let i = 0; i < 100000000; i++) {
   // throttleFn(i);
   throttledLogTime(i);
 }
 console.timeEnd("throttleFn")
 
-setTimeout(() => {}, 5000); // 10s
-
-// function throttle3(fn, delay = 1000) {
-//   let timer = null
-//   return function () {
-//     if ()
-//   }
-// }
+setTimeout(() => {}, 5000); // 5s
