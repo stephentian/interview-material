@@ -622,6 +622,7 @@ catch 块接收参数 `x`, 这个变量 x 是属于 catch 作用域。
 // add(1, 2)(3)
 // add(1)(2, 3)
 
+// 无限累加
 // function addCurry(...args) {
 //   let sum = args.reduce((res, cur) => res + cur)
 //   return function (...next) {
