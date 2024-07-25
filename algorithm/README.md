@@ -597,13 +597,14 @@ let tree =  {
 
     ```js
     function dfs(node, nodeList = []) {
-      if (node) {
-        nodeList.push(node)
-        if(node.children && node.children.length>0){
-          const child = node.children
-          for(let i = 0; i<child.length; i++) {
-            dfs(child[i], nodeList)
-          }
+      if (!node) throw new Error('Invalid node object')
+
+      nodeList.push(node)
+
+      if(node.children && node.children.length > 0){
+        const child = node.children
+        for(let i = 0; i<child.length; i++) {
+          dfs(child[i], nodeList)
         }
       }
       return nodeList
