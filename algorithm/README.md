@@ -601,7 +601,7 @@ let tree =  {
 
       nodeList.push(node)
 
-      if(node.children && node.children.length > 0){
+      if (node.children && node.children.length > 0) {
         const child = node.children
         for(let i = 0; i<child.length; i++) {
           dfs(child[i], nodeList)
@@ -619,15 +619,19 @@ let tree =  {
       let nodes = []
 
       if (node) {
+        // 使用栈来进行深度优先搜索
         let stack = []
         stack.push(node)
 
+        // 当栈不为空时，继续搜索
         while(stack.length) {
           const item = stack.pop()
-          const child = item.children
-          
           nodes.push(item)
+          
+          const child = item.children
+          // 提前检查子节点是否存在，避免不必要的操作
           if (child && child.length > 0) {
+            // 倒序遍历，保证先遍历子节点
             for(let i = child.length - 1; i >= 0; i--) {
               stack.push(child[i])
             }
