@@ -10,12 +10,15 @@
 function cloneJSON(source) {
 	return JSON.parse(JSON.stringify(source))
 }
-// 递归爆栈
+// 问题
+// 1. 递归爆栈
 // cloneJSON(createData(10000)); // Maximum call stack size exceeded
-// 循环引用 报错
+// 2. 循环引用 报错
 // cloneJSON(a) // Uncaught TypeError: Converting circular structure to JSON
 
+// 测试方法
 // 生成指定深度和每层广度的代码
+
 function createData(deep, breadth = 0) {
 	var data = {}
 	var temp = data
@@ -50,7 +53,7 @@ function clone(target) {
 // 函数处理
 // 循环引用问题
 
-function deepClone(obj, hash= new WeakMap()) {
+function deepClone(obj, hash = new WeakMap()) {
   if (obj === null) return obj
   if (obj instanceof RegExp) return new RegExp(obj)
   if (obj instanceof Date) return new Date(obj)

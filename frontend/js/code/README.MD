@@ -69,8 +69,8 @@ console.log(-Math.pow(2, 53) - 1); //-9007199254740992
 - [debounce](debounce.js)
 - [throttle](throttle.js)
 
-防抖 debounce: 单位时间后执行，如果重复触发，就重新开始计时
-节流 throttle: 单位时间内只运行一次，在这段时间重复触发，只生效一次
+防抖 `debounce`: 单位时间后执行，如果重复触发，就重新开始计时
+节流 `throttle`: 单位时间内只运行一次，在这段时间重复触发，只生效一次
 
 ## 深拷贝
 
