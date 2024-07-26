@@ -7,6 +7,7 @@
 - [padStart 和 padEnd](#padstart-和-padend)
 - [模板字符串](#模板字符串)
 - [扩展运算符](#扩展运算符)
+- [Symbol](#symbol)
 - [Set](#set)
 - [Map](#map)
 - [WeakMap](#weakmap)
@@ -256,6 +257,38 @@ console.log(...[1, 2, 3])
 // [ "h", "e", "l", "l", "o" ]
 ```
 
+## Symbol
+
+原始数据类型。使用 `Symbol()` 创建 Symbol 类型的值。不支持 `new Symbol()`。
+
+每个 Symbol 值都是唯一的，用来解决命名冲突的问题。
+
+`Symbol.for(key)`：
+
+`key`，字符串。和 `Symbol()` 不同，每次都会创建一个新的 symbol。`Symbol.for()` 会检查 `key` 对应的 symbol，有则返回，没有则会在全局 symbol 注册表中创建一个新的。
+
+```js
+
+Symbol.for("foo"); // 创建一个 symbol 并放入 symbol 注册表中，键为 "foo"
+Symbol.for("foo"); // 从 symbol 注册表中读取键为"foo"的 symbol
+Symbol.for("bar") === Symbol.for("bar"); // true
+Symbol("bar") === Symbol("bar"); // false, 每次会创建一个新的
+```
+
+`Symbol.keyFor(sym)`
+
+`sym`: 必选，查找键值的某个 symbol.
+
+如果全局注册表中查找到该 symbol，则返回该 symbol 的 key 值，返回值为字符串类型。否则返回 undefined
+
+```js
+var globalSym = Symbol.for("foo");
+Symbol.keyFor(globalSym); // "foo"
+
+var localSym = Symbol();
+Symbol.keyFor(localSym); // undefined，
+```
+
 ## Set
 
 类似于数组，但是成员的值都是唯一的，没有重复的值
@@ -365,7 +398,7 @@ console.log(wm1.get(o1));
 
 ## WeakSet
 
-`WeakSet` 是可被垃圾回收的值的集合，包括对象和`Symbol``。WeakSet` 中的值只能出现一次。
+`WeakSet` 是可被垃圾回收的值的集合，包括对象和`Symbol`。`WeakSet` 中的值只能出现一次。
 
 - WeakSet 弱引用：WeakSet 中对象的引用为弱引用。如果没有其他的对 WeakSet 中对象的引用存在，那么这些对象会被垃圾回收。
 - WeakSet 只能是对象和 `Symbol` 的集合， Set 可以包含任何类型的任意值

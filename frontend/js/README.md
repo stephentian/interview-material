@@ -471,7 +471,7 @@ D: ReferenceError
 2. `string`
 3. `boolean`
 4. `undefined`
-5. `symbol`
+5. `symbol`: `typeof Symbol()`
 6. `bigint`
 7. `object`
 8. `function`
