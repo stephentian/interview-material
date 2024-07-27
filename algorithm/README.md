@@ -654,8 +654,8 @@ leetcode: [200. 岛屿数量](https://leetcode.cn/problems/number-of-islands/)
 ```js
 var numIslands = function(grid) {
     let res = 0
-    const row = grid.length
-    const col = grid[0].length
+    const row = grid.length // 行
+    const col = grid[0].length // 列
 
     function dfs(x, y) {
         grid[x][y] = 0
