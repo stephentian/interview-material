@@ -19,7 +19,7 @@
   - [DFS 深度优先遍历](#dfs-深度优先遍历)
     - [200.岛屿数量](#200岛屿数量)
     - [257.二叉树的所有路径](#257二叉树的所有路径)
-  - [BFS 广度优先搜索](#bfs-广度优先搜索)
+  - [BFS 广度优先遍历](#bfs-广度优先遍历)
     - [94.二叉树的中序遍历](#94二叉树的中序遍历)
     - [104.二叉树的最大深度](#104二叉树的最大深度)
   - [226.翻转二叉树](#226翻转二叉树)
@@ -601,7 +601,7 @@ let tree =  {
 
       nodeList.push(node)
 
-      if(node.children && node.children.length > 0){
+      if (node.children && node.children.length > 0) {
         const child = node.children
         for(let i = 0; i<child.length; i++) {
           dfs(child[i], nodeList)
@@ -619,15 +619,19 @@ let tree =  {
       let nodes = []
 
       if (node) {
+        // 使用栈来进行深度优先遍历
         let stack = []
         stack.push(node)
 
+        // 当栈不为空时，继续搜索
         while(stack.length) {
           const item = stack.pop()
-          const child = item.children
-          
           nodes.push(item)
+          
+          const child = item.children
+          // 提前检查子节点是否存在，避免不必要的操作
           if (child && child.length > 0) {
+            // 倒序遍历，保证先遍历子节点
             for(let i = child.length - 1; i >= 0; i--) {
               stack.push(child[i])
             }
@@ -650,8 +654,8 @@ leetcode: [200. 岛屿数量](https://leetcode.cn/problems/number-of-islands/)
 ```js
 var numIslands = function(grid) {
     let res = 0
-    const row = grid.length
-    const col = grid[0].length
+    const row = grid.length // 行
+    const col = grid[0].length // 列
 
     function dfs(x, y) {
         grid[x][y] = 0
@@ -702,9 +706,9 @@ var binaryTreePaths = function(root) {
 };
 ```
 
-### BFS 广度优先搜索
+### BFS 广度优先遍历
 
-广度优先遍历 breadth-first traversal，一行一行遍历，借助 “队列”实现，队列 “先进先出”，遍历则 “逐层推进”
+广度优先遍历 `breadth-first search`，一行一行遍历，借助 “队列”实现，队列 “先进先出”，遍历则 “逐层推进”
 
 BFS Breath-First Search
 
