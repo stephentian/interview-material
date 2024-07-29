@@ -88,6 +88,10 @@ MyPrms.prototype.then = function (onFulfilled, onRejected) {
   })
 }
 
+MyPrms.prototype.catch = function (onRejected) {
+  return this.then(null, onRejected)
+}
+
 function resolvePromise(promise2, x, resolve, reject) {
   if (promise2 === x)
     return reject(new TypeError('Chaining cycle detected for promise!'))

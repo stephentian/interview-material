@@ -16,12 +16,24 @@ Promise.retry = function(fn, times, delay) {
         if (times === 0) {
           reject(e)
         } else {
-          times --
+          times--
           setTimeout(innerFn, delay)
         }
       })
     }
 
-    return innerFn
+    return innerFn()
   })
 }
+
+function getUser() {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      reject('error')
+    }, 1000)
+  })
+}
+
+Promise.retry(getUser, 3, 1000).then(res => {
+  console.log('res: ', res)
+})

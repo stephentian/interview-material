@@ -18,7 +18,7 @@ DOM 标准文档地址: [whatwg DOM](https://dom.spec.whatwg.org/)
 
 ```js
 event.preventDefault()  // 例如阻止链接跳转
-event.stopPropagation()
+event.stopPropagation() // 阻止事件冒泡
 event.stopImmediatePropagation()  // 阻止事件冒泡, 并且阻止之后相同事件的其他函数执行
 event.currentTarget() // 获取到的是绑定事件的标签元素
 event.target()  // 获取的是触发事件的标签元素
