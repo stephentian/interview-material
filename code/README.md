@@ -22,8 +22,9 @@ arr.sort((a,b) => {
     const arr2 = b.split('.');
 
     while(true) {
-        const  s1 = arr1[i];
-        const s2 = arr2[i ++];
+        const s1 = arr1[i];
+        const s2 = arr2[i];
+        i++
         if(s1 === undefined || s2 === undefined) {
             return arr1.length - arr2.length;
         }
@@ -64,7 +65,9 @@ function traversal(node) {
         const ele = stack.pop()
         if (ele && ele.nodeType === 1) {
             console.log(ele.tagName)
-
+            
+            if (!ele.children) return
+            
             const { children } = ele
             const len = children.length
 

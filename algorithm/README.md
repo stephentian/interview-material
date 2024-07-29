@@ -619,7 +619,6 @@ let tree =  {
       let nodes = []
 
       if (node) {
-        // 使用栈来进行深度优先遍历
         let stack = []
         stack.push(node)
 

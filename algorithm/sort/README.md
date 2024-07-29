@@ -115,7 +115,7 @@ const quickSort = function (arr) {
   // 直接下标访问，复杂度 O(1)
   let pivot = arr[0]
 
-let left = []
+  let left = []
   let right = []
   // for (let i = 0; i < arr.length; i++) {
   for (let i = 1; i < arr.length; i++) {
@@ -195,9 +195,7 @@ function quickSort(arr) {
 
 ```js
 function insertSort(arr) {
-  if (arr.length <= 1) {
-    return arr
-  }
+  if (!arr || arr.length <= 1) return arr
 
   for (let i = 1; i < arr.length; i++) {
     let key = arr[i]
