@@ -558,6 +558,6 @@ class Point {
 
 ## async 和 await
 
-1. async 表示这是一个 async 函数， await只能用在 async 函数里面，不能单独使用
-2. await 等待的是一个 Promise 对象，后面必须跟一个 Promise 对象，但是不必写 `then()`，直接就可以得到返回值
-3. async 返回的是一个Promise对象
+1. `async` 表示这是一个 `async` 函数， `await` 只能用在 `async` 函数里面，不能单独使用
+2. `await` 等待的是一个 `Promise` 对象，后面必须跟一个 `Promise` 对象，但是不必写 `then()`，直接就可以得到返回值
+3. `async` 返回的是一个 `Promise` 对象

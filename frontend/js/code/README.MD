@@ -127,16 +127,17 @@ if (Array.from(arr) instanceof Array) {
 
 ```js
 function __const(data, value) {
-  window[data] = value // 把要定义的data挂载到window下，并赋值value
-  let c=1
+  let c = 1
   Object.defineProperty(window, data, {
       enumerable: true, // 可枚举
       configurable: false, // 可配置
+      value: value,
+      writable: false, // 防止常量值被更改
       get: function () {
         return value
       },
       set: function (newVal) {
-        if(c>=1) throw new TypeError('Assignment to constant variable')
+        if(c >= 1) throw new TypeError('Assignment to constant variable')
         
         c++
         value = newVal
@@ -155,7 +156,7 @@ console.log(a)
 function parse (json) {
     return eval("(" + json + ")");
 }
-// 相关地址：https://link.juejin.cn/?target=https%3A%2F%2Fgithub.com%2Fdouglascrockford%2FJSON-js%2Fblob%2Fmaster%2Fjson2.js%23L373
+// 相关地址：https://github.com/douglascrockford/JSON-js/blob/master/json2.js#L373
 ```
 
 ## toString 和 valueOf
