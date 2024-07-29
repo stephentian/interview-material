@@ -8,15 +8,19 @@
 
 const arr = [1, 2, [3, 4, [5], 6], 7]
 
-// ES6
+// 1. ES6 flat
 
+// flat(depth): 创建一个新的数组，并根据指定深度递归地将所有子数组元素拼接到新的数组
+// depth: 可选，递归的深度，默认为 1
 function flattenEs6(params) {
   return params.flat(Infinity)
 }
 
-// 2. 字符串化
 
+// 2. 字符串化
 let str = JSON.stringify(target)
+// JSON.stringify(arr)
+// '[1,2,[3,4,[5],6],7]'
 
 // 2.1 split
 
@@ -27,17 +31,17 @@ str = str.replace(/(\[|\])/g, '')
 str = '[' + str + ']'
 arr3 = JSON.parse(str)
 
-// 4. reduce
 
-function flattern(arr) {
+// 3. reduce
+
+function flatten(arr) {
   return arr.reduce((pre, cur) => {
-    return pre.concat(Array.isArray(cur) ? flattern(cur) : cur)
+    return pre.concat(Array.isArray(cur) ? flatten(cur) : cur)
   }, [])
 }
 
-// 递归
 
-// 利用 map
+// 4. 利用 map
 
 function flattenMap(arr) {
   const res = arr.map((item) => {
@@ -50,7 +54,8 @@ function flattenMap(arr) {
   return [].concat(res)
 }
 
-// for of
+
+// 5. for of
 
 function flattenForOf(arr, res = []) {
   for (const element of arr) {
@@ -63,7 +68,6 @@ function flattenForOf(arr, res = []) {
   return res
 }
 
-//
 
 // 二、扩展运算符
 
