@@ -599,10 +599,20 @@ flex 有两根轴线，分别是主轴(`main axis`：项目排列布局的方向
   width: 15px;
   background-color: #fff;
 }
+
+/* 等腰三角形 */
+.triangle3 {
+  width: 0;
+  height: 0;
+  border-width: 20px;
+  border-style: solid;
+  border-color: transparent transparent green;
+}
 ```
 
 扇形
 
+- 等腰三角形的变种
 - `border-radius` 和 `border-width` 相同, 100%
 - 尖头朝上的扇形
 
