@@ -1398,10 +1398,12 @@ var singleNumber = function(nums) {
 
 ### 把一个数组旋转 K 步
 
+leetcode: 189.[旋转数组](https://leetcode.cn/problems/rotate-array/description/)
+
 题目：
 
 1. 输入一个数组 `[1,2,3,4,5,6,7]`
-2. `K=3`,  即旋转 3 步（即最前面，旋转到最后面）
+2. `K=3`,  即向后旋转 3 步（即最后面，旋转到最前面）
 3. 输出 `[5,6,7,1,2,3,4]`
 
 两种思路：
