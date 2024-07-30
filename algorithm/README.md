@@ -19,9 +19,9 @@
   - [DFS 深度优先遍历](#dfs-深度优先遍历)
     - [200.岛屿数量](#200岛屿数量)
     - [257.二叉树的所有路径](#257二叉树的所有路径)
+    - [104.二叉树的最大深度](#104二叉树的最大深度)
   - [BFS 广度优先遍历](#bfs-广度优先遍历)
     - [94.二叉树的中序遍历](#94二叉树的中序遍历)
-    - [104.二叉树的最大深度](#104二叉树的最大深度)
   - [226.翻转二叉树](#226翻转二叉树)
 - [队列](#队列)
 - [链表](#链表)
@@ -705,6 +705,23 @@ var binaryTreePaths = function(root) {
 };
 ```
 
+#### 104.二叉树的最大深度
+
+[104. 二叉树的最大深度](https://leetcode.cn/problems/maximum-depth-of-binary-tree/)
+
+```js
+// DFS
+// 深度遍历
+var maxDepth = function(root) {
+  if (!root) return 0
+
+  const left = maxDepth(root.left)
+  const right = maxDepth(root.right)
+
+  return Math.max(left, right) + 1
+};
+```
+
 ### BFS 广度优先遍历
 
 广度优先遍历 `breadth-first search`，一行一行遍历，借助 “队列”实现，队列 “先进先出”，遍历则 “逐层推进”
@@ -809,23 +826,6 @@ var inorderTraversal = function(root) {
 }
 ```
 
-#### 104.二叉树的最大深度
-
-[104. 二叉树的最大深度](https://leetcode.cn/problems/maximum-depth-of-binary-tree/)
-
-```js
-// DFS
-// 深度遍历
-var maxDepth = function(root) {
-  if (!root) return 0
-
-  const left = maxDepth(root.left)
-  const right = maxDepth(root.right)
-
-  return Math.max(left, right) + 1
-};
-```
-
 ### 226.翻转二叉树
 
 [226. 翻转二叉树](https://leetcode.cn/problems/invert-binary-tree/)
@@ -834,7 +834,7 @@ var maxDepth = function(root) {
 
 ```js
 // 递归
-// 基于 DFS
+// DFS
 var invertTree = function(root) {
   if (!root) return root
 
@@ -848,7 +848,7 @@ var invertTree = function(root) {
   return root
 };
 
-// 遍历 BFS
+// BFS
 // 层序遍历
 // 根节点入列，然后出列，出列就交接左右子节点
 // 然后左右子节点入列
@@ -910,6 +910,7 @@ MyQueue.prototype.pop = function() {
     return this._stack2.pop()
 };
 
+// 获取队首元素
 MyQueue.prototype.peek = function() {
     if (this._stack2.length === 0) {
         return this._stack1[0];
