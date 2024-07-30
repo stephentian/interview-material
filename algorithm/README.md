@@ -1408,11 +1408,12 @@ leetcode: 189.[旋转数组](https://leetcode.cn/problems/rotate-array/descripti
 
 两种思路：
 
-- `pop`  队尾弹出，`unshift` 插入队首；时间复杂度 O(n^2)，unshift 时间复杂度 O(n); 空间复杂度 O(1)
-- 数组分为两份，剪切数组尾部 k 个元素，放前面，`concat` 剩余的子数组；时间复杂度 O(1)；空间复杂度 O(n)
+- `pop`  队尾弹出，`unshift` 插入队首；时间复杂度 `O(n^2)`，unshift 时间复杂度 `O(n)`; 空间复杂度 `O(1)`
+- 数组分为两份，剪切数组尾部 k 个元素，放前面，`concat` 剩余的子数组；时间复杂度 `O(1)`；空间复杂度 `O(n)`
 
 ```js
 // pop unshift
+// 超时
 function rotateArr(arr, k) {
   const len = arr.length || 0
   if (len === k) return
@@ -1429,14 +1430,14 @@ function rotateArr(arr, k) {
   return arr
 }
 
-// pop 和 concat
+// slice 和 concat
 function rotateArr1(arr, k) {
   const length = arr.length
 
   if(!k || length === 0) return arr
   const step = Math.abs(k % length)  //abs 取绝对值
   const part1 = arr.slice(-step)
-  const part2 = arr.slice(0,length-step)
+  const part2 = arr.slice(0, length - step)
   const part3 = part1.concat(part2)
   return part3
 }
