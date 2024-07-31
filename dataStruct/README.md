@@ -35,8 +35,7 @@ LIFO 后进先出，先进入的数据被压入栈底，最后的数据在栈顶
 
 [ArrayQueue](./queue.js)
 
-源码地址：[webpack/lib/util
-/ArrayQueue.js](https://github.com/webpack/webpack/blob/main/lib/util/ArrayQueue.js)
+源码地址：[webpack/lib/util/ArrayQueue.js](https://github.com/webpack/webpack/blob/main/lib/util/ArrayQueue.js)
 
 ## 链表
 
