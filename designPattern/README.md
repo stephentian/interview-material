@@ -34,21 +34,22 @@ person.name = '李四';
 
 思路：
 
-- 定义了一个 Set, 观察者集合
+- 定义了一个 `Set`, 观察者集合
 - `observable` 函数返回一个原始对象的 Proxy 代理, 拦截赋值操作
-- 拦截函数 set 中，执行所有观察者
+- 拦截函数 `set` 中，执行所有观察者
 
 ```js
 const observers = new Set();
 
 const observe = fn => observers.add(fn);
-const observable = obj => new Proxy(obj, {set});
 
 function set(target, key, value, receiver) {
   const result = Reflect.set(target, key, value, receiver);
   observers.forEach(observer => observer());
   return result;
 }
+
+const observable = obj => new Proxy(obj, { set });
 ```
 
 ## Adapter 适配器模式
