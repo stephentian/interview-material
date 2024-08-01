@@ -30,7 +30,7 @@
 
 ### qiankun
 
-qiankun 是基于 single-spa，解决了 Single-SPA Css样式隔离，Js执行隔离等问题的微前端技术方案。
+qiankun 是基于 single-spa，解决了 Single-SPA CSS 样式隔离，Js执行隔离等问题的微前端技术方案。
 
 思路：允许以 html 文件为应用入口，然后通过一个 html 解析器从文件中提取js和css依赖，并通过fetch下载依赖
 

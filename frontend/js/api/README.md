@@ -480,15 +480,26 @@ async 是Generator函数的语法糖，并对Generator函数进行了改进。
 
 ## Proxy
 
-在目标对象之前架设一层“拦截”，外界对该对象的访问，都必须先通过这层拦截
+在目标对象之前架设一层 “拦截”，外界对该对象的访问，都必须先通过这层拦截
 
 `var proxy = new Proxy(target, handler)`
 
-- target, 代理目标对象
-- handler 一个对象，用来定制拦截行为
+- `target`, 代理目标对象(数组，函数，甚至另一个代理)
+- `handler` 一个对象，用来定制拦截行为
+  - `has`: `in` 操作符捕捉器
+  - `get`: 取值捕捉器
+  - `set`: 赋值捕捉器
 
 ```js
-var obj = new Proxy({}, {
+const obj = {
+  name: '张三',
+  _age: 18
+}
+const handler = {
+  has: function (target, propKey) {
+    if (propKey[0] === '_') return false;
+    return Reflect.has(target, propKey);
+  },
   get: function (target, propKey, receiver) {
     console.log(`getting ${propKey}!`);
     return Reflect.get(target, propKey, receiver);
@@ -497,14 +508,20 @@ var obj = new Proxy({}, {
     console.log(`setting ${propKey}!`);
     return Reflect.set(target, propKey, value, receiver);
   }
-})
+}
+var proxyObj = new Proxy(obj, handler)
 
-obj.count = 1
+proxyObj.count = 1
 //  setting count!
-++obj.count
+++proxyObj.count
 //  getting count!
 //  setting count!
 //  2
+
+console.log("proxyObj.name", proxyObj.name)
+console.log("obj.count", obj.count)
+console.log("'_age' in proxyObj", "_age" in proxyObj) // false
+console.log("'_age' in o", "_age" in obj) // true
 ```
 
 this 问题: 目标对象 this 指向 proxy 代理

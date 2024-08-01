@@ -28,8 +28,12 @@ class EventBus {
 
     // 取消订阅
     unsubcribe(event, callback) {
-        if (this.subscribes[event]) {
+        if (!this.subscribes[event]) throw Error('No subscription event')
+
+        if (callback) {
             this.subscribes[event] = this.subscribes[event].filter(subscriberCallback => subscriberCallback !== callback)
+        } else {
+            delete this.subscribes[event]
         }
     }
 }
