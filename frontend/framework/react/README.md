@@ -22,7 +22,6 @@
 - [Hooks](#hooks)
   - [useState](#usestate)
   - [useEffect](#useeffect)
-    - [useEffect 第二个参数内部是如何比较](#useeffect-第二个参数内部是如何比较)
   - [useCallback](#usecallback)
   - [useMemo](#usememo)
   - [useContext](#usecontext)
@@ -109,7 +108,7 @@ React16架构可以分为三层：
 更新:
 
 - setState 自动批处理（过时 API）
-  - react17，只有 react 事件会进行批处理，原生js事件、promise，setTimeout、setInterval不会  
+  - react17，只有 react 事件会进行批处理，原生js事件、promise，setTimeout、setInterval 不会  
   - react18，将所有事件都进行批处理，即多次 setState 会被合并为1次执行，提高了性能，在数据层，将多个状态更新合并成一次处理（在视图层，将多次渲染合并成一次渲染）
 - 类组件（Component）过时，建议使用函数组件
 - 引入了新的 root API，支持 new concurrent renderer(并发模式的渲染)
@@ -355,52 +354,53 @@ class Example extends React.Component {
 
 React v16.8.0 引入的新特性，它使函数组件能够拥有状态和其他 React 特性。
 
-在 React 中，useState 以及任何其他以 “use” 开头的函数都被称为 Hook。只能在组件或自定义 Hook 的最顶层调用。
+在 React 中，useState 以及任何其他以 “use” 开头的函数都被称为 Hook。**只能在组件或自定义 Hook 的最顶层调用!**
 
 Hooks API
 
-useState: 用于在函数组件中添加状态。
-useEffect: 用于在函数组件中添加副作用。
-useContext: 用于在函数组件中访问 context。
-useReducer: 用于在函数组件中管理复杂的状态。
-useCallback: 用于在函数组件中缓存回调函数，以避免不必要的重新渲染。
-useMemo: 用于在函数组件中缓存值，以避免不必要的重新计算。
-useRef: 用于在函数组件中存储可变的值。
-useImperativeHandle: 用于在函数组件中公开 ref。
-useLayoutEffect: 与 useEffect 相同，但在 DOM 更新之前同步执行。
-useDebugValue: 用于在自定义 Hooks 中显示调试信息。
+- useState: 用于在函数组件中添加状态。
+- useEffect: 用于在函数组件中添加副作用。
+- useContext: 用于在函数组件中访问 context。
+- useReducer: 用于在函数组件中管理复杂的状态。
+- useCallback: 用于在函数组件中缓存回调函数，以避免不必要的重新渲染。
+- useMemo: 用于在函数组件中缓存值，以避免不必要的重新计算。
+- useRef: 用于在函数组件中存储可变的值。
+- useImperativeHandle: 用于在函数组件中公开 `ref`。
+- useLayoutEffect: 与 `useEffect` 相同，但在 DOM 更新之前同步执行。
+- useDebugValue: 用于在自定义 Hooks 中显示调试信息。
 
 ### useState
 
-`useState` 是一个 React Hook，它用于在函数组件中添加状态。当你调用 `useState` 时，它会返回一个数组，其中第一个元素是当前状态的值，第二个元素是一个回调函数，用于更新状态的值。当你调用第二个元素时，React 会比较新旧状态的值是否相同，如果不同，则会触发组件的重新渲染。
+`useState` 是一个 React Hook，它用于在函数组件中添加状态。
 
-`useState` 的唯一参数是 state 变量的初始值
+`const [state, setState] = useState(initialState)`
 
-当你调用 useState 时，你是在告诉 React 你想让这个组件记住一些东西：
-
-`const [index, setIndex] = useState(0);`
-
-- `index` 会保存上次渲染的值。
-- `setIndex` 可以更新 `state` 变量并触发 `React` 重新渲染组件。
+- 参数
+  - `initialState`: 初始状态的值。
+  - 如果是函数，则调用函数并返回结果作为初始状态。应该是纯函数，不应该接受任何参数，并且应该返回一个任何类型的值。
+- 返回
+  - `state`: 当前状态的值。
+  - `setState`: 更新 `state` 变量，并触发 `React` 重新渲染组件。
 
 ### useEffect
 
 `useEffect` 是一个用于在组件渲染后执行副作用（如数据获取、订阅和 DOM 操作等）的函数。
 
-接受两个参数：
+`useEffect(setup, dependencies?)`
 
-- 一个 `setup` 函数
-  - 返回一个 清理函数（`cleanup`），清除副作用。用来与该系统断开连接，清除定时器，清除事件监听等。
-- 一个依赖项数组。
-  - 可选的，用于指定在哪些依赖项发生变化时重新运行函数。
-  - 省略此参数，则在每次重新渲染组件后，将重新运行函数。
+接收两个参数：
+
+- `setup` 函数
+  - 返回一个清理函数（`cleanup`），清除副作用。用来与该系统断开连接，清除定时器，清除事件监听等。
+- `dependencies` 依赖项数组
+  - 可选，用于指定在哪些依赖项发生变化时重新运行 setup 函数。
+  - **省略此参数**，则在每次重新渲染组件后，将重新运行函数。
   - 此参数为 空数组时，组件 props 或 state 发生改变不会重新运行。
 
 **注意：** useEffect 在每次组件渲染后都会执行，因此应该避免在 useEffect 中执行过多的副作用操作，以免影响性能。此外，为了避免副作用操作之间的相互依赖，应该将副作用操作拆分成多个 useEffect 函数，并在依赖项中分别指定。
 
-#### useEffect 第二个参数内部是如何比较
-
-内部是浅比较，源码中用 for 循环配合 Object.is 实现。
+**useEffect 第二个参数内部如何比较**  
+内部是浅比较，源码中用 `for` 循环配合 `Object.is` 实现。
 
 ### useCallback
 
