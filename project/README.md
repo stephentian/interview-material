@@ -40,12 +40,12 @@
 
 步骤:
 
-1. 名为 km-bundle-size
-2. 定义一个 apply 方法
-3. 指定一个绑定到 webpack 自身的事件钩子。
-    a. 这个插件中 webpack 完成的时候触发  
-    b. 版本 webpack > 4: compiler.hooks.done.tapAsync 异步调用  
-    c. compiler 对象代表了完整的 webpack 环境配置  
+1. 名为 `km-bundle-size`
+2. 定义一个 `apply` 方法
+3. 指定一个绑定到 `webpack` 自身的事件钩子。
+    a. 这个插件中 `webpack` 完成的时候触发  
+    b. 版本 `webpack > 4`: `compiler.hooks.done.tapAsync` 异步调用  
+    c. `compiler` 对象代表了完整的 webpack 环境配置  
     d. compilation 对象代表了一次资源版本构建
 4. 遍历 stats.compilation.assets ，记录 文件大小，上次大小，时间戳，并且 使用 node fs 模块保存 json
 

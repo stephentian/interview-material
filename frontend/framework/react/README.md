@@ -4,12 +4,8 @@
   - [React 发展历程](#react-发展历程)
   - [React 实例过程](#react-实例过程)
   - [React Fiber](#react-fiber)
-    - [reconcile](#reconcile)
-    - [schedule](#schedule)
-    - [commit](#commit)
-    - [fiber 总结](#fiber-总结)
   - [React 设计思想](#react-设计思想)
-  - [React 三种开发模式](#react-三种开发模式)
+  - [React 三种模式](#react-三种模式)
   - [JSX](#jsx)
   - [副作用](#副作用)
 - [类组件](#类组件)
@@ -92,22 +88,18 @@
 
 React Fiber 将渲染过程拆分成多个小片，每执行完一段渲染过程就将控制权交还给 React 负责任务协调的模块，看看有没有其他紧急任务要做。这种处理方式使得 React 能够更好地利用浏览器的时间片，避免了长时间占用 JavaScript 线程的情况，提高了页面响应度。
 
-#### reconcile
-
+**reconcile**  
 vdom 转 fiber 的过程叫做 reconcile，是可打断的
 
-#### schedule
-
+**schedule**  
 React 加入了 schedule 的机制在空闲时调度 reconcile，reconcile 的过程中会做 diff，打上增删改的标记（effectTag），并把对应的 dom 创建好。
 
-#### commit
-
+**commit**  
 然后就可以一次性把 fiber 渲染到 dom，也就是 commit。
 
 这个 schdule、reconcile、commit 的流程就是 fiber 架构。当然，对应的这个数据结构也叫 fiber。
 
-#### fiber 总结
-
+**fiber 总结**  
 个人认为 fiber 实现了一个类似 虚拟调用栈，可以控制 数据变化渲染到真实 DOM 过程。调度器使用了 `requestIdleCallback` API。利用浏览器每一帧的工作特性。在浏览器空闲的时候, 去执行未完成的任务。
 
 还引入了优先级控制机制，给不同的任务赋予了不同的优先级。优先级高的任务可以中断低优先级的任务，从而更好地控制渲染过程。
@@ -127,11 +119,13 @@ React Fiber 解决了 React 15 中存在的性能瓶颈和用户体验方面的�
 2. 数据驱动视图
 3. 虚拟 DOM
 
-### React 三种开发模式
+### React 三种模式
 
-- `Legacy` 模式：通过 `ReactDom.reander(.rootNode)` 创建的应用遵循该模式。默认关闭 `StrictMode`，和以前一样.
-- `Blocking` 模式:通过 `ReactDOM.createBlockingRoot(rootNode).render()`，默认开启 `StrictMode`，作为向第三种模式迁移的中间态(可以体验并发模式的部分功能)。
-- `Concurrent` 模式：通过 `ReactDOM.createRoot(rootNode).render()` 创建的应用，默认开启 `StrictMode` ，这种模式开启了所有的新功能。
+- `Legacy` 模式：常用模式；通过 `ReactDom.render(rootNode)` 创建的应用遵循该模式。默认关闭 `StrictMode`，和以前一样.
+- `Blocking` 模式: 部分迁移到未来模式，加入一些实验性功能；通过 `ReactDOM.createBlockingRoot(rootNode).render()`，默认开启 `StrictMode`，作为向第三种模式迁移的中间态(可以体验并发模式的部分功能)。
+- `Concurrent` 模式：未来模式；通过 `ReactDOM.createRoot(rootNode).render()` 创建的应用，默认开启 `StrictMode` ，这种模式开启了所有的新功能。
+
+react18 中，默认开启模式 `Concurrent`，并发更新。
 
 ### JSX
 
@@ -655,10 +649,10 @@ StrictMode，16.3 版本发布，为了规范代码，
 
 类组件：
 
-以前：
+react16 以前：
 认为在 componentWillMount 中进行异步请求，避免白屏。
 但是在服务器渲染的话，会执行两次请求，一次在服务端一次在客户端。
-其次，`React Fiber` 重写后，`componentWillMount` 可能在一次渲染中多次调用。
+其次，`React Fiber` 重写后，`componentWillMount` 可能在一次渲染中多次调用，被废弃。
 
 官方推荐：`componentDidMount`
 有特殊需要提前请求，也可以在 `constructor` 中请求。
