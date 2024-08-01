@@ -2,6 +2,10 @@
 
 - [基础知识](#基础知识)
   - [React 发展历程](#react-发展历程)
+    - [React 15](#react-15)
+    - [React 16](#react-16)
+    - [React 17](#react-17)
+    - [React 18](#react-18)
   - [React 实例过程](#react-实例过程)
   - [React Fiber](#react-fiber)
   - [React 设计思想](#react-设计思想)
@@ -11,15 +15,9 @@
 - [类组件](#类组件)
   - [React 生命周期](#react-生命周期)
   - [setState](#setstate)
-    - [setState 到底是异步还是同步](#setstate-到底是异步还是同步)
+    - [setState 是异步还是同步](#setstate-是异步还是同步)
     - [setState 输出顺序](#setstate-输出顺序)
-- [React 组件之间的通信](#react-组件之间的通信)
-- [React 版本](#react-版本)
-  - [React 15](#react-15)
-  - [React 16](#react-16)
-  - [React 17](#react-17)
-  - [React 18](#react-18)
-    - [特征更新](#特征更新)
+- [React 组件通信](#react-组件通信)
 - [HOC 高阶组件](#hoc-高阶组件)
 - [Hooks](#hooks)
   - [useState](#usestate)
@@ -35,6 +33,7 @@
   - [为什么需要前端路由](#为什么需要前端路由)
   - [前端路由解决的问题](#前端路由解决的问题)
 - [问题](#问题)
+  - [React性能优化](#react性能优化)
   - [StrictMode 模式是什么](#strictmode-模式是什么)
   - [类组件，React 请求放哪个生命周期中](#类组件react-请求放哪个生命周期中)
   - [类组件，为什么 React bind(this)](#类组件为什么-react-bindthis)
@@ -51,21 +50,89 @@
 
 ### React 发展历程
 
-2013 React 发布
+- 2013 React 发布
+- 2016 React 15
+- 2017 React 16
+  - React Fiber 架构。切片架构
+- 2019 React 16.8
+  - React Hooks, 无需编写类即可使用状态和其他React功能的方法，不会产生 JSX 嵌套地狱
+- 2020 React 17
+- 2022 React 18
 
-2016 React 15
+#### React 15
 
-2017 React 16
+React15 架构可以分为两层：
 
-  1. React Fiber 架构。切片架构
+- Reconciler（协调器）—— 负责递归处理虚拟DOM，找出变化的组件
+- Renderer（渲染器）—— 负责将变化的组件渲染到页面
 
-2019 React 16.8
+15 版本是基于 Stack Reconcilation(栈调和器)。它是递归、同步的方式。栈的优点在于用少量的代码就可以实现diff功能。并且非常容易理解。但是它也带来了严重的性能问题。
 
-  1. React Hooks, 无需编写类即可使用状态和其他React功能的方法，不会产生 JSX 嵌套地狱
+React15 使用的是栈调和器，由于递归执行，所以更新一旦开始，中途就无法中断。当调用层级很深时，递归更新时间超过了屏幕刷新时间间隔，用户交互就会卡顿。
 
-2020 React 17
+#### React 16
 
-2022 React 18
+React16架构可以分为三层：
+
+- Scheduler（调度器）—— 调度任务的优先级，高优任务优先进入 Reconciler
+- Reconciler（协调器）—— 负责找出变化的组件
+- Renderer（渲染器）—— 负责将变化的组件渲染到页面上
+
+1. hooks
+2. memo, lazy, suspense
+3. profiler
+
+#### React 17
+
+1. 全新的 jsx 转换
+   之前: React中如果使用JSX，则必须导入React `import React from 'react';`, JSX 会转换为 React.createElement()
+   当前: 编写 JSX 代码将不再需要手动导入 React 包，编译器会针对 JSX 代码进行自动导入（React/jsx-runtime）
+
+2. 事件委托的变更
+   React17 不再将事件添加在 document 上，而是添加到渲染 React 树的根 DOM 容器中:
+
+   ```js
+   // v17
+   const rootNode = document.getElementById('root');
+   ReactDOM.render(<App />, rootNode);
+
+   // React16 事件委托（挂在document上）
+   <!-- document.addEventListener(); -->
+   // React17 事件委托（挂在 root DOM 上）
+   <!-- rootNode.addEventListener(); -->
+   ```
+
+3. 废弃三个 Will 除了组件销毁那个，componentWillMount、componentWillReceiveProps、componentWillUpdate
+
+#### React 18
+
+更新:
+
+- setState 自动批处理（过时 API）
+  - react17，只有 react 事件会进行批处理，原生js事件、promise，setTimeout、setInterval不会  
+  - react18，将所有事件都进行批处理，即多次 setState 会被合并为1次执行，提高了性能，在数据层，将多个状态更新合并成一次处理（在视图层，将多次渲染合并成一次渲染）
+- 类组件（Component）过时，建议使用函数组件
+- 引入了新的 root API，支持 new concurrent renderer(并发模式的渲染)
+  - 之前: `ReactDom.render` 将应用组件渲染到页面的根元素
+  - 当前: 通过 `ReactDom.creatRoot` 创建根节点对象
+  
+    ```js
+    // v18
+    import { createRoot } from 'react-dom/client';
+
+    const domNode = document.getElementById('root');
+    const root = createRoot(domNode);
+    root.render(<App />);
+    ```
+
+- 去掉了对 IE 浏览器的支持，使用 IE 浏览器要回退到 17版本
+- flushSync 退出批量更新
+- Strict Mode
+  - 当你使用严格模式（Strict Mode）时，React 会对每个组件进行两次渲染，以便你观察一些意想不到的结果。
+  - React 17 中，取消了其中一次渲染的控制台日志，以便让日志更容易阅读。
+- react组件返回值更新
+  - 在react17中，返回空组件只能返回 null，显式返回 undefined 会报错
+  - 在react18中，支持 null 和undefined 返回
 
 ### React 实例过程
 
@@ -191,7 +258,7 @@ React 围绕纯函数的概念设计的。
 1. 接收改变对象 setState(obj, callback)
 2. 接受函数 setState(fn, callback), fn 有两个参数 `state` 和 `props`
 
-#### setState 到底是异步还是同步
+#### setState 是异步还是同步
 
 摘自：<https://www.cxymsg.com/guide/react.html#setstate%E5%88%B0%E5%BA%95%E6%98%AF%E5%BC%82%E6%AD%A5%E8%BF%98%E6%98%AF%E5%90%8C%E6%AD%A5>
 
@@ -208,14 +275,14 @@ setState是一个异步方法，但是在 setTimeout/setInterval 等定时器里
 1. `setState` 源码, 会根据 `isBatchingUpdates` 判断直接更新 `this.state` 还是放入队列中. `isBatchingUpdates` 默认 `false`
 2. `batchedUpdates` 会修改 `isBatchingUpdates` 为 `true`
 3. React 处理事件(`onClick` 事件处理函数等或 React 生命周期内), 会调用 `batchedUpdates`
-4. 造成 setState 不会同步更新
+4. 造成 `setState` 不会同步更新
 
 原生事件和异步代码
 
 - 原生事件不会触发 react 的批处理机制，因而调用 setState 会直接更新
 - 异步代码中调用 setState，由于 js 的异步处理机制，异步代码会暂存，等待同步代码执行完毕再执行，此时 react 的批处理机制已经结束，因而直接更新
 
-React18 以后，使用了 createRoot api 后，所有 setState 都是异步批量执行的
+注意：**React18 以后，使用了 createRoot api 后，所有 setState 都是异步批量执行的**
 
 #### setState 输出顺序
 
@@ -250,8 +317,6 @@ class Example extends React.Component {
 };
 ```
 
-分析
-
 1. 第一次和第二次都是在 react 自身生命周期内，触发时 `isBatchingUpdates` 为 true
 2. 两次 setState 时，获取到 `this.state.val` 都是 0，所以执行时都是将 0 设置成 1，在 react 内部会被合并掉，只执行一次。设置完成后 state.val 值为 `1`
 3. `setTimeout` 中的代码，触发时 `isBatchingUpdates` 为 false，所以能够直接进行更新，所以连着输出 `2，3`
@@ -262,7 +327,7 @@ class Example extends React.Component {
 
 如果需要在 `setState` 更新后获取新的值，可以在 `setState` 的回调函数中进行操作
 
-## React 组件之间的通信
+## React 组件通信
 
 1. props
 2. props + 回调
@@ -273,95 +338,16 @@ class Example extends React.Component {
 - 父组件向子组件通信
   - props
 - 子组件向父组件通信
-  - 回调函数
+  - 回调函数，事件冒泡
   - Ref
 - 兄弟组件通信
-  - props
+  - props，子给父，父再传子
 - 父组件向后代组件通信
   - Context
 - 无关组件通信
-  - Context
-
-## React 版本
-
-### React 15
-
-React15 架构可以分为两层：
-
-- Reconciler（协调器）—— 负责递归处理虚拟DOM，找出变化的组件
-- Renderer（渲染器）—— 负责将变化的组件渲染到页面
-
-15 版本是基于 Stack Reconcilation(栈调和器)。它是递归、同步的方式。栈的优点在于用少量的代码就可以实现diff功能。并且非常容易理解。但是它也带来了严重的性能问题。
-
-React15 使用的是栈调和器，由于递归执行，所以更新一旦开始，中途就无法中断。当调用层级很深时，递归更新时间超过了屏幕刷新时间间隔，用户交互就会卡顿。
-
-### React 16
-
-React16架构可以分为三层：
-
-- Scheduler（调度器）—— 调度任务的优先级，高优任务优先进入 Reconciler
-- Reconciler（协调器）—— 负责找出变化的组件
-- Renderer（渲染器）—— 负责将变化的组件渲染到页面上
-
-1. hooks
-2. memo, lazy, suspense
-3. profiler
-
-### React 17
-
-1. 全新的 jsx 转换
-   之前: React中如果使用JSX，则必须导入React `import React from 'react';`, JSX 会转换为 React.createElement()
-   当前: 编写 JSX 代码将不再需要手动导入 React 包，编译器会针对 JSX 代码进行自动导入（React/jsx-runtime）
-
-2. 事件委托的变更
-   React17 不再将事件添加在 document 上，而是添加到渲染 React 树的根 DOM 容器中:
-
-   ```js
-   // v17
-   const rootNode = document.getElementById('root');
-   ReactDOM.render(<App />, rootNode);
-
-   // React16 事件委托（挂在document上）
-   <!-- document.addEventListener(); -->
-   // React17 事件委托（挂在 root DOM 上）
-   <!-- rootNode.addEventListener(); -->
-   ```
-
-3. 废弃三个 Will 除了组件销毁那个，componentWillMount、componentWillReceiveProps、componentWillUpdate
-
-### React 18
-
-#### 特征更新
-
-- setState 自动批处理（过时 API）
-  - react17，只有 react 事件会进行批处理，原生js事件、promise，setTimeout、setInterval不会  
-  - react18，将所有事件都进行批处理，即多次 setState 会被合并为1次执行，提高了性能，在数据层，将多个状态更新合并成一次处理（在视图层，将多次渲染合并成一次渲染）
-- 类组件（Component）过时，建议使用函数组件
-- 引入了新的 root API，支持 new concurrent renderer(并发模式的渲染)
-  - 之前: `ReactDom.render` 将应用组件渲染到页面的根元素
-  - 当前: 通过 `ReactDom.creatRoot` 创建根节点对象
-  
-    ```js
-    // v18
-    import { createRoot } from 'react-dom/client';
-
-    const domNode = document.getElementById('root');
-    const root = createRoot(domNode);
-    root.render(<App />);
-    ```
-
-- 去掉了对 IE 浏览器的支持，使用 IE 浏览器要回退到 17版本
-- flushSync 退出批量更新
-- Strict Mode
-  - 当你使用严格模式（Strict Mode）时，React 会对每个组件进行两次渲染，以便你观察一些意想不到的结果。
-  - React 17 中，取消了其中一次渲染的控制台日志，以便让日志更容易阅读。
-- react组件返回值更新
-  - 在react17中，返回空组件只能返回 null，显式返回 undefined 会报错
-  - 在react18中，支持 null 和undefined 返回
+  - Context，Redux
 
 ## HOC 高阶组件
-
-高阶函数指能接受一个或多个函数作为参数，或者返回一个函数作为结果的函数；
 
 高阶组件（high-order Component）是一个函数，接受一个组件作为参数并返回一个新的组件。HOC 可以用于增强现有组件的功能，例如添加状态、操作 props 等。
 
@@ -639,6 +625,13 @@ HashRouter 使用 URL 的 hash 属性控制路由跳转
 
 ## 问题
 
+### React性能优化
+
+1. 减少不必要的渲染，利用 `shouldComponentUpdate`
+2. 使用 `memo` 记住函数，减少函数创建开销
+3. 使用 `Fragment`，减少 DOM 层级
+4. v-for 使用 key
+
 ### StrictMode 模式是什么
 
 StrictMode，16.3 版本发布，为了规范代码，
@@ -763,7 +756,7 @@ React.createElement("app",null,"lyllovelemon")
 
 <App>lyllovelemon</App>
 // 转义后
-React.createElement(App,null,lyllovelemon)
+React.createElement(App, null ,lyllovelemon)
 ```
 
 ### 列举几个用到的自定义 Hooks
