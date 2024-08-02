@@ -35,7 +35,7 @@
   - [React性能优化](#react性能优化)
   - [StrictMode 模式是什么](#strictmode-模式是什么)
   - [类组件，React 请求放哪个生命周期中](#类组件react-请求放哪个生命周期中)
-  - [类组件，为什么 React bind(this)](#类组件为什么-react-bindthis)
+  - [类组件，为什么 bind(this)](#类组件为什么-bindthis)
   - [为什么 React 不推荐直接修改 state](#为什么-react-不推荐直接修改-state)
   - [为什么使用 hooks](#为什么使用-hooks)
   - [Hooks 实现原理](#hooks-实现原理)
@@ -654,7 +654,7 @@ react16 以前：
 
 `useEffect`
 
-### 类组件，为什么 React bind(this)
+### 类组件，为什么 bind(this)
 
 原因在于 JavaScript 不在 React
 
