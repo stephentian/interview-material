@@ -668,7 +668,7 @@ react16 以前：
 3. 显式绑定
    - `obj.fn.bind(obj)`, this 指向 obj, 避免上面的问题
 
-如果不绑定, 组件方法 this 值可能为 `undefined`, 因为 class 类不管是原型方法还是静态方法定义，“this”值在被调用的函数内部将为 undefined
+如果不绑定, 组件方法 this 值可能为 `undefined`, 因为 class 类不管是原型方法还是静态方法定义，this 值在被调用的函数内部将为 `undefined`
 
 解决方法：箭头函数
 
