@@ -35,7 +35,7 @@
   - [React性能优化](#react性能优化)
   - [StrictMode 模式是什么](#strictmode-模式是什么)
   - [类组件，React 请求放哪个生命周期中](#类组件react-请求放哪个生命周期中)
-  - [类组件，为什么 React bind(this)](#类组件为什么-react-bindthis)
+  - [类组件，为什么 bind(this)](#类组件为什么-bindthis)
   - [为什么 React 不推荐直接修改 state](#为什么-react-不推荐直接修改-state)
   - [为什么使用 hooks](#为什么使用-hooks)
   - [Hooks 实现原理](#hooks-实现原理)
@@ -657,7 +657,7 @@ react16 以前：
 
 `useEffect`
 
-### 类组件，为什么 React bind(this)
+### 类组件，为什么 bind(this)
 
 原因在于 JavaScript 不在 React
 
@@ -671,7 +671,7 @@ react16 以前：
 3. 显式绑定
    - `obj.fn.bind(obj)`, this 指向 obj, 避免上面的问题
 
-如果不绑定, 组件方法 this 值可能为 `undefined`, 因为 class 类不管是原型方法还是静态方法定义，“this”值在被调用的函数内部将为 undefined
+如果不绑定, 组件方法 this 值可能为 `undefined`, 因为 class 类不管是原型方法还是静态方法定义，this 值在被调用的函数内部将为 `undefined`
 
 解决方法：箭头函数
 
