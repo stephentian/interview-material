@@ -44,6 +44,7 @@
   - [为什么 React 自定义组件首字母要大写](#为什么-react-自定义组件首字母要大写)
   - [列举几个用到的自定义 Hooks](#列举几个用到的自定义-hooks)
   - [为什么不能在 if 里面写 hook](#为什么不能在-if-里面写-hook)
+  - [手写 useState](#手写-usestate)
 
 ## 基础知识
 
@@ -405,6 +406,8 @@ Hooks API
 ### useCallback
 
 `useCallback` 返回你已经传入的 `fn` 函数。不会调用此函数，而是返回此函数。你可以自己决定何时调用以及是否调用。
+
+`const cachedFn = useCallback(fn, dependencies)`
 
 `useCallback` 只应作用于性能优化。如果代码在没有它的情况下无法运行，请找到根本问题并首先修复它，然后再使用 `useCallback`。
 
@@ -769,3 +772,36 @@ useAjaxHooks
 
 以 useState 为例，在 react 内部，每个组件(Fiber)的 hooks 都是以链表的形式存在 memoizeState。
 update 阶段，每次调用 useState，链表就会执行 next 向后移动一步。如果将 useState 写在条件判断中，假设条件判断不成立，没有执行里面的 useState 方法，会导致接下来所有的 useState 的取值出现偏移，从而导致异常发生。
+
+### 手写 useState
+
+分析 useState 的作用
+
+   1. 接受一个参数，作为初始值
+   2. 返回一个数组，第一个是一个值，第二个是一个函数
+   3. 调用返回的函数，会重新赋值，并且重新渲染
+
+```js
+let value = [];
+// setState 会触发渲染，重新渲染会触发 useState，须把 value 放在外面
+// value 须为数组，这样可以存储多个状态
+// 不然调用多次 setState 会导致 value 覆盖
+
+// 当前状态的索引
+let currentIndex = 0;
+
+function useState(initialState) {
+  // 判断是否是第一次执行
+  if (value[currenIndex] === undefined) value[currenIndex] = initialState; 
+  let hookIndex = currentIndex; // 重置，防止无限增加
+
+  const setState = (newValue) => {
+    value[hookIndex] = newValue;
+    // 重新渲染
+    ReactDOM.render(<App />, document.getElementById('root'));
+  }
+  // 保存当前状态索引，以便下次调用时可以正确地找到状态
+  currentIndex++;
+  return [value[currentIndex], setState];
+}
+```
