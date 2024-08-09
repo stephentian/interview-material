@@ -66,10 +66,10 @@
 
 组合式：
 
-- setup(选项式的 created 里面的写在 setup 里面即可)
+- setup
 - beforeCreate
 - 初始化选项式 api
-- create
+- created
 - 检查是否存在模版，存在模版，即时编译模版
 - onBeforeMount
 - onMounted
@@ -83,7 +83,7 @@
 2. 初始化生命周期
 3. 初始化自定义事件
 4. 执行 `beforeCreate`
-5. 初始化模板，解析 插槽，`render(h)` 方法
+5. 初始化模板，解析插槽，`render(h)` 方法
 6. 初始化响应式数据
 7. 执行 `created`
 8. 执行 `mount` 挂载 `el dom` 元素
