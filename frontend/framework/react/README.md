@@ -772,7 +772,7 @@ useAjaxHooks
 可能会导致 hooks 的执行顺序发生改变，因为 React Hooks 内部是通过 hooks 的调用顺序来区分是哪个 hook.
 
 以 useState 为例，在 react 内部，每个组件(Fiber)的 hooks 都是以链表的形式存在 memoizeState。
-update 阶段，每次调用 useState，链表就会执行 next 向后移动一步。如果将 useState 写在条件判断中，假设条件判断不成立，没有执行里面的 useState 方法，会导致接下来所有的 useState 的取值出现偏移，从而导致异常发生。
+`update` 阶段，每次调用 `useState`，链表就会执行 next 向后移动一步。如果将 useState 写在条件判断中，假设条件判断不成立，没有执行里面的 `useState` 方法，会导致接下来所有的 `useState` 的取值出现偏移，从而导致异常发生。
 
 ### 手写 useState
 

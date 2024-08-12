@@ -575,22 +575,22 @@ flex 有两根轴线，分别是主轴(`main axis`：项目排列布局的方向
   - 使用裁剪方式创建元素的可显示区域。
   - 区域内的部分显示，区域外的隐藏。
   - polygon（多边形）根据点的坐标绘制一条闭合的遮罩区域
-- rotate 和 overflow: hidden
-- linear-gradient 渐变色
+- `rotate` 和 `overflow: hidden`
+- `linear-gradient` 渐变色
 
 ```css
 .triangle1 {
   width: 0;
   height: 0;
-  border: 10px solid transparent;
-  border-top-color: black;
+  /* border: 10px solid transparent;
+  border-top-color: black; */
   /* 只有上边框有颜色，其它为透明 */
   /* 本质上占用的空间还是一个正方形 */
   /* 不设置 border-bottom 即可 */
 
-  /* border-top: 10px solid black;
-  border-right: 10px solid transparent;
-  border-left: 10px solid transparent; */
+  border-top: 30px solid red;
+  border-right: 15px solid transparent;
+  border-left: 20px solid transparent;
 }
 
 .triangle2 {
@@ -607,6 +607,9 @@ flex 有两根轴线，分别是主轴(`main axis`：项目排列布局的方向
   border-width: 20px;
   border-style: solid;
   border-color: transparent transparent green;
+
+  /* border: 10px solid transparent;
+  border-top-color: black; */
 }
 ```
 

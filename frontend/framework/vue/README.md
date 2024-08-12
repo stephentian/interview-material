@@ -27,29 +27,29 @@
 
 ### Vue 发展史
 
-2015年，Vue1.0
+- 2015年，Vue1.0
 
-1. 和 `Angular` 一样，把 `template` 扔给浏览器渲染，有点像 `jQuery`。
-2. 异步请求库用 `vue-resource`
+  1. 和 `Angular` 一样，把 `template` 扔给浏览器渲染，有点像 `jQuery`。
+  2. 异步请求库用 `vue-resource`
 
-2016年，Vue2.0
+- 2016年，Vue2.0
 
-文档地址：[https://v2.cn.vuejs.org/v2/guide/](https://v2.cn.vuejs.org/v2/guide/)
+  文档地址：[https://v2.cn.vuejs.org/v2/guide/](https://v2.cn.vuejs.org/v2/guide/)
 
-1. 吸收了 React 虚拟 DOM 的方案，将 `template` 编译为 `render` 函数，`render` 返回 `Virtual DOM`，然后 `patch` 对比差异，最后渲染。
-2. runtime 版本（使用 render 渲染）和 compiler 版本(使用 template)
-3. 支持服务端渲染；
-4. 异步请求库用 `axios`
+  1. 吸收了 React 虚拟 DOM 的方案，将 `template` 编译为 `render` 函数，`render` 返回 `Virtual DOM`，然后 `patch` 对比差异，最后渲染。
+  2. runtime 版本（使用 render 渲染）和 compiler 版本(使用 template)
+  3. 支持服务端渲染；
+  4. 异步请求库用 `axios`
 
-2020年，Vue3
+- 2020年，Vue3
 
-文档地址：[https://cn.vuejs.org/guide/introduction.html](https://cn.vuejs.org/guide/introduction.html)
+  文档地址：[https://cn.vuejs.org/guide/introduction.html](https://cn.vuejs.org/guide/introduction.html)
 
-1. 源码使用 `TypeScript` 重写，原来是 `Flow`
-2. `Virtual Dom` 重构
-3. 使用 `Proxy` 代替 `defineProperty`
-4. 自定义 `render API`
-5. 支持 Time Slicing 时间切片(类似 React Fiber 切片架构)，Vue 会限制执行时间(小于 16ms)，只在一个时间片段内运行。
+  1. 源码使用 `TypeScript` 重写，原来是 `Flow`
+  2. `Virtual Dom` 重构
+  3. 使用 `Proxy` 代替 `defineProperty`
+  4. 自定义 `render API`
+  5. 支持 `Time Slicing` 时间切片(类似 `React Fiber` 切片架构)，Vue 会限制执行时间(小于 `16ms`)，只在一个时间片段内运行。
 
 ### 生命周期
 
@@ -66,10 +66,10 @@
 
 组合式：
 
-- setup(选项式的 created 里面的写在 setup 里面即可)
+- setup
 - beforeCreate
 - 初始化选项式 api
-- create
+- created
 - 检查是否存在模版，存在模版，即时编译模版
 - onBeforeMount
 - onMounted
@@ -83,7 +83,7 @@
 2. 初始化生命周期
 3. 初始化自定义事件
 4. 执行 `beforeCreate`
-5. 初始化模板，解析 插槽，`render(h)` 方法
+5. 初始化模板，解析插槽，`render(h)` 方法
 6. 初始化响应式数据
 7. 执行 `created`
 8. 执行 `mount` 挂载 `el dom` 元素
@@ -149,7 +149,7 @@ Vue 重点响应式是通过数据劫持和发布-订阅模型来实现的。
 
 - 源码首先使用 `promise, MutationOberver` 微任务去实现
 - 如果不支持, 就是使用 `setImmediate` 和 `setTimeout`, 等待当前微/宏任务执行完, 再执行回调
-- 一次事件循环是一个 tick, UI 渲染是在两个 tick 之间。
+- 一次事件循环是一个 `tick`, UI 渲染是在两个 `tick` 之间。
 
 ## 父子组件渲染过程
 
@@ -160,7 +160,7 @@ Vue 重点响应式是通过数据劫持和发布-订阅模型来实现的。
 - child mounted
 - parent mounted
 
-1. Vue 源码中, 回递归组件, 先递归到创建父组件, 有子组件就创建子组件
+1. Vue 源码中, 会递归组件, 先递归到创建父组件, 有子组件就创建子组件
 2. 子组件被创建完, 如果没有子组件, 会添加 `mounted` 钩子到队列中, 等 `patch` 结束后执行. 然后再去父组件执行挂载 `mounted`
 
 ## 组件之间的通信
@@ -274,7 +274,7 @@ export default {
 
 ref/$refs
 
-有的时候你仍可能需要在 JavaScript 里直接访问一个子组件。可以通过 `ref` 特性为这个子组件赋予一个 ID 引用。
+有的时候你仍可能需要在 `JavaScript` 里直接访问一个子组件。可以通过 `ref` 特性为这个子组件赋予一个 ID 引用。
 
 ```js
 <Child ref="child1"></Child>
@@ -294,7 +294,7 @@ this.$refs.child1
 
 原理：采用了 LRU (最近最少使用 least recently used)缓存算法管理
 
-1. 缓存组件 vnode 到 cache 对象，键名`key`保存为数组 `keys`
+1. 缓存组件 vnode 到 cache 对象，键名 `key` 保存为数组 `keys`
 2. 将不经常用的缓存组件放前面，常用的放后面
 3. 缓存消耗内存，会设一个 max 值，如果超过 max 就将第一个 `key` 删除，对应 `cache` 对象里也删除该节点。
 
@@ -316,7 +316,7 @@ LRU：[LRU.js](https://github.com/stephentian/interview-material/blob/1e031bc07c
 7. 过渡类名 `v-enter` 修改为 `v-enter-from`、过渡类名 `v-leave` 修改为 `v-leave-from`
 8. 提供了 `defineAsyncComponent` 方法，用于异步加载组件
 9. 增加了内置组件 `suspense`，用于在组件异步加载时，提供加载状态。
-10. 将全局的API，即：Vue.xxx 调整到应用实例（app）上，使用 app.xxx（如 app.use，app.config）
+10. 将全局的API，即：Vue.xxx 调整到应用实例（app）上，使用 `app.xxx`（如 `app.use`，`app.config`）
 
 ### Diff 差别
 
