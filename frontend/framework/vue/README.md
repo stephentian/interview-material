@@ -274,7 +274,7 @@ export default {
 
 ref/$refs
 
-有的时候你仍可能需要在 JavaScript 里直接访问一个子组件。可以通过 `ref` 特性为这个子组件赋予一个 ID 引用。
+有的时候你仍可能需要在 `JavaScript` 里直接访问一个子组件。可以通过 `ref` 特性为这个子组件赋予一个 ID 引用。
 
 ```js
 <Child ref="child1"></Child>
@@ -294,7 +294,7 @@ this.$refs.child1
 
 原理：采用了 LRU (最近最少使用 least recently used)缓存算法管理
 
-1. 缓存组件 vnode 到 cache 对象，键名`key`保存为数组 `keys`
+1. 缓存组件 vnode 到 cache 对象，键名 `key` 保存为数组 `keys`
 2. 将不经常用的缓存组件放前面，常用的放后面
 3. 缓存消耗内存，会设一个 max 值，如果超过 max 就将第一个 `key` 删除，对应 `cache` 对象里也删除该节点。
 
@@ -316,7 +316,7 @@ LRU：[LRU.js](https://github.com/stephentian/interview-material/blob/1e031bc07c
 7. 过渡类名 `v-enter` 修改为 `v-enter-from`、过渡类名 `v-leave` 修改为 `v-leave-from`
 8. 提供了 `defineAsyncComponent` 方法，用于异步加载组件
 9. 增加了内置组件 `suspense`，用于在组件异步加载时，提供加载状态。
-10. 将全局的API，即：Vue.xxx 调整到应用实例（app）上，使用 app.xxx（如 app.use，app.config）
+10. 将全局的API，即：Vue.xxx 调整到应用实例（app）上，使用 `app.xxx`（如 `app.use`，`app.config`）
 
 ### Diff 差别
 
