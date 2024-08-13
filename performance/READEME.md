@@ -32,8 +32,10 @@
 
 ## 性能测评工具
 
-- chrome
-- console.time() timeEnd()
+预先善其事，必先利其器；要看性能，先要有测量工具，测量方式来确定当前性能指数，分析哪些地方优化，如何优化。最后再测量得出优化结果。
+
+- chrome: devtools
+- 代码执行: console.time() timeEnd()
 - 测评网站 jsperf.com 或 jsbench.com
 
 ## js 代码优化
@@ -80,7 +82,7 @@ DNS 预解析
 如果缓存过期，则使用协商缓存来解决问题。协商缓存需要请求，如果缓存有效则返回 304.
 有两种实现方式：`Last-Modified` 和 `Etag`
 
-使用 http/ 2.0
+使用 `http2.0`
 
 预渲染
 
@@ -96,9 +98,9 @@ DNS 预解析
 
 ### 图片优化
 
-1. 不用图片，部分可以使用 css
-2. 移动端，没必要加载原图。使用 CDN 加载。
-3. 小图使用 base64 格式。
+1. 不用图片，部分可以使用 `css`
+2. 移动端，没必要加载原图。使用 `CDN` 加载。
+3. 小图使用 `base64` 格式。
 4. 多个图标文件整合到一张图上(雪碧图)
 
 ### 其他文件优化
@@ -114,7 +116,7 @@ DNS 预解析
 
 ### 使用 webpack 优化项目
 
-1. 对于 Webpack4， 打包项目使用 production 模式，会自动开启代码压缩。
+1. 对于 `Webpack4`， 打包项目使用 `production` 模式，会自动开启代码压缩。
 2. 使用 ES6 模块来开启 Tree shaking, 这个技术可以移除没有使用的代码。
 3. 按路由拆分代码，实现按需加载。
 4. 给打包出来的文件添加哈希，实现浏览器缓存文件。
@@ -125,11 +127,11 @@ DNS 预解析
 
 1. 全局变量
 2. 闭包
-3. 定时器 setInterval, setTimeout
+3. 定时器 `setInterval`, `setTimeout`
 4. 监听事件
 5. 循环引用
 6. DOM 引用
-7. WebSocket 重连不恰当
+7. `WebSocket` 重连不恰当
 
 ### 查看内存
 
@@ -142,7 +144,7 @@ DNS 预解析
    3. 在页面中操作多次，最后点击 收集垃圾 图标后，点击 stop 停止录制。
    4. 面板中显示内存占用情况，查看查看 JS Heap size 和 DOM Nodes的数量。
    5. 如果内存占用一直增加，说明内存泄漏。如果增加有减少情况，说明没有内存泄漏。
-3. Chrome performance monitor 性能监视器
+3. `Chrome performance monitor` 性能监视器
    1. 查看内存趋势
 
 ### 如何减少内存占用
@@ -164,7 +166,7 @@ DNS 预解析
 
 ## 开发构建性能优化
 
-1. 使用include或exclude排除不相关的目录，缩小构建打包范围
+1. 使用 include或exclude 排除不相关的目录，缩小构建打包范围
 2. 使用缓存，比如：开启babel-loader的cacheDirectory，或使用cache-loader或hard-source-webpack-plugin对相应loader进行缓存配置
 3. 使用threads-webpack-plugin或happy-pack进行多线程或多进程打包
 4. 使用DLLPlugin把公共代码库抽取成dll，再使用DLLReferencePlugin引入，提升二次构建打包速度
@@ -194,7 +196,7 @@ DNS 预解析
 
 ### 1.距离足够短
 
- 静态资源（CSS、JS、图片）放在CDN服务器
+ 静态资源（CSS、JS、图片）放在 CDN 服务器
 
 ### 2.请求足够少
 
