@@ -611,7 +611,7 @@ Redirect 路由重定向
 
 ### React-Router 工作原理
 
-`BrowserRouter` 使用的 HTML5 的 history api 实现路由跳转
+`BrowserRouter` 使用的 `HTML5` 的 `history` api 实现路由跳转
 
 `HashRouter` 使用 URL 的 hash 属性控制路由跳转
 
