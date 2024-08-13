@@ -9,7 +9,7 @@
 
 ## OAUTH
 
-第三方登录鉴权方式，需要先去 开放平台注册应用获取 应用 ID 和 APP Secret 密钥。
+第三方登录鉴权方式，需要先去开放平台注册应用获取 应用 ID 和 APP Secret 密钥。
 
 流程： 比如通过微博登录网站 A
 
@@ -41,7 +41,7 @@ JWT 内容用 . 连接成三个部分信息
   
 ## session
 
-基于 cookie 和 sessionId
+基于 `cookie` 和 `sessionId`
 
 1、用户第一次请求服务器的时候，服务器根据用户提交的相关信息，创建对应的 Session
 2、请求返回时将此 Session 的唯一标识信息 SessionID 返回给浏览器

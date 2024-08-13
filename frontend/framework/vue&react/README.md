@@ -18,9 +18,9 @@
 
 ## MVVM
 
-传统的 MVC：model view controller；
+传统的 MVC：`model view controller`
 
-MVVM 是 Model-View-ViewModel 的缩写
+MVVM 是 `Model-View-ViewModel` 的缩写
 
 Model 代表数据模型，也可以在 Model 中定义数据修改和操作的业务逻辑。
 View 代表 UI 组件，它负责将数据模型转化成 UI 展现出来。
