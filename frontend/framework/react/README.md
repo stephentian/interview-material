@@ -591,7 +591,7 @@ function tasksReducer(tasks, action) {
 ## React-Router
 
 组件：
-HashRouter/BrowserRouter 路由器
+`HashRouter/BrowserRouter` 路由器
 
 Route 路由匹配
 
