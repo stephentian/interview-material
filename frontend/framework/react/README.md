@@ -595,13 +595,13 @@ function tasksReducer(tasks, action) {
 
 Route 路由匹配
 
-Link 链接，在 HTML 中是个锚点
+`Link` 链接，在 HTML 中是个锚点
 
-NavLink 当前活动链接
+`NavLink` 当前活动链接
 
-Switch 路由跳转
+`Switch` 路由跳转
 
-Redirect 路由重定向
+`Redirect` 路由重定向
 
 ```js
 <Link to="/home">Home</Link>
