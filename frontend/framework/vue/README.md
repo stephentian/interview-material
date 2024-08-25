@@ -21,7 +21,7 @@
   - [watch 和 watchEffect](#watch-和-watcheffect)
 - [Vue-Router](#vue-router)
 - [问题](#问题)
-  - [为什么不推荐 v-if 和 v-for 一起用](#为什么不推荐-v-if-和-v-for-一起用)
+  - [v-if 和 v-for 一起用有什么问题](#v-if-和-v-for-一起用有什么问题)
 
 ## 基础知识
 
@@ -423,7 +423,7 @@ export default {
 
 ## 问题
 
-### 为什么不推荐 v-if 和 v-for 一起用
+### v-if 和 v-for 一起用有什么问题
 
 当它们同时存在于一个节点上时，v-if 比 v-for 的优先级更高。这意味着 v-if 的条件将无法访问到 v-for 作用域内定义的变量别名
 
