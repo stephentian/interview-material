@@ -586,7 +586,11 @@ function tasksReducer(tasks, action) {
 
 ### 自定义 Hooks
 
-自定义 Hook 是一个函数，其名称以 use 开头，函数内部可以调用其他的 Hook。
+自定义 Hook 是一个函数，其名称以 use 开头，函数内部可以调用其他的 Hook
+
+1. useFocus: 获取元素焦点
+2. useFormUpdate: 更新表单数据
+3. useLocalStorage: 本地存储数据
 
 ## React-Router
 
