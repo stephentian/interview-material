@@ -546,7 +546,7 @@ var isValid = function(s) {
 
 - 前序遍历：根左右；根节点、左子树、右子树
 - 中序遍历：左根右；左子树、根节点、右子树
-- 后序遍历：左右跟；左子树、右子树、根节点
+- 后序遍历：左右根；左子树、右子树、根节点
 
 ```js
 class TreeNode {
@@ -865,7 +865,7 @@ BFS Breath-First Search
 1. 递归版本
 
     ```js
-    function bfs(node, nodeList = []) {
+    <!-- function bfs(node, nodeList = []) {
       if (node) {
         nodeList.push(node)
         if(node.children && node.children.length>0){
@@ -874,13 +874,9 @@ BFS Breath-First Search
             bfs(child[i], nodeList)
           }
         }
-        while(node) {
-          bfs()
-          node.children
-        }
       }
       return nodeList
-    }
+    } -->
 
     ```
 
@@ -897,13 +893,23 @@ BFS Breath-First Search
         if (node.right !== null) queue.push(node.right); // 将右子节点入队  
       }  
 
-      return root
+      return queue
     }
     ```
 
 例题：
 
 一、[515. 在每个树行中找最大值](https://leetcode-cn.com/problems/find-largest-value-in-each-tree-row/)
+
+给定一棵二叉树的根节点 root ，请找出该二叉树中每一层的最大值。
+
+示例：
+
+输入: root = [1,3,2,5,3,null,9]
+输出: [1,3,9]
+
+输入: root = [1,2,3]
+输出: [1,3]
 
 ```js
 var largestValues = function(root) {
@@ -935,6 +941,17 @@ var largestValues = function(root) {
 [94.二叉树的中序遍历](https://leetcode.cn/problems/binary-tree-inorder-traversal/)
 
 题目：给定一个二叉树的根节点 root ，返回 它的 中序 遍历 。
+
+示例：
+
+输入：root = [1,null,2,3]
+输出：[1,3,2]
+
+输入：root = []
+输出：[]
+
+输入：root = [1]
+输出：[1]
 
 ```js
 // 迭代
