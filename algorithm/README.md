@@ -138,6 +138,17 @@ const binarySearch1 = function(
 
 请必须使用时间复杂度为 O(log n) 的算法。
 
+示例 1:
+
+输入: nums = [1,3,5,6], target = 5
+输出: 2
+
+输入: nums = [1,3,5,6], target = 2
+输出: 1
+
+输入: nums = [1,3,5,6], target = 7
+输出: 4
+
 ```js
 var searchInsert = function(nums, target) {
     let len = nums.length
@@ -161,8 +172,8 @@ var searchInsert = function(nums, target) {
 
 [69. x 的平方根](https://leetcode.cn/problems/sqrtx/description/)
 
-给你一个非负整数 x ，计算并返回 `x` 的 算术平方根 。
-由于返回类型是整数，结果只保留 整数部分 ，小数部分将被舍去 。
+给你一个非负整数 x ，计算并返回 `x` 的 算术平方根。
+由于返回类型是整数，结果只保留整数部分 ，小数部分将被舍去。
 示例 1：
 输入：x = 4
 输出：2
@@ -180,7 +191,7 @@ var mySqrt = function(x) {
     let l = 1, r = x
 
     while (l <= r) {
-        let mid = Math.floor(l + (r - l)/2)
+        let mid = Math.floor(l + r)/2)
 
         if (mid * mid === x) return mid
 
@@ -223,6 +234,22 @@ var mySqrt = function(x) {
 [77. 组合](https://leetcode.cn/problems/combinations/)
 
 给定两个整数 n 和 k，返回 1 ... n 中所有可能的 k 个数的组合。
+
+示例：
+
+输入：n = 4, k = 2
+输出：
+[
+  [2,4],
+  [3,4],
+  [2,3],
+  [1,2],
+  [1,3],
+  [1,4],
+]
+
+输入：n = 1, k = 1
+输出：[[1]]
 
 思想：
 
