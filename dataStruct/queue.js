@@ -29,6 +29,8 @@ class MyQueue {
 			if (this._list.length === 1) return this._list.pop()
 			if (this._list.length < 16) return this._list.shift()
 			// webpack 源码优化
+			// shift 时间复杂度 O(n)
+			// pop 时间复杂度 O(1), reverse + pop 时间复杂度 O(n)
 			// 长度大于 16 使用 reverse + pop 代替 shift
 			const temp = this._listReversed
 			this._listReversed = this._list
