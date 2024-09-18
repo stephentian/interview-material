@@ -138,6 +138,17 @@ const binarySearch1 = function(
 
 请必须使用时间复杂度为 `O(log n)` 的算法。
 
+示例 1:
+
+输入: nums = [1,3,5,6], target = 5
+输出: 2
+
+输入: nums = [1,3,5,6], target = 2
+输出: 1
+
+输入: nums = [1,3,5,6], target = 7
+输出: 4
+
 ```js
 var searchInsert = function(nums, target) {
     let len = nums.length
@@ -161,8 +172,8 @@ var searchInsert = function(nums, target) {
 
 [69. x 的平方根](https://leetcode.cn/problems/sqrtx/description/)
 
-给你一个非负整数 x ，计算并返回 `x` 的 算术平方根 。
-由于返回类型是整数，结果只保留 整数部分 ，小数部分将被舍去 。
+给你一个非负整数 x ，计算并返回 `x` 的 算术平方根。
+由于返回类型是整数，结果只保留整数部分 ，小数部分将被舍去。
 示例 1：
 输入：x = 4
 输出：2
@@ -180,7 +191,7 @@ var mySqrt = function(x) {
     let l = 1, r = x
 
     while (l <= r) {
-        let mid = Math.floor(l + (r - l)/2)
+        let mid = Math.floor(l + r)/2)
 
         if (mid * mid === x) return mid
 
@@ -223,6 +234,22 @@ var mySqrt = function(x) {
 [77. 组合](https://leetcode.cn/problems/combinations/)
 
 给定两个整数 n 和 k，返回 1 ... n 中所有可能的 k 个数的组合。
+
+示例：
+
+输入：n = 4, k = 2
+输出：
+[
+  [2,4],
+  [3,4],
+  [2,3],
+  [1,2],
+  [1,3],
+  [1,4],
+]
+
+输入：n = 1, k = 1
+输出：[[1]]
 
 思想：
 
@@ -321,6 +348,20 @@ combine(names, colors, storages)
 
 [415.字符串相加](https://leetcode.cn/problems/add-strings/)
 
+给定两个字符串形式的非负整数 num1 和num2 ，计算它们的和并同样以字符串形式返回。
+
+你不能使用任何內建的用于处理大整数的库（比如 BigInteger）， 也不能直接将输入的字符串转换为整数形式。
+
+示例：
+输入：num1 = "11", num2 = "123"
+输出："134"
+
+输入：num1 = "456", num2 = "77"
+输出："533"
+
+输入：num1 = "0", num2 = "0"
+输出："0"
+
 ```js
 // 模拟加法
 // 从两个数最低位开始： i, j 指向 num1, num2 尾部
@@ -339,7 +380,8 @@ var addStrings = function(num1, num2) {
         const result = x + y + add;
         ans.push(result % 10);
 
-        add = Math.floor(result / 10);
+        // add = Math.floor(result / 10);
+        add = result >= 10 ? 1 : 0;
 
         i--;
         j--;
@@ -356,6 +398,23 @@ var addStrings = function(num1, num2) {
 ### 3.无重复字符的最长子串
 
 地址：[3. 无重复字符的最长子串](https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/)
+
+给定一个字符串 s ，请你找出其中不含有重复字符的 最长子串的长度。
+
+示例：
+
+输入: s = "abcabcbb"
+输出: 3
+解释: 因为无重复字符的最长子串是 "abc"，所以其长度为 3。
+
+输入: s = "bbbbb"
+输出: 1
+解释: 因为无重复字符的最长子串是 "b"，所以其长度为 1。
+
+输入: s = "pwwkew"
+输出: 3
+解释: 因为无重复字符的最长子串是 "wke"，所以其长度为 3。
+     请注意，你的答案必须是 子串 的长度，"pwke" 是一个子序列，不是子串
 
 ```js
 var lengthOfLongestSubstring = function (s) {

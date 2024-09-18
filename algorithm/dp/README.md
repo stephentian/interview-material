@@ -21,7 +21,7 @@ DP（dynamic program）
 `F(0) = 0,   F(1) = 1`
 `F(N) = F(N - 1) + F(N - 2), 其中 N > 1.`
 
-答案需要取模 1e9+7(1000000007) ，如计算初始结果为：1000000008，请返回 1。
+答案需要取模 `1e9+7(1000000007)` ，如计算初始结果为：`1000000008`，请返回 1。
 
 ```js
 // 动态规划
@@ -65,6 +65,23 @@ var fib = function(n) {
 假设你正在爬楼梯。需要 n 阶你才能到达楼顶。
 
 每次你可以爬 1 或 2 个台阶。你有多少种不同的方法可以爬到楼顶呢？
+
+实例：
+
+输入：n = 2
+输出：2
+解释：有两种方法可以爬到楼顶。
+
+1. 1 阶 + 1 阶
+2. 2 阶
+
+输入：n = 3
+输出：3
+解释：有三种方法可以爬到楼顶。
+
+1. 1 阶 + 1 阶 + 1 阶
+2. 1 阶 + 2 阶
+3. 2 阶 + 1 阶
 
 分析：
 
@@ -138,17 +155,17 @@ function(nums) {
   if (nums == null || nums.length == 0) {
     return 0;
   }
-  let length = nums.length;
-  if (length == 1) {
+  if (nums.length == 1) {
     return nums[0];
   }
+
   let dp = []
   dp[0] = nums[0]
   dp[1] = nums[1] > nums[0] ? nums[1] : nums[0]
   
-  for (let i = 2; i< length; i++) {
+  for (let i = 2; i< nums.length; i++) {
     dp[i] = Math.max(dp[i - 1], nums[i] + dp[i - 2])
   }
-  return dp[length - 1]
+  return dp[nums.length - 1]
 }
 ```
