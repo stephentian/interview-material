@@ -19,13 +19,14 @@
 - [盒模型](#盒模型)
   - [两种模型及区别](#两种模型及区别)
   - [CSS 如何设置这两种模型](#css-如何设置这两种模型)
-  - [JS 如何设置获取盒模型对应的宽和高](#js-如何设置获取盒模型对应的宽和高)
+  - [JS 获取盒模型对应的宽和高](#js-获取盒模型对应的宽和高)
   - [边距重叠](#边距重叠)
 - [BFC](#bfc)
   - [清除浮动](#清除浮动)
 - [IFC](#ifc)
 - [Flex](#flex)
   - [Flex 布局属性](#flex-布局属性)
+- [Grid](#grid)
 - [媒体查询](#媒体查询)
 - [例题](#例题)
   - [1.实现一个三角形（或扇形）](#1实现一个三角形或扇形)
@@ -140,6 +141,8 @@
 
 比如：
 
+优先级不同情况下：
+
 ```css
 #id {
   color: red;
@@ -153,6 +156,18 @@ p {
 ```
 
 如果匹配的都是 p 元素，那么 p 元素的颜色是 red
+
+优先级相同情况下：
+
+.p {
+  color: red;
+}
+
+.p {
+  color: blue;
+}
+
+p 颜色为 blue
 
 ### CSS 匹配顺序
 
@@ -323,7 +338,7 @@ p {
 
 一、float 布局
 
-使用 float 可以使元素脱离文档流，形成 BFC，在重新渲染时不会影响其他的元素。需要注意使用 `float` 的元素其父元素会塌陷，需要清除浮动。
+使用 float 可以使元素脱离文档流，形成 `BFC`，在重新渲染时不会影响其他的元素。需要注意使用 `float` 的元素其父元素会塌陷，需要清除浮动。
 
 二、flex 弹性布局
 
@@ -336,7 +351,7 @@ flex布局主要适用于移动端项目
 
 四、grid 布局
 
-规范并未成熟，主流的浏览器使用较少，不推荐使用在企业项目中
+规范并未成熟，有些浏览器可能有兼容问题
 
 ### 九宫格布局
 
@@ -402,7 +417,7 @@ box-sizing: content-box;
 
 box-sizing: border-box;
 
-### JS 如何设置获取盒模型对应的宽和高
+### JS 获取盒模型对应的宽和高
 
 设置 dom 元素的宽高样式 一般有三种方法：
 
@@ -411,35 +426,22 @@ box-sizing: border-box;
 3. 通过 link 标签引入(外联样式)
 
 获取 dom 元素宽高样式，有下列 4 种方法：
-一
 
 ```js
+// 一
 dom.style.width/height
-
 // 只能获取 1， 即内联样式
-```
 
-二
-
-```js
+// 二
 dom.currentStyle.width/height
-
 // 获取1, 2, 3渲染后的宽高，但是仅 IE 支持
-```
 
-三
-
-```js
+// 三
 window.getComputedStyle(dom).width/height
-
 // 与2原理相似，但是兼容性好一些
-```
 
-四
-
-```js
+// 四
 dom.getBoundingClientRect().widht/height
-
 // 计算元素绝对位置（相对于视窗左上角），
 // 获取到四个元素left, top, width, height
 ```
@@ -456,13 +458,14 @@ dom.getBoundingClientRect().widht/height
 
 ```css
 .child {
-  width: 100%;
+  width: 100px;
   height: 100px;
   margin-top: 10px;
 }
 
 // 父级元素 parent 高度多少？
-// 100
+// 100px
+// 如何让父元素变成 110px ？
 ```
 
 解决方案：父元素设置 padding，或者 border，或者触发 BFC
@@ -471,7 +474,7 @@ dom.getBoundingClientRect().widht/height
 
 1.基本概念
 
-英文名, block formatting context, 块级格式化上下文.
+英文名, `block formatting context`, 块级格式化上下文.
 它是一个独立的渲染区域, 里面由块级元素组成.
 MDN: 是块盒子的布局过程发生的区域, 也是浮动元素与其他元素交互的区域.
 文档的根元素 HTML 就是 BFC 元素.
@@ -555,6 +558,10 @@ flex 有两根轴线，分别是主轴(`main axis`：项目排列布局的方向
 
 2. `align-item` 和 `align-content` 区别
    align-items 是针对每一个子项起作用居中，`align-content` 用于多行。
+
+## Grid
+
+TODO:
 
 ## 媒体查询
 
