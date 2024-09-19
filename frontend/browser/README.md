@@ -28,6 +28,7 @@
 - [Web Worker](#web-worker)
 - [WebSocket](#websocket)
   - [WebSocket 心跳机制](#websocket-心跳机制)
+- [SSE](#sse)
 - [从 url 输入到显示网页都发生了什么？](#从-url-输入到显示网页都发生了什么)
   - [`DNS` 解析](#dns-解析)
   - [解析渲染页面](#解析渲染页面)
@@ -482,6 +483,10 @@ heartCheck() {
   }, 20000)
 }
 ```
+
+## SSE
+
+SSE: Server-Sent Events
 
 ## 从 url 输入到显示网页都发生了什么？
 
