@@ -81,12 +81,14 @@ console.log(d.valueOf())    // {a:2}
     // => false
     ```
 
-2. 字符串转数字运算
+2. 字符串相加转数字运算
 
 ```js
-num = num * 10 + s[i].charCodeAt() - '0'.charCodeAt();
+// 比如要完成 '5' + '5' = '55'
+
+num = '5' * 10 + '5'.charCodeAt() - '0'.charCodeAt();
 //等价于
-num = num * 10 +Number(s[i])
+num = '5' * 10 + Number('5')
 ```
 
 ## eval
@@ -101,6 +103,9 @@ num = num * 10 +Number(s[i])
     // 动态生成 HTML 元素
     var str = "<div>动态生成的元素</div>";
     eval("document.body.innerHTML += '" + str + "';");
+
+    // 等价于
+    eval("document.body.innerHTML += '<div>动态生成的元素</div>';");
     ```
 
 2. 将字符串转换为 JavaScript 对象；
@@ -176,7 +181,7 @@ D: NaN and 63
 
 // 省略第二个参数，默认使用空格补全长度。
 'x'.padStart(4) // '   x'
-'x'.padEnd(4) // 'x   
+'x'.padEnd(4) // 'x   '
 ```
 
 padStart()的常见用途是为数值补全指定位数。
@@ -208,9 +213,9 @@ const age = 21;
 
 getPersonInfo`${person} is ${age} years old`;
 
-A: Lydia 21 ["", "is", "years old"]
-B: ["", "is", "years old"] Lydia 21
-C: Lydia ["", "is", "years old"] 21
+A: Lydia 21 ["", " is ", " years old"]
+B: ["", " is ", " years old"] Lydia 21
+C: Lydia ["", " is ", " years old"] 21
 ```
 
 答案：`B`
@@ -226,14 +231,17 @@ C: Lydia ["", "is", "years old"] 21
 举例：
 
 ```js
-function mytag(strings,...values){
+const country = "China";
+const age = 21;
+function mytag(strings, ...values){
     console.log(strings);
     console.log(values);
 }
-mytag`age is ${boy.age},country is ${boy.country}`;
+mytag`age is ${age},country is ${country}`;
 
 // output
-['age is', ',country is', '']
+// ['age is ', ',country is ', '']
+// [ 21, "China"]
 ```
 
 ## 扩展运算符
@@ -299,6 +307,8 @@ Set 结构没有键名，只有键值（或者说键名和键值是同一个值�
 const s = new Set();
 
 [2, 3, 5, 4, 5, 2, 2].forEach(x => s.add(x));
+
+// new Set([2, 3, 5, 4, 5, 2, 2])
 
 for (let i of s) {
   console.log(i);
@@ -390,10 +400,15 @@ WeakMap 是 ES6 提供的，键值对的集合。键必须是对象或者 `Symbo
 ```js
 const wm1 = new WeakMap();
 const o1 = {};
-const o2 = function () {};
+const o2 = "";
 
 wm1.set(o1, 'ok');
 console.log(wm1.get(o1));
+// ok
+
+wm1.set(o2, 'o2 ok?');
+console.log(wm1.get(o2));
+// Uncaught TypeError: Invalid value used as weak map key
 ```
 
 ## WeakSet
@@ -433,7 +448,7 @@ execRecursively((obj) => console.log(obj), foo);
 
 ## Promise
 
-链接: [promise](./promise/README.md)
+链接: [promise](../promise/README.md)
 
 Promise 是 ES6 出的异步编程的一种解决方案。
 

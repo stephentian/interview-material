@@ -29,6 +29,25 @@ const promise = new Promise((resolve, reject) => {
     reject('error')
   }
 })
+
+const promise1 = new Promise((resolve, reject) => {
+    setTimeout(() => {
+        resolve(1);
+    }, 1000);
+});
+
+
+promise1
+    .then(value => {
+        console.log(value); // 输出 1
+        return value * 2;
+    })
+    .then(value => {
+        console.log(value); // 输出 2
+    })
+    .catch(reason => {
+        console.error(reason);
+    });
 ```
 
 ## Promise.all
