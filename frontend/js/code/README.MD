@@ -82,7 +82,7 @@ console.log(-Math.pow(2, 53) - 1); //-9007199254740992
 
 ## call, apply, bind
 
-1. 三者都可以改变函数的 `this` 指向.
+1. 三者都可以改变函数的 `this` 指向
 
 2. `apply` 传数组，`call` 是参数列表；`bind` 参数可以分多次传入
 

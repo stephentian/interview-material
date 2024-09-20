@@ -55,13 +55,14 @@
 
 ### 设计缺陷
 
-1. `this` 的设计
+1. `this` 的设计，跟风 java，又和 java 不同
 2. `type null  = object`
 3. `instanceof` 只检查原型，只适用于对象，不适用基础类型。`"a" instanceof String === false`, `"a"` 不是字符串？
 4. 隐式转换 `[] + {}` 返回 `"[object Object]"`
 5. `==` 类型转换规则极复杂
 6. `new Date().getYear()` 返回是 1900 开始计算, 要用 `getFullYear`, 月份为 `getMonth() - 1`
 7. `toFixed` 精度问题(`1.335.toFixed(2) = 1.33`，`1.135.toFixed(2) = 1.14`)
+8. `sort` 对负数排序无效，是根据 unicode 排序
 
 ### 数据类型
 
@@ -77,7 +78,7 @@
 6. `Symbol`
 7. `BigInt`: ES2020，大于 `2^53 - 1` 的整数
 
-还有一个 `Object`
+还有一个引用数据类型 `Object`
 
 ### 继承
 

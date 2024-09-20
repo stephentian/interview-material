@@ -329,6 +329,7 @@ e.g.
 - Content-Length: 响应体长度
 - Content-Type: 返回内容的 MIME 类型
 - Expires：响应过期日期和时间
+- Last-Modified
 - Set-Cookie：设置 Http Cookie
 
 ### HTTP 状态码
@@ -529,16 +530,15 @@ TODO:
     - no-cache 缓存但重新验证
     - max-age = 相对时间
 - 协商缓存(弱缓存)
-  - etag & if-none-match
+  - etag(响应) & if-none-match(请求)
     - 标志资源是否变化
-  - last-modified & if-modified-since
+  - last-modified(响应) & if-modified-since(请求)
 
 缓存机制：  
 
 - 强缓存生效则使用强缓存，失效则进行协商缓存
 - cache-control 优先级高于 expires; etag 优先级高于 last-modified
-- 协商缓存有服务
-器决定。生效则返回 304。
+- 协商缓存由服务器决定。生效则返回 304。
 
 ### 浏览器请求使用缓存先后
 
