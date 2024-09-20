@@ -16,6 +16,7 @@
     - [Cookie](#cookie)
     - [localStorage](#localstorage)
     - [sessionStorage](#sessionstorage)
+    - [本地缓存对比](#本地缓存对比)
   - [代理服务器缓存](#代理服务器缓存)
   - [CDN 缓存](#cdn-缓存)
 - [事件循环 Event Loop](#事件循环-event-loop)
@@ -218,7 +219,7 @@ If-Modified-Since，是浏览器再次请求资源时，会携带上一次返回
 
 - 强缓存生效则使用强缓存，失效则进行协商缓存
 - `cache-control` 优先级高于 `expires`; `etag` 优先级高于 `last-modified`
-- 协商缓存有服务器决定。生效则返回 304。
+- 协商缓存由服务器决定。生效则返回 304。
 
 ![http cache](./img/httpCache.png)
 
@@ -261,15 +262,18 @@ localStorage 存值的方式和 Cookie 类似，都会存放在同一个域名�
 
 #### sessionStorage
 
-sessionStorage 和 localStorage 一致，唯一大的区别在于 sessionStorage 是会话级别的存储 会话级别的。 sessionStorage 在浏览器页面关闭后，这个存储也就消失了。
+sessionStorage 和 localStorage 一致，唯一大的区别在于 sessionStorage 是会话级别的存储。在浏览器页面关闭后，这个存储也就消失了。
 
 sessionStorage 的场景：sessionStorage 可以用于保存一些临时的数据，防止页面消失后数据就没了，比如表单填写和用户的浏览器记录等。
+
+#### 本地缓存对比
 
 - localStorage
   - 浏览器端设置，永久存储，要手动清除
   - 存储格式是字符串，注意存对象取出来要格式化
   - 同源情况，即可获取
   - 每个网站限制 5MB
+
 - sessionStorage
   - 浏览器端设置，窗口或页面关闭则清除
   - 同窗口才能获取
