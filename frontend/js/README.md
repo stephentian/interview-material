@@ -662,7 +662,7 @@ curriedAdd(1, 2, 3) // 6
 defer 和 async 在网络读取（下载）这块儿是一样的，都是异步的（相较于 HTML 解析）
 
 - defer: 会在整个文档解析完成后, `document` 的 `DOMContentLoaded` 之前执行
-- async: js 在下载完后会立即执行
+- async: `js` 在下载完后会立即执行
 
 ### Event Loop 执行顺序
 
@@ -697,6 +697,24 @@ console.log(10)
 ```
 
 打印顺序: `0 3 4 7 9 10 5 8 2 1 6`
+
+相关信息：
+
+Event loop 每一次循环操作叫 `tick`
+
+1. 执行最先进入队列的任务
+2. 检查是否存在 微任务 microtask, 存在则不停执行, 直至清空 微任务 microtask queue
+3. render 渲染
+   1. requestAnimationFrame
+   2. intersectionObserver
+4. 检查 宏任务队列，存在则执行
+5. requestIdleCallback 取第一个, 执行
+
+宏任务 task: script(整体代码), setTimeout, setInterval, setImmediate
+
+微任务 microtask: Promise.then, MutaionObserver, process.nextTick
+
+详情: [browser](../browser/README.md) 事件循环 Event Loop
 
 ## 代码题
 

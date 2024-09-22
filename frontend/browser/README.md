@@ -372,8 +372,26 @@ setTimeout 0ms 为什么浏览器不是 0ms 执行：
 
 ## requestAnimationFrame
 
+window.requestAnimationFrame()​​​ 告诉浏览器——你希望执行一个动画，并且要求浏览器在下次重绘之前调用指定的回调函数更新动画。该方法需要传入一个回调函数作为参数，该回调函数会在浏览器下一次重绘之前执行。
+
 - 回调执行与 宏任务微任务无关, 与浏览器是否渲染有关, 它是在浏览器渲染之前, 微任务执行后执行。
 - 一般显示器屏幕为 60hz, 大约 16.7ms 执行一次
+- `requestAnimationFrame​​​` 会返回一个请求 ID，是回调函数列表中的一个唯一值，可以使用 `​​cancelAnimationFrame​​` 通过传入该请求 ID 取消回调函数。
+
+```js
+const test = document.querySelector<HTMLDivElement>("#test")!;
+let i = 0;
+let requestId: number;
+function animation() {
+  test.style.marginLeft = `${i}px`;
+  requestId = requestAnimationFrame(animation);
+  i++;
+  if (i > 200) {
+    cancelAnimationFrame(requestId);
+  }
+}
+animation();
+```
 
 [深入requestAnimationFrame 执行机制](https://blog.51cto.com/feng/5289890)
 
