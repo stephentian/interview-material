@@ -101,6 +101,8 @@ function flattenStack(arr) {
   // return res
 }
 
+
+
 // 对象扁平化
 
 function flattenObj(obj) {

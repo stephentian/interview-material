@@ -30,6 +30,8 @@ function addStrings(num1, num2) {
 
 // addStrings(1234, 123) // 1357
 
+Number.MAX_SAFE_INTEGER = Math.pow(2, 53) - 1
+
 console.log("Math.pow(2, 53): ", Math.pow(2, 53));
 console.log("Math.pow(2, 53) + 1 精度丢失: ", Math.pow(2, 53) + 1);
 console.log("大数相加: ", addStrings(Math.pow(2, 53), 1));

@@ -6,7 +6,7 @@
 - [柯里化](#柯里化)
 - [防抖和节流](#防抖和节流)
 - [深拷贝](#深拷贝)
-- [数组扁平化](#数组扁平化)
+- [数组及对象扁平化](#数组及对象扁平化)
 - [call, apply, bind](#call-apply-bind)
 - [判断 Array 类型](#判断-array-类型)
 - [实现一个 const](#实现一个-const)
@@ -24,6 +24,7 @@
 JS 在存放整数的时候是有一个安全范围的，一旦数字超过这个范围便会损失精度。
 
 ```js
+// Number.MAX_SAFE_INTEGER = 9007199254740991 = 2^53 - 1
 console.log(Math.pow(2, 53)); // 9007199254740992
 console.log(Math.pow(2,53) + 1); //9007199254740992
 console.log(-Math.pow(2, 53)); // -9007199254740992
@@ -76,7 +77,7 @@ console.log(-Math.pow(2, 53) - 1); //-9007199254740992
 
 代码: [deepClone](deepClone.js)
 
-## 数组扁平化
+## 数组及对象扁平化
 
 代码: [Flatten](Flatten.js)
 

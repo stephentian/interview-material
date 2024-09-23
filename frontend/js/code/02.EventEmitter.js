@@ -1,4 +1,5 @@
 // EventEmitter
+// 核心方法: `on, emit, off, once`
 
 class EventEmitter {
   constructor() {
