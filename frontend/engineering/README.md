@@ -1,6 +1,10 @@
 # 前端工程
 
-- [工程化、组件化、模块化](#工程化组件化模块化)
+- [前端工程化](#前端工程化)
+  - [模块化](#模块化)
+  - [规范化](#规范化)
+  - [组件化](#组件化)
+  - [自动化](#自动化)
 - [模块化规范](#模块化规范)
   - [CommonJS](#commonjs)
   - [AMD](#amd)
@@ -27,11 +31,11 @@
 - [微前端](#微前端)
   - [微前端，每个团队都有自己的选择，浏览器加载多个框架和重复的组件代码？](#微前端每个团队都有自己的选择浏览器加载多个框架和重复的组件代码)
 
-## 工程化、组件化、模块化
+## 前端工程化
 
 工程化 = 模块化 + 组件化 + 规范化 + 自动化
 
-1. 模块化
+### 模块化
 
     这里说的模块化是 业务场景下的，非代码层面。
     可以理解为对特定业务场景的封装, 是根据项目情况封装到一起的。
@@ -45,7 +49,7 @@
     - 方便维护
     - 解决命名冲突
 
-2. 工程化
+### 规范化
 
     使用规范的软件工程技术进行项目的开发到交付，管理和维护。目的是 **提高质量和效率**。
 
@@ -61,7 +65,7 @@
 
     主要是工具的体现: eslint, typescript, git, webpack, gitlab 等
 
-3. 组件化
+### 组件化
 
     对某个具体功能的封装, 达到组件复用, 提高开发效率。列表组件, 预览图组件等
 
@@ -70,6 +74,11 @@
     如何划分组件：
     1. 容器组件，无状态组件，UI 组件
     2. 基础公共组件，业务定制组件，区块容器（基础+业务），页面容器
+
+### 自动化
+
+- 自动化构建工具，用于构建和发布项目
+- 构建工具，构建工具就是用来构建项目，构建工具就是用来构建项目，构建工具就是用来构建项目。
 
 ## 模块化规范
 
@@ -80,7 +89,7 @@
 - 输出模块指模块只有一个接口对象
 - 最初被应用于 `Node.js`，成为 `Node.js` 的模块规范
 
-`module` 是通过 new Module() 实例化得到的一个 CommonJS 模块实例
+`module` 是通过 `new Module()` 实例化得到的一个 `CommonJS` 模块实例
 
 模块导出：`module.exports`
 
@@ -88,22 +97,22 @@
 
 ### AMD
 
-Asynchronous Module Definition 异步模块定义
+`Asynchronous Module Definition` 异步模块定义
 
 AMD 推崇依赖前置，在定义模块的时候就要声明其依赖的模块
 
-一般用于 require.js
+一般用于 `require.js`
 
-- 多个 js 可能有依赖关系, 被依赖的文件要早于它自己加载到浏览器
+- 多个 `js` 可能有依赖关系, 被依赖的文件要早于它自己加载到浏览器
 - 异步加载，避免 js 加载的时候浏览器中止页面渲染
 
 ### CMD
 
-Common Module Definition 通用模块定义
+`Common Module Definition` 通用模块定义
 
-CMD 推崇异步依赖加载的，只有在用到某个模块的时候再去 require
+CMD 推崇异步依赖加载的，只有在用到某个模块的时候再去 `require`
 
-国内流行，用于 SeaJS
+国内流行，用于 `SeaJS`
 
 ### ES Module
 
@@ -126,7 +135,7 @@ export 导出，导入时要加 大括号 { }
 // m.b
 ```
 
-一个文件里面只能有一个export default语句
+一个文件里面只能有一个 export default 语句
 
 ```js
 // export default { a, b, c }
@@ -139,28 +148,28 @@ export 导出，导入时要加 大括号 { }
 
 ### CommonJS 和 ES6 Module区别
 
-- CommonJS 输出是一个值的拷贝, ES6 通过 export default 是值的拷贝，export 是值的引用
-  - 值拷贝：把模块的值赋值给 `module.exports`，修改 require 的文件，当前文件不变
+- CommonJS 输出是一个值的拷贝, ES6 通过 `export default` 是值的拷贝，`export` 是值的引用
+  - 值拷贝：把模块的值赋值给 `module.exports`，修改 `require` 的文件，当前文件不变
   - 引用：修改导入文件，当前文件会同步变化
 - CommonJS 运行时加载，ES6 是编译时输出
   - 运行时: 指的是js 执行过程，只用脚步完成才生成对象
   - 编译时：JS 运行代码之前的编译过程
-- CommonJS 模块的 require() 是同步加载模块，ES6 模块的 import 命令是异步加载
+- CommonJS 模块的 `require()` 是同步加载模块，ES6 模块的 `import` 命令是异步加载
 - CommonJS 模块循环引用不会报错；ES6 模块循环引用会导致 JS 错误
-- CommonJS 的 this 指向当前 `module` 的 `exports`，ESM 指向 `undefined`
+- CommonJS 的 `this` 指向当前 `module` 的 `exports`，ESM 指向 `undefined`
 
 ### 为什么 CommonJS 可以循环引用
 
 在 `require` 一个模块时，存在缓存机制`require.cache`。加载模块时会先判断是否存在该模块的缓存，如果存在，就会直接返回缓存中该模块的`module.exports`。而不会再次执行模块代码。
 
-只有在第一次加载模块A时，模块 A 的代码才会被执行，之后不管你再require('A')多少次都不会再执行模块 A 的代码
+只有在第一次加载模块A时，模块 A 的代码才会被执行，之后不管你再 `require('A')` 多少次都不会再执行模块 A 的代码
 
 ## 前端构建工具演变流程
 
 1. `grunt`
-2. gulp fis3
-3. webpack parcel rollup
-4. vite
+2. `gulp` `fis3`
+3. `webpack` `parcel` `rollup`
+4. `vite`
 
 ## Webpack
 
@@ -186,7 +195,7 @@ Webpack 核心只处理 JS 和 JSON，处理其他（css, img）等需要 Loader
 
 ### webpack 优势
 
-- Grunt/Gulp 强调自动化，而没有模块化
+- `Grunt/Gulp` 强调自动化，而没有模块化
 - 有很多工具, 文件压缩，预处理
 - 更好的生态链，开发体验有保证
 
@@ -200,11 +209,11 @@ Webpack 核心只处理 JS 和 JSON，处理其他（css, img）等需要 Loader
 
 ## Browserify
 
-本地起一个 server , 在浏览器端运行使用require加载的js代码
+本地起一个 server , 在浏览器端运行使用 require 加载的 js 代码
 
 ## Yeoman
 
-Yeoman 是 Google 的团队和外部贡献者团队合作开发的，他的目标是通过Grunt（一个用于开发任务自动化的命令行工具）和 Bower（一个HTML、CSS、Javascript和图片等前端资源的包管理器）的包装为开发者创建一个易用的工作流。
+Yeoman 是 Google 的团队和外部贡献者团队合作开发的，他的目标是通过 Grunt（一个用于开发任务自动化的命令行工具）和 Bower（一个HTML、CSS、Javascript和图片等前端资源的包管理器）的包装为开发者创建一个易用的工作流。
 
 - 一个通用的脚手架搭建系统，可以创建任何的类型的 app。
 - ”语言无感知”的，支持创建任何类型开发语言的项目，Web, Java, Python, C# 等。
@@ -224,9 +233,9 @@ babel的核心步骤:
 
 ## AST
 
-Abstract Syntax Tree 抽象语法树
+`Abstract Syntax Tree` 抽象语法树
 
-javascript转译、代码压缩、css预处理器、elint、pretiier，等都建立在了AST这个巨人的肩膀上。
+javascript转译、代码压缩、css 预处理器、elint、pretiier，等都建立在了AST这个巨人的肩膀上。
 
 在线转换 ast : [astexplorer](https://astexplorer.net/)
 

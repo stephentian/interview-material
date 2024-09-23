@@ -18,8 +18,8 @@
 
 ## webpack 构建流程
 
-1. 初始化: 读取与合并配置 webpack.config 参数；加载 Plugin；实例化 Compiler
-2. 编译: （调用 Compiler 的 run）从 entry 出发，调用所有配置的 loader 对 module 进行编译，再递归编译该 module 依赖的 module，最后将编译后的 module 组合成 chunk 及对应资源 `assets`
+1. 初始化: 读取与合并配置 `webpack.config` 参数；加载 Plugin；实例化 Compiler
+2. 编译: （调用 Compiler 的 run）从 `entry` 出发，调用所有配置的 loader 对 module 进行编译，再递归编译该 module 依赖的 module，最后将编译后的 module 组合成 chunk 及对应资源 `assets`
 3. 输出：把编译得到的 `assets` 输出到文件系统
 
 ## 常见 loader 和 plugins
@@ -38,8 +38,8 @@
 1. babel 缓存：cacheDirectory，contenthash
 2. 多进程打包
 3. externals
-4. DLLPlugin 把第三方代码完全分离开，即每次只打包项目自身的代码
-5. oneOf：oneOf里面的loader只匹配一个。不能有两个配置处理同一种类型的文件；避免每个文件都被所有loader过一遍
+4. `DLLPlugin` 把第三方代码完全分离开，即每次只打包项目自身的代码
+5. oneOf：oneOf 里面的 loader 只匹配一个。不能有两个配置处理同一种类型的文件；避免每个文件都被所有 loader 过一遍
 
 ### 优化代码性能
 
@@ -50,9 +50,9 @@
 
 ### Tree-shaking
 
-tree-shaking 指打包中去除在代码中没有被用到的那些死代码。
-js: UglifyJsPlugin
-css: purify-CSS
+`tree-shaking` 指打包中去除在代码中没有被用到的那些死代码。
+js: `UglifyJsPlugin`
+css: `purify-CSS`
 
 ## Loder 和 Plugins 的不同
 
@@ -71,7 +71,7 @@ css: purify-CSS
 loader 本质上是一个函数。
 
 1. loader 的执行顺序在 use 数组里面是 **从下往上** 执行。
-2. loader 里面有一个 pitch 方法，use数组中 pitch 方法的执行顺序是从上往下执行，因此我们如果想先执行某些功能，可以先在 pitch 方法中定义。
+2. loader 里面有一个 pitch 方法，use 数组中 pitch 方法的执行顺序是从上往下执行，因此我们如果想先执行某些功能，可以先在 pitch 方法中定义。
 
 ### 手写一个 Loader
 
@@ -130,28 +130,28 @@ module.exports = myPlugin
 
 1. 多入口情况下，使用 `CommonsChunkPlugin` 来提取公共代码
 2. 使用 `Happypack` 实现多线程加速编译
-3. Tree-shaking
+3. `Tree-shaking`
 4. 通过 externals 配置来提取常用库
 
 ## 说说 webpack 的热更新HMR
 
-webpack的热更新又称热替换（Hot Module Replacement），缩写为HMR。
+webpack的热更新又称热替换（`Hot Module Replacement`），缩写为HMR。
 这个机制可以做到不用刷新浏览器而将新变更的模块替换掉旧的模块。
 
 核心是 `websocket` 数据交互, 不需要刷新界面发起数据请求
 
 步骤原理:
 
-1. 使用 webpack-dev-server (后面简称 WDS)托管静态资源，同时以 Runtime 方式注入 HMR 客户端代码
-2. 浏览器加载页面后，与 WDS(server) 建立 WebSocket 连接
-3. Webpack 监听到文件变化后，增量构建发生变更的模块，并通过 WebSocket 发送 hash 事件
+1. 使用 `webpack-dev-server` (后面简称 WDS)托管静态资源，同时以 `Runtime` 方式注入 HMR 客户端代码
+2. 浏览器加载页面后，与 `WDS(server)` 建立 `WebSocket` 连接
+3. Webpack 监听到文件变化后，增量构建发生变更的模块，并通过 `WebSocket` 发送 `hash` 事件
 4. 浏览器接收到 hash 事件后，请求 manifest 资源文件，确认增量变更范围
 5. 浏览器加载发生变更的增量模块
-6. Webpack 运行时触发变更模块的 module.hot.accept 回调，执行代码变更逻辑
+6. `Webpack` 运行时触发变更模块的 `module.hot.accept` 回调，执行代码变更逻辑
 
 ## webpack 模块联邦
 
-webpack5 出的新特性, Module Federation 模块联邦
+webpack5 出的新特性, `Module Federation` 模块联邦
 
 这个功能可以跨应用做到模块共享。
 

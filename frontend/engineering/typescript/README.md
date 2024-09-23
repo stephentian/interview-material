@@ -107,6 +107,8 @@ type C = Pick<A, 'a' | 'c'>  // 等价于 type C = { a: 1; c: 3 }
 
 ### 泛型
 
+TODO:
+
 ## 例题
 
 ### any 和 unknow
@@ -128,7 +130,7 @@ type C = Pick<A, 'a' | 'c'>  // 等价于 type C = { a: 1; c: 3 }
 ### 遍历一个对象类型，将不想要的类型标记为 never
 
 ```ts
-type MarkUnwantedTypesAsNever<Source, Condition> ={  
+type MarkUnwantedTypesAsNever<Source, Condition> = {  
   [K in keyof Source]: Source[K] extends Condition ? K : never  
 } 
 ```
