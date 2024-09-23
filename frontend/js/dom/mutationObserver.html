@@ -20,9 +20,9 @@
     console.log('1 observer', observer)
 
     Promise.resolve(2).then((a) => {
-      console.log('then', a)
+      console.log('then1', a)
     }).then((a) => {
-      console.log('then2', a)
+      console.log('then1-2', a)
     })
 
     observer.observe(app, {
@@ -40,9 +40,9 @@
     }
 
     Promise.resolve(3).then((a) => {
-      console.log('then', a)
-    }).then((a) => {
       console.log('then2', a)
+    }).then((a) => {
+      console.log('then2-2', a)
     })
 
     console.timeEnd('for time')
@@ -51,6 +51,7 @@
       console.log('setTimeout')
       // observer.disconnect()
     }, 0)
+    
 </script>
 </body>
 </html>
