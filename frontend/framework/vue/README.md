@@ -15,7 +15,7 @@
 - [keep-alive](#keep-alive)
 - [Vue3](#vue3)
   - [vue3 更新](#vue3-更新)
-  - [Diff 差别](#diff-差别)
+  - [vue3 Diff](#vue3-diff)
   - [Vue3 组件通信](#vue3-组件通信)
   - [defineProperty 缺点](#defineproperty-缺点)
   - [Vue3.0 性能提升](#vue30-性能提升)
@@ -23,6 +23,7 @@
 - [Vue-Router](#vue-router)
 - [问题](#问题)
   - [v-if 和 v-for 一起用有什么问题](#v-if-和-v-for-一起用有什么问题)
+  - [ref 和 reactive 区别](#ref-和-reactive-区别)
 
 ## 基础知识
 
@@ -335,7 +336,7 @@ LRU：[LRU.js](https://github.com/stephentian/interview-material/blob/1e031bc07c
 9. 增加了内置组件 `suspense`，用于在组件异步加载时，提供加载状态。
 10. 将全局的API，即：Vue.xxx 调整到应用实例（app）上，使用 `app.xxx`（如 `app.use`，`app.config`）
 
-### Diff 差别
+### vue3 Diff
 
 vue2
 
@@ -470,3 +471,12 @@ export default {
 - 性能损耗：如前所述，每次循环迭代时都需要执行 v-if 条件判断，对于大数据量或复杂度高的场景，这会增加不必要的计算负担。
 
 - 代码可读性与维护性：同时使用 v-if 和 v-for 在单个元素上可能会使模板逻辑变得复杂，不易于其他开发者理解与维护。这种混杂的条件与循环逻辑容易引发混淆，尤其是在处理较复杂的业务场景时。
+
+### ref 和 reactive 区别
+
+两个都是用于创建响应式数据的。
+
+- ref 一般用来处理基本数据类型；返回一个响应式的、可更改的 ref 对象，此对象只有一个指向其内部值的属性 `.value`。
+- ref 也可以绑定对象，对于深层对象会使用 reactive 深层转化为响应式；避免深层对象数据绑定 使用 `shallowRef` 替代，不会被深层递归地转为响应式。只有对 .value 的访问是响应式的。
+- reactive 专门用于处理对象和数组，利用Proxy进行深度数据代理，不需要访问.value。
+- reactive 只想保留对这个对象顶层次访问的响应性，请使用 `shallowReactive` 作替代。
