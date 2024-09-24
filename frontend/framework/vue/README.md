@@ -2,6 +2,7 @@
 
 - [基础知识](#基础知识)
   - [Vue 发展史](#vue-发展史)
+  - [api 风格](#api-风格)
   - [生命周期](#生命周期)
   - [Vue 实例过程](#vue-实例过程)
   - [数据响应式原理](#数据响应式原理)
@@ -14,10 +15,11 @@
 - [keep-alive](#keep-alive)
 - [Vue3](#vue3)
   - [vue3 更新](#vue3-更新)
-  - [Diff 差别](#diff-差别)
+  - [vue3 Diff](#vue3-diff)
   - [Vue3 组件通信](#vue3-组件通信)
   - [defineProperty 缺点](#defineproperty-缺点)
   - [Vue3.0 性能提升](#vue30-性能提升)
+  - [ref 和 reactive](#ref-和-reactive)
   - [watch 和 watchEffect](#watch-和-watcheffect)
 - [Vue-Router](#vue-router)
 - [问题](#问题)
@@ -36,9 +38,9 @@
 
   文档地址：[https://v2.cn.vuejs.org/v2/guide/](https://v2.cn.vuejs.org/v2/guide/)
 
-  1. 吸收了 React 虚拟 DOM 的方案，将 `template` 编译为 `render` 函数，`render` 返回 `Virtual DOM`，然后 `patch` 对比差异，最后渲染。
-  2. runtime 版本（使用 render 渲染）和 compiler 版本(使用 template)
-  3. 支持服务端渲染；
+  1. 吸收了 React 虚拟 DOM 的方案，将 `template` 编译为 `render` 函数，`render` 返回 `Virtual DOM`，然后 `patch` 对比差异，最后渲染
+  2. `runtime` 版本（使用 `render` 渲染）和 `compiler` 版本(使用 `template`)
+  3. 支持服务端渲染
   4. 异步请求库用 `axios`
 
 - 2020年，Vue3
@@ -50,6 +52,22 @@
   3. 使用 `Proxy` 代替 `defineProperty`
   4. 自定义 `render API`
   5. 支持 `Time Slicing` 时间切片(类似 `React Fiber` 切片架构)，Vue 会限制执行时间(小于 `16ms`)，只在一个时间片段内运行。
+
+### api 风格
+
+选项式 API (Options API)
+
+可以用包含多个选项的对象来描述组件的逻辑，例如 data、methods 和 mounted。选项所定义的属性都会暴露在函数内部的 this 上，它会指向当前的组件实例。
+
+组合式 API (Composition API)
+
+这套 API 的风格是基于函数的组合。组合式 API 通常会与 `<script setup>` 搭配使用。使用导入的 API 函数来描述组件逻辑。
+
+选择哪个：
+
+- 其实都可以完成业务场景，复杂的业务场景建议使用组合式 API。
+- 选项式 API 中我们主要的逻辑复用机制是 mixins，而组合式 API 解决了 mixins 的所有缺陷。
+- 选项氏 API 简单逻辑代码组织很好，但是代码量一多，拆分在了不同的选项中，就很零散；组合式 API 代码组织更好。
 
 ### 生命周期
 
@@ -92,7 +110,7 @@
 
 响应性是一种可以使我们声明式地处理变化的编程范式。
 
-Vue 重点响应式是通过数据劫持和发布-订阅模型来实现的。
+Vue 数据响应式是通过数据劫持和发布-订阅模型来实现的。
 
 数据劫持：Vue 2 使用 `Object.defineProperty()` 设置属性的 `getter / setters`。Vue 3 中则使用了 `Proxy` 来创建响应式对象，仅将 `getter / setter` 用于 `ref`。
 
@@ -160,7 +178,7 @@ Vue 重点响应式是通过数据劫持和发布-订阅模型来实现的。
 - child mounted
 - parent mounted
 
-1. Vue 源码中, 会递归组件, 先递归到创建父组件, 有子组件就创建子组件
+1. Vue 源码中, 会从根组件递归组件, 创建父组件, 有子组件就创建子组件
 2. 子组件被创建完, 如果没有子组件, 会添加 `mounted` 钩子到队列中, 等 `patch` 结束后执行. 然后再去父组件执行挂载 `mounted`
 
 ## 组件之间的通信
@@ -171,10 +189,12 @@ Vue 重点响应式是通过数据劫持和发布-订阅模型来实现的。
 2. `eventBus`
 3. `provide/inject`
 4. `ref/$refs`
+5. Vuex, pinia 等全局状态管理
 
 props/$emit
 
-适用于**父子组件**
+- 使用 `defineProps` 和 `defineEmits` 获得类型推导
+- 适用于**父子组件**
 
 ```js
 // 父组件
@@ -253,7 +273,7 @@ eventBus
     }
     ```
 
-provide/inject
+`provide/inject`
 
 父组件中通过 `provide` 来提供变量, 然后再子组件中通过 `inject` 来注入变量。
 
@@ -272,7 +292,7 @@ export default {
 }
 ```
 
-ref/$refs
+`ref/$refs`
 
 有的时候你仍可能需要在 `JavaScript` 里直接访问一个子组件。可以通过 `ref` 特性为这个子组件赋予一个 ID 引用。
 
@@ -288,11 +308,11 @@ this.$refs.child1
 
 ## keep-alive
 
-- 组件，或者页面开启缓存数据
-- 会触发两个生命周期 `activated` `deactivated`
-- 可以在 `activated` 刷新数据
+- `<KeepAlive>` 默认会缓存内部的所有组件实例，可以通过 `include` 和 `exclude` prop 来定制该行为
+- 传入 `max` prop 来限制可被缓存的最大组件实例数
+- 通过 `onActivated`() 和 `onDeactivated`() 注册相应的两个状态的生命周期钩子
 
-原理：采用了 LRU (最近最少使用 least recently used)缓存算法管理
+原理：采用了 `LRU` (最近最少使用 least recently used)缓存算法管理
 
 1. 缓存组件 vnode 到 cache 对象，键名 `key` 保存为数组 `keys`
 2. 将不经常用的缓存组件放前面，常用的放后面
@@ -318,7 +338,7 @@ LRU：[LRU.js](https://github.com/stephentian/interview-material/blob/1e031bc07c
 9. 增加了内置组件 `suspense`，用于在组件异步加载时，提供加载状态。
 10. 将全局的API，即：Vue.xxx 调整到应用实例（app）上，使用 `app.xxx`（如 `app.use`，`app.config`）
 
-### Diff 差别
+### vue3 Diff
 
 vue2
 
@@ -362,6 +382,16 @@ vue3
 - 初始渲染速度方面（快了 55%）
 - 更新速度方面（快了 133%）
 - 内存占用方面（减少了 54%）
+
+### ref 和 reactive
+
+两个都是用于创建响应式数据的。
+
+- ref 一般用来处理基本数据类型；返回一个响应式的、可更改的 ref 对象，此对象只有一个指向其内部值的属性 `.value`。
+- ref 也可以绑定对象，对于深层对象会使用 reactive 深层转化为响应式；避免深层对象数据绑定 使用 `shallowRef` 替代，不会被深层递归地转为响应式。只有对 .value 的访问是响应式的。
+- reactive 专门用于处理对象和数组，利用Proxy进行深度数据代理，不需要访问.value。
+- reactive 只想保留对这个对象顶层次访问的响应性，请使用 `shallowReactive` 作替代。
+
 
 ### watch 和 watchEffect
 
@@ -453,3 +483,5 @@ export default {
 - 性能损耗：如前所述，每次循环迭代时都需要执行 v-if 条件判断，对于大数据量或复杂度高的场景，这会增加不必要的计算负担。
 
 - 代码可读性与维护性：同时使用 v-if 和 v-for 在单个元素上可能会使模板逻辑变得复杂，不易于其他开发者理解与维护。这种混杂的条件与循环逻辑容易引发混淆，尤其是在处理较复杂的业务场景时。
+
+

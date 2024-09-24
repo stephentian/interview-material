@@ -46,7 +46,7 @@
 优点
 
 - 浏览器兼容性好
-- 渲染速度快(vue3 比 React18 更快了)
+- 渲染速度快(vue3 比 `React18` 更快了)
 - 天然代码模块化
 
 缺点
@@ -187,7 +187,7 @@ Pinia 是一个轻量级的 Vue 状态管理库，类似于 Redux 和 Vuex。它
 
 ### vuex 和 pinia 区别
 
-1. `vuex` 基于 vue2 选项式 api，而 `pinia` 基于 `vue3` 组合式 api；
+1. `vuex` 基于 `vue2` 选项式 api，而 `pinia` 基于 `vue3` 组合式 api；
 2. pinia 没有 `mutations`，`actions` 支持同步异步；
 3. pinia `state` 是一个箭头函数返回一个对象。
-4. `pinia` 没有 `modules` ，每一个独立的模块都是 `definStore` 生成出来的。
+4. `pinia` 没有 `modules` ，每一个独立的模块都是 `defineStore` 生成出来的。
