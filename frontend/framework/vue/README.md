@@ -19,11 +19,11 @@
   - [Vue3 组件通信](#vue3-组件通信)
   - [defineProperty 缺点](#defineproperty-缺点)
   - [Vue3.0 性能提升](#vue30-性能提升)
+  - [ref 和 reactive](#ref-和-reactive)
   - [watch 和 watchEffect](#watch-和-watcheffect)
 - [Vue-Router](#vue-router)
 - [问题](#问题)
   - [v-if 和 v-for 一起用有什么问题](#v-if-和-v-for-一起用有什么问题)
-  - [ref 和 reactive 区别](#ref-和-reactive-区别)
 
 ## 基础知识
 
@@ -110,7 +110,7 @@
 
 响应性是一种可以使我们声明式地处理变化的编程范式。
 
-Vue 重点响应式是通过数据劫持和发布-订阅模型来实现的。
+Vue 数据响应式是通过数据劫持和发布-订阅模型来实现的。
 
 数据劫持：Vue 2 使用 `Object.defineProperty()` 设置属性的 `getter / setters`。Vue 3 中则使用了 `Proxy` 来创建响应式对象，仅将 `getter / setter` 用于 `ref`。
 
@@ -178,7 +178,7 @@ Vue 重点响应式是通过数据劫持和发布-订阅模型来实现的。
 - child mounted
 - parent mounted
 
-1. Vue 源码中, 会递归组件, 先递归到创建父组件, 有子组件就创建子组件
+1. Vue 源码中, 会从根组件递归组件, 创建父组件, 有子组件就创建子组件
 2. 子组件被创建完, 如果没有子组件, 会添加 `mounted` 钩子到队列中, 等 `patch` 结束后执行. 然后再去父组件执行挂载 `mounted`
 
 ## 组件之间的通信
@@ -189,10 +189,12 @@ Vue 重点响应式是通过数据劫持和发布-订阅模型来实现的。
 2. `eventBus`
 3. `provide/inject`
 4. `ref/$refs`
+5. Vuex, pinia 等全局状态管理
 
 props/$emit
 
-适用于**父子组件**
+- 使用 `defineProps` 和 `defineEmits` 获得类型推导
+- 适用于**父子组件**
 
 ```js
 // 父组件
@@ -306,11 +308,11 @@ this.$refs.child1
 
 ## keep-alive
 
-- 组件，或者页面开启缓存数据
-- 会触发两个生命周期 `activated` `deactivated`
-- 可以在 `activated` 刷新数据
+- `<KeepAlive>` 默认会缓存内部的所有组件实例，可以通过 `include` 和 `exclude` prop 来定制该行为
+- 传入 `max` prop 来限制可被缓存的最大组件实例数
+- 通过 `onActivated`() 和 `onDeactivated`() 注册相应的两个状态的生命周期钩子
 
-原理：采用了 LRU (最近最少使用 least recently used)缓存算法管理
+原理：采用了 `LRU` (最近最少使用 least recently used)缓存算法管理
 
 1. 缓存组件 vnode 到 cache 对象，键名 `key` 保存为数组 `keys`
 2. 将不经常用的缓存组件放前面，常用的放后面
@@ -380,6 +382,16 @@ vue3
 - 初始渲染速度方面（快了 55%）
 - 更新速度方面（快了 133%）
 - 内存占用方面（减少了 54%）
+
+### ref 和 reactive
+
+两个都是用于创建响应式数据的。
+
+- ref 一般用来处理基本数据类型；返回一个响应式的、可更改的 ref 对象，此对象只有一个指向其内部值的属性 `.value`。
+- ref 也可以绑定对象，对于深层对象会使用 reactive 深层转化为响应式；避免深层对象数据绑定 使用 `shallowRef` 替代，不会被深层递归地转为响应式。只有对 .value 的访问是响应式的。
+- reactive 专门用于处理对象和数组，利用Proxy进行深度数据代理，不需要访问.value。
+- reactive 只想保留对这个对象顶层次访问的响应性，请使用 `shallowReactive` 作替代。
+
 
 ### watch 和 watchEffect
 
@@ -472,11 +484,4 @@ export default {
 
 - 代码可读性与维护性：同时使用 v-if 和 v-for 在单个元素上可能会使模板逻辑变得复杂，不易于其他开发者理解与维护。这种混杂的条件与循环逻辑容易引发混淆，尤其是在处理较复杂的业务场景时。
 
-### ref 和 reactive 区别
 
-两个都是用于创建响应式数据的。
-
-- ref 一般用来处理基本数据类型；返回一个响应式的、可更改的 ref 对象，此对象只有一个指向其内部值的属性 `.value`。
-- ref 也可以绑定对象，对于深层对象会使用 reactive 深层转化为响应式；避免深层对象数据绑定 使用 `shallowRef` 替代，不会被深层递归地转为响应式。只有对 .value 的访问是响应式的。
-- reactive 专门用于处理对象和数组，利用Proxy进行深度数据代理，不需要访问.value。
-- reactive 只想保留对这个对象顶层次访问的响应性，请使用 `shallowReactive` 作替代。
