@@ -87,7 +87,7 @@
 
 ## Solid
 
-SolidJS 是一个语法像 React Function Component，内核像 Vue 的前端框架。
+SolidJS 是一个语法像 `React Function Component`，内核像 Vue 的前端框架。
 
 SolidJS 通过利用细粒度的观察机制，将组件的渲染过程与 JavaScript 的响应式特性结合起来，实现了高效的界面更新。SolidJS 使用JavaScript 代码来描述界面的结构，而不是像其他框架那样使用模板语言。
 
