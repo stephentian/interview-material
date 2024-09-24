@@ -2,6 +2,7 @@
 
 - [基础知识](#基础知识)
   - [Vue 发展史](#vue-发展史)
+  - [api 风格](#api-风格)
   - [生命周期](#生命周期)
   - [Vue 实例过程](#vue-实例过程)
   - [数据响应式原理](#数据响应式原理)
@@ -36,9 +37,9 @@
 
   文档地址：[https://v2.cn.vuejs.org/v2/guide/](https://v2.cn.vuejs.org/v2/guide/)
 
-  1. 吸收了 React 虚拟 DOM 的方案，将 `template` 编译为 `render` 函数，`render` 返回 `Virtual DOM`，然后 `patch` 对比差异，最后渲染。
-  2. runtime 版本（使用 render 渲染）和 compiler 版本(使用 template)
-  3. 支持服务端渲染；
+  1. 吸收了 React 虚拟 DOM 的方案，将 `template` 编译为 `render` 函数，`render` 返回 `Virtual DOM`，然后 `patch` 对比差异，最后渲染
+  2. `runtime` 版本（使用 `render` 渲染）和 `compiler` 版本(使用 `template`)
+  3. 支持服务端渲染
   4. 异步请求库用 `axios`
 
 - 2020年，Vue3
@@ -50,6 +51,22 @@
   3. 使用 `Proxy` 代替 `defineProperty`
   4. 自定义 `render API`
   5. 支持 `Time Slicing` 时间切片(类似 `React Fiber` 切片架构)，Vue 会限制执行时间(小于 `16ms`)，只在一个时间片段内运行。
+
+### api 风格
+
+选项式 API (Options API)
+
+可以用包含多个选项的对象来描述组件的逻辑，例如 data、methods 和 mounted。选项所定义的属性都会暴露在函数内部的 this 上，它会指向当前的组件实例。
+
+组合式 API (Composition API)
+
+这套 API 的风格是基于函数的组合。组合式 API 通常会与 `<script setup>` 搭配使用。使用导入的 API 函数来描述组件逻辑。
+
+选择哪个：
+
+- 其实都可以完成业务场景，复杂的业务场景建议使用组合式 API。
+- 选项式 API 中我们主要的逻辑复用机制是 mixins，而组合式 API 解决了 mixins 的所有缺陷。
+- 选项氏 API 简单逻辑代码组织很好，但是代码量一多，拆分在了不同的选项中，就很零散；组合式 API 代码组织更好。
 
 ### 生命周期
 
@@ -253,7 +270,7 @@ eventBus
     }
     ```
 
-provide/inject
+`provide/inject`
 
 父组件中通过 `provide` 来提供变量, 然后再子组件中通过 `inject` 来注入变量。
 
@@ -272,7 +289,7 @@ export default {
 }
 ```
 
-ref/$refs
+`ref/$refs`
 
 有的时候你仍可能需要在 `JavaScript` 里直接访问一个子组件。可以通过 `ref` 特性为这个子组件赋予一个 ID 引用。
 
