@@ -380,8 +380,8 @@ e.g.
 ### HTTP1.0 与 HTTP1.1
 
 1. **缓存处理**
-   - HTTP1.0 为 If-Modified-Since,Expires
-   - HTTP1.1 添加了 Entity tag，If-Unmodified-Since, If-Match, If-None-Match
+   - HTTP1.0 为 If-Modified-Since, Expires
+   - HTTP1.1 添加了 Etag，If-Unmodified-Since, If-Match, If-None-Match
 
 2. **带宽优化及网络连接的使用**
    - HTTP1.0 返回整个资源，不支持断点续传功能
@@ -393,7 +393,7 @@ e.g.
 
 ### HTTP2
 
-HTTP2 不再使用小版本号，新协议是 HTTP3。
+HTTP2 不再使用小版本号，新协议是 HTTP2。
 
 1. 二进制分帧
    - 之前是文本协议，二进制协议更高效，错误更少

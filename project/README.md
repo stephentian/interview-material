@@ -47,7 +47,7 @@
     b. 版本 `webpack > 4`: `compiler.hooks.done.tapAsync` 异步调用  
     c. `compiler` 对象代表了完整的 webpack 环境配置  
     d. compilation 对象代表了一次资源版本构建
-4. 遍历 stats.compilation.assets ，记录 文件大小，上次大小，时间戳，并且 使用 node fs 模块保存 json
+4. 遍历 `stats.compilation.assets` ，记录 文件大小，上次大小，时间戳，并且 使用 node fs 模块保存 json
 
 优化点:
 
@@ -165,7 +165,7 @@ ANALYZE_MODE = 'analyze'
    出现闪屏现象, fps 卡顿问题
 2. `requestAnimationFrame`  
    由系统决定回调时间
-3. `createDocumentFragment`  
+3. `createDocumentFragment`  创建虚拟的节点对象
    1.变化不会触发 DOM 树重新渲染, 不会导致性能等问题  
    2.插入到文档片段时不会引起页面回流
 4. 滚动 节流操作
@@ -323,7 +323,7 @@ observer.disconnect();
 
 1. CDN 加速
 
-2. Nginx 开启 gzip, 可以减小60%以上的体积
+2. `Nginx` 开启 gzip, 可以减小60%以上的体积
 
 二、文件处理
 
@@ -382,7 +382,7 @@ observer.disconnect();
 - 使用 file 协议加载本地文件到 webview
 - html 发起 ajax 请求
 
-- CMS 系统上传 模板文件,
+- CMS 系统上传模板文件,
 - 模板文件版本控制
 
 ### 下载时机
