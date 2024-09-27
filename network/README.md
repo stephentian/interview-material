@@ -31,7 +31,7 @@
     - [协商缓存](#协商缓存)
     - [浏览器缓存顺序](#浏览器缓存顺序)
   - [本地缓存](#本地缓存)
-    - [Cookie](#cookie)
+    - [cookie](#cookie)
     - [session](#session)
     - [localStorage](#localstorage)
     - [sessionStorage](#sessionstorage)
@@ -642,13 +642,13 @@ If-Modified-Since，是浏览器再次请求资源时，会携带上一次返回
 
 storage
 
-浏览器的本地缓存主要分为 5 种，localStorage, sessionStorage, Cookie, WebSql, indexedDB
+浏览器的本地缓存主要分为 5 种，localStorage, sessionStorage, cookie, WebSql, indexedDB
 
-#### Cookie
+#### cookie
 
-Cookie 是服务器生成的，保存到浏览器。前端可以通过 Set-Cookie 设置 Cookie，服务器可以设置 `http only` 告知浏览器不允许通过脚本修改 cookie。
+cookie 是服务器生成的，保存到浏览器。前端可以通过 Set-Cookie 设置 cookie，服务器可以设置 `http only` 告知浏览器不允许通过脚本修改 cookie。
 
-- cookie 分为会话cookie 和 持久cookie；
+- cookie 分为会话 cookie 和 持久cookie；
 - 会话cookie是指不设定 expires 过期时间；
 - cookie 浏览器关闭后就会失效。关闭一个页面时，不会影响会话cookie的销毁
 
@@ -661,9 +661,9 @@ Set-Cookie: H_PS_PSSID=34130_34099_33969_31253_33848_33607_26350; path=/; domain
 - 优点：1. 记住数据的状态，密码等。2. 弥补的 HTTP 的无状态。
 - 缺点：
   - 容量缺陷，只能存储 4kb 大小；
-  - 安全问题，Cookie 是以文本的形式在浏览器和服务器之前传递信息，很有可能会被修改。
-  - 请求的 Cookie 文件容易被删除。
-  - 性能消耗大，Cookie 是紧跟域名的，域名下的任意地址被修改都携带 Cookie 到服务器。造成性能浪费。
+  - 安全问题，cookie 是以文本的形式在浏览器和服务器之前传递信息，很有可能会被修改。
+  - 请求的 cookie 文件容易被删除。
+  - 性能消耗大，Cookie 是紧跟域名的，域名下的任意地址被修改都携带 cookie 到服务器。造成性能浪费。
 
 #### session
 
@@ -671,9 +671,9 @@ TODO:
 
 #### localStorage
 
-localStorage 存值的方式和 Cookie 类似，都会存放在同一个域名下，localStorage 可以长期存储，没有时间的限制。可以通过 localStorage.setItem()/getItem() 存取值。
+localStorage 存值的方式和 cookie 类似，都会存放在同一个域名下，localStorage 可以长期存储，没有时间的限制。可以通过 localStorage.setItem()/getItem() 存取值。
 
-- localStorage 优点：1.扩展了 Cookie 的存储大小，可以存放 5M 大小，不同浏览器不同；2.只存储在浏览器不会和服务器之间有通信解决了Cookie 的安全问题和性能消耗问题。
+- localStorage 优点：1.扩展了 cookie 的存储大小，可以存放 5M 大小，不同浏览器不同；2.只存储在浏览器不会和服务器之间有通信解决了Cookie 的安全问题和性能消耗问题。
 - localStorage 缺点：1.需要手动删除保存的数据；2.只支持字符串类型，JSON 类型需要通过JSON.stringify() 转化。3. 同步的操作，写入大量的数据可以会导致页面卡顿。
 - localStorage 使用场景：利用 localStorage 可以存放一些稳定的资源和base64的图片等
 
@@ -695,7 +695,7 @@ sessionStorage 的场景：sessionStorage 可以用于保存一些临时的数�
   - 浏览器端设置，窗口或页面关闭则清除
   - 同窗口才能获取
   
-- Cookie
+- cookie
   - 服务端设置，保存则客户端本地
   - 限制 4KB
 
@@ -758,7 +758,7 @@ CDN（Content delivery networks）缓存，也叫网关缓存、反向代理缓�
 > cross site request forgery
 
 冒充用户发送一些违反用户意愿的请求。
-比如用户原来访问过 A 网站，存了登录 A 网站的 Cookie,
+比如用户原来访问过 A 网站，存了登录 A 网站的 cookie,
 然后用户访问 B 网站时，B 网站可能有过引诱链接，这个链接是访问 A 网站的，
 可能用户点击了链接，但是用户不清楚自己进了 A 网站。（新浪微博莫名其妙增加关注）
 
