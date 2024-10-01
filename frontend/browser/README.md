@@ -74,7 +74,7 @@ chrome 架构图：
 
 ## 缓存
 
-见 [networ - 缓存](../../network/README.md)
+见 [network - 缓存](../../network/README.md)
 
 ## 事件循环 Event Loop
 
