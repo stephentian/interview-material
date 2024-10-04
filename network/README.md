@@ -8,7 +8,7 @@
 - [跨域](#跨域)
   - [跨域通信的方式](#跨域通信的方式)
   - [CORS 跨域原理](#cors-跨域原理)
-  - [为什么会发送 options 请求](#为什么会发送-options-请求)
+  - [options 请求](#options-请求)
 - [REST](#rest)
 - [TCP/IP](#tcpip)
   - [TCP 的三次握手和四次挥手](#tcp-的三次握手和四次挥手)
@@ -23,7 +23,7 @@
 - [SSL/TLS/HTTPS](#ssltlshttps)
   - [HTTPS](#https)
   - [HTTPS 建立连接](#https-建立连接)
-- [HTTP 中 GET 和 POST 有什么区别？](#http-中-get-和-post-有什么区别)
+- [GET 和 POST 区别](#get-和-post-区别)
 - [缓存](#缓存)
   - [浏览器缓存](#浏览器缓存)
     - [Service Worker](#service-worker)
@@ -230,11 +230,11 @@ fetch('/some/url/', {
 
 ### CORS 跨域原理
 
-浏览器一旦发现 AJAX 请求跨源，就会自动添加一些附加的头信息，有时还会多出一次附加的请求，但用户不会有感觉。
+浏览器一旦发现 `AJAX` 请求跨源，就会自动添加一些附加的头信息，有时还会多出一次附加的请求，但用户不会有感觉。
 因此，实现 CORS 通信的关键是服务器。
 只要服务器实现了 CORS 接口，就可以跨源通信。
 
-### 为什么会发送 options 请求
+### options 请求
 
 浏览器行为，有时候发生，有时候不发生.
 
@@ -469,7 +469,7 @@ HTTPS 协议是由 `SSL+HTTP` 协议构建的可进行加密传输、身份认�
 4. SSL 加密协商完成
 5. 双方采用 会话密钥 进行加密通信
 
-## HTTP 中 GET 和 POST 有什么区别？
+## GET 和 POST 区别
 
 GET 和 POST 本质上就是 TCP 链接，区别是在 HTTP 规定和 浏览器和服务器处理中
 
