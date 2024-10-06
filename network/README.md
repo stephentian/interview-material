@@ -212,7 +212,7 @@ fetch('/some/url/', {
 });
 ```
 
-比如 vue 和 react 中的 axios
+比如 vue 和 react 中的 `axios`
 
 ### CORS 跨域原理
 
