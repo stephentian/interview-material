@@ -103,7 +103,7 @@ web components 由 3 个部分组成：
 
 官网地址：[无界极致的微前端框架](https://wujie-micro.github.io/doc/)
 
-基于 WebComponent + iframe 实现的微前端框架
+基于 `WebComponent + iframe` 实现的微前端框架
 
 ## 渲染方式
 
