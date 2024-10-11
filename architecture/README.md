@@ -1,6 +1,7 @@
 # architechture
 
 - [微前端](#微前端)
+  - [微前端痛点](#微前端痛点)
   - [single-spa](#single-spa)
   - [qiankun](#qiankun)
   - [iframe](#iframe)
@@ -16,6 +17,8 @@
 - 技术栈无关
 - 独立开发、独立部署
 - 独立运行，每个微应用之间状态隔离
+
+### 微前端痛点
 
 ### single-spa
 
