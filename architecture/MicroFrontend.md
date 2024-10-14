@@ -2,22 +2,33 @@
 
 > 微前端
 
-- [介绍](#介绍)
+- [简介](#简介)
 - [落地方案](#落地方案)
   - [iframe](#iframe)
   - [web component](#web-component)
   - [single-spa](#single-spa)
   - [qiankun](#qiankun)
+    - [qiankun 工作原理](#qiankun-工作原理)
   - [模块联邦](#模块联邦)
   - [wujie](#wujie)
 
-## 介绍
+## 简介
 
 微前端是一种类似于微服务的架构, 它将微服务的理念应用于浏览器端, 即将 Web 应用由单一的单体应用转变为多个小型前端应用聚合为一的应用。
 
+优点：
+
+- 项目解耦，业务解耦
 - 技术栈无关
-- 独立开发、独立部署
+- 方便并行开发、独立部署
 - 独立运行，每个微应用之间状态隔离
+
+关注问题：
+
+- 性能问题（项目大小，运行速度）
+- 用户体验、行为一致性问题（样式隔离）
+- 状态共享问题（数据通信）
+- 安全性（跨域）
 
 ## 落地方案
 
@@ -95,6 +106,14 @@ qiankun 是基于 single-spa，解决了 Single-SPA CSS 样式隔离，Js执行�
 思路：允许以 html 文件为应用入口，然后通过一个 html 解析器从文件中提取js和css依赖，并通过fetch下载依赖
 
 qiankun 封装了一个 `import-html-entry` 插件，实现了像 `iframe` 一样加载子应用，只需要知道 `html` 的 `url` 就能加载到主应用中
+
+#### qiankun 工作原理
+
+1. 应用加载：动态创建 `script` 标签加载子应用。通过 `import-html-entry` ，并解析出子应用依赖的 `js` 和 `css`，然后通过 `fetch` 下载依赖，最后通过 `eval` 执行。
+2. 生命周期管理：子应用暴露 bootstrap、mounted、unmounted 等生命周期钩子，子应用在应用加载时调用 bootstrap，应用启动时调用 mounted。
+3. 沙箱隔离：通过 `Proxy` 实现，子应用和主应用之间的变量隔离。
+4. 样式隔离：通过动态添加和移除子应用样式标签实现样式隔离。
+5. 通信机制：通过 postMessageAPI进行跨域通信，还有事件总线 EventBus。
 
 ### 模块联邦
 
