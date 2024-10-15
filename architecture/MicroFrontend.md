@@ -9,6 +9,7 @@
   - [single-spa](#single-spa)
   - [qiankun](#qiankun)
     - [qiankun 工作原理](#qiankun-工作原理)
+    - [资源加载机制 import-html-entry](#资源加载机制-import-html-entry)
   - [模块联邦](#模块联邦)
   - [wujie](#wujie)
 
@@ -115,12 +116,24 @@ qiankun 封装了一个 `import-html-entry` 插件，实现了像 `iframe` 一�
 4. 样式隔离：通过动态添加和移除子应用样式标签实现样式隔离。
 5. 通信机制：通过 postMessageAPI进行跨域通信，还有事件总线 EventBus。
 
+#### 资源加载机制 import-html-entry
+
+1. 加载 HTML 资源：创建一个 `<link>` 标签来加载子应用的 HTML 入口文件。
+2. 动态加载 js 和 css：遍历 HTML内容，动态创建 `<script>` 和 `<link>` 标签，动态加载 js 和 css。
+3. 创建沙箱环境：通过 `Proxy` 代理，隔离全局变量和运行环境。
+4. 返回子应用入口模块：抛出加载子应用的 js 模块，里面包含初始化子应用的方法。
+
 ### 模块联邦
 
 模块联邦是一种去中心化的思想，可以用来做组件的拆分及复用。
 
 - webpack: `module federation`
 - vite: `vite-plugin-federation`
+
+缺点：
+
+- 对 webpack 强依赖
+- 没有 CSS 和 JS 沙箱隔离
 
 ### wujie
 
