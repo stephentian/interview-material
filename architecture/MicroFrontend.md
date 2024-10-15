@@ -9,7 +9,11 @@
   - [single-spa](#single-spa)
   - [qiankun](#qiankun)
     - [qiankun 工作原理](#qiankun-工作原理)
-    - [资源加载机制 import-html-entry](#资源加载机制-import-html-entry)
+    - [qiankun import-html-entry](#qiankun-import-html-entry)
+    - [qiankun 处理子应用资源加载](#qiankun-处理子应用资源加载)
+    - [qiankun 处理js全局污染](#qiankun-处理js全局污染)
+    - [qiankun 实现keep-alive](#qiankun-实现keep-alive)
+    - [qiankun 相较于 iframe](#qiankun-相较于-iframe)
   - [模块联邦](#模块联邦)
   - [wujie](#wujie)
 
@@ -116,12 +120,58 @@ qiankun 封装了一个 `import-html-entry` 插件，实现了像 `iframe` 一�
 4. 样式隔离：通过动态添加和移除子应用样式标签实现样式隔离。
 5. 通信机制：通过 postMessageAPI进行跨域通信，还有事件总线 EventBus。
 
-#### 资源加载机制 import-html-entry
+#### qiankun import-html-entry
 
 1. 加载 HTML 资源：创建一个 `<link>` 标签来加载子应用的 HTML 入口文件。
 2. 动态加载 js 和 css：遍历 HTML内容，动态创建 `<script>` 和 `<link>` 标签，动态加载 js 和 css。
 3. 创建沙箱环境：通过 `Proxy` 代理，隔离全局变量和运行环境。
 4. 返回子应用入口模块：抛出加载子应用的 js 模块，里面包含初始化子应用的方法。
+
+#### qiankun 处理子应用资源加载
+
+方案一：使用公共路径，比如子应用放在 `xxx.com/sub-app`，那可以在所有静态资源路径添加这个前缀。
+
+方案二：遍历 `img/video/audio` 等标签，封装使用一个方法 `getTemplate` 处理这些媒体资源的路径。
+
+#### qiankun 处理js全局污染
+
+`qiankun` 沙箱可以通过代理 `window` 对象处理js全局变量污染问题。但是不能解决挂载到 `body` 的 `onclick`，`addEventListener` 等事件。
+
+1. 开发规范，避免直接操作全局对象 `window` 和 `document`
+2. 如果子应用有添加全局点击事件，子应用 `unmount` 时，清除事件监听。
+
+#### qiankun 实现keep-alive
+
+方案一：子应用 `unmount` 卸载时保存子应用状态，子应用 `mount` 重新加载。
+
+```js
+let saveBool
+export function getSaveState() {}
+
+export function setSaveState(state) {}
+
+export async function mount(props) {
+  if (saveBool) {
+    // 获取子应用保存的状态
+    const state = await getSaveState()
+    props.setGlobalState(state)
+  }
+}
+
+export async function unmount(props) {
+  // 保存子应用状态
+  setSaveState(props)
+  saveBool = true
+}
+```
+
+缺点：不能保存子应用 DOM 状态
+
+方案二：不卸载应用，通过 `display: none` 隐藏应用，通过 `display: block` 显示应用。
+
+#### qiankun 相较于 iframe
+
+TODO:
 
 ### 模块联邦
 
