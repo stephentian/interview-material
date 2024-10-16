@@ -218,4 +218,8 @@ export async function unmount(props) {
 
 官网地址：[无界极致的微前端框架](https://wujie-micro.github.io/doc/)
 
-基于 `WebComponent + iframe` 实现的微前端框架
+腾讯出品的，基于 `WebComponent + iframe` 实现的微前端框架
+
+加载子应用：通过类似 `iframe` 的方式，自定义组件，填写 url, 加载子应用
+数据交互：有 props, window.parent.xxx, EventBus 三种方式
+路由跳转：主应用通过 props 传给子应用方法，子应用调用
