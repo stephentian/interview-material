@@ -413,8 +413,27 @@ var addStrings = function(num1, num2) {
 输出：[0,1,2]
 
 ```js
+// 时间复杂度：O(n)
+// 空间复杂度: O(1)
 var sortColors = function(nums) {
-  
+  let l = 0, cur = 0, r = nums.length - 1
+  while (cur <= r) {
+    if (nums[cur] === 0) {
+      const temp = nums[l]
+      nums[l] = nums[cur]
+      nums[cur] = temp
+      l++
+      cur++
+    } else if (nums[cur] === 2) {
+      const temp = nums[r]
+      nums[r] = nums[cur]
+      nums[cur] = temp
+      r--
+    } else {
+      cur++
+    }
+  }
+  return nums
 }
 ```
 
