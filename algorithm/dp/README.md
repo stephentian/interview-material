@@ -11,6 +11,7 @@ DP（dynamic program）
 - [斐波那契数列](#斐波那契数列)
 - [70.爬楼梯](#70爬楼梯)
 - [198.打家劫舍](#198打家劫舍)
+- [53. 最大子数组和](#53-最大子数组和)
 
 ## 斐波那契数列
 
@@ -168,4 +169,58 @@ function(nums) {
   }
   return dp[nums.length - 1]
 }
+```
+
+## 53. 最大子数组和
+
+[53. 最大子数组和](https://leetcode.cn/problems/maximum-subarray/)
+
+给你一个整数数组 nums ，请你找出一个具有最大和的连续子数组（子数组最少包含一个元素），返回其最大和。
+
+子数组是数组中的一个连续部分。
+
+示例1：
+输入：nums = [-2,1,-3,4,-1,2,1,-5,4]
+输出：6
+
+示例2：
+输入：nums = [1]
+输出：1
+
+示例3：
+输入：nums = [5,4,-1,7,8]
+输出：23
+
+```js
+// 最大子数组和 res
+
+// 当前子数组和 temp
+// 状态：
+// 1. 上个子连续和 + 当前值 大于 当前值，temp = temp + nums[i]
+// 2. 上个子连续和 + 当前值 小于等于 当前值，temp = nums[i]
+// 或：
+// 1. 上个子连续和 大于 0，对结果有增益，temp = temp + nums[i]
+// 2. 上个子连续和 小于等于 0，对结果无增益，重新开始求和，temp = nums[i]
+
+// 转移方程：
+// temp = temp > 0 ? temp + nums[i] : nums[i]
+
+// 和最终值比较
+// res = Math.max(res, temp)
+
+// 时间复杂度 O(n)
+// 空间复杂度 O(1)
+var maxSubArray = function(nums) {
+    if (!nums || nums.length < 0) throw error("请输入数组！")
+    let res = nums[0]
+    let temp = 0
+    for (let i = 0; i < nums.length; i++) {
+        // temp = temp + nums[i] > nums[i] ? temp + nums[i] : nums[i]
+        temp = temp > 0 ? temp + nums[i] : nums[i]
+
+        res = Math.max(res, temp)
+    }
+
+    return res
+};
 ```
