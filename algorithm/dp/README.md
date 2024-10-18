@@ -200,7 +200,7 @@ function(nums) {
 // 2. 上个子连续和 + 当前值 小于等于 当前值，temp = nums[i]
 // 或：
 // 1. 上个子连续和 大于 0，对结果有增益，temp = temp + nums[i]
-// 2. 上个子连续和 小于等于 0，对结果无增益，重新开始求和，temp = nums[i]
+// 2. 上个子连续和 小于等于 0，对结果无增益，从当前位置重新求和，temp = nums[i]
 
 // 转移方程：
 // temp = temp > 0 ? temp + nums[i] : nums[i]
