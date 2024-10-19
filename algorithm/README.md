@@ -601,8 +601,22 @@ var isValid = function(s) {
 输出：[2,3,4,-1,4]
 
 ```js
+// 暴力法
+// 时间复杂度：O(n^2)
+// 空间复杂度: O(1)
 var nextGreaterElements = function(nums) {
-// TODO:
+  const len = nums.length
+  const res = new Array(len).fill(-1)
+
+  for (let i = 0; i < len; i++) {
+    for (let j = i + 1; j < len + i; j++) {
+      if (nums[j % len] > nums[i]) {
+        res[i] = nums[j % len]
+        break
+      }
+    }
+  }
+  return res
 };
 ```
 
