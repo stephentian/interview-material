@@ -604,6 +604,9 @@ var isValid = function(s) {
 // 暴力法
 // 时间复杂度：O(n^2)
 // 空间复杂度: O(1)
+
+// 从 i+1 开始，找到第一个大于 nums[i] 的数
+// 因为是循环数组，所以找到结尾没找到的话，再从 0 到 i-1 找一遍
 var nextGreaterElements = function(nums) {
   const len = nums.length
   const res = new Array(len).fill(-1)
@@ -618,6 +621,10 @@ var nextGreaterElements = function(nums) {
   }
   return res
 };
+
+// 单调栈
+// 时间复杂度：O(n)
+// 空间复杂度: O(n)
 ```
 
 ## 树
