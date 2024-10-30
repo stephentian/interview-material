@@ -625,6 +625,22 @@ var nextGreaterElements = function(nums) {
 // 单调栈
 // 时间复杂度：O(n)
 // 空间复杂度: O(n)
+var nextGreaterElements = function(nums) {
+  const len = nums.length
+  const res = new Array(len).fill(-1)
+  const stack = []
+
+  // 每个位置i都需要从i+1遍历到i-1的位置，在这个区间内找到下一个更大的值
+  for (let i = 0; i < len * 2- 1; i++) {
+    let num = nums[i % len]
+    // 将所有大于nums[i]的数都弹出
+    while (stack.length && num > nums[stack[stack.length - 1] % len]) {
+      res[stack.pop() % len] = num
+    }
+    stack.push(i)
+  }
+  return res
+}
 ```
 
 ## 树
