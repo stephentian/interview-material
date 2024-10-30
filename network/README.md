@@ -30,12 +30,11 @@
     - [强缓存](#强缓存)
     - [协商缓存](#协商缓存)
     - [浏览器缓存顺序](#浏览器缓存顺序)
+  - [session](#session)
+  - [cookie](#cookie)
   - [本地缓存](#本地缓存)
-    - [cookie](#cookie)
-    - [session](#session)
     - [localStorage](#localstorage)
     - [sessionStorage](#sessionstorage)
-    - [本地缓存对比](#本地缓存对比)
   - [数据库缓存](#数据库缓存)
   - [代理服务器缓存](#代理服务器缓存)
   - [CDN 缓存](#cdn-缓存)
@@ -652,19 +651,18 @@ If-Modified-Since，是浏览器再次请求资源时，会携带上一次返回
 
 ![http cache](./httpCache.png)
 
-### 本地缓存
+### session
 
-storage
+用户第一次登录网站时，在服务器为用户创建session，分配唯一标志符 sessionId，存储在服务器端。
 
-浏览器的本地缓存主要分为 5 种，localStorage, sessionStorage, cookie, WebSql, indexedDB
+### cookie
 
-#### cookie
+cookie 是服务器生成，保存到浏览器。前端可以通过 Set-Cookie 设置 cookie，服务器可以设置 `http only` 告知浏览器不允许通过脚本修改 cookie。
 
-cookie 是服务器生成的，保存到浏览器。前端可以通过 Set-Cookie 设置 cookie，服务器可以设置 `http only` 告知浏览器不允许通过脚本修改 cookie。
-
-- cookie 分为会话 cookie 和 持久cookie；
-- 会话cookie是指不设定 expires 过期时间；
-- cookie 浏览器关闭后就会失效。关闭一个页面时，不会影响会话cookie的销毁
+- cookie 分为 会话cookie 和 持久cookie；
+- 默认会话 cookie，关闭浏览器结束会话，cookie会被删除；
+- 可以设置 Max-Age 变成持久cookie, 为 0 表示立即删除，为负数，表示不存储；为正数，表示存储时间，单位秒；
+- 持久cookie不会随浏览器关闭而销毁；
 
 ```js
 Set-Cookie: BDSVRTM=7; path=/
@@ -674,30 +672,16 @@ Set-Cookie: H_PS_PSSID=34130_34099_33969_31253_33848_33607_26350; path=/; domain
 - 产生原因：因为 http 是无状态的，不能记录数据状态，Cookie 可以记录数据的状态。比如用户的 id，密码，浏览过的页面等。
 - 优点：1. 记住数据的状态，密码等。2. 弥补的 HTTP 的无状态。
 - 缺点：
-  - 容量缺陷，只能存储 4kb 大小；
-  - 安全问题，cookie 是以文本的形式在浏览器和服务器之前传递信息，很有可能会被修改。
-  - 请求的 cookie 文件容易被删除。
-  - 性能消耗大，Cookie 是紧跟域名的，域名下的任意地址被修改都携带 cookie 到服务器。造成性能浪费。
+  - 容量小，只能存储 4kb 左右数据；
+  - 只能保存字符串，中文需要编码；
+  - 安全问题，很有可能会被修改或者删除；
+  - 可以被用户禁止使用
 
-#### session
+### 本地缓存
 
-TODO:
+storage
 
-#### localStorage
-
-localStorage 存值的方式和 cookie 类似，都会存放在同一个域名下，localStorage 可以长期存储，没有时间的限制。可以通过 localStorage.setItem()/getItem() 存取值。
-
-- localStorage 优点：1.扩展了 cookie 的存储大小，可以存放 5M 大小，不同浏览器不同；2.只存储在浏览器不会和服务器之间有通信解决了Cookie 的安全问题和性能消耗问题。
-- localStorage 缺点：1.需要手动删除保存的数据；2.只支持字符串类型，JSON 类型需要通过JSON.stringify() 转化。3. 同步的操作，写入大量的数据可以会导致页面卡顿。
-- localStorage 使用场景：利用 localStorage 可以存放一些稳定的资源和base64的图片等
-
-#### sessionStorage
-
-sessionStorage 和 localStorage 一致，唯一大的区别在于 sessionStorage 是会话级别的存储。在浏览器页面关闭后，这个存储也就消失了。
-
-sessionStorage 的场景：sessionStorage 可以用于保存一些临时的数据，防止页面消失后数据就没了，比如表单填写和用户的浏览器记录等。
-
-#### 本地缓存对比
+浏览器的本地缓存主要分为 5 种，localStorage, sessionStorage, cookie, WebSql, indexedDB
 
 - localStorage
   - 浏览器端设置，永久存储，要手动清除
@@ -712,6 +696,20 @@ sessionStorage 的场景：sessionStorage 可以用于保存一些临时的数�
 - cookie
   - 服务端设置，保存则客户端本地
   - 限制 4KB
+
+#### localStorage
+
+localStorage 存值的方式和 cookie 类似，都会存放在同一个域名下，localStorage 可以长期存储，没有时间的限制。可以通过 localStorage.setItem()/getItem() 存取值。
+
+- localStorage 优点：1.扩展了 cookie 的存储大小，可以存放 5M 大小，不同浏览器不同；2.只存储在浏览器不会和服务器之间有通信解决了Cookie 的安全问题和性能消耗问题。
+- localStorage 缺点：1.需要手动删除保存的数据；2.只支持字符串类型，JSON 类型需要通过JSON.stringify() 转化。3. 同步的操作，写入大量的数据可以会导致页面卡顿。
+- localStorage 使用场景：利用 localStorage 可以存放一些稳定的资源和base64的图片等
+
+#### sessionStorage
+
+sessionStorage 和 localStorage 一致，唯一大的区别在于 sessionStorage 是会话级别的存储。在浏览器页面关闭后，这个存储也就消失了。
+
+sessionStorage 的场景：sessionStorage 可以用于保存一些临时的数据，防止页面消失后数据就没了，比如表单填写和用户的浏览器记录等。
 
 ### 数据库缓存
 
