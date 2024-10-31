@@ -11,7 +11,7 @@ HTML5 是 2006年 发布的，新特性：
 1. `<!DOCTYPE html>`, 告知浏览器当前页面是使用 `HTML5` 规范编写的
 2. 多媒体，`video` 和 `audio`
 3. 图像绘制，`canvas` 和 `svg`
-4. 离线存储，`localStorage` 和 `Cookies`
+4. 离线存储，`localStorage` 和 `sessionStorage`
 5. 连接特性，页面可以实时聊天，还有网页 `h5` 游戏体验，`Server-Sent Event` 和 `WebSocket`。
 6. 请求方式，`XML HttpRequest` 技术
 

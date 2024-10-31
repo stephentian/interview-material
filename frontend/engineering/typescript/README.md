@@ -107,7 +107,32 @@ type C = Pick<A, 'a' | 'c'>  // 等价于 type C = { a: 1; c: 3 }
 
 ### 泛型
 
-TODO:
+泛型的目的是，约束不同成员之间的类型：
+
+- 类的方法，实例
+- 函数参数，返回值
+
+```js
+// 泛型类
+class Queue<T> {
+  private data: T[] = [];
+  push = (item: T) => this.data.push(item);
+  pop = (): T | undefined => this.data.shift();
+}
+
+const queue = new Queue<number>();
+queue.push(1);
+queue.push('1'); // Error: Argument of type '"1"' is not assignable to parameter of type 'number'.
+
+// 泛型函数
+function reverse<T>(item: T[]): T[] {
+  const arr = []
+  for (let i = item.length - 1; i >= 0; i--) {
+    arr.push(item[i])
+  }
+  return arr
+}
+```
 
 ## 例题
 
