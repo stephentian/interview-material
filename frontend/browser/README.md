@@ -10,7 +10,7 @@
 - [一帧发生的事情](#一帧发生的事情)
 - [setTimeout](#settimeout)
 - [requestAnimationFrame](#requestanimationframe)
-  - [setTimeout 和 rAF](#settimeout-和-raf)
+  - [对比 setTimeout](#对比-settimeout)
 - [requestIdleCallback](#requestidlecallback)
 - [浏览器的多线程](#浏览器的多线程)
 - [Web Worker](#web-worker)
@@ -78,7 +78,7 @@ chrome 架构图：
 
 ## 事件循环 Event Loop
 
-JavaScript 是单线程的, 浏览器为了防止用户交互, 脚本, UI 渲染和网络请求等行为, 协调事件中的同步任务和异步任务，防止主线程不阻塞，Event Loop 的方案应用而生
+JavaScript 是单线程的, 浏览器防止主线程阻塞，需要协调JS引擎线程和浏览器其他线程（UI渲染，网络请求）的执行顺序，Event Loop 的方案应用而生
 
 Event Loop 包含两类
 
@@ -128,7 +128,7 @@ async function async1() {
 
 ## 一帧发生的事情
 
-[life of a frame](./img/life-of-a-frame.png)
+![life of a frame](./img/life-of-a-frame.png)
 
 1. 处理输入事件
 2. js 解析
@@ -152,7 +152,7 @@ setTimeout 0ms 为什么浏览器不是 0ms 执行：
 
 ## requestAnimationFrame
 
-window.requestAnimationFrame()​​​ 告诉浏览器——你希望执行一个动画，并且要求浏览器在下次重绘之前调用指定的回调函数更新动画。该方法需要传入一个回调函数作为参数，该回调函数会在浏览器下一次重绘之前执行。
+`window.requestAnimationFrame()`​​​ 告诉浏览器——你希望执行一个动画，并且要求浏览器在下次重绘之前调用指定的回调函数更新动画。该方法需要传入一个回调函数作为参数，该回调函数会在浏览器下一次重绘之前执行。
 
 - 回调执行与 宏任务微任务无关, 与浏览器是否渲染有关, 它是在浏览器渲染之前, 微任务执行后执行。
 - 一般显示器屏幕为 60hz, 大约 16.7ms 执行一次
@@ -177,15 +177,15 @@ animation();
 
 **执行时机**:
 
-stackoverflow 一些回答说 RAF 被归为宏任务，但它可能不一定按任务队列执行，会因为不同浏览器而执行结果不同。
+`stackoverflow` 一些回答说 RAF 被归为宏任务，但它可能不一定按任务队列执行，会因为不同浏览器而执行结果不同。
 
 谷歌浏览器和火狐官方文档是实现了在 css 渲染之前执行。
 
-### setTimeout 和 rAF
+### 对比 setTimeout
 
 - 执行时机: requestAnimation 由系统决定执行时间, setTimeout 的执行时间并不是确定的
 - requestAnimationFrame 受系统的绘制频率影响，即屏幕分辨率 和 屏幕尺寸，setTimeout 受任务队列和页面渲染有关
-- 节能: 页面未激活(隐藏, 最小化), requestAnimationFrame 暂停执行, setTimeout 会继续执行
+- 页面未激活(切换，隐藏, 最小化), requestAnimationFrame 暂停执行, 旧版浏览器 setTimeout 会继续执行，新版浏览器 setTimeout 也会暂停执行（通过监听 visibilitychange 事件恢复动画）； 
 - 函数节流: 防止刷新阶段, 防止函数执行多次
 - 引擎: setTimeout JS 引擎线程, 存在事件队列. requestAnimationFrame 属于 GUI 引擎线程, 发生在渲染之前
 
