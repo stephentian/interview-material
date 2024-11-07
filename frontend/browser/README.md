@@ -143,7 +143,7 @@ async function async1() {
 
 - 浏览器设置最好间隔 4ms;
 - 经过 5 重嵌套定时器之后，时间间隔被强制设定为至少 4 毫秒。
-- 同步任务执行过久, 可能 setTimeout 时间不准
+- 同步任务执行过久, 可能 `setTimeout` 时间不准
 
 **setTimeout 0ms 为什么浏览器不是 0ms 执行**：
 
