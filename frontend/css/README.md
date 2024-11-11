@@ -8,7 +8,8 @@
   - [CSS 隐藏元素](#css-隐藏元素)
   - [position](#position)
   - [px, rem, vw](#px-rem-vw)
-  - [CSS选择器优先级](#css选择器优先级)
+  - [CSS选择器](#css选择器)
+  - [选择器优先级](#选择器优先级)
   - [CSS 匹配顺序](#css-匹配顺序)
   - [clip-path](#clip-path)
 - [布局](#布局)
@@ -125,7 +126,16 @@
   - 百分比（%）：是相对于父元素的尺寸而定的。
   - vw 和 vh：是相对于视窗（浏览器窗口或标签页的可视区域）的尺寸而定的。
 
-### CSS选择器优先级
+### CSS选择器
+
+1. 标签选择器：`h1`、`div`
+2. 类选择器：`.className`
+3. id 选择器：`#idName`
+4. 伪元素选择器：`::before` 和 `::after`
+5. 伪类选择器：`:hover`
+6. 属性选择器：`[attributeName]`，比如 `input[type="text"]`
+
+### 选择器优先级
 
 优先级排名：
 
@@ -160,6 +170,7 @@ p {
 
 优先级相同情况下：
 
+```css
 .p {
   color: red;
 }
@@ -167,6 +178,7 @@ p {
 .p {
   color: blue;
 }
+```
 
 p 颜色为 blue
 
@@ -174,7 +186,7 @@ p 颜色为 blue
 
 从右往左匹配，如果有多个选择器匹配到同一个元素，则以最后一个为准。
 
-比如： `#div p span.span1{color:red;}`，浏览器先查找所有 class="span1" 的 span 元素，再查找其父元素为 p 元素，最后查找 p 标签的 带 id="div" 的父元素。
+比如： `#div p span.span1{ color:red; }`，浏览器先查找所有 class="span1" 的 span 元素，再查找其父元素为 p 元素，最后查找 p 标签的 带 id="div" 的父元素。
 
 ### clip-path
 
