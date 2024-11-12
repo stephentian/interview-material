@@ -368,13 +368,13 @@ vue3
 
 ### defineProperty 缺点
 
-- 1. 监控数组麻烦
-  - 使用 `Object.defineProperty` 无法监听数组变更,之前是通过 `push、pop、shift、unshift、splice、sort、reverse` 监控
-  - 无法监听 通过索引修改数组： `arr[i] = value`
-  - 无法监听 `length`
-- 2. `Object.defineProperty` 是对属性进行劫持，需要遍历对象的每个属性；`Proxy` 直接代理对象
-- 3. 对象新增属性，要重新遍历对象，对新对象使用 `Object.defineProperty` 进行劫持
-- 4. `Proxy` 为新标准，浏览器会对其进行优化
+1. 监控数组麻烦
+    - 使用 `Object.defineProperty` 无法监听数组变更,之前是通过 `push、pop、shift、unshift、splice、sort、reverse` 监控
+    - 无法监听 通过索引修改数组： `arr[i] = value`
+    - 无法监听 `length`
+2. `Object.defineProperty` 是对属性进行劫持，需要遍历对象的每个属性；`Proxy` 直接代理对象
+3. 对象新增属性，要重新遍历对象，对新对象使用 `Object.defineProperty` 进行劫持
+4. `Proxy` 为新标准，浏览器会对其进行优化
 
 ### Vue3.0 性能提升
 

@@ -205,15 +205,15 @@ p 颜色为 blue
 水平居中:
 
 1. text-align: center
-2. margin: auto
+2. margin: 0 auto
 3. 父元素 position: relative; left: 50%; 子元素 position: relative; left: 50%
-4. flex 布局
+4. flex 布局，justify-content: center;
 
 垂直居中:
 
-1. line-height = height
+1. 文本居中，line-height = height
 2. 父元素 table, 子元素 vertical-align: middle
-3. flex 布局
+3. flex 布局, align-items: center;
 
 水平垂直居中:
 
@@ -292,7 +292,7 @@ p 颜色为 blue
 }
 ```
 
-(3) flexbox 弹性布局
+(3) flex 弹性布局
 
 ```css
 .flexbox {
