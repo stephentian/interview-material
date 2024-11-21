@@ -381,11 +381,36 @@ Map 的键实际上是跟内存地址绑定的，只要内存地址不一样，�
 4. has
 5. delete
 6. clear
+7. entries
 
 遍历: Map 的遍历顺序就是插入顺序
 
 ```js
+const map = new Map();
+map.set('name', '张三');
+map.set('title', 'Author');
+map.set('age', 18);
 
+// forEach
+map.forEach((value, key, map) => {
+  console.log(`${key}: ${value}`);
+})
+
+// entries()
+// entries() 方法返回一个包含 Map 对象中每个元素的 [key, value] 数组的新迭代器
+for (const [key, value] of myMap.entries()) {
+  console.log(`${key}: ${value}`);
+}
+
+// for of
+for (const [key, value] of myMap) {
+  console.log(`${key}: ${value}`);
+}
+
+// for of keys()
+for (const key of myMap.keys()) {
+  console.log(key);
+}
 ```
 
 ## WeakMap
