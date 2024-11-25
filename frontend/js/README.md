@@ -62,6 +62,7 @@
 6. `new Date().getYear()` 返回是 1900 开始计算, 要用 `getFullYear`, 月份为 `getMonth() - 1`
 7. `toFixed` 精度问题(`1.335.toFixed(2) = 1.33`，`1.135.toFixed(2) = 1.14`)
 8. `sort` 对负数排序无效，是根据 unicode 排序
+9. 浮点数是否相等判断问题，`0.1 + 0.2 !== 0.3`，使用 `Math.abs(a - b) <= Number.EPSILON` 判断
 
 ### 数据类型
 

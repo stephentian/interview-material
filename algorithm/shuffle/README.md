@@ -15,6 +15,7 @@
 `JavaScript` 开发中有时会遇到要将一个数组随机排序（`shuffle`）的需求，一般采用 `array.sort` 方法，传入一个比较函数
 
 ```js
+// sort 内部不是前后比较，所以可以对数组所有元素都打乱
 var arr = [1, 2, 3, 4, 5]
 arr.sort(function() {
   return .5 - Math.random()

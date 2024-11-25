@@ -1,7 +1,7 @@
 # 优化
 
 - [性能测评工具](#性能测评工具)
-- [js 代码优化](#js-代码优化)
+- [代码优化](#代码优化)
 - [网络优化](#网络优化)
 - [文件优化](#文件优化)
   - [图片优化](#图片优化)
@@ -16,9 +16,9 @@
 - [开发构建性能优化](#开发构建性能优化)
 - [生产构建性能优化](#生产构建性能优化)
 - [页面加载性能优化](#页面加载性能优化)
-  - [1.距离足够短](#1距离足够短)
-  - [2.请求足够少](#2请求足够少)
-  - [3.传输足够小](#3传输足够小)
+  - [1.访问加速](#1访问加速)
+  - [2.减少请求](#2减少请求)
+  - [3.减少资源大小](#3减少资源大小)
   - [4.资源要复用](#4资源要复用)
   - [5.标签要摆好](#5标签要摆好)
   - [6.降维来优化](#6降维来优化)
@@ -38,7 +38,9 @@
 - 代码执行: console.time() timeEnd()
 - 测评网站 jsperf.com 或 jsbench.com
 
-## js 代码优化
+## 代码优化
+
+js:
 
 - 全局变量
   - 慎用
@@ -166,12 +168,12 @@ DNS 预解析
 
 ## 开发构建性能优化
 
-1. 使用 include或exclude 排除不相关的目录，缩小构建打包范围
-2. 使用缓存，比如：开启babel-loader的cacheDirectory，或使用cache-loader或hard-source-webpack-plugin对相应loader进行缓存配置
+1. 使用 include 或 exclude 排除不相关的目录，缩小构建打包范围
+2. 使用缓存，比如：开启babel-loader的cacheDirectory，或使用 cache-loade r或hard-source-webpack-plugin对相应loader进行缓存配置
 3. 使用threads-webpack-plugin或happy-pack进行多线程或多进程打包
-4. 使用DLLPlugin把公共代码库抽取成dll，再使用DLLReferencePlugin引入，提升二次构建打包速度
-5. 合理配置resolve.modules里的模块搜索路径
-6. 合理配置resolve.extensions里的后缀顺序
+4. 使用 DLLPlugin 把公共代码库抽取成 dll，再使用 DLLReferencePlugin 引入，提升二次构建打包速度
+5. 合理配置 resolve.modules 里的模块搜索路径
+6. 合理配置 resolve.extensions 里的后缀顺序
 7. 可以适当关闭一些代码文件的压缩开关和相关的loader和plugin
 8. 最后可以使用speed-measure-webpack-plugin来进行具体loader执行时间的分析
 
@@ -179,7 +181,7 @@ DNS 预解析
 
 1. 配置Webpack的TreeShaking  
    - babel的preset-env里的modules属性的值要设为false  
-   - 导出和引入模块时使用ES Modules  
+   - 导出和引入模块时使用 ES Modules  
 2. 配置babel使用@babel/plugin-transform-runtime和corejs3，减少冗余的babel公共代码
 3. 使用url-loader配置文件大小的最小阈值，把小文件以data uri的形式内嵌
 4. 使用mini-css-extract-plugin把CSS拆分成样式文件
@@ -194,11 +196,11 @@ DNS 预解析
 
 ## 页面加载性能优化
 
-### 1.距离足够短
+### 1.访问加速
 
  静态资源（CSS、JS、图片）放在 CDN 服务器
 
-### 2.请求足够少
+### 2.减少请求
 
 1. 减少HTTP请求：一般浏览器都会限制单个域名的并发HTTP请求数为4-6个，单个页面总的并发HTTP请求数一般在12个左右，根据浏览器不同而不同。而且每个HTTP/S请求都需要进行DNS查找、TCP连接建立、TLS连接建立、HTTP/S连接建立，之后才开始消息通讯
    - 合并CSS
@@ -209,7 +211,7 @@ DNS 预解析
    - 小图标可以使用CSS绘制
    - 小资源可以通过data-uri的形式内嵌
 
-### 3.传输足够小
+### 3.减少资源大小
 
 1. 压缩资源：减少资源大小可以加快网页的加载速度
    - 压缩HTML文档
@@ -220,11 +222,9 @@ DNS 预解析
 3. 懒加载（按需加载）：将不影响首屏当前屏的资源放到需要时才进行加载，可以大大提升重要资源的显示速度和降低总体流量的使用  
    *按需加载可能会导致页面进行大量的重排重绘，影响页面运行性能
    - 图片懒加载
-   - 组件懒加载  
-     使用React的Suspend组件和React.lazy进行组件的按需加载
-   - 路由懒加载  
-     可以在配置React的路由懒加载
-   - Chunk懒加载  
+   - 组件懒加载
+   - 路由懒加载
+   - Chunk懒加载
      配置Webpack的spilitChunk为async模式
 4. 预加载（预先加载）：大型应用可以使用预加载把即将使用到或可能用到的资源进行提前加载
    - prefetch（编写JS时使用动态import的时候，使用Webpack的prefetch magic comment）

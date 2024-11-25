@@ -135,6 +135,10 @@
 5. 伪类选择器：`:hover`
 6. 属性选择器：`[attributeName]`，比如 `input[type="text"]`
 
+相邻选择器：`h1 + p` 表示h1元素后的第一个 p 元素
+兄弟选择器：`h1 ~ p` 表示h1元素的所有兄弟 p 元素
+子选择器：`div p` 选择所有在 `div` 元素内的`p`元素 ；`div > p` 表示 div 元素的直接子元素 p
+
 ### 选择器优先级
 
 优先级排名：
@@ -201,15 +205,15 @@ p 颜色为 blue
 水平居中:
 
 1. text-align: center
-2. margin: auto
+2. margin: 0 auto
 3. 父元素 position: relative; left: 50%; 子元素 position: relative; left: 50%
-4. flex 布局
+4. flex 布局，justify-content: center;
 
 垂直居中:
 
-1. line-height = height
+1. 文本居中，line-height = height
 2. 父元素 table, 子元素 vertical-align: middle
-3. flex 布局
+3. flex 布局, align-items: center;
 
 水平垂直居中:
 
@@ -288,7 +292,7 @@ p 颜色为 blue
 }
 ```
 
-(3) flexbox 弹性布局
+(3) flex 弹性布局
 
 ```css
 .flexbox {
