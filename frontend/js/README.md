@@ -11,18 +11,17 @@
   - [内置对象，方法及语句](#内置对象方法及语句)
 - [JS 执行过程](#js-执行过程)
   - [提升](#提升)
-  - [作用域](#作用域)
-  - [词法作用域](#词法作用域)
   - [执行上下文](#执行上下文)
-  - [词法环境](#词法环境)
-  - [变量环境](#变量环境)
-  - [为什么要有两个词法环境](#为什么要有两个词法环境)
+    - [词法环境](#词法环境)
+    - [变量环境](#变量环境)
+    - [this](#this)
   - [语法环境](#语法环境)
+  - [作用域](#作用域)
+    - [词法作用域](#词法作用域)
   - [作用域链](#作用域链)
-  - [闭包使用场景，注意点](#闭包使用场景注意点)
+  - [闭包](#闭包)
 - [变量类型隐式转换](#变量类型隐式转换)
 - [表达式和运算符](#表达式和运算符)
-  - [this](#this)
   - [属性访问](#属性访问)
   - [运算符](#运算符)
   - [typeof](#typeof)
@@ -97,21 +96,27 @@
 
 ## JS 执行过程
 
-js 执行过程分为两个阶段：
+一般语言执行分为编译阶段，执行阶段；js 执行过程分为三个阶段：
 
-1. 编译阶段
-2. 执行阶段
+js 的编译阶段包括 语法分析和预编译阶段，不会严格区分。
 
-一、编译阶段
+1. 语法分析
+2. 预编译
+3. 执行阶段
 
-编译阶段（序列化-->抽象语法树-->可执行代码）， js 引擎做 3 件事
+一、语法分析
+
+序列化-->抽象语法树-->可执行代码， js 引擎做 3 件事
 
 - 词法分析 `Lexical analyzer` (`Scanner`)
-  - 将代码分解成各个模块， tokens
-  - 预编译：变量提升，函数提升
+  - 将代码分解小模块，词法单元 tokens
 - 语法分析 `Syntax analyzer` (`Parser`)
   - 生成 AST，检查语法
-- 字节码生成
+- 生成代码 `Code generator` (`Code generator`)
+  - 将 AST 转换成字节码，生成机器码
+
+过程优化：
+
 - 即时编译 JIT：发现某个函数或代码块被频繁执行，就会将其编译成高度优化的机器码
 
 参考文章：
@@ -122,7 +127,13 @@ js 执行过程分为两个阶段：
 - [JavaScript的执行过程（深入执行上下文、GO、AO、VO和VE等概念）](https://www.cnblogs.com/MomentYY/p/15785719.html)
 - [You-Dont-Know-JS - Compiling Code](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/scope-closures/ch1.md)
 
-二、执行阶段
+二、预编译
+
+- 预编译：变量提升，函数提升
+
+三、执行阶段
+
+js 引擎根据 AST执行，变量在这里初始化，被赋值；函数在这个阶段被调用，每次调用生成执行上下文
 
 <!-- 执行阶段会创建不同类型上下文：全局上下文、函数执行上下文
 
@@ -173,24 +184,6 @@ func(18);
 
 提升的优先级：函数提升，变量提升，实参
 
-### 作用域
-
-作用域是一套规则，用来管理引擎如何查找变量。简单的来说，作用域就是个盒子，规定了变量和函数的可访问范围以及他们的生命周期。
-
-编程语言中, 作用域有两种: 词法作用域, 动态作用域
-
-`JavaScript` 的作用域是词法作用域（静态作用域）
-
-- 全局作用域
-- 函数作用域
-- 块作用域
-
-### 词法作用域
-
-也叫 静态作用域, 指作用域是在函数声明的位置确定，即代码写在哪里来决定的；
-
-无论函数在哪里被调用, 它如何被调用，它的词法作用域都只由函数被声明时所处的位置决定
-
 ### 执行上下文
 
 执行上下文（`Execution Contexts`）是 js 执行时创建的一个环境。
@@ -219,7 +212,7 @@ js 执行上下文两个阶段：1.创建阶段 2.执行阶段
 
 - 当执行上下文准备就绪，进入执行阶段
 
-### 词法环境
+#### 词法环境
 
 词法环境（`Lexical Environment`）
 
@@ -236,15 +229,75 @@ js 执行上下文两个阶段：1.创建阶段 2.执行阶段
 - with 结构：一个 with 结构块内也是自己一个词法环境
 - catch 结构：一个 catch 结构快内也是自己一个词环境
 
-### 变量环境
+#### 变量环境
 
 变量环境也是一个词法环境，它具有上面定义的词法环境的所有属性，其 `EnvironmentRecord` 包含了由 `VariableStatements` 在此执行上下文创建的绑定。
 
-### 为什么要有两个词法环境
+为什么要有两个词法环境？
 
 变量环境组件（VariableEnvironment） 是用来登记 `var function` 变量声明，词法环境组件（LexicalEnvironment）是用来登记 `let const class` 等变量声明。
 
 在 ES6 之前都没有块级作用域，ES6之后我们可以用 `let const` 来声明块级作用域，有两个词法环境是为了实现块级作用域的同时不影响 var 变量声明和函数声明。
+
+#### this
+
+Javascript 函数中的 `this` 表现与其他语言不同。此外，在严格模式和非严格模式之间也会有一些差别。
+
+1. 全局作用域
+   1. 非严格模式，浏览器指向 `window`，node 环境指向 `global`
+   2. 严格模式下为 `undefined`
+2. 函数作用域
+   1. 非严格模式，指向全局对象
+   2. 严格模式，指向 `undefined`
+3. 对象方法，指向调用者(谁调用指向谁)
+4. 构造函数，指向 `new` 创建的对象实例，用 `this` 来设置实例的属性
+5. 箭头函数
+   1. 本身没有 `this`, 不能当构造函数；
+   2. 从外层作用域继承, 在声明的位置时确定 `this`；
+   3. 并且不会被 `bind` 改变
+6. 类 Class
+   1. `this` 指向类的实例，类的静态方法里指向类；
+   2. 如果将实例方法解构出来调用会报错 `undefined`，需要在定义的时候 `bind` 绑定 `this` 或使用箭头函数
+
+    ```js
+    class Foo {
+      sayName(name) {
+        this.say(name)
+      }
+
+      say(name) {
+        console.log("foo name: ", name)
+      }
+    }
+
+    const foo = new Foo()
+    foo.sayName("foo") // foo name:  foo
+    const { sayName } = foo
+    sayName("foo1") // TypeError: Cannot read properties of undefined (reading 'say')
+    const sayName2 = foo.sayName
+    sayName2("foo2") // TypeError: Cannot read properties of undefined (reading 'say')
+
+    class Foo1 {
+      constructor() {
+        this.sayName = this.sayName.bind(this)
+      }
+
+      sayName(name) {
+        this.say(name)
+      }
+
+      say(name) {
+        console.log("foo1 name: ", name)
+      }
+    }
+
+    const foo1 = new Foo1()
+    foo1.sayName("foo1")
+    const { sayName: sayNameFoo1 } = foo1
+    sayNameFoo1("foo2")
+    const sayName3 = foo1.sayName
+    sayName3("foo3")
+    ```
 
 ### 语法环境
 
@@ -256,6 +309,24 @@ js 执行上下文两个阶段：1.创建阶段 2.执行阶段
 - 外部环境引用：用于指向外部环境，也就是包含当前语法环境的函数或代码块的语法环境；
 - this：用于存储当前执行上下文中的 this 值。
 
+### 作用域
+
+作用域是一套规则，用来管理引擎如何查找变量。简单的来说，作用域就是个盒子，规定了变量和函数的可访问范围以及他们的生命周期。
+
+编程语言中, 作用域有两种: 词法作用域, 动态作用域
+
+`JavaScript` 的作用域是词法作用域（静态作用域）
+
+- 全局作用域
+- 函数作用域
+- 块作用域
+
+#### 词法作用域
+
+也叫 静态作用域, 指作用域是在函数声明的位置确定，即代码写在哪里来决定的；
+
+无论函数在哪里被调用, 它如何被调用，它的词法作用域都只由函数被声明时所处的位置决定
+
 ### 作用域链
 
 - 本质上是一个指向变量对象的指针列表
@@ -264,11 +335,11 @@ js 执行上下文两个阶段：1.创建阶段 2.执行阶段
 
 从当前上下文查找, 从父级找, 一直找到全局上下文, 这样形成的链表
 
-### 闭包使用场景，注意点
+### 闭包
 
 概念: 一个函数和它的词法环境捆绑在一起, 这样的组合叫闭包
 
-通俗说法: 闭包是由函数和外部环境组成的一个整体；函数可以访问外部函数的变量和参数，并保留这些变量和参数的状态。
+作用：函数可以访问外部函数的变量和参数，并保留这些变量和参数的状态。
 
 **使用场景**：
 
@@ -377,66 +448,6 @@ JavaScript 是一种动态类型语言，没有指定变量类型。在不知情
 在让数字类型（1）和字符串类型（'2'）相加时，该数字被视为字符串。所以这里发生的是 '1' + '2' 返回 '12'。
 
 ## 表达式和运算符
-
-### this
-
-Javascript 函数中的 `this` 表现与其他语言不同。此外，在严格模式和非严格模式之间也会有一些差别。
-
-1. 全局作用域
-   1. 非严格模式，浏览器指向 `window`，node 环境指向 `global`
-   2. 严格模式下为 `undefined`
-2. 函数作用域
-   1. 非严格模式，指向全局对象
-   2. 严格模式，指向 `undefined`
-3. 对象方法，指向调用者(谁调用指向谁)
-4. 构造函数，指向 `new` 创建的对象实例，用 `this` 来设置实例的属性
-5. 箭头函数
-   1. 本身没有 `this`, 不能当构造函数；
-   2. 从外层作用域继承, 在声明的位置时确定 `this`；
-   3. 并且不会被 `bind` 改变
-6. 类 Class
-   1. `this` 指向类的实例，类的静态方法里指向类；
-   2. 如果将实例方法解构出来调用会报错 `undefined`，需要在定义的时候 `bind` 绑定 `this` 或使用箭头函数
-
-    ```js
-    class Foo {
-      sayName(name) {
-        this.say(name)
-      }
-
-      say(name) {
-        console.log("foo name: ", name)
-      }
-    }
-
-    const foo = new Foo()
-    foo.sayName("foo") // foo name:  foo
-    const { sayName } = foo
-    sayName("foo1") // TypeError: Cannot read properties of undefined (reading 'say')
-    const sayName2 = foo.sayName
-    sayName2("foo2") // TypeError: Cannot read properties of undefined (reading 'say')
-
-    class Foo1 {
-      constructor() {
-        this.sayName = this.sayName.bind(this)
-      }
-
-      sayName(name) {
-        this.say(name)
-      }
-
-      say(name) {
-        console.log("foo1 name: ", name)
-      }
-    }
-
-    const foo1 = new Foo1()
-    foo1.sayName("foo1")
-    const { sayName: sayNameFoo1 } = foo1
-    sayNameFoo1("foo2")
-    const sayName3 = foo1.sayName
-    sayName3("foo3")
-    ```
 
 ### 属性访问
 
