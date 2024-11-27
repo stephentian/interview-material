@@ -71,7 +71,7 @@
 基本类型 7 种：
 
 1. `undefined`: 声明变量未初始化的值
-2. `null`: 用来保存对象, 没有值. `null` 值表示一个空对象指针. `typeof null` 为 `object`
+2. `null`: 用来保存对象, 没有值. `null` 值表示一个空对象指针. `typeof null` = `object`
 3. `boolean`
 4. `number`
 5. `string`
