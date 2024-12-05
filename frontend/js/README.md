@@ -82,7 +82,10 @@
 
 ### 继承
 
-前置知识： `call, apply, bind`
+前置知识：
+[call](./code/06.call.js)
+[apply](./code/05.apply.js)
+[bind](./code/07.bind.js)
 
 [JS 继承](./inherit/README.md)
 
