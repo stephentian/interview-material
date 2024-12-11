@@ -39,8 +39,7 @@
 
 ## JavaScript 引擎
 
-JavaScript 是一门高级语言，CPU 只能识别机器语言；
-JavaScript 引擎是用来渲染 JavaScript 的, JavaScript 引擎将 JavaScript 翻译成 CPU 指令，JavaScript 的渲染速度越快，动态网页的展示也越快。
+JavaScript 是一门高级语言，CPU 只能识别机器语言；JavaScript 引擎将 JavaScript 翻译成 CPU 指令，JavaScript 的翻译速度越快，动态网页的展示也越快。
 
 - `SpiderMonkey`: Brendan Eich(js作者) 开发
 - `JSCore`: Webkit 中的 js 引擎，Apple 开发
