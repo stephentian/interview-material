@@ -14,7 +14,7 @@
     - [语法分析 parse](#语法分析-parse)
     - [编译 compile](#编译-compile)
     - [执行 execute](#执行-execute)
-  - [提升(预编译)](#提升预编译)
+  - [提升Hoist(预编译)](#提升hoist预编译)
   - [执行上下文](#执行上下文)
     - [词法环境](#词法环境)
     - [变量环境](#变量环境)
@@ -146,7 +146,7 @@ js 引擎（Execution Engine）负责执行过程。执行引擎会逐行执行�
 
 函数在这个阶段被调用，每次调用生成执行上下文。
 
-### 提升(预编译)
+### 提升Hoist(预编译)
 
 提升发生在语法分析阶段，所以有些文章称其为预编译；参考：[v8 dateparser](https://github.com/v8/v8-git-mirror/blob/master/src/dateparser.cc)，[chromium](https://code.google.com/p/chromium)
 
