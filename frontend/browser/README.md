@@ -322,3 +322,5 @@ SSE: Server-Sent Events
   3. 结合 DOM 树和 CSS 规则树，生成渲染树 render tree
   4. Reflow: 回流/重排，元素内容、结构、位置发送变化
   5. Repaint: 重绘，元素外观变化(颜色)
+
+TODO:
