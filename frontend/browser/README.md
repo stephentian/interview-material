@@ -34,7 +34,7 @@
 - `Presto`：（已弃用）该内核被称为公认的浏览网页速度最快的内核，同时也是处理 JS 脚本最兼容的内核，能在 Windows、Mac 及 Linux操作系统下完美运行。
 - `Webkit`：Apple，该内核主要用于 Safari 浏览器，它的优点是具有清晰的源码结构、极快的渲染速度，但缺点是对网页代码的兼容性较低，可能导致一些编写不标准的网页无法正确显示。
   - `Chromium`：Google，基于 Webkit 再深度改装的内核，除了 Chrome，目前广泛应用于Sogou、360极速、世界之窗极速、百度、淘宝、猎豹等浏览器
-  - `Webkit2`
+  - `Webkit2`: 苹果公司开发，Webkit 的一个分支，负责渲染 HTML、CSS和JavaScript，并集成了 V8 来执行JavaScript代码。多进程架构。
   - `Blink`: Webkit 的一个分支, google 目前在使用。Blink 是一个更广泛的浏览器排版引擎，负责渲染 HTML、CSS和JavaScript，并集成了 V8 来执行JavaScript代码。
 
 ## JavaScript 引擎

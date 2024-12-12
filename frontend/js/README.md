@@ -148,13 +148,28 @@ js 引擎（Execution Engine）负责执行过程。执行引擎会逐行执行�
 
 ### 提升Hoist(预编译)
 
-提升发生在语法分析阶段，所以有些文章称其为预编译；参考：[v8 dateparser](https://github.com/v8/v8-git-mirror/blob/master/src/dateparser.cc)，[chromium](https://code.google.com/p/chromium)
+提升发生在代码编译的语法分析阶段，有些文章称其为预编译；参考：[v8 parser.cc](https://github.com/v8/v8/blob/master/src/parsing/parser.cc)
+
+```c++
+// parse.cc
+ case Token::VAR:
+    case Token::LET:
+    case Token::CONST:
+      result = ParseVariableStatement(kStatementListItem, &names);
+      break;
+
+// parser.h
+// The var declarations are hoisted to the function scope, but originate from
+// a scope where the name has also been let bound or the var declaration is
+// hoisted over such a scope.
+// ParseVariableStatement
+```
 
 提升包括：参数，变量提升，函数提升
 
 参数：形参 和 实参。形参是函数声明时的变量，实参是调用该函数时传入的具体参数。
 
-JS 运行时全局作用域生成 GO, 全局对象 global object，函数会生成活动对象 `Active Object` AO。
+JS 运行时全局作用域生成 GO, 全局对象 `global object`，函数会生成活动对象 `Active Object` AO。
 
 分析步骤：
 
