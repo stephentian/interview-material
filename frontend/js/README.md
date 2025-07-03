@@ -42,6 +42,7 @@
   - [为什么设计成单线程？](#为什么设计成单线程)
   - [defer 和 async](#defer-和-async)
   - [Event Loop 执行顺序](#event-loop-执行顺序)
+  - [严格模式和非严格模式](#严格模式和非严格模式)
 - [代码题](#代码题)
 
 ## JS 基础
@@ -745,6 +746,10 @@ Event loop 每一次循环操作叫 `tick`
 微任务 microtask: Promise.then, MutaionObserver, process.nextTick
 
 详情: [browser](../browser/README.md) 事件循环 Event Loop
+
+### 严格模式和非严格模式
+
+TODO:
 
 ## 代码题
 
