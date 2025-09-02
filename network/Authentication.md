@@ -52,7 +52,7 @@ JWT 内容用 . 连接成三个部分信息
 2. 服务器校验通过，服务器根据提交信息，创建唯一的 SessionID，并将 Session 信息保存到服务器内存中
 3. 服务器通过 HTTP 标头 Set-Cookie 返回 SessionID 给浏览器
 4. 客户端将返回的 SessionID 存储在 Cookie 中，会在后续请求将这个 Cookie 发给服务器
-5. 服务器根据 Cookies 中的SesionID 验证身份
+5. 服务器根据 Cookie 中的SesionID 验证身份
 
 ## 总结
 
