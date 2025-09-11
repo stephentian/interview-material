@@ -6,7 +6,7 @@ HTML 标准文档：https://html.spec.whatwg.org/multipage/
 
 ## HTML5 新特性
 
-HTML5 是 2006年 发布的，新特性：
+HTML5 是 2006 年发布的，新特性：
 
 1. `<!DOCTYPE html>`, 告知浏览器当前页面是使用 `HTML5` 规范编写的
 2. 多媒体，`video` 和 `audio`
@@ -26,7 +26,7 @@ HTML5 是 2006年 发布的，新特性：
 
 1. 标签语义化`header, footer` 等
 2. 提高用户体验，`title, alt` 等
-3. 有利于 SEO，语义化能和搜索引擎建立关系，有益于爬虫爬取更多有效信息。
+3. 有利于 `SEO`，语义化能和搜索引擎建立关系，有益于爬虫爬取更多有效信息。
 
 ## CSS/JS 引入位置
 

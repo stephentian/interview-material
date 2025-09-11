@@ -7,7 +7,7 @@
   - [继承及非继承属性](#继承及非继承属性)
   - [CSS 隐藏元素](#css-隐藏元素)
   - [position](#position)
-  - [px, rem, vw](#px-rem-vw)
+  - [px, rem, vw, vh](#px-rem-vw-vh)
   - [CSS选择器](#css选择器)
   - [选择器优先级](#选择器优先级)
   - [CSS 匹配顺序](#css-匹配顺序)
@@ -41,7 +41,7 @@
 
 1. CSS 实现圆角 `border-radius`， 阴影 `box-shadow`
 2. 旋转，缩放，等动画: `transform: rotate(90deg)`
-3. CSS 选择器，多背景， `rgba()`
+3. CSS 选择器，多背景， 颜色 `rgba()`
 4. 新增伪元素 `::selection`
 5. 媒体查询 `@media`，多栏布局 `flex`
 
@@ -101,7 +101,7 @@
 4. `fixed` 绝对定位, 相对浏览器窗口定位
 5. `inherit` 从父元素继承 `position` 属性
 
-### px, rem, vw
+### px, rem, vw, vh
 
 | 单位 | 含义                                                |
 | ---- | --------------------------------------------------- |
@@ -364,7 +364,8 @@ flex布局主要适用于移动端项目
 三、table 布局
 
 1. Table 要比其它 html 标记占更多的字节。(延迟下载时间，占用服务器更多的流量资源。)
-2. Table 会阻挡浏览器渲染引擎的渲染顺序。
+2. 阻塞渲染：表格需要等所有内容加载完成才能确定最终布局，影响页面渲染速度
+3. 响应式支持差：在移动端适配上存在困难
 
 四、grid 布局
 
@@ -445,6 +446,8 @@ box-sizing: border-box;
 获取 dom 元素宽高样式，有下列 4 种方法：
 
 ```js
+let dom = document.querySelector("div");
+
 // 一
 dom.style.width/height
 // 只能获取 1， 即内联样式
@@ -458,7 +461,7 @@ window.getComputedStyle(dom).width/height
 // 与2原理相似，但是兼容性好一些
 
 // 四
-dom.getBoundingClientRect().widht/height
+dom.getBoundingClientRect().width/height
 // 计算元素绝对位置（相对于视窗左上角），
 // 获取到四个元素left, top, width, height
 ```
@@ -555,7 +558,7 @@ flex 有两根轴线，分别是主轴(`main axis`：项目排列布局的方向
 4. `flew-grow`  
   让项目放大。默认 0 不放大
 5. `flex-shrink`
-  缩小程度。但不是按比例缩小。默认1，同比例收缩
+  缩小程度。但不是按比例缩小。默认1，同比例收缩，设置为0，则子项不会缩小
 6. `flex-basis`  
   项目占据尺寸。默认 auto，自动计算
 7. `flex`  
