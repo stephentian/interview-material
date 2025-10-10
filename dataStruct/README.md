@@ -316,6 +316,8 @@ function arrToTree(arr) {
 
 父级id 无序数组
 
+code: [树转数组](./arrayToTree.js)
+
 ```js
 // 方法一
 // 利用了对象引用类型，浅拷贝
