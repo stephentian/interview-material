@@ -538,6 +538,20 @@ D: ReferenceError
 
 比如遍历数组, `for in` 遍历出是 `key(0, 1, 2)`(array 自身的属性), `for of` 遍历出是 `value(a b c)`。
 
+```js
+const arr = [1, 2, 3]
+
+for (let key in arr) {
+  console.log("arr key", key)
+}
+// 0 1 2
+
+for (let value of arr) {
+  console.log("arr value", value)
+}
+// 1 2 3
+```
+
 ### for await of
 
 for await of 用于遍历多个 `Promise`
