@@ -29,13 +29,14 @@ class MyQueue {
 			if (this._list.length === 1) return this._list.pop()
 			if (this._list.length < 16) return this._list.shift()
 			// webpack 源码优化
-			// shift 时间复杂度 O(n)
-			// pop 时间复杂度 O(1), reverse + pop 时间复杂度 O(n)
+			// shift 时间复杂度 O(n), 每次出队都要移动数组
+			// pop 时间复杂度 O(1), reverse 时间复杂度 O(n); 但是 reverse 只需要执行一次
+			// 所以当队列长度较大时，使用 reverse + pop 代替 shift 性能更好
 			// 长度大于 16 使用 reverse + pop 代替 shift
-			const temp = this._listReversed
+
 			this._listReversed = this._list
 			this._listReversed.reverse()
-			this._list = temp
+			this._list = []
 		}
 
 		return this._listReversed.pop()

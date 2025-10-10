@@ -26,7 +26,7 @@
 
 堆 `heap` 指一种常见的树形结构，特殊的完全二叉树。
 
-根节点最大（或最小），同级节点左右没有大小顺序
+根节点最大（或最小），同级节点左右没有大小顺序。插入和删除的时间复杂度 `O(log n)`
 
 存储内容：引用数据类型 对象，数组
 
@@ -79,17 +79,133 @@ class Node {
 
 平衡二叉树：左右子树高度差绝对值不超过 1
 
+```js
+class TreeNode {
+  constructor(value) {
+    this.value = value
+    this.left = null
+    this.right = null
+  }
+}
+
+// 构建一颗二叉树
+//     1
+//    / \
+//   2   3
+//  / \   \
+// 4   5   6
+
+const root = new TreeNode(1)
+const node2 = new TreeNode(2)
+const node3 = new TreeNode(3)
+const node4 = new TreeNode(4)
+const node5 = new TreeNode(5)
+const node6 = new TreeNode(6)
+
+root.left = node2
+root.right = node3
+node2.left = node4
+node2.right = node5
+node3.right = node6
+console.log(root)
+
+// 递归 Recursive
+// 先序遍历
+function preOrder(root) {
+  if (root === null) return
+  console.log(root.value) // 访问根节点
+  preOrder(root.left) // 递归遍历左子树
+  preOrder(root.right) // 递归遍历右子树
+}
+
+// 中序遍历
+function inOrder(root) { 
+  if (root === null) return
+  inOrder(root.left) // 递归遍历左子树
+  console.log(root.value) // 访问根节点
+  inOrder(root.right) // 递归遍历右子树
+}
+
+// 后序遍历
+function postOrder(root) {
+  if (root === null) return
+  postOrder(root.left) // 递归遍历左子树
+  postOrder(root.right) // 递归遍历右子树
+  console.log(root.value) // 访问根节点
+}
+
+preOrder(root) // 1 2 4 5 3 6
+inOrder(root) // 4 2 5 1 3 6
+postOrder(root) // 4 5 2 6 3 1
+
+// 迭代 Iteration
+// 迭代方法不使用函数自身的调用栈，而是通过手动维护一个栈 (Stack) 数据结构来模拟递归的过程。这种方法在处理非常深的树时可以避免栈溢出，并且能更好地理解计算机底层的执行逻辑。
+// 利用栈的 “后进先出” 特性，通过巧妙地安排节点入栈和出栈的顺序，来实现不同的遍历。
+
+// 迭代先序遍历
+function preorderIteration(root) {
+  if (root === null) return
+  const stack = [root]
+  while (stack.length) { 
+    const node = stack.pop()
+    console.log(node.value)
+    if (node.right) stack.push(node.right)
+    if (node.left) stack.push(node.left)
+  }
+}
+
+// 迭代中序遍历
+function inorderIteration(root) {
+  if (root === null) return
+  const stack = []
+  let current = root
+  while (current || stack.length) {
+    while (current) {
+      stack.push(current)
+      current = current.left
+    }
+    current = stack.pop()
+    console.log(current.value)
+    current = current.right
+  }
+}
+
+// 迭代后序遍历
+function postorderIteration(root) {
+  if (root === null) return
+  const stack = []
+  let lastVisited = null
+  let current = root
+
+  while (current || stack.length) {
+    // 找到最左子树
+    while (current) {
+      stack.push(current)
+      current = current.left
+    }
+    const prev = stack[stack.length - 1] // 栈顶元素
+    if (prev.right === null || prev.right === lastVisited) {
+      console.log(prev.value)
+      stack.pop()
+      lastVisited = prev
+    } else {
+      current = prev.right
+    }
+  }
+}
+```
+
 ## 图
 
 ## 经典例题
 
 ### 数组和链表区别
 
-| 数组                       | 链表                                   |
-| -------------------------- | -------------------------------------- |
-| 数组在内存中连续           | 链表不连续                             |
-| 数组从栈上分配内存         | 链表从堆上分配内存                     |
-| 可通过下标访问，访问效率高 | 访问效率低，访问某个元素，需要从头遍历 |
+| 数组                      | 链表                                |
+| ------------------------  | ----------------------------------- |
+| 数组在内存中连续           | 链表不连续                           |
+| 数组从栈上分配内存         | 链表从堆上分配内存                    |
+| 可通过下标访问, 访问效率高  | 访问效率低，访问某个元素，需要从头遍历 |
 
 ### 链表和数组，哪个实现队列更快
 
@@ -147,7 +263,7 @@ class myQueue {
 数据：
 
 ```js
-const arr = [
+const arr = [     
   { id: 6, name: 'a', pId: 3 },
   { id: 2, name: 'a', pId: 1 },
   { id: 3, name: 'a', pId: 1 },
