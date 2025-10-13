@@ -8,6 +8,10 @@ const arr = [
   { id: 5, name: '部门5', pId: 3 },
 ]
 
+// 每个对象都有一个id（自身标识）和pId（父级标识）
+// pId为0或null的节点通常是根节点（如例子中的公司总部）
+// 其他节点通过pId指向其父节点
+
 console.log('原始无序数组:');
 console.log(arr);
 
