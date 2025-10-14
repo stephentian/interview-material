@@ -261,6 +261,8 @@ var mySqrt = function(x) {
    2. n 为树的宽度，k 为树的深度
    3. 把到达 子叶点的结果收集起来，求得 组合集合
 
+code: [combination.js](./combinations.js)
+
 ```js
 const combine = function(n, k) {
   let res = []
