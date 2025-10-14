@@ -267,15 +267,17 @@ code: [combination.js](./combinations.js)
 const combine = function(n, k) {
   let res = []
 
-  function helper(start, path) { // start是枚举选择的起点 path是当前构建的路径（组合）
+  // 递归方法
+  function helper(start, path) { // start 是当前选择的数字起点 path 是当前构建的组合
     if (path.length === k) {
-      res.push(path.slice()) // 拷贝一份 path，推入 res
+      res.push(path.slice()) // 拷贝一份 path，避免后续操作影响已保存的结果
       return
     }
 
+    // 从 start 到 n 枚举每个数字
     for (let i = start; i <= n; i++) {
-      path.push(i)
-      helper(i + 1, path)
+      path.push(i) // 将当前数字 i 加入 path
+      helper(i + 1, path) // 递归调用 helper，传入 i+1 作为新的起点（确保不重复选择同一个数字） 
       path.pop() // 撤销选择
     }
   }
@@ -284,6 +286,37 @@ const combine = function(n, k) {
   return res
 }
 ```
+
+1. 调用 helper(1, [])
+
+2. i=1: path=[1]
+   - 调用 helper(2, [1])
+   - i=2: path=[1,2]
+     - 调用 helper(3, [1,2])
+     - i=3: path=[1,2,3]，长度达到k，保存结果[[1,2,3]]，返回
+     - 执行 path.pop()，path变为[1,2]
+     - i=4: path=[1,2,4]，长度达到k，保存结果[[1,2,3], [1,2,4]]，返回
+     - 执行 path.pop()，path变为[1,2]
+     - i=5: path=[1,2,5]，长度达到k，保存结果[[1,2,3], [1,2,4], [1,2,5]]，返回
+     - 执行 path.pop()，path变为[1]
+     - helper(2, [1])执行完毕，返回到第一层
+   - 执行 path.pop()，path变为[]
+   - 关键点在这里：现在 i=1 的循环结束，开始 i=2 的循环
+
+3. i=2: path=[2]
+   - 调用 helper(3, [2])
+   - i=3: path=[2,3]
+     - 调用 helper(4, [2,3])
+     - i=4: path=[2,3,4]，长度达到k，保存结果，返回
+     - 执行 path.pop()，path变为[2,3]
+     - i=5: path=[2,3,5]，长度达到k，保存结果，返回
+     - 执行 path.pop()，path变为[2]
+     - helper(3, [2])执行完毕，返回到第一层
+   - 执行 path.pop()，path变为[]
+
+所以，每当 helper(i + 1, path) 执行完成后，都会执行 path.pop() 来撤销选择，然后继续循环尝试下一个数字。这就是回溯算法的核心机制——在递归调用之后撤销之前的选择，使得我们可以探索其他的可能性。
+
+因此，在获取了 [1,2,3]、[1,2,4]、[1,2,5] 之后，会通过两次 path.pop() 操作回到 path=[1]，然后再执行 path.pop() 回到 path=[]，接着外层循环继续 i=2，从而能够得到包含 [2,x,y] 的组合。
 
 方法二
 
@@ -391,7 +424,7 @@ var addStrings = function(num1, num2) {
         j--;
     }
 
-    return ans.reverse().join('');
+    return ans.reverse().join(''); // 前面把最后位 push ，所以需要 reverse
 };
 ```
 
@@ -415,6 +448,16 @@ var addStrings = function(num1, num2) {
 输入：nums = [2,0,1]
 输出：[0,1,2]
 
+思路：
+
+1. 创建三个指针，l, r, cur
+2. l 指向下一个0应该放置的位置，初始为0；cur 当前遍历位置，初始为0； r 指向下一个2应该放置的位置，初始为数组末尾
+3. 循环判断当前元素，如果为0，则交换到左边，如果为2，则交换到右边，如果为1，则继续循环
+
+- [0, l) 区间内都是0
+- [l, cur) 区间内都是1
+- (r, nums.length - 1] 区间内都是2
+
 ```js
 // 时间复杂度：O(n)
 // 空间复杂度: O(1)
@@ -431,7 +474,8 @@ var sortColors = function(nums) {
       const temp = nums[r]
       nums[r] = nums[cur]
       nums[cur] = temp
-      r--
+      r-- // 减 r，因为 r 指向的元素已经交换到左边了
+      // cur 保持不变，因为从 r 位置交换过来的元素可能是0、1或2，需要进一步判断
     } else {
       cur++
     }
@@ -472,6 +516,8 @@ var lengthOfLongestSubstring = function (s) {
   let map = new Map()
 
   for (let r = 0; r < s.length; r++) {
+    // map.has(s[r]) 检查字符是否出现过
+    // map.get(s[r]) >= left 确保重复字符在当前窗口内（而不是历史窗口中）
     if (map.has(s[r]) && map.get(s[r]) >= left) {
       left = map.get(s[r]) + 1
     }
