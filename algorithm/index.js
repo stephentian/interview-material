@@ -34,3 +34,13 @@ var addBinary = function (a, b) {
 };
 
 addBinary('11', '1')
+
+const nextBigerNum = (nums) => {
+  const len = nums.length
+  const res = new Array(len).fill(-1)
+  const stack = []
+
+  for (let i = 0; i< len*2 -1; i++) {
+    
+  }
+}
