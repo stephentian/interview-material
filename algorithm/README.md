@@ -2256,10 +2256,12 @@ n 皇后问题 研究的是如何将 n 个皇后放置在 n×n 的棋盘上，�
 ```js
 var solveNQueens = function(n) {
   let res = [], 
-    queens = [] // 皇后每行位置数组
+    queens = [] // 每行皇后在的列位置, queens[i] = j 表示第 i 行的皇后在第 j 列
 
   // 判断位置是否可以放置
   let canPlace = (queens, row, col) => {
+    console.log("判断行 row = " + row + ";" + "列 col = " + col + ";" + "是否可以放置")
+
     for (let i = 0; i < queens.length; i++) {
       // i 是行, queens[i] 是列
       // 不能同行，同列，同对角线
@@ -2268,21 +2270,30 @@ var solveNQueens = function(n) {
       // if (Math.abs(row - i) === Math.abs(col - queens[i])) return false
     }
 
+    console.log("位置 row = " + row + ";" + "列 col = " + col + "可以放置")
     return true
   }
 
   let dfs = (res, queens, n, row) => {
+    console.log("row = " + row + ";" + "尝试在第 " + row + " 行放置皇后")
+
     if (row === n) {
+      console.log("第 " + row + " 行已放置完所有行")
+      console.log("queens = " + JSON.stringify(queens))
       return res.push(queens.map(s => '.'.repeat(s) + 'Q' + '.'.repeat(n-s-1)))
     }
 
     for (let col = 0; col < n; col++) {
       if (!canPlace(queens, row, col)) continue // 不能放置，跳过
       queens[row] = col
+      console.log("queens 第" + row + "行放置了col：" + col)
+      console.log("queens = " + JSON.stringify(queens))
+      console.log("深度遍历下一行")
       dfs(res, queens, n, row + 1)
 
-      // 清空数组
+      console.log("dfs 出来了, row: " + row)
       queens.splice(row, 1)
+      console.log("回溯后的 queens = " + JSON.stringify(queens))
     }
   }
 
@@ -2291,6 +2302,18 @@ var solveNQueens = function(n) {
 }
 
 solveNQueens(4)
+
+// 执行过程：
+// row=0: 尝试在第0行放置皇后
+//  判断行 row = 0;列 col = 0;是否可以放置
+//  位置 row = 0;列 col = 0可以放置
+//  queens 第0行放置了col：0
+//  深度遍历下一行
+// row=1: 尝试在第1行放置皇后
+//  col=0,1,2都不行，col=3可以: queens=[0,3]
+//         row=2: 尝试在第2行放置皇后
+//           col=0,1,2,3都不行，回溯
+//         回溯到row=1，继续尝试其他列...
 ```
 
 ### 165.比较版本号
