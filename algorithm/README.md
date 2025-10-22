@@ -1047,7 +1047,29 @@ leetcode: [200. 岛屿数量](https://leetcode.cn/problems/number-of-islands/)
 输出：3
 ```
 
-思路: 把当前为 1 的点变为 0, 并使用  dfs 查找出来上下左右的点 变为 0
+图遍历问题，使用深度优先搜索（DFS）或者广度优先搜索（BFS）解决
+
+思路：
+
+1. 遍历整个网络
+2. 消灭岛屿
+   - 发现陆地（1），就从这个点开始 DFS 或 BFS 搜索
+   - 把与这个陆地相连的陆地标记为已访问（把 1 变为 0, 并使用 dfs 搜索出来上下左右的点变为 0）
+3. 计数
+   1. 每次发现新岛屿，计数+1
+4. 继续便利剩余的点
+
+具体实现：
+
+1. 初始化计数器为0, 行 row, 列 col
+2. 遍历网格的每个位置(i,j)
+3. 如果`grid[i][j]` 是'1'：
+   1. 计数器加1
+   2. 从(i,j)开始进行DFS，将所有相连的'1'都改为'0'(上下左右)
+   3. 
+4. 返回计数器的值
+
+时间复杂度：O(M*N)
 
 ```js
 var numIslands = function(grid) {
@@ -1057,10 +1079,10 @@ var numIslands = function(grid) {
 
     function dfs(x, y) {
         grid[x][y] = 0
-        if (x > 0 && grid[x - 1][y] === "1") dfs(x - 1, y)
-        if (x < row -1 && grid[x + 1][y] === "1") dfs(x + 1, y)
-        if (grid[x][y - 1] === "1") dfs(x, y - 1)
-        if (grid[x][y + 1] === "1") dfs(x, y + 1)
+        if (x > 0 && grid[x - 1][y] === "1") dfs(x - 1, y) // 上
+        if (x < row -1 && grid[x + 1][y] === "1") dfs(x + 1, y) // 下
+        if (y > 0 && grid[x][y - 1] === "1") dfs(x, y - 1) // 左
+        if (y < col - 1 && grid[x][y + 1] === "1") dfs(x, y + 1) // 右
     }
       
     for (let i = 0; i < row; i ++) {

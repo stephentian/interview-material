@@ -41,6 +41,18 @@ const nextBigerNum = (nums) => {
   const stack = []
 
   for (let i = 0; i< len*2 -1; i++) {
-    
+
   }
+}
+
+const dfs = (node, nodeList = []) => {
+  nodeList.push(node.val)
+
+  if (node.children && node.children.length) {
+    for (let child of node.children) {
+      dfs(child, nodeList)
+    }
+  }
+
+  return nodeList
 }
