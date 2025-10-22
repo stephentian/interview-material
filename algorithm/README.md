@@ -826,6 +826,8 @@ var nextGreaterElements = function(nums) {
 }
 ```
 
+代码：[nextBiggerNum.js](./nextBiggerNum.js)
+
 ## 树
 
 二叉树，非线性数据结构；根节点，表示最顶层节点；叶节点，表示没有子节点的节点；
