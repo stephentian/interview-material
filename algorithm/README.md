@@ -1066,7 +1066,6 @@ leetcode: [200. 岛屿数量](https://leetcode.cn/problems/number-of-islands/)
 3. 如果`grid[i][j]` 是'1'：
    1. 计数器加1
    2. 从(i,j)开始进行DFS，将所有相连的'1'都改为'0'(上下左右)
-   3. 
 4. 返回计数器的值
 
 时间复杂度：O(M*N)
@@ -1101,7 +1100,7 @@ var numIslands = function(grid) {
 
 leetcode: [257. 二叉树的所有路径](https://leetcode-cn.com/problems/binary-tree-paths/)
 
-给你一个二叉树的根节点 root ，按 任意顺序 ，返回所有从根节点到叶子节点的路径。
+给你一个二叉树的根节点 root，按 任意顺序 ，返回所有从根节点到叶子节点的路径。
 
 叶子节点 是指没有子节点的节点。
 
@@ -1176,39 +1175,70 @@ BFS Breath-First Search
 - 等到这一轮队列中的子节点处理完成以后
 - 下一轮再继续处理的就是孙子节点了，这就实现了层序遍历
 
-1. 递归版本
-
-    ```js
-    <!-- function bfs(node, nodeList = []) {
-      if (node) {
-        nodeList.push(node)
-        if(node.children && node.children.length>0){
-          const child = node.children
-          for(let i = 0; i<child.length; i++) {
-            bfs(child[i], nodeList)
-          }
-        }
-      }
-      return nodeList
-    } -->
-
-    ```
-
-2. 非递归版
+1. 非递归版
 
     ```js
     function bfs(root) {
       const queue = [root]
+      const result = [];
 
       while (queue.length > 0) {  
         const node = queue.shift(); // 取出队首元素并移除  
-        console.log(node.value); // 访问当前节点  
-        if (node.left !== null) queue.push(node.left); // 将左子节点入队  
-        if (node.right !== null) queue.push(node.right); // 将右子节点入队  
+        result.push(node.value);
+        console.log(node.value); // 访问当前节点
+
+        // 将子节点加入队尾
+        if (node.children) {
+          for (let child of node.children) {
+            queue.push(child);
+          }
+        }
       }  
 
-      return queue
+      return result
     }
+    ```
+
+BFS不适合用递归实现
+
+- BFS的本质特性
+  - BFS是层序遍历，需要按层级顺序访问节点
+  - 使用队列(先进先出)来实现
+  - 目标是先访问完当前层的所有节点，再访问下一层
+- 递归的本质特性
+  - 递归使用栈(后进先出)来实现
+  - 递归会沿着一条路径深入到底，再回溯
+
+1. 递归版本
+
+    ```js
+    function bfsRecursive(queue, result = []) {
+      // 递归终止条件
+      if (queue.length === 0) {
+        return result;
+      }
+      
+      // 处理当前层的所有节点
+      const levelSize = queue.length;
+      for (let i = 0; i < levelSize; i++) {
+        const node = queue.shift();
+        result.push(node.value);
+        
+        // 将下一层节点加入队列
+        if (node.children) {
+          for (let child of node.children) {
+            queue.push(child);
+          }
+        }
+      }
+      
+      // 递归处理下一层
+      return bfsRecursive(queue, result);
+    }
+
+    // 调用方式
+    // bfsRecursive([root]);
+
     ```
 
 例题：

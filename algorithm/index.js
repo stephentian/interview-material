@@ -45,14 +45,18 @@ const nextBigerNum = (nums) => {
   }
 }
 
-const dfs = (node, nodeList = []) => {
-  nodeList.push(node.val)
+const dfs = (i, j) => {
+  grid[i][j] = '0'
 
-  if (node.children && node.children.length) {
-    for (let child of node.children) {
-      dfs(child, nodeList)
-    }
-  }
+  if (i > 0 && grid[i-1][j] === '1') dfs(i-1, j)
+  if (i < row -1 && grid[i+1][j] === '1') dfs(i+1, j)
+}
 
-  return nodeList
+const longestRoot = (root) => {
+  if (!root) return 0
+
+  const left = longestRoot(root.left)
+  const right = longestRoot(root.right)
+
+  return Math.max(left, right) + 1
 }
