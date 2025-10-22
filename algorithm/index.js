@@ -41,6 +41,22 @@ const nextBigerNum = (nums) => {
   const stack = []
 
   for (let i = 0; i< len*2 -1; i++) {
-    
+
   }
+}
+
+const dfs = (i, j) => {
+  grid[i][j] = '0'
+
+  if (i > 0 && grid[i-1][j] === '1') dfs(i-1, j)
+  if (i < row -1 && grid[i+1][j] === '1') dfs(i+1, j)
+}
+
+const longestRoot = (root) => {
+  if (!root) return 0
+
+  const left = longestRoot(root.left)
+  const right = longestRoot(root.right)
+
+  return Math.max(left, right) + 1
 }

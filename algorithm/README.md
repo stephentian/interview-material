@@ -24,6 +24,7 @@
     - [257.二叉树的所有路径](#257二叉树的所有路径)
     - [104.二叉树的最大深度](#104二叉树的最大深度)
   - [BFS 广度优先遍历](#bfs-广度优先遍历)
+    - [515. 在每个树行中找最大值](#515-在每个树行中找最大值)
     - [94.二叉树的中序遍历](#94二叉树的中序遍历)
   - [226.翻转二叉树](#226翻转二叉树)
 - [队列](#队列)
@@ -1049,7 +1050,28 @@ leetcode: [200. 岛屿数量](https://leetcode.cn/problems/number-of-islands/)
 输出：3
 ```
 
-思路: 把当前为 1 的点变为 0, 并使用  dfs 查找出来上下左右的点 变为 0
+图遍历问题，使用深度优先搜索（DFS）或者广度优先搜索（BFS）解决
+
+思路：
+
+1. 遍历整个网络
+2. 消灭岛屿
+   - 发现陆地（1），就从这个点开始 DFS 或 BFS 搜索
+   - 把与这个陆地相连的陆地标记为已访问（把 1 变为 0, 并使用 dfs 搜索出来上下左右的点变为 0）
+3. 计数
+   1. 每次发现新岛屿，计数+1
+4. 继续便利剩余的点
+
+具体实现：
+
+1. 初始化计数器为0, 行 row, 列 col
+2. 遍历网格的每个位置(i,j)
+3. 如果`grid[i][j]` 是'1'：
+   1. 计数器加1
+   2. 从(i,j)开始进行DFS，将所有相连的'1'都改为'0'(上下左右)
+4. 返回计数器的值
+
+时间复杂度：O(M*N)
 
 ```js
 var numIslands = function(grid) {
@@ -1059,10 +1081,10 @@ var numIslands = function(grid) {
 
     function dfs(x, y) {
         grid[x][y] = 0
-        if (x > 0 && grid[x - 1][y] === "1") dfs(x - 1, y)
-        if (x < row -1 && grid[x + 1][y] === "1") dfs(x + 1, y)
-        if (grid[x][y - 1] === "1") dfs(x, y - 1)
-        if (grid[x][y + 1] === "1") dfs(x, y + 1)
+        if (x > 0 && grid[x - 1][y] === "1") dfs(x - 1, y) // 上
+        if (x < row -1 && grid[x + 1][y] === "1") dfs(x + 1, y) // 下
+        if (y > 0 && grid[x][y - 1] === "1") dfs(x, y - 1) // 左
+        if (y < col - 1 && grid[x][y + 1] === "1") dfs(x, y + 1) // 右
     }
       
     for (let i = 0; i < row; i ++) {
@@ -1081,7 +1103,7 @@ var numIslands = function(grid) {
 
 leetcode: [257. 二叉树的所有路径](https://leetcode-cn.com/problems/binary-tree-paths/)
 
-给你一个二叉树的根节点 root ，按 任意顺序 ，返回所有从根节点到叶子节点的路径。
+给你一个二叉树的根节点 root，按 任意顺序 ，返回所有从根节点到叶子节点的路径。
 
 叶子节点 是指没有子节点的节点。
 
@@ -1156,42 +1178,73 @@ BFS Breath-First Search
 - 等到这一轮队列中的子节点处理完成以后
 - 下一轮再继续处理的就是孙子节点了，这就实现了层序遍历
 
-1. 递归版本
-
-    ```js
-    <!-- function bfs(node, nodeList = []) {
-      if (node) {
-        nodeList.push(node)
-        if(node.children && node.children.length>0){
-          const child = node.children
-          for(let i = 0; i<child.length; i++) {
-            bfs(child[i], nodeList)
-          }
-        }
-      }
-      return nodeList
-    } -->
-
-    ```
-
-2. 非递归版
+1. 非递归版
 
     ```js
     function bfs(root) {
       const queue = [root]
+      const result = [];
 
       while (queue.length > 0) {  
         const node = queue.shift(); // 取出队首元素并移除  
-        console.log(node.value); // 访问当前节点  
-        if (node.left !== null) queue.push(node.left); // 将左子节点入队  
-        if (node.right !== null) queue.push(node.right); // 将右子节点入队  
+        result.push(node.value);
+        console.log(node.value); // 访问当前节点
+
+        // 将子节点加入队尾
+        if (node.children) {
+          for (let child of node.children) {
+            queue.push(child);
+          }
+        }
       }  
 
-      return queue
+      return result
     }
     ```
 
-例题：
+BFS不适合用递归实现
+
+- BFS的本质特性
+  - BFS是层序遍历，需要按层级顺序访问节点
+  - 使用队列(先进先出)来实现
+  - 目标是先访问完当前层的所有节点，再访问下一层
+- 递归的本质特性
+  - 递归使用栈(后进先出)来实现
+  - 递归会沿着一条路径深入到底，再回溯
+
+1. 递归版本
+
+    ```js
+    function bfsRecursive(queue, result = []) {
+      // 递归终止条件
+      if (queue.length === 0) {
+        return result;
+      }
+      
+      // 处理当前层的所有节点
+      const levelSize = queue.length;
+      for (let i = 0; i < levelSize; i++) {
+        const node = queue.shift();
+        result.push(node.value);
+        
+        // 将下一层节点加入队列
+        if (node.children) {
+          for (let child of node.children) {
+            queue.push(child);
+          }
+        }
+      }
+      
+      // 递归处理下一层
+      return bfsRecursive(queue, result);
+    }
+
+    // 调用方式
+    // bfsRecursive([root]);
+
+    ```
+
+#### 515. 在每个树行中找最大值
 
 一、[515. 在每个树行中找最大值](https://leetcode-cn.com/problems/find-largest-value-in-each-tree-row/)
 
@@ -1234,7 +1287,7 @@ var largestValues = function(root) {
 
 [94.二叉树的中序遍历](https://leetcode.cn/problems/binary-tree-inorder-traversal/)
 
-题目：给定一个二叉树的根节点 root ，返回 它的 中序 遍历 。
+题目：给定一个二叉树的根节点 root ，返回 它的 中序遍历 。
 
 示例：
 
@@ -1502,6 +1555,13 @@ var hasCycle = function(head) {
 
 [160. 相交链表](https://leetcode.cn/problems/intersection-of-two-linked-lists/)
 
+给你两个单链表的头节点 headA 和 headB ，请你找出并返回两个单链表相交的起始节点。如果两个链表不存在相交节点，返回 null 。
+
+图示两个链表在节点 8 开始相交：
+
+输入：intersectVal = 8, listA = [4,1,8,4,5], listB = [5,6,1,8,4,5], skipA = 2, skipB = 3
+输出：Intersected at '8'
+
 方法：1. hashMap；2.双指针；3.暴力法
 
 ```js
@@ -1657,17 +1717,46 @@ var maxProfit = function(prices) {
 
 ```js
 var findContentChildren = function(g, s) {
-  let i = g.length, j = s.length - 1
   g.sort((a, b) => a - b)
   s.sort((a, b) => a - b)
 
-  while(i--) {
+  let i = g.length - 1, j = s.length - 1;
+  let count = 0;
+
+  while(i >= 0 && j >= 0) {
     if (s[j] >= g[i]) {
-      if (j-- === 0) break
+      count++
+      j--
     }
+    i--
   }
-  return s.length - j -1
+
+  return count
 }
+
+var findContentChildren = function(g, s) {
+  // 贪心策略：用尽量小的饼干满足孩子的胃口，这样大的饼干可以留给胃口大的孩子
+  // 1. 对孩子胃口和饼干尺寸进行排序
+  g.sort((a, b) => a - b);  // 孩子胃口从小到大排序
+  s.sort((a, b) => a - b);  // 饼干尺寸从小到大排序
+  
+  let childIndex = 0;   // 孩子指针
+  let cookieIndex = 0;  // 饼干指针
+  let satisfiedCount = 0; // 满足的孩子数
+  
+  // 2. 用双指针遍历
+  while (childIndex < g.length && cookieIndex < s.length) {
+    // 3. 如果当前饼干能满足当前孩子
+    if (s[cookieIndex] >= g[childIndex]) {
+      satisfiedCount++;    // 满足孩子数+1
+      childIndex++;        // 移动到下一个孩子
+    }
+    // 4. 无论是否满足，都要看下一个饼干（因为当前饼干要么被用了，要么太小了）
+    cookieIndex++;
+  }
+  
+  return satisfiedCount;
+};
 ```
 
 ## 回溯
@@ -2174,8 +2263,8 @@ var solveNQueens = function(n) {
     for (let i = 0; i < queens.length; i++) {
       // i 是行, queens[i] 是列
       // 不能同行，同列，同对角线
-      if (queens[i] === col) return false
-      if (i + queens[i] == row + col || i - queens[i] == row - col) return false
+      if (queens[i] === col) return false // 同列检查
+      if (i + queens[i] == row + col || i - queens[i] == row - col) return false  // 对角线检查
       // if (Math.abs(row - i) === Math.abs(col - queens[i])) return false
     }
 
@@ -2188,7 +2277,7 @@ var solveNQueens = function(n) {
     }
 
     for (let col = 0; col < n; col++) {
-      if (!canPlace(queens, row, col)) continue
+      if (!canPlace(queens, row, col)) continue // 不能放置，跳过
       queens[row] = col
       dfs(res, queens, n, row + 1)
 
@@ -2200,6 +2289,8 @@ var solveNQueens = function(n) {
   dfs(res, queens, n, 0)
   return res
 }
+
+solveNQueens(4)
 ```
 
 ### 165.比较版本号
