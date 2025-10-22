@@ -24,6 +24,7 @@
     - [257.二叉树的所有路径](#257二叉树的所有路径)
     - [104.二叉树的最大深度](#104二叉树的最大深度)
   - [BFS 广度优先遍历](#bfs-广度优先遍历)
+    - [515. 在每个树行中找最大值](#515-在每个树行中找最大值)
     - [94.二叉树的中序遍历](#94二叉树的中序遍历)
   - [226.翻转二叉树](#226翻转二叉树)
 - [队列](#队列)
@@ -1241,7 +1242,7 @@ BFS不适合用递归实现
 
     ```
 
-例题：
+#### 515. 在每个树行中找最大值
 
 一、[515. 在每个树行中找最大值](https://leetcode-cn.com/problems/find-largest-value-in-each-tree-row/)
 
@@ -1284,7 +1285,7 @@ var largestValues = function(root) {
 
 [94.二叉树的中序遍历](https://leetcode.cn/problems/binary-tree-inorder-traversal/)
 
-题目：给定一个二叉树的根节点 root ，返回 它的 中序 遍历 。
+题目：给定一个二叉树的根节点 root ，返回 它的 中序遍历 。
 
 示例：
 
@@ -1552,6 +1553,13 @@ var hasCycle = function(head) {
 
 [160. 相交链表](https://leetcode.cn/problems/intersection-of-two-linked-lists/)
 
+给你两个单链表的头节点 headA 和 headB ，请你找出并返回两个单链表相交的起始节点。如果两个链表不存在相交节点，返回 null 。
+
+图示两个链表在节点 8 开始相交：
+
+输入：intersectVal = 8, listA = [4,1,8,4,5], listB = [5,6,1,8,4,5], skipA = 2, skipB = 3
+输出：Intersected at '8'
+
 方法：1. hashMap；2.双指针；3.暴力法
 
 ```js
@@ -1707,17 +1715,46 @@ var maxProfit = function(prices) {
 
 ```js
 var findContentChildren = function(g, s) {
-  let i = g.length, j = s.length - 1
   g.sort((a, b) => a - b)
   s.sort((a, b) => a - b)
 
-  while(i--) {
+  let i = g.length - 1, j = s.length - 1;
+  let count = 0;
+
+  while(i >= 0 && j >= 0) {
     if (s[j] >= g[i]) {
-      if (j-- === 0) break
+      count++
+      j--
     }
+    i--
   }
-  return s.length - j -1
+
+  return count
 }
+
+var findContentChildren = function(g, s) {
+  // 贪心策略：用尽量小的饼干满足孩子的胃口，这样大的饼干可以留给胃口大的孩子
+  // 1. 对孩子胃口和饼干尺寸进行排序
+  g.sort((a, b) => a - b);  // 孩子胃口从小到大排序
+  s.sort((a, b) => a - b);  // 饼干尺寸从小到大排序
+  
+  let childIndex = 0;   // 孩子指针
+  let cookieIndex = 0;  // 饼干指针
+  let satisfiedCount = 0; // 满足的孩子数
+  
+  // 2. 用双指针遍历
+  while (childIndex < g.length && cookieIndex < s.length) {
+    // 3. 如果当前饼干能满足当前孩子
+    if (s[cookieIndex] >= g[childIndex]) {
+      satisfiedCount++;    // 满足孩子数+1
+      childIndex++;        // 移动到下一个孩子
+    }
+    // 4. 无论是否满足，都要看下一个饼干（因为当前饼干要么被用了，要么太小了）
+    cookieIndex++;
+  }
+  
+  return satisfiedCount;
+};
 ```
 
 ## 回溯
@@ -2224,8 +2261,8 @@ var solveNQueens = function(n) {
     for (let i = 0; i < queens.length; i++) {
       // i 是行, queens[i] 是列
       // 不能同行，同列，同对角线
-      if (queens[i] === col) return false
-      if (i + queens[i] == row + col || i - queens[i] == row - col) return false
+      if (queens[i] === col) return false // 同列检查
+      if (i + queens[i] == row + col || i - queens[i] == row - col) return false  // 对角线检查
       // if (Math.abs(row - i) === Math.abs(col - queens[i])) return false
     }
 
@@ -2238,7 +2275,7 @@ var solveNQueens = function(n) {
     }
 
     for (let col = 0; col < n; col++) {
-      if (!canPlace(queens, row, col)) continue
+      if (!canPlace(queens, row, col)) continue // 不能放置，跳过
       queens[row] = col
       dfs(res, queens, n, row + 1)
 
@@ -2250,6 +2287,8 @@ var solveNQueens = function(n) {
   dfs(res, queens, n, 0)
   return res
 }
+
+solveNQueens(4)
 ```
 
 ### 165.比较版本号
