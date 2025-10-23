@@ -86,13 +86,14 @@ function shuffle(arr) {
       n = arr.length,
       i;
   while(n) {
-    // 在数组里随机选取数组下标
-    i = Math.floor(Math.random() * arr.length)
-    if (i in arr) {
-      copy.push(arr[i])
-      delete arr[i]
-      n--
-    }
+    // 在剩余元素中随机选取数组下标
+    i = Math.floor(Math.random() * n)
+
+    copy.push(arr[i])
+
+    // 删除选中的元素，后面的元素会自动前移
+    arr.splice(randomIndex, 1);
+    n--
   }
   return copy
 }
