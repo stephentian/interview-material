@@ -3,6 +3,7 @@
 - [基础知识](#基础知识)
   - [Vue 发展史](#vue-发展史)
   - [api 风格](#api-风格)
+  - [mixins](#mixins)
   - [生命周期](#生命周期)
   - [Vue 实例过程](#vue-实例过程)
   - [数据响应式原理](#数据响应式原理)
@@ -53,6 +54,8 @@
   4. 自定义 `render API`
   5. 支持 `Time Slicing` 时间切片(类似 `React Fiber` 切片架构)，Vue 会限制执行时间(小于 `16ms`)，只在一个时间片段内运行。
 
+2025, Vue3.5
+
 ### api 风格
 
 选项式 API (Options API)
@@ -68,6 +71,19 @@
 - 其实都可以完成业务场景，复杂的业务场景建议使用组合式 API。
 - 选项式 API 中我们主要的逻辑复用机制是 mixins，而组合式 API 解决了 mixins 的所有缺陷。
 - 选项氏 API 简单逻辑代码组织很好，但是代码量一多，拆分在了不同的选项中，就很零散；组合式 API 代码组织更好。
+
+### mixins
+
+混入对象，可以包含任意的选项，当组件使用混入对象时，会先将混入对象的选项合并到组件对象中。
+
+缺陷：
+
+1. 命名冲突，多个 mixin 有同名属性名冲突，会覆盖.
+2. 来源不明，组件使用多个 mixin，无法快速定位问题来自哪个 mixin.
+
+组合式 API 通过显式导入逻辑函数, 没有上面问题：`const { fn1, fn2 } = useSomeCompositionApi()`
+
+
 
 ### 生命周期
 
@@ -327,7 +343,7 @@ LRU：[LRU.js](https://github.com/stephentian/interview-material/blob/1e031bc07c
 1. 提供了组合式API composition API 书写风格 ，和 `setup` 搭配使用
 2. 生命周期 `destroyed` 变为 `unmounted`, `beforeDestroy` 变为 `beforeUnmount`
 3. `$children` 移除。要访问子组件实例，使用模版引用 `ref`
-4. `Mixin` 合并行为变更，`data` 同名属性直接覆盖，而不是合并
+4. `Mixins` 合并行为变更，`data` 同名属性直接覆盖，而不是合并
 5. `$on, $off, $once` 被移除
    - 使用 `provide/inject`
    - 替换使用外部的库，例如`mitt tiny-emitter`
