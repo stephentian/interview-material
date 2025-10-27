@@ -1785,7 +1785,11 @@ var findContentChildren = function(g, s) {
 
 LRU 在 Vue 的 `keep-alive` 中有使用
 
-利用 Map 的 key 的有序性，Map 会记住键值对的插入顺序。
+利用 Map 的 key 的有序性，Map 会记住键值对的插入顺序：
+
+1. 插入顺序保持：当你按顺序插入键值对时，Map 会记住这个顺序
+2. 遍历时按插入顺序：使用 for...of 或 forEach 遍历时，会按照插入的顺序访问键值对
+3. keys() 方法返回有序键列表：Map.keys() 返回的迭代器会按照插入顺序提供键
 
 ```js
 class LRUCache {
@@ -1794,7 +1798,7 @@ class LRUCache {
     this.data = new Map()
   }
   put(domain, info) {
-    if(this.map.has(key)) this.map.delete(key)
+    if(this.data.has(key)) this.data.delete(key)
 
     if(this.data.size >= this.size) {
       // 删除最久没有用到的数据
@@ -1822,8 +1826,9 @@ class LRUCache {
 `|`: 或，两者都为 0， 才为 0  
 `^`: 异或，两者相同为 0，相异为 1  
 `~`: 按位非，0 变 1，1 变 0，运算时 `~x = -(x+1)`  
-`<<`: 左移，左移 n 位，左边超出丢弃，右边补 0  
-`>>`: 右移，右移 n 位；无符号，左边补 0，有符号，编译器处理方式不一样。
+`<<`: 左移，左移 n 位，左边超出丢弃，右边补 0；相当于 N*(2^n) ，如 5 << 2 = 5*(2**2) = 20。(2的n次方，在js 使用 `Math.pow(2,n)` 或者 `2**n`)
+`>>`: 右移，右移 n 位；无符号，左边补 0，有符号，编译器处理方式不一样；相当于 N/(2^n)，如 5 >> 2 = 5/(2**2) = 1。
+`>>>`: 无符号右移，无符号右移 n 位，左边补 0，右边丢弃；相当于 N/(2^n)，如 5 >>> 2 = 5/(2^2) = 1.25。
 
 异或运算性质：
 
@@ -1831,7 +1836,7 @@ class LRUCache {
 2. 任何数和其自身做异或运算，结果是 0，即 `a^a=0`
 3. 异或运算满足交换律和结合律，即 `a^b^a = b^a^a = b^(a^a) = b^0=b`。
 
-异或是机器码运算，相同为 0 不同为 1，不管数字先后，只要两个数字相同对应的二进制都会被异或为 00000000，最后剩下的就是所要找的值
+异或是机器码运算，相同为 0 不同为 1，不管数字先后，只要两个数字相同对应的二进制都会被异或为 00000000，最后剩下的就是所要找的值。
 
 负数的位运算：
 
@@ -1864,7 +1869,7 @@ class LRUCache {
     // nunm & 1 
     ```
 
-    注意：由于 `==` 的优先级比 `&` 打，所以判断的时候，记得加括号，即 `(num&1) === 1` 为 `true`
+    注意：由于 `==` 的优先级比 `&` 大，所以判断的时候，记得加括号，即 `(num&1) === 1` 为 `true`
 
 3. 求负数绝对值(整数)
 
@@ -1882,10 +1887,12 @@ class LRUCache {
       let temp = a
       a = b
       b = temp
+
       // 或者
       a = a+b
       b = a-b
       a = a-b
+
       // 位运算
       a ^= b // a 变成了 a^b，a 和 b 的异或结果
       b ^= a // b 变成了 a^b^b = a^0 = a , 即 b 变成了原来的 a
@@ -1898,6 +1905,10 @@ class LRUCache {
     ```js
     // 利用 a ^ b ^ b =a
     // 讲数组的数 做 ^ 运算
+
+    [1,1,2,2,3,4,4,5,5].reduce((a,b) => a^b, null)
+    // 3
+
     ```
 
 ### 169.多数元素
@@ -1943,13 +1954,13 @@ var majorityElement = function(nums) {
 
 // 异或
 var singleNumber = function(nums) {
-    let a = nums[0]
+  if (!nums.length) return null
 
-    if (nums.length > 1) {
-        for (let i = 1; i<nums.length; i++) {
-            a = a ^ nums[i]
-        }
-    }
+  let a = nums[0]
+
+  for (let i = 1; i<nums.length; i++) {
+      a = a ^ nums[i]
+  }
 
     return a
 }
