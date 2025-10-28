@@ -83,8 +83,6 @@
 
 组合式 API 通过显式导入逻辑函数, 没有上面问题：`const { fn1, fn2 } = useSomeCompositionApi()`
 
-
-
 ### 生命周期
 
 选项式：
@@ -100,10 +98,8 @@
 
 组合式：
 
-- setup
-- beforeCreate
-- 初始化选项式 api
-- created
+- setup(beforeCreate)
+- 初始化选项式 api(created)
 - 检查是否存在模版，存在模版，即时编译模版
 - onBeforeMount
 - onMounted
@@ -120,7 +116,7 @@
 5. 初始化模板，解析插槽，`render(h)` 方法
 6. 初始化响应式数据
 7. 执行 `created`
-8. 执行 `mount` 挂载 `el dom` 元素
+8. 执行 `mount` 挂载 `dom` 元素
 
 ### 数据响应式原理
 
@@ -162,11 +158,7 @@ Vue 数据响应式是通过数据劫持和发布-订阅模型来实现的。
 1. 在负责视图中提升渲染性能
 2. 维护视图和状态之间的关系
 3. 可以支持服务端渲染 `ssr`, 框架跨平台, 原生应用 rn, 小程序等
-
-为什么需要虚拟 DOM
-
-1. 使用 虚拟 DOM 检查差异性能比较好。
-2. DOM 对象创建和销毁非常耗费性能。用虚拟 DOM 减少 DOM 创建和销毁。
+4. DOM 对象创建和销毁非常耗费性能。用虚拟 DOM 减少 DOM 创建和销毁。
 
 ## 组件中 name 选项作用
 
