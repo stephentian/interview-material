@@ -40,7 +40,6 @@
   - [为什么使用 hooks](#为什么使用-hooks)
   - [Hooks 实现原理](#hooks-实现原理)
   - [useEffect, useMemo, useCallback 差异](#useeffect-usememo-usecallback-差异)
-    - [如何判断计算成本高？](#如何判断计算成本高)
   - [为什么 React 自定义组件首字母要大写](#为什么-react-自定义组件首字母要大写)
   - [列举几个用到的自定义 Hooks](#列举几个用到的自定义-hooks)
   - [为什么不能在 if 里面写 hook](#为什么不能在-if-里面写-hook)
@@ -58,6 +57,7 @@
   - React Hooks, 无需编写类即可使用状态和其他React功能的方法，不会产生 JSX 嵌套地狱
 - 2020 React 17
 - 2022 React 18
+- 2024 React 19
 
 #### React 15
 
@@ -656,9 +656,7 @@ react16 以前：
 官方推荐：`componentDidMount`
 有特殊需要提前请求，也可以在 `constructor` 中请求。
 
-函数组件：
-
-`useEffect`
+函数组件：`useEffect`
 
 ### 类组件，为什么 bind(this)
 
@@ -719,7 +717,7 @@ Hooks 的实现就是基于 fiber 的，会在 fiber 节点上放一个链表，
 
 3. `useCallback` 用于避免频繁触发 Effect，组件重新渲染。`useMemo` 将调用 fn 函数并返回其结果，而 `useCallback` 将返回 fn 函数而不调用它。`useCallback(fn, deps) 相当于 useMemo(() => fn, deps)。`
 
-#### 如何判断计算成本高？
+**如何判断计算成本高？**
 
 一是看计算消耗时间是否很长（1ms 甚至更多），二是对比时间是否减少
 
