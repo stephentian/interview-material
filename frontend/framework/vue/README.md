@@ -83,8 +83,6 @@
 
 组合式 API 通过显式导入逻辑函数, 没有上面问题：`const { fn1, fn2 } = useSomeCompositionApi()`
 
-
-
 ### 生命周期
 
 选项式：
@@ -181,9 +179,39 @@ Vue 数据响应式是通过数据劫持和发布-订阅模型来实现的。
 
 实现:
 
-- 源码首先使用 `promise, MutationOberver` 微任务去实现
+- 源码首先使用 `promise, MutationObserver` 微任务去实现
 - 如果不支持, 就是使用 `setImmediate` 和 `setTimeout`, 等待当前微/宏任务执行完, 再执行回调
 - 一次事件循环是一个 `tick`, UI 渲染是在两个 `tick` 之间。
+
+```js
+// 选择需要观察变动的节点
+const targetNode = document.getElementById("some-id");
+
+// 监视一个节点及其全部子节点树的添加、移除元素，以及任何属性变化的事件。
+// 观察器的配置（需要观察什么变动）
+const config = { attributes: true, childList: true, subtree: true };
+
+// 当观察到变动时执行的回调函数
+const callback = function (mutationsList, observer) {
+  // Use traditional 'for loops' for IE 11
+  for (let mutation of mutationsList) {
+    if (mutation.type === "childList") {
+      console.log("A child node has been added or removed.");
+    } else if (mutation.type === "attributes") {
+      console.log("The " + mutation.attributeName + " attribute was modified.");
+    }
+  }
+};
+
+// 创建一个观察器实例并传入回调函数
+const observer = new MutationObserver(callback);
+
+// 以上述配置开始观察目标节点
+observer.observe(targetNode, config);
+
+// 之后，可停止观察
+observer.disconnect();
+```
 
 ## 父子组件渲染过程
 
