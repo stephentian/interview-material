@@ -19,6 +19,7 @@
 //   }
 // }
 // 最后需要调用，传入空参数触发
+// add(1)(2, 3)()
 
 function curry(fn, ...args) {
   // fn.length 表示 fn 接收参数个数
