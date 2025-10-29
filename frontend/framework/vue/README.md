@@ -173,9 +173,39 @@ Vue 数据响应式是通过数据劫持和发布-订阅模型来实现的。
 
 实现:
 
-- 源码首先使用 `promise, MutationOberver` 微任务去实现
+- 源码首先使用 `promise, MutationObserver` 微任务去实现
 - 如果不支持, 就是使用 `setImmediate` 和 `setTimeout`, 等待当前微/宏任务执行完, 再执行回调
 - 一次事件循环是一个 `tick`, UI 渲染是在两个 `tick` 之间。
+
+```js
+// 选择需要观察变动的节点
+const targetNode = document.getElementById("some-id");
+
+// 监视一个节点及其全部子节点树的添加、移除元素，以及任何属性变化的事件。
+// 观察器的配置（需要观察什么变动）
+const config = { attributes: true, childList: true, subtree: true };
+
+// 当观察到变动时执行的回调函数
+const callback = function (mutationsList, observer) {
+  // Use traditional 'for loops' for IE 11
+  for (let mutation of mutationsList) {
+    if (mutation.type === "childList") {
+      console.log("A child node has been added or removed.");
+    } else if (mutation.type === "attributes") {
+      console.log("The " + mutation.attributeName + " attribute was modified.");
+    }
+  }
+};
+
+// 创建一个观察器实例并传入回调函数
+const observer = new MutationObserver(callback);
+
+// 以上述配置开始观察目标节点
+observer.observe(targetNode, config);
+
+// 之后，可停止观察
+observer.disconnect();
+```
 
 ## 父子组件渲染过程
 
@@ -359,8 +389,8 @@ vue3
 
 1. 进行新老节点头尾对比，头与头、尾与尾对比，寻找未移动的节点。
 2. 创建一个新节点在旧节点中的位置的映射表，这个映射表的元素如果不为空，代表可复用。
-3. 根据这个映射表计算出最长递增子序列，这个序列中的结点代表可以原地复用。之后移动剩下的新结点到正确的位置即递增序列的间隙中。
-4. 最长递增子序列：在一个给定的数值序列中，找到一个子序列，使得这个子序列元素的数值依次递增，并且这个子序列的长度尽可能地大。最长递增子序列中的元素在原序列中不一定是连续的。
+3. 根据这个映射表计算出**最长递增子序列**，这个序列中的结点代表可以原地复用。之后移动剩下的新结点到正确的位置即递增序列的间隙中。
+   - **最长递增子序列**：在一个给定的数值序列中，找到一个子序列，使得这个子序列元素的数值依次递增，并且这个子序列的长度尽可能地大。最长递增子序列中的元素在原序列中不一定是连续的。
 
 差别
 
@@ -395,7 +425,7 @@ vue3
 
 两个都是用于创建响应式数据的。
 
-- `ref` 一般用来处理基本数据类型；返回一个响应式的、可更改的 ref 对象，此对象只有一个指向其内部值的属性 `.value`。
+- `ref` 一般用来处理基本数据类型；返回一个响应式的、可更改的 `ref` 对象，此对象只有一个指向其内部值的属性 `.value`。
 - `ref` 也可以绑定对象，对于深层对象会使用 `reactive` 深层转化为响应式；避免深层对象数据绑定 使用 `shallowRef` 替代，不会被深层递归地转为响应式。只有对 `.value` 的访问是响应式的。
 - reactive 专门用于处理对象和数组，利用Proxy进行深度数据代理，不需要访问 `.value`。
 - reactive 只想保留对这个对象顶层次访问的响应性，请使用 `shallowReactive` 作替代。
@@ -450,7 +480,13 @@ export default {
       count,  
       doubleCount,  
     };  
-  },  
+  },
+
+  count.value++
+  // -> 输出 1
+  
+  // watchEffect(() => console.log(count.value))
+  // -> 输出 0
 };
 ```
 
