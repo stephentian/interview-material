@@ -60,8 +60,8 @@
 ### 缺陷
 
 1. `this` 的设计，跟风 java，又和 java 不同
-2. `typeof null  = 'object'`
-3. `instanceof` 只检查原型，只适用于对象，不适用基础类型。`"a" instanceof String === false`, `"a"` 不是字符串？
+2. `typeof null  === 'object'`。
+3. `instanceof` 只检查原型，只适用于对象，不适用基础类型。`"a" instanceof String === false`, `"a"` 不是字符串？使用 `Object.prototype.toString.call(obj)` 解决。
 4. 隐式转换 `[] + {}` 返回 `"[object Object]"`
 5. `==` 类型转换规则极复杂
 6. `new Date().getYear()` 返回是 1900 开始计算, 要用 `getFullYear`, 月份为 `getMonth() - 1`
@@ -643,6 +643,8 @@ catch 块接收参数 `x`, 这个变量 x 是属于 catch 作用域。
 
 比如 `slice` 和 `splice`， 都可以做同样的操作，
 但是 `splice` 会修改参数，也就是传入的数组，所以不是纯函数，而 `slice` 是纯函数。
+
+副作用：函数执行过程中，会修改函数外部的变量。比如修改全局变量，修改对象属性，就是有副作用的。
 
 ### 柯里化
 

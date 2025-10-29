@@ -34,4 +34,4 @@ if (process.env.TARO_ENV === 'weapp') {
 差异点：
 
 1. uniapp 配置文件是 json，taro 配置文件是 js
-2. uniapp 运行时转换，taro 编译时转换
+2. uniapp 运行时转换；taro 编译时转换，基于Babel和SWC(Speedy Web Compiler)实现代码转换

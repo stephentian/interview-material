@@ -27,6 +27,7 @@
 - [Object.seal \& Object.freeze](#objectseal--objectfreeze)
 - [箭头函数](#箭头函数)
 - [函数声明和函数表达式](#函数声明和函数表达式)
+- [slice splice split](#slice-splice-split)
 
 
 ## 作用域
@@ -549,3 +550,31 @@ var b = function () {
 ```
 
 函数声明与函数表达式的最重要的区别就是是否会在词法分析阶段进行解析。函数声明会在词法分析阶段被解析，而函数表达式会先以变量的形式在词法分析阶段解析，然后在执行期进行赋值。
+
+## slice splice split
+
+- slice
+  - slice(begin, end) 方法返回一个新的数组对象，浅拷贝（包括 begin，不包括 end）。原始数组不会被改变。
+  - begin 和 end 可省略。省略参数时，slice() 方法会复制整个原数组。
+  - begin < 0，slice 从数据组尾开始计算。begin + array.length。
+  - end < 0，使用 end + array.length。
+  - end 参数省略时，slice() 方法会一直到数组末尾。为负数时，slice() 方法会从数组末尾开始倒数。
+
+- splice
+  - splice() 方法会修改原数组，就地移除或者替换已存在的元素和/或添加新的元素，并返回被删除的元素。
+  - splice(start, deleteCount, item1, item2, ..., itemN)
+  - start: 必需。开始位置。
+  - deleteCount: 可选。删除的元素数量。
+  - item1, item2, ..., itemN: 可选。要添加的新元素。
+
+split() 方法用于把一个字符串分割成字符串数组。
+
+```js
+const arr = [1, 2, 3, 4, 5];
+arr.slice(2, 4);
+arr.splice(2, 4);
+arr.split(2, 4); // 报错
+
+// 1 2 5
+// 1 2
+```
