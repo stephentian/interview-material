@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" context="width=device-width, initial-scale=1.0">
+  <title>事件委托验证</title>
+  <style>
+    .container {
+      max-width: 600px;
+      margin: 20px auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    
+    .list {
+      list-style-type: none;
+      padding: 0;
+    }
+    
+    .list li {
+      padding: 10px;
+      margin: 5px 0;
+      background-color: #f0f0f0;
+      cursor: pointer;
+      border-radius: 3px;
+    }
+    
+    .list li:hover {
+      background-color: #e0e0e0;
+    }
+    
+    .list li span {
+      display: inline-block;
+      background-color: #ffeb3b;
+      padding: 2px 5px;
+      margin: 0 5px;
+      border-radius: 3px;
+    }
+    
+    .btn {
+      padding: 10px 15px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      margin: 5px;
+    }
+    
+    .btn:hover {
+      background-color: #45a049;
+    }
+    
+    .log {
+      height: 200px;
+      overflow-y: auto;
+      border: 1px solid #ddd;
+      padding: 10px;
+      background-color: #f9f9f9;
+      margin-top: 20px;
+    }
+    
+    .log-item {
+      padding: 5px 0;
+      border-bottom: 1px solid #eee;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>事件委托验证</h1>
+    
+    <button id="addItem" class="btn">添加列表项</button>
+    <button id="removeItem" class="btn">删除最后一个列表项</button>
+    
+    <ul class="list" id="myList">
+      <li>项目 1 <span>子元素</span></li>
+      <li>项目 2 <span>子元素</span></li>
+      <li>项目 3 <span>子元素</span></li>
+    </ul>
+    
+    <div class="log" id="log">
+      <div class="log-item">日志:</div>
+    </div>
+  </div>
+
+  <script>
+    // 日志函数
+    function addLog(message) {
+      const logElement = document.getElementById('log');
+      const logItem = document.createElement('div');
+      logItem.className = 'log-item';
+      logItem.textContent = `${new Date().toLocaleTimeString()}: ${message}`;
+      logElement.appendChild(logItem);
+      logElement.scrollTop = logElement.scrollHeight;
+    }
+
+    // 第一种事件委托方法（来自文档）
+    let delegate = function(element, eventType, selector, fn) {
+      element.addEventListener(eventType, e => {
+        let el = e.target
+        while (!el.matches(selector)) {
+          el = el.parentNode
+          if(element === el) {
+            el = null
+            break
+          }
+        }
+        el && fn.call(el, e, el)
+      })
+      return element
+    }
+
+    // 获取列表元素
+    const listElement = document.querySelector('.list');
+
+    // 使用第一种方法添加事件委托
+    delegate(listElement, 'click', 'li', function(e, el) {
+      addLog(`委托方法1: 点击了 "${this.textContent}"`);
+      console.log('委托方法1触发:', this, e, el);
+    });
+
+    // 第二种事件委托方法
+    listElement.addEventListener('click', e => {
+      let el = e.target
+      while(el.tagName.toLowerCase() !== 'li') {
+        el = el.parentNode
+        if (el === listElement) {
+          el = null
+          break
+        }
+      }
+      if (el) {
+        addLog(`委托方法2: 点击了 "${el.textContent}"`);
+        console.log('委托方法2触发:', el, e);
+      }
+    });
+
+    // 动态添加和删除列表项
+    document.getElementById('addItem').addEventListener('click', () => {
+      const newItem = document.createElement('li');
+      const itemCount = document.querySelectorAll('.list li').length + 1;
+      newItem.innerHTML = `项目 ${itemCount} <span>子元素</span>`;
+      listElement.appendChild(newItem);
+      addLog(`添加了项目 ${itemCount}`);
+    });
+
+    document.getElementById('removeItem').addEventListener('click', () => {
+      const items = document.querySelectorAll('.list li');
+      if (items.length > 0) {
+        const lastItem = items[items.length - 1];
+        lastItem.remove();
+        addLog(`删除了项目 ${items.length}`);
+      } else {
+        addLog('没有可删除的项目');
+      }
+    });
+
+    // 点击子元素的测试
+    document.querySelectorAll('li span').forEach(span => {
+      span.addEventListener('click', (e) => {
+        // 阻止事件冒泡到父元素
+        // e.stopPropagation();
+        addLog(`直接点击了子元素: "${e.target.textContent}"`);
+      });
+    });
+
+    addLog('页面加载完成，可以开始测试事件委托');
+  </script>
+</body>
+</html>
