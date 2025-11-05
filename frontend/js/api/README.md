@@ -92,7 +92,7 @@ num = '5' * 10 + '5'.charCodeAt() - '0'.charCodeAt();
 num = '5' * 10 + Number('5')
 ```
 
-chartAt: 返回指定索引位置的字符
+charAt: 返回指定索引位置的字符
 
 ```js
 const str = "Hello";
