@@ -92,6 +92,21 @@ num = '5' * 10 + '5'.charCodeAt() - '0'.charCodeAt();
 num = '5' * 10 + Number('5')
 ```
 
+chartAt: 返回指定索引位置的字符
+
+```js
+const str = "Hello";
+console.log(str.charAt(0));  // "H"
+console.log(str.charAt(1));  // "e"
+console.log(str.charAt(10)); // "" (超出范围)
+
+console.log(str.charCodeAt(0));  // 72 (H的Unicode编码)
+console.log(str.charCodeAt(1));  // 101 (e的Unicode编码)
+console.log(str.charCodeAt(10)); // NaN (超出范围)
+```
+
+charAt() 用于获取字符本身，而 charCodeAt() 用于获取字符的编码值
+
 ## eval
 
 `eval` 函数可以将一个字符串作为 `JavaScript` 代码来执行。
