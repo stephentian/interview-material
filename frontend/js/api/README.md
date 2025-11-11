@@ -14,8 +14,7 @@
 - [WeakSet](#weakset)
 - [Promise](#promise)
 - [Reflect](#reflect)
-- [Generator](#generator)
-- [Proxy](#proxy)
+  - [Reflect 和 Object](#reflect-和-object)
 - [Class](#class)
 - [async 和 await](#async-和-await)
 
@@ -38,6 +37,8 @@ toString.call(Math)         // [object Math]
 toString.call(window)       // [object Window]
 toString.call(undefined)    // [object Undefined]
 toString.call(null)         // [object Null]
+
+toString.call([]).slice(8, -1) // Array
 
 let c = [1, 2, 3]
 let d = {a:2}
@@ -90,6 +91,21 @@ num = '5' * 10 + '5'.charCodeAt() - '0'.charCodeAt();
 //等价于
 num = '5' * 10 + Number('5')
 ```
+
+charAt: 返回指定索引位置的字符
+
+```js
+const str = "Hello";
+console.log(str.charAt(0));  // "H"
+console.log(str.charAt(1));  // "e"
+console.log(str.charAt(10)); // "" (超出范围)
+
+console.log(str.charCodeAt(0));  // 72 (H的Unicode编码)
+console.log(str.charCodeAt(1));  // 101 (e的Unicode编码)
+console.log(str.charCodeAt(10)); // NaN (超出范围)
+```
+
+charAt() 用于获取字符本身，而 charCodeAt() 用于获取字符的编码值
 
 ## eval
 
@@ -352,14 +368,14 @@ Map 结构, 键名不限于字符串，各种类型都可以当键名。
 
 ```js
 const m = new Map();
-const o = {p: 'Hello World'};
+const obj = {p: 'Hello World'};
 
-m.set(o, 'content')
-m.get(o) // "content"
+m.set(obj, 'content')
+m.get(obj) // "content"
 
-m.has(o) // true
-m.delete(o) // true
-m.has(o) // false
+m.has(obj) // true
+m.delete(obj) // true
+m.has(obj) // false
 ```
 
 Map 也可以接受一个数组作为参数
@@ -519,6 +535,88 @@ Promise 是 ES6 出的异步编程的一种解决方案。
     const instance = Reflect.construct(Greeting, ['张三']);
     ```
 
+### Reflect 和 Object
+
+相同点
+
+1. 都是 JavaScript 内置对象，提供操作对象的方法
+2. 都可以进行对象属性的操作，如获取、设置、删除等
+3. 都是现代 JavaScript 开发中常用的工具
+
+差异点
+
+1. 设计理念不同
+   - Object 是一个构造函数和工具集合，方法混杂了创建、操作和查询对象的功能
+   - Reflect 是专门为对象操作设计的 API 集合，所有方法都对应对象的底层操作
+2. 返回值设计不同
+
+    ```js
+    // Object 方法在失败时通常返回特殊值或抛出异常
+    try {
+      Object.defineProperty({}, 'name', { value: 'test', writable: false });
+      console.log('成功');
+    } catch(e) {
+      console.log('失败'); // Object.defineProperty 抛出异常
+    }
+
+    // Reflect 方法总是返回布尔值表示成功或失败
+    const result = Reflect.defineProperty({}, 'name', { value: 'test', writable: false });
+    console.log(result); // true 或 false，不会抛出异常
+    ```
+
+3. 方法一致性
+    ```js
+    // Object 的方法命名不一致，有些返回布尔值，有些抛出异常
+    delete obj.prop;              // 返回 true/false
+    Object.defineProperty();      // 成功返回对象，失败抛出异常
+
+    // Reflect 方法具有一致的行为，都返回有意义的布尔值
+    Reflect.deleteProperty(obj, 'prop');     // 返回 true/false
+    Reflect.defineProperty(obj, 'prop', {}); // 返回 true/false
+   ```
+
+4. this 绑定处理
+
+    ```js
+      // 使用 Object.call 方式操作对象
+      Function.prototype.apply.call(Math.floor, undefined, [1.75]); // 1
+
+      // Reflect 提供更清晰的 API
+      Reflect.apply(Math.floor, undefined, [1.75]); // 1
+    ```
+
+**为什么要使用 Reflect**  
+
+1. 与 Proxy 完美配合
+
+    ```js
+    const proxy = new Proxy(target, {
+      get(target, property, receiver) {
+        // 使用 Reflect.get 可以正确处理 this 绑定
+        return Reflect.get(target, property, receiver);
+      },
+      
+      set(target, property, value, receiver) {
+        // 使用 Reflect.set 可以正确处理 setter 和 this 绑定
+        return Reflect.set(target, property, value, receiver);
+      }
+    });
+    ```
+
+2. 统一的操作接口
+
+    ```js
+    // Object 上的方法分散在不同地方
+    'name' in obj;                    // 使用 in 操作符
+    delete obj.name;                  // 使用 delete 操作符
+    obj.hasOwnProperty('name');       // 使用对象方法
+
+    // Reflect 提供统一的函数式接口
+    Reflect.has(obj, 'name');         // 对应 in 操作符
+    Reflect.deleteProperty(obj, 'name'); // 对应 delete 操作符
+    Reflect.hasOwn(obj, 'name');      // 对应 hasOwnProperty
+    ```
+
 ## Generator
 
 ES6 提供的一种异步编程的解决方案
@@ -572,7 +670,7 @@ proxyObj.count = 1
 console.log("proxyObj.name", proxyObj.name)
 console.log("obj.count", obj.count)
 console.log("'_age' in proxyObj", "_age" in proxyObj) // false
-console.log("'_age' in o", "_age" in obj) // true
+console.log("'_age' in obj", "_age" in obj) // true
 ```
 
 this 问题: 目标对象 this 指向 proxy 代理

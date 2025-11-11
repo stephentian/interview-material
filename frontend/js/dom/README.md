@@ -50,7 +50,7 @@ var element = document.querySelector('.list')
 element.addEventListener('click', e => {
   let el = e.target
   while(el.tagName.toLowerCase() !== 'li') {
-    el = el.parent
+    el = el.parentNode
     if (el === element) {
       el = null
       break
@@ -77,6 +77,10 @@ windiw --> document --> html --> body --> ... --> 目标元素
 2.事件目标阶段
 
 3.事件冒泡阶段
+
+```js
+目标元素 --> body --> html --> document --> window
+```
 
 ## DOM 操作
 
@@ -121,13 +125,13 @@ windiw --> document --> html --> body --> ... --> 目标元素
 
 4. createDocumentFragment
 
-   创建一个 文档碎片 documentFragment. 轻量型文档，用于存储临时节点。
+   创建一个 文档碎片 documentFragment，轻量型文档，用于存储临时节点。
 
 ## DOM 事件
 
 ### DOM 事件级别
 
-DOM事件分为3个级别：DOM0 级事件处理，DOM2 级事件处理和 DOM3 级事件处理
+DOM 事件分为3个级别：DOM0 级事件处理，DOM2 级事件处理和 DOM3 级事件处理
 
 1.DOM0 级别
 
@@ -142,6 +146,7 @@ el.addEventListener(event, callback, useCapture)
 ```
 
 3.DOM3 级别
+
 在 DOM2 级事件的基础上添加了更多的事件类型
 
 - UI事件，当用户与页面上的元素交互时触发，如：load、scroll
