@@ -52,6 +52,23 @@
       // observer.disconnect()
     }, 0)
     
+    // 执行顺序
+    // 1 observer
+    // for time: XXms
+    // then1 2
+    // mutation time: XXms
+    // then2 3
+
+    // then1-2 undefined
+    // then2-2 undefined
+    // setTimeout
+
+    // 执行同步代码
+    // 执行微任务，队列，先进先出
+      // then1 2
+      // 执行 MutationObserver 回调
+    // 执行宏任务 setTimeout
+
 </script>
 </body>
 </html>

@@ -125,7 +125,7 @@ window --> document --> html --> body --> ... --> 目标元素
 
 4. createDocumentFragment
 
-   创建一个 文档碎片 documentFragment，轻量型文档，用于存储临时节点。
+   会创建一个空的文档片段（相当于 “虚拟容器”） documentFragment，向其添加子节点时不会触发任何页面渲染。用于存储临时节点。
 
 ## DOM 事件
 
@@ -176,6 +176,6 @@ DOM 事件同步触发，`MutationObserver` 异步触发，不会阻塞页面的
 
 ### 执行时机
 
-异步任务，在微任务队列中执行
+异步任务，在微任务队列中执行；MutationObserver 会批量处理这些变化。
 
 `MutationObserver` 是异步触发的。这意味着当 DOM 发生变化时，它并不会立即触发，而是等到当前所有DOM操作都结束后才触发。这个执行时机类似于微任务，但与微任务和宏任务在 JavaScript 中的处理方式有所不同。
