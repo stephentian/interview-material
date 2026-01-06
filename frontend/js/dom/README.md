@@ -71,7 +71,7 @@ DOM 事件模型分为捕获和冒泡
 1.事件的捕获阶段
 
 ```js
-windiw --> document --> html --> body --> ... --> 目标元素
+window --> document --> html --> body --> ... --> 目标元素
 ```
 
 2.事件目标阶段
