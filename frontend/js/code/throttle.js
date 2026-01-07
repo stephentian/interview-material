@@ -31,15 +31,13 @@ function throttle(fn, time) {
 
 // 方法执行完回调版
 function throttle1(fn, delay) {
-  let canUse = true
   let timer = null
   return function (...args) {
-    if (canUse) {
+
+    // 判断是否执行完上一个
+    if (!timer) {
+
       fn.apply(this, args)
-      canUse = false
-
-      if (timer) clearTimeout(timer)
-
       timer = setTimeout(() => {
         timer = null
         canUse = true

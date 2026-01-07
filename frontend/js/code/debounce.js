@@ -16,7 +16,7 @@
 function debounce(fn, time = 1000) {
   let timer
   return function (...args) {
-    const context = this // 箭头函数中不需要了
+    const context = this // 箭头函数中不需要
     if (timer) clearTimeout(timer)
     timer = setTimeout(() => {
       fn.apply(context, args)
