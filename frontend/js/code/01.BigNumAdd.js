@@ -13,6 +13,7 @@ function addStrings(num1, num2) {
   num2 = num2 + ''
   const maxLength = Math.max(num1.length, num2.length)
 
+  // 补 0
   num1 = num1.padStart(maxLength, '0')
   num2 = num2.padStart(maxLength, '0')
 
@@ -30,7 +31,9 @@ function addStrings(num1, num2) {
 
 // addStrings(1234, 123) // 1357
 
-Number.MAX_SAFE_INTEGER = Math.pow(2, 53) - 1
+// 9007199254740991
+Number.MAX_SAFE_INTEGER === Math.pow(2, 53) - 1
+// true
 
 console.log("Math.pow(2, 53): ", Math.pow(2, 53));
 console.log("Math.pow(2, 53) + 1 精度丢失: ", Math.pow(2, 53) + 1);
