@@ -178,4 +178,4 @@ DOM 事件同步触发，`MutationObserver` 异步触发，不会阻塞页面的
 
 异步任务，在微任务队列中执行；MutationObserver 会批量处理这些变化。
 
-`MutationObserver` 是异步触发的。这意味着当 DOM 发生变化时，它并不会立即触发，而是等到当前所有DOM操作都结束后才触发。这个执行时机类似于微任务，但与微任务和宏任务在 JavaScript 中的处理方式有所不同。
+`MutationObserver` 是异步触发的。这意味着当 `DOM` 发生变化时，它并不会立即触发，而是等到当前所有DOM操作都结束后才触发。这个执行时机类似于微任务，但与微任务和宏任务在 JavaScript 中的处理方式有所不同。

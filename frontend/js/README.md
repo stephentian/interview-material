@@ -637,7 +637,7 @@ catch 块接收参数 `x`, 这个变量 x 是属于 catch 作用域。
 
 ## 函数式编程
 
-"函数式编程"是一种"编程范式"（programming paradigm），也就是如何编写程序的方法论。
+"函数式编程"是一种"编程范式"(programming paradigm)，也就是如何编写程序的方法论。
 
 面向对象编程是假设一个实体，然后给它属性，方法。
 
@@ -692,7 +692,7 @@ catch 块接收参数 `x`, 这个变量 x 是属于 catch 作用域。
 const add = (x, y, z) => x + y + z
 const curry = (fn, ...args) => {
   return args.length >= fn.length ? fn(...args)
-   : (..._args) => curry(fn, ...args, ..._args)
+   : (..._args) => curry(fn, ...args, ..._args) 
 }
 const curryFn = (fn) => {
   return function curried(...args) {
@@ -716,7 +716,7 @@ curriedAdd(1, 2, 3) // 6
 
 ### defer 和 async
 
-defer 和 async 在网络读取（下载）这块儿是一样的，都是异步的（相较于 HTML 解析）
+defer 和 async 都是异步下载的（相较于 HTML 解析）
 
 - defer: 会在整个文档解析完成后, `document` 的 `DOMContentLoaded` 之前执行
 - async: `js` 在下载完后会立即执行
@@ -759,13 +759,14 @@ console.log(10)
 
 Event loop 每一次循环操作叫 `tick`
 
-1. 执行最先进入队列的任务
-2. 检查是否存在 微任务 microtask, 存在则不停执行, 直至清空 微任务 microtask queue
-3. render 渲染
-   1. requestAnimationFrame
-   2. intersectionObserver
+1. 执行最先进入队列的宏任务(script, setTimeout)
+2. 检查是否存在 微任务 microtask, 存在则不停执行, 直至清空 微任务队列 microtask queue
+3. render 渲染, 浏览器是否渲染
+   1. 样式计算，布局，绘制
+   2. requestAnimationFrame
+   3. intersectionObserver
+   4. 是否有空闲时间，有则执行 requestIdleCallback 回调, 无则进入下一个 tick
 4. 检查 宏任务队列，存在则执行
-5. requestIdleCallback 取第一个, 执行
 
 宏任务 task: script(整体代码), setTimeout, setInterval, setImmediate
 
