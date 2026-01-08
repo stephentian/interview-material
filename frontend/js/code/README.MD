@@ -126,6 +126,9 @@ if (Object.prototype.toString.call(arr) === "[object Array]") {
   console.log("arr 是 Array 类型");
 }
 
+// '[object Array]'.slice(8, -1)
+// Array
+
 // Array.from
 if (Array.from(arr) instanceof Array) {
   console.log("arr 是 Array 类型");
@@ -143,8 +146,8 @@ function __const(data, value) {
   Object.defineProperty(window, data, {
       enumerable: true, // 可枚举
       configurable: false, // 可配置
-      value: value,
-      writable: false, // 防止常量值被更改
+      // value: value,  // value 和 get 互斥
+      // writable: false, // writable 和 set 互斥. 防止常量值被更改
       get: function () {
         return value
       },

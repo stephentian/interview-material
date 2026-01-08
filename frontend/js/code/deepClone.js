@@ -32,6 +32,20 @@ function createData(deep, breadth = 0) {
 
 	return data
 }
+
+/*
+示例：createData(2, 3)
+初始: data = {}, temp = data
+第一次外层循环 (i=0):
+  - temp['data'] = {}  => data = {data: {}}, temp = data.data
+  - 内层循环: temp[0]=0, temp[1]=1, temp[2]=2  => data = {data: {0:0, 1:1, 2:2}}, temp = data.data
+第二次外层循环 (i=1):
+  - temp['data'] = {}  => data = {data: {0:0, 1:1, 2:2, data: {}}}, temp = data.data.data
+  - 内层循环: temp[0]=0, temp[1]=1, temp[2]=2  => data = {data: {0:0, 1:1, 2:2, data: {0:0, 1:1, 2:2}}}, temp = data.data.data
+
+最终结果: {data: {0:0, 1:1, 2:2, data: {0:0, 1:1, 2:2}}}
+*/
+
 // createData(1, 2); // 1层深度，每层有2个数据 {data: {0: 0, 1: 1}}
 
 function clone(target) {
