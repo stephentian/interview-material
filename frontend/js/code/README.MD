@@ -210,35 +210,37 @@ if (a === 1 && a === 2 && a === 3) {
 
 ### 实现一个无限累加函数
 
-利用 闭包 和 `toString` 实现
-
 ```js
 // add(1)              // 1
 // add(1)(2)           // 3
 // add(1)(2)(3)        // 6
 // add(1)(2)(3)(4)     // 10
+```
 
+js 不支持直接运算，只能使用 `+` 运算符触发 `toString`，以前调用方法会触发 `valueOf` 和 `toString`。
+
+利用 闭包 和 `toString`/`valueOf` 实现，需要使用 `+` 触发 `toString`
+
+```js
 function add(a) {
     function sum(b) { // 使用闭包
-        a = b ? a + b : a; // 累加
+        a += b;
         return sum;
     }
-    sum.toString = function() { // 只在最后一次调用
+    sum.toString = function() {
         return a;
     }
+    // sum.valueOf = function() {
+    //     return a;
+    // }
     return sum; // 返回一个函数
 }
 
-add(1)              // 1
-add(1)(2)           // 3
-add(1)(2)(3)        // 6
-add(1)(2)(3)(4)     // 10
-
 // toString 要 + 号触发
-// +add(1)
+// +add(1)              // 1
 // +add(1)(2)           // 3
 // +add(1)(2)(3)        // 6
-// +add(1)(2)(3)(4)
+// +add(1)(2)(3)(4)     // 10
 
 // 或者显式调用
 // add(1).toString()
@@ -257,5 +259,29 @@ function to(promise) {
   }).catch(err => {
     return [err, undefined]
   })
+}
+```
+
+```js
+// 传统方式（需要 try-catch）
+async function traditionalWay() {
+  try {
+    const result = await someAsyncFunction();
+    console.log('Success:', result);
+  } catch (error) {
+    console.log('Error:', error);
+  }
+}
+
+// 使用 to 函数的方式
+async function withToFunction() {
+  const [error, result] = await to(someAsyncFunction());
+  
+  if (error) {
+    console.log('Error:', error);
+    return;
+  }
+  
+  console.log('Success:', result);
 }
 ```
