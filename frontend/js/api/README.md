@@ -299,9 +299,9 @@ Symbol.for("bar") === Symbol.for("bar"); // true
 Symbol("bar") === Symbol("bar"); // false, 每次会创建一个新的
 ```
 
-`Symbol.keyFor(sym)`
+`Symbol.keyFor(symbol)`
 
-`sym`: 必选，查找键值的某个 symbol.
+`symbol`: 必选，查找键值的某个 symbol.
 
 如果全局注册表中查找到该 symbol，则返回该 symbol 的 key 值，返回值为字符串类型。否则返回 undefined
 
@@ -310,7 +310,7 @@ var globalSym = Symbol.for("foo");
 Symbol.keyFor(globalSym); // "foo"
 
 var localSym = Symbol();
-Symbol.keyFor(localSym); // undefined，
+Symbol.keyFor(localSym); // undefined
 ```
 
 ## Set
@@ -326,6 +326,7 @@ const s = new Set();
 
 // new Set([2, 3, 5, 4, 5, 2, 2])
 
+// 转换为数组
 [...new Set([2, 3, 5, 4, 5, 2, 2])]
 // [2, 3, 5, 4]
 
@@ -441,7 +442,7 @@ WeakMap 是 ES6 提供的，键值对的集合。键必须是对象或者 `Symbo
 - `Map` 允许任意类型作为键。
 - `Map` 有遍历键值对方法，`WeakMap` 不允许遍历键的列表，因为键值对集合可能因为垃圾回收动态变化。
 - `Map` 要释放占用的内存，需要显式地删除其中的键值对（使用 delete 方法或 clear 方法），或者将 Map 对象本身置为 null;
-  - WeakMap 的键对象没有其他强引用指向它，垃圾回收器可以在任何时候回收该键及其对应的值。
+  - `WeakMap` 的键对象没有其他强引用指向它，垃圾回收器可以在任何时候回收该键及其对应的值。
 
 作用场景：
 
@@ -451,15 +452,15 @@ WeakMap 是 ES6 提供的，键值对的集合。键必须是对象或者 `Symbo
 ```js
 const wm1 = new WeakMap();
 const o1 = {};
-const o2 = "";
+const o2 = "o2";
 
 wm1.set(o1, 'ok');
 console.log(wm1.get(o1));
 // ok
 
 wm1.set(o2, 'o2 ok?');
-console.log(wm1.get(o2));
 // Uncaught TypeError: Invalid value used as weak map key
+// 键必须是对象或者 `Symbol`
 ```
 
 ## WeakSet
@@ -477,7 +478,7 @@ console.log(wm1.get(o2));
 // 使用场景：检测循环引用
 function execRecursively(fn, subject, _res= new WeakSet()) {
   // 避免无限递归
-  if (_res.has(subject)) return
+  if (_res.has(subject)) return true
 
   fn(subject)
 
@@ -497,7 +498,7 @@ const foo = {
   },
 }
 
-foo.bar.baz = foo; // 循环引用！
+foo.bar.baz = foo; // 循环引用
 execRecursively((obj) => console.log(obj), foo);
 ```
 
