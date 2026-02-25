@@ -317,6 +317,93 @@ SSE: Server-Sent Events
 - 需双向通信（如聊天、在线协作）：必须选 WebSocket；
 - 兼容性要求极高（如 IE）：用长轮询兜底。
 
+SSE 实现
+
+服务端实现：
+
+```js
+// Node.js 示例
+const http = require('http');
+
+const server = http.createServer((req, res) => {
+  if (req.url !== '/api/sse') {
+    res.writeHead(404, { 'Content-Type': 'text/plain' });
+    res.end('404 Not Found, 请访问 /api/sse');
+    return;
+  }
+
+  res.writeHead(200, {
+    'Content-Type': 'text/event-stream',
+    'Cache-Control': 'no-cache',
+    'Connection': 'keep-alive',
+    'Access-Control-Allow-Origin': '*',
+  });
+
+  // 发送事件 'time' 每秒钟发送一次当前时间
+  let msgId = 1;
+  const timeInterval = setInterval(() => {
+    res.write(`id: ${msgId++}\nevent: time\ndata: ${new Date().toLocaleTimeString()}\n\n`);
+  }, 1000);
+
+  // 发送普通消息
+  res.write('data: 这是一条普通消息\n\n');
+
+  // 发送自定义事件 'notice'
+  res.write('event: notice\ndata: {"title": "通知", "content": "这是一条通知消息"}\n\n');
+
+  // 发送自定义事件 'time'
+  setInterval(() => {
+    res.write(`event: time\ndata: ${new Date().toLocaleTimeString()}\n\n`);
+  }, 1000);
+
+  // 发送心跳事件 'heartbeat'
+  setInterval(() => {
+    res.write('event: heartbeat\ndata: {"msg": "heartbeat"}\n\n');
+  }, 5000);
+
+  // 关闭连接
+  res.on('close', () => {
+    clearInterval(timeInterval);
+    console.log('连接关闭');
+    res.end();
+  });
+})
+
+server.listen(3000);
+```
+
+客户端实现：
+
+```js
+const eventSource = new EventSource('/api/sse');
+
+// 连接成功事件
+eventSource.onopen = function(event) {
+  console.log('连接成功:', event);
+};
+
+// 接收消息
+eventSource.onmessage = function(event) {
+  console.log('收到消息:', event.data);
+};
+
+eventSource.onerror = function(error) {
+  console.error('连接错误:', error);
+};
+
+// 服务端可发送自定义事件类型，客户端使用 addEventListener 监听。
+// 监听自定义事件 'notice'
+eventSource.addEventListener('notice', (event) => {
+  const data = JSON.parse(event.data);
+  console.log('通知:', data.title, data.content);
+});
+
+// 监听自定义事件 'time'
+eventSource.addEventListener('time', (event) => {
+  console.log('时间更新:', event.data);
+});
+```
+
 ## 从 url 输入到显示网页都发生了什么？
 
 动作过程：用户输入url -> DNS解析 -> TCP连接 -> HTTP请求(接收响应) -> 浏览器渲染页面
