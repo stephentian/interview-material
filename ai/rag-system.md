@@ -19,6 +19,8 @@ RAG（Retrieval-Augmented Generation，检索增强生成）是一种结合外�
 
 ### 1.2 RAG vs 微调
 
+两者都是用于增强LLM能力的技术，但有不同的应用场景和实现方式。微调适用于调整模型在特定任务上的性能，而RAG则更关注于引入外部知识。
+
 | 特性 | RAG | 微调 |
 |------|-----|------|
 | 知识更新 | 实时更新 | 需重新训练 |
@@ -36,13 +38,13 @@ RAG（Retrieval-Augmented Generation，检索增强生成）是一种结合外�
 │                    RAG System                           │
 ├─────────────────────────────────────────────────────────┤
 │  ┌─────────────────────────────────────────────────┐   │
-│  │              离线索引构建                         │   │
-│  │  文档 → 分块 → Embedding → 向量数据库            │   │
+│  │              离线索引构建                        │   │
+│  │  文档 → 分块 → Embedding → 向量数据库             │   │
 │  └─────────────────────────────────────────────────┘   │
 │                         ↓                               │
 │  ┌─────────────────────────────────────────────────┐   │
-│  │              在线检索生成                         │   │
-│  │  问题 → Embedding → 相似检索 → 重排序 → LLM生成  │   │
+│  │              在线检索生成                        │   │
+│  │  问题 → Embedding → 相似检索 → 重排序 → LLM生成   │   │
 │  └─────────────────────────────────────────────────┘   │
 └─────────────────────────────────────────────────────────┘
 ```
@@ -50,7 +52,9 @@ RAG（Retrieval-Augmented Generation，检索增强生成）是一种结合外�
 ### 2.2 核心组件
 
 1. **文档处理层**：文档解析、分块、清洗
-2. **Embedding层**：文本向量化
+2. **Embedding层**：文本向量化(使用预训练模型如BERT、GPT等)
+   1. 自然语言处理（NLP）中把离散文本转化为连续数值向量的核心组件
+   2. 把原本无语义的整数编码，转化为有语义的向量，让模型能理解文本的语义关联（比如 “苹果” 和 “水果” 的向量距离更近）
 3. **向量数据库**：向量存储与检索
 4. **检索层**：相似度计算、混合检索
 5. **重排序层**：结果精排
@@ -99,6 +103,13 @@ class DocumentParser {
 
 **固定大小分块：**
 ```javascript
+/**
+ * 固定大小分块
+ * @param {string} text - 输入文本
+ * @param {number} chunkSize - 每个块的最大字符数
+ * @param {number} overlap - 块之间的重叠字符数
+ * @returns {string[]} - 分块后的文本数组
+ */
 function fixedSizeChunk(text, chunkSize = 500, overlap = 50) {
   const chunks = [];
   
@@ -327,6 +338,8 @@ const results = await client.search({
 
 ### 6.1 纯向量检索
 
+或叫语义检索，基础检索
+
 ```javascript
 async function vectorSearch(query, topK = 5) {
   const queryEmbedding = await getEmbedding(query);
@@ -341,6 +354,27 @@ async function vectorSearch(query, topK = 5) {
 ```
 
 ### 6.2 混合检索（Hybrid Search）
+
+语义 + 关键词
+
+1. 先用 BM25/TF-IDF 做关键词检索
+   1. 抓句子中的实体、专有名词、代码、术语
+2. 再用 Embedding 语义检索
+   1. 向量库语义找相近的词汇，句子
+3. 结果加权融合
+
+示例：
+
+搜索 “iPhone 续航差”
+
+1. 先抓句子中的实体、专有名词、代码、术语
+   1. 比如 “iPhone”、“续航”、“差”
+   2. 只靠关键词：会错（比如 “苹果水果” 和 “苹果手机” 关键词重合但语义不同）；
+2. 再用 Embedding 语义检索
+   1. 向量库语义找相近的词汇，句子
+   2. 比如 “iPhone 电池续航”、“电池续航时间”
+   3. 只靠语义：会漏（比如 “电池续航” 和 “电池充电时间” 字面不同）、对专有名词 / 代码 / 术语不敏感；
+3. 结果加权融合
 
 ```javascript
 async function hybridSearch(query, topK = 10) {
@@ -373,6 +407,11 @@ function mergeResults(vectorResults, keywordResults, alpha = 0.7) {
 ```
 
 ### 6.3 重排序（Rerank）
+
+召回 Top20～Top50 → 丢给重排模型 → 取 Top3～Top5
+
+重排模型专门做一件事：
+判断：这段文本是否真的能回答这个问题？
 
 ```javascript
 async function rerank(query, documents, topK = 5) {
