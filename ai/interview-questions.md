@@ -39,7 +39,7 @@
 - 英文约1个单词 = 1.3个token
 - 中文约1个汉字 = 1.5-2个token
 - 可使用tiktoken等库精确计算
-- 不同模型使用不同的tokenizer
+- 不同模型使用不同的tokenizer(token 算法)
 
 **Q5: 如何优化LLM API的调用成本？**
 
