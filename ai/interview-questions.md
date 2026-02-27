@@ -372,6 +372,11 @@ function sanitizeInput(input) {
 参考答案：
 评估维度：
 1. 检索质量：Precision、Recall、MRR、NDCG
+   1. Precision（准确率）
+   2. Recall（召回率）
+   3. F1（F1分数）
+   4. MRR（平均倒数排名）
+   5. NDCG（归一化折扣累积增益）
 2. 生成质量：BLEU、ROUGE、人工评估
 3. 端到端：答案准确率、响应时间
 4. 用户反馈：满意度、问题解决率

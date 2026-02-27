@@ -612,6 +612,32 @@ const optimizedPrompt = `你是一个专业的问答助手。
 ### 8.3 评估指标
 
 ```javascript
+/**
+ * 评估RAG系统效果
+ * @param {Array} results - 模型生成的结果，每个元素包含id、content、metadata
+ * @param {Object} groundTruth - 包含relevantDocs（相关文档ID列表）和answer（标准答案）
+ * @returns {Object} 包含Precision、Recall、F1、MRR、NDCG等指标
+ * 
+ * Precision（准确率）
+ * 定义：检索到的相关文档中，实际相关的比例
+ * 公式：TruePositives / RetrievedDocuments
+ * 
+ * Recall（召回率）
+ * 定义：所有相关文档中，被成功检索到的比例
+ * 公式：TruePositives / RelevantDocuments
+ * 
+ * F1（F1分数）
+ * 定义：Precision和Recall的调和平均值
+ * 公式：2 * (Precision * Recall) / (Precision + Recall)
+ * 
+ * MRR（平均倒数排名）
+ * 定义：衡量第一个相关结果的排名倒数的平均值，关注“最佳结果”是否靠前
+ * 公式：1 / (FirstRelevantRank + 1)
+ * 
+ * NDCG（归一化折扣累积增益）
+ * 定义：考虑文档排名的相关性得分，归一化到[0,1]
+ * 公式：DCG / IDCG
+ */
 function evaluateRAG(results, groundTruth) {
   const metrics = {
     precision: 0,
@@ -664,7 +690,15 @@ function evaluateRAG(results, groundTruth) {
 
 **答案要点：**
 1. 检索指标：Precision、Recall、MRR、NDCG
-2. 生成指标：BLEU、ROUGE、人工评估
+   1. Precision（准确率）
+   2. Recall（召回率）
+   3. F1（F1分数）
+   4. MRR（平均倒数排名）
+   5. NDCG（归一化折扣累积增益）
+2. 生成指标：自动化评估、BLEU、ROUGE、人工评估
+   1. BLEU（双语评估替补）
+   2. ROUGE（召回-oriented评估）
+   3. 人工评估（主观判断）
 3. 端到端指标：答案准确率、用户满意度
 4. A/B测试：对比不同配置效果
 
