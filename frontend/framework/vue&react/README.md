@@ -241,7 +241,7 @@ vue 和 react 里的 diff 算法有所不同。它们的 diff 算法就是对虚
 
 3. 比类组件更容易理解, 比如随处可见的 `.bind(this)`
 
-React Hooks 和 Vue Hooks 在实现上有所不同，但它们的目的都是为了在函数组件中引入状态和副作用。
+React Hooks 和 Vue Hooks 在实现上有所不同，但它们的设计初衷一致（**解决组件逻辑复用、让函数式组件拥有状态能力**）。
 
 ### React Hooks
 
@@ -254,7 +254,9 @@ React Hooks 的核心概念包括：
 
 ### Vue Hooks
 
-Vue Hooks 是 Vue.js 3.0 版本引入的特性，它允许在单文件组件（SFC）中使用钩子函数。Hooks 的核心原理是利用 Vue.js 的响应式系统，将组件中的状态和副作用抽象成钩子函数，使得组件开发者可以更加方便地处理组件的生命周期、事件、异步操作等。
+Vue Hooks 是 Vue.js 3.0 版本引入的特性，Vue 本身没有 “官方 Hooks 概念”，我们常说的 Vue Hooks 是 Vue 3 组合式 API（Composition API）的民间统称，核心是 “将分散在 Options API（data、methods、watch）中的逻辑聚合，实现逻辑复用”。
+
+Vue 的 Hooks 本质是基于 Composition API 封装的可复用逻辑函数（比如封装请求逻辑、表单校验逻辑），没有 React Hooks 那样严格的调用规则，更接近 “增强版的 utils”。
 
 Vue Hooks 的核心概念包括：
 
@@ -262,6 +264,7 @@ Vue Hooks 的核心概念包括：
 - beforeMount、mounted：模板编译结束，但尚未挂载到 DOM 上之前和之后分别触发。
 - beforeUpdate、updated：组件数据更新后分别触发。
 - beforeDestroy、destroyed：组件实例销毁之前和之后分别触发。
+- ref/reactive（响应式状态）
 
 ## Router
 
