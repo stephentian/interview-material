@@ -318,7 +318,7 @@ export function useModelSwitch() {
 
 #### 1. 工作流可视化编辑
 
-```vue
+```html
 <!-- WorkflowEditor.vue -->
 <template>
   <div class="workflow-editor">
