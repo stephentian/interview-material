@@ -353,6 +353,7 @@ app.post('/api/chat', async (req, res) => {
 ### 6.2 请求取消
 
 ```javascript
+// AbortController  用于取消请求
 const controller = new AbortController();
 
 async function chatWithAbort(message) {
@@ -405,9 +406,9 @@ async function chatWithCache(message) {
 
 **答案要点：**
 - Token是文本的最小处理单位
-- 英文约1个单词=1.3个token
-- 中文约1个汉字=1.5-2个token
-- 不同模型使用不同的tokenizer
+- 不同模型使用不同的tokenizer(分词算法)
+- 比如 GPT-4o模型，英文单词1个token，中文汉字1个token
+- 特殊字符和标点符号也会被当作1个token
 
 ### Q2: Temperature参数如何影响输出？
 
