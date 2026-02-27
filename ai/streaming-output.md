@@ -13,6 +13,7 @@
 - 用户可以实时看到生成内容
 - 降低首字节响应时间（TTFB）
   > **💡 TTFB**（Time To First Byte，首字节响应时间）：从发起请求到收到第一个字节数据的时间。
+  > **💡 TTFT**（Total Time To First Token，总首字节响应时间）：从发起请求到收到第一个token数据的时间。TTFT大于TTFB，或者包括TTFB。
 - 提升用户体验，类似打字机效果
 - 按token计费，成本可控
 
