@@ -1,5 +1,15 @@
 # Algorithm
 
+- [学习顺序](#学习顺序)
+  - [一、按难度递进学习](#一按难度递进学习)
+    - [第一阶段：基础入门（建议 1-2 周）](#第一阶段基础入门建议-1-2-周)
+    - [第二阶段：进阶提升（建议 2-3 周）](#第二阶段进阶提升建议-2-3-周)
+    - [第三阶段：高级突破（建议 2-4 周）](#第三阶段高级突破建议-2-4-周)
+  - [二、按面试频率排序](#二按面试频率排序)
+    - [⭐⭐⭐⭐⭐ 超高频（必刷）](#-超高频必刷)
+    - [⭐⭐⭐⭐ 高频（重点）](#-高频重点)
+    - [⭐⭐⭐ 中频（常考）](#-中频常考)
+  - [三、学习建议](#三学习建议)
 - [基础知识](#基础知识)
 - [排序](#排序)
 - [二分查找](#二分查找)
@@ -57,6 +67,134 @@
   - [122.买卖股票的最佳时机 II](#122买卖股票的最佳时机-ii)
   - [67.二进制求和](#67二进制求和)
   - [300. 最长递增子序列](#300-最长递增子序列)
+  - [42.接雨水](#42接雨水)
+  - [46.全排列](#46全排列)
+  - [56.合并区间](#56合并区间)
+- [哈希表](#哈希表)
+  - [1.两数之和](#1两数之和)
+  - [49.字母异位词分组](#49字母异位词分组)
+  - [128.最长连续序列](#128最长连续序列)
+- [前缀和](#前缀和)
+  - [560.和为K的子数组](#560和为k的子数组)
+- [堆](#堆)
+  - [215.数组中的第K个最大元素](#215数组中的第k个最大元素)
+  - [23.合并K个升序链表](#23合并k个升序链表)
+
+## 学习顺序
+
+### 一、按难度递进学习
+
+#### 第一阶段：基础入门（建议 1-2 周）
+
+| 类型 | 题目 | 难度 | 核心知识点 |
+|------|------|------|------------|
+| 数组 | 把一个数组旋转 K 步 | 简单 | 数组操作 |
+| 链表 | 206.反转链表 | 简单 | 链表遍历 |
+| 链表 | 21.合并两个有序链表 | 简单 | 双指针 |
+| 字符串 | 67.二进制求和 | 简单 | 模拟运算 |
+| 树 | 104.二叉树的最大深度 | 简单 | DFS/BFS |
+| 树 | 226.翻转二叉树 | 简单 | 递归 |
+| 栈 | 20.有效的括号 | 简单 | 栈的应用 |
+| 动态规划 | 70.爬楼梯 | 简单 | DP入门 |
+| 动态规划 | 斐波那契数列 | 简单 | DP入门 |
+| 位运算 | 136.只出现一次的数字 | 简单 | 异或运算 |
+
+#### 第二阶段：进阶提升（建议 2-3 周）
+
+| 类型 | 题目 | 难度 | 核心知识点 |
+|------|------|------|------------|
+| 双指针 | 415.字符串相加 | 中等 | 模拟加法 |
+| 双指针 | 75.颜色分类 | 中等 | 三指针 |
+| 滑动窗口 | 3.无重复字符的最长子串 | 中等 | 滑动窗口 |
+| 二分查找 | 35.搜索插入位置 | 简单 | 二分查找 |
+| 二分查找 | 69.x 的平方根 | 简单 | 二分查找 |
+| 链表 | 141.环形链表 | 简单 | 快慢指针 |
+| 链表 | 160.相交链表 | 简单 | 双指针 |
+| 链表 | 234.回文链表 | 简单 | 快慢指针+反转 |
+| 树 | 200.岛屿数量 | 中等 | DFS/BFS |
+| 树 | 257.二叉树的所有路径 | 简单 | DFS |
+| 树 | 94.二叉树的中序遍历 | 简单 | 迭代遍历 |
+| 树 | 515.在每个树行中找最大值 | 中等 | BFS |
+| 动态规划 | 198.打家劫舍 | 中等 | DP |
+| 动态规划 | 53.最大子数组和 | 中等 | DP |
+| 动态规划 | 300.最长递增子序列 | 中等 | DP+二分 |
+| 贪心 | 121.买卖股票的最佳时机 | 简单 | 贪心 |
+| 贪心 | 455.分发饼干 | 简单 | 贪心 |
+| 单调栈 | 503.下一个更大元素 II | 中等 | 单调栈 |
+
+#### 第三阶段：高级突破（建议 2-4 周）
+
+| 类型 | 题目 | 难度 | 核心知识点 |
+|------|------|------|------------|
+| 排列组合 | 77.组合 | 中等 | 回溯 |
+| 回溯 | 51.N皇后 | 困难 | 回溯 |
+| 双指针 | 15.三数之和 | 中等 | 排序+双指针 |
+| 双指针 | 394.字符串解码 | 中等 | 栈 |
+| 树 | 24.交换链表节点 | 中等 | 递归 |
+| 动态规划 | 122.买卖股票的最佳时机 II | 中等 | DP/贪心 |
+| 设计 | LRU缓存 | 中等 | 设计+Map |
+| 设计 | 异步并发调度器 | 中等 | 设计+Promise |
+| 位运算 | 169.多数元素 | 简单 | 摩尔投票 |
+| 其他 | 165.比较版本号 | 中等 | 双指针 |
+| 其他 | 403.青蛙过河 | 困难 | DFS+记忆化 |
+
+### 二、按面试频率排序
+
+> 基于近年大厂前端面试真题统计
+
+#### ⭐⭐⭐⭐⭐ 超高频（必刷）
+
+| 排名 | 题目 | 类型 | 出现频率 |
+|------|------|------|----------|
+| 1 | 206.反转链表 | 链表 | 极高 |
+| 2 | 3.无重复字符的最长子串 | 滑动窗口 | 极高 |
+| 3 | 20.有效的括号 | 栈 | 极高 |
+| 4 | 15.三数之和 | 双指针 | 极高 |
+| 5 | 70.爬楼梯 | 动态规划 | 极高 |
+| 6 | 141.环形链表 | 链表 | 极高 |
+| 7 | 104.二叉树的最大深度 | 树 | 极高 |
+| 8 | LRU缓存机制 | 设计 | 极高 |
+| 9 | 21.合并两个有序链表 | 链表 | 极高 |
+| 10 | 226.翻转二叉树 | 树 | 极高 |
+
+#### ⭐⭐⭐⭐ 高频（重点）
+
+| 排名 | 题目 | 类型 | 出现频率 |
+|------|------|------|----------|
+| 11 | 200.岛屿数量 | DFS/BFS | 很高 |
+| 12 | 53.最大子数组和 | 动态规划 | 很高 |
+| 13 | 146.LRU缓存 | 设计 | 很高 |
+| 14 | 300.最长递增子序列 | 动态规划 | 很高 |
+| 15 | 121.买卖股票的最佳时机 | 贪心 | 很高 |
+| 16 | 234.回文链表 | 链表 | 很高 |
+| 17 | 94.二叉树的中序遍历 | 树 | 很高 |
+| 18 | 35.搜索插入位置 | 二分查找 | 很高 |
+| 19 | 160.相交链表 | 链表 | 很高 |
+| 20 | 394.字符串解码 | 栈 | 很高 |
+
+#### ⭐⭐⭐ 中频（常考）
+
+| 排名 | 题目 | 类型 | 出现频率 |
+|------|------|------|----------|
+| 21 | 77.组合 | 回溯 | 中等 |
+| 22 | 51.N皇后 | 回溯 | 中等 |
+| 23 | 503.下一个更大元素 II | 单调栈 | 中等 |
+| 24 | 75.颜色分类 | 双指针 | 中等 |
+| 25 | 198.打家劫舍 | 动态规划 | 中等 |
+| 26 | 415.字符串相加 | 双指针 | 中等 |
+| 27 | 69.x的平方根 | 二分查找 | 中等 |
+| 28 | 67.二进制求和 | 字符串 | 中等 |
+| 29 | 136.只出现一次的数字 | 位运算 | 中等 |
+| 30 | 455.分发饼干 | 贪心 | 中等 |
+
+### 三、学习建议
+
+1. **先易后难**：从第一阶段开始，扎实掌握基础题型
+2. **分类突破**：按类型集中练习，掌握该类型的核心思想
+3. **重复刷题**：高频题目建议刷 2-3 遍
+4. **总结模板**：每种类型总结通用代码模板
+5. **模拟面试**：限时完成，锻炼临场发挥
+6. **精益求精**：不仅要知道怎么做，还要把握细节，知道怎么做更好
 
 ## 基础知识
 
@@ -1980,8 +2118,8 @@ leetcode: 189.[旋转数组](https://leetcode.cn/problems/rotate-array/descripti
 
 两种思路：
 
-- `pop`  队尾弹出，`unshift` 插入队首；时间复杂度 `O(n^2)`，unshift 时间复杂度 `O(n)`; 空间复杂度 `O(1)`
-- 数组分为两份，剪切数组尾部 k 个元素，放前面，`concat` 剩余的子数组；时间复杂度 `O(1)`；空间复杂度 `O(n)`
+- `pop`  队尾弹出，`unshift` 插入队首，时间复杂度 `O(n^2)`；unshift 时间复杂度 `O(n)`; 空间复杂度 `O(1)`
+- 数组分为两份，`slice` 剪切复制数组尾部 k 个元素，放前面，`concat` 剩余的子数组；时间复杂度 `O(n)`；空间复杂度 `O(n)`
 
 ```js
 // pop unshift
@@ -2613,3 +2751,544 @@ var lengthOfLIS = function(nums) {
 }
 
 ```
+
+### 42.接雨水
+
+[42. 接雨水](https://leetcode.cn/problems/trapping-rain-water/)
+
+给定 n 个非负整数表示每个宽度为 1 的柱子的高度图，计算按此排列的柱子，下雨之后能接多少雨水。
+
+示例：
+
+输入：height = [0,1,0,2,1,0,1,3,2,1,2,1]
+输出：6
+解释：上面是由数组 [0,1,0,2,1,0,1,3,2,1,2,1] 表示的高度图，在这种情况下，可以接 6 个单位的雨水（蓝色部分表示雨水）。
+
+思路：
+
+1. 双指针法：左右两个指针，记录左右两边的最大高度
+2. 单调栈：维护一个单调递减栈
+
+```js
+// 双指针法
+// 时间复杂度：O(n)
+// 空间复杂度：O(1)
+var trap = function(height) {
+  let left = 0, right = height.length - 1
+  let leftMax = 0, rightMax = 0
+  let res = 0
+
+  while (left < right) {
+    if (height[left] < height[right]) {
+      if (height[left] >= leftMax) {
+        leftMax = height[left]
+      } else {
+        res += leftMax - height[left]
+      }
+      left++
+    } else {
+      if (height[right] >= rightMax) {
+        rightMax = height[right]
+      } else {
+        res += rightMax - height[right]
+      }
+      right--
+    }
+  }
+
+  return res
+};
+
+// 单调栈解法
+var trap = function(height) {
+  let res = 0
+  let stack = []
+  
+  for (let i = 0; i < height.length; i++) {
+    while (stack.length && height[i] > height[stack[stack.length - 1]]) {
+      let mid = stack.pop()
+      if (!stack.length) break
+      let left = stack[stack.length - 1]
+      let h = Math.min(height[left], height[i]) - height[mid]
+      let w = i - left - 1
+      res += h * w
+    }
+    stack.push(i)
+  }
+  
+  return res
+};
+```
+
+### 46.全排列
+
+[46. 全排列](https://leetcode.cn/problems/permutations/)
+
+给定一个不含重复数字的数组 nums ，返回其 所有可能的全排列 。你可以 按任意顺序 返回答案。
+
+示例：
+
+输入：nums = [1,2,3]
+输出：[[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]
+
+```js
+var permute = function(nums) {
+  const res = []
+  const used = new Array(nums.length).fill(false)
+
+  const backtrack = (path) => {
+    if (path.length === nums.length) {
+      res.push([...path])
+      return
+    }
+
+    for (let i = 0; i < nums.length; i++) {
+      if (used[i]) continue
+
+      path.push(nums[i])
+      used[i] = true
+      backtrack(path)
+      path.pop()
+      used[i] = false
+    }
+  }
+
+  backtrack([])
+  return res
+};
+```
+
+### 56.合并区间
+
+[56. 合并区间](https://leetcode.cn/problems/merge-intervals/)
+
+以数组 intervals 表示若干个区间的集合，其中单个区间为 intervals[i] = [starti, endi] 。请你合并所有重叠的区间，并返回 一个不重叠的区间数组，该数组需恰好覆盖输入中的所有区间 。
+
+示例：
+
+输入：intervals = [[1,3],[2,6],[8,10],[15,18]]
+输出：[[1,6],[8,10],[15,18]]
+解释：区间 [1,3] 和 [2,6] 重叠, 将它们合并为 [1,6]。
+
+```js
+var merge = function(intervals) {
+  if (intervals.length <= 1) return intervals
+
+  // 按区间起点排序
+  intervals.sort((a, b) => a[0] - b[0])
+
+  const res = [intervals[0]]
+
+  for (let i = 1; i < intervals.length; i++) {
+    const last = res[res.length - 1]
+    const curr = intervals[i]
+
+    // 如果当前区间与上一个区间重叠，合并
+    if (curr[0] <= last[1]) {
+      last[1] = Math.max(last[1], curr[1])
+    } else {
+      res.push(curr)
+    }
+  }
+
+  return res
+};
+```
+
+## 哈希表
+
+哈希表是一种根据键（Key）直接访问内存存储位置的数据结构。通过哈希函数将键映射到存储位置，实现 O(1) 的查找效率。
+
+常见应用场景：
+- 快速查找某个元素是否存在
+- 统计元素出现次数
+- 两数之和、字母异位词分组等问题
+
+### 1.两数之和
+
+[1. 两数之和](https://leetcode.cn/problems/two-sum/)
+
+给定一个整数数组 nums 和一个整数目标值 target，请你在该数组中找出和为目标值 target 的那两个整数，并返回它们的数组下标。
+
+示例：
+
+输入：nums = [2,7,11,15], target = 9
+输出：[0,1]
+解释：因为 nums[0] + nums[1] == 9 ，返回 [0, 1] 。
+
+```js
+var twoSum = function(nums, target) {
+  const map = new Map()
+
+  for (let i = 0; i < nums.length; i++) {
+    const complement = target - nums[i]
+
+    if (map.has(complement)) {
+      return [map.get(complement), i]
+    }
+
+    map.set(nums[i], i)
+  }
+
+  return []
+};
+```
+
+### 49.字母异位词分组
+
+[49. 字母异位词分组](https://leetcode.cn/problems/group-anagrams/)
+
+给你一个字符串数组，请你将字母异位词组合在一起。可以按任意顺序返回结果列表。
+
+字母异位词是由相同字母重新排列形成的不同单词。
+
+示例：
+
+输入: strs = ["eat", "tea", "tan", "ate", "nat", "bat"]
+输出: [["bat"],["nat","tan"],["ate","eat","tea"]]
+
+```js
+var groupAnagrams = function(strs) {
+  const map = new Map()
+
+  for (const str of strs) {
+    // 将字符串排序作为 key
+    const key = str.split('').sort().join('')
+
+    if (map.has(key)) {
+      map.get(key).push(str)
+    } else {
+      map.set(key, [str])
+    }
+  }
+
+  return [...map.values()]
+};
+
+// 方法二：使用字符计数作为 key
+var groupAnagrams = function(strs) {
+  const map = new Map()
+
+  for (const str of strs) {
+    const count = new Array(26).fill(0)
+    
+    for (const char of str) {
+      count[char.charCodeAt() - 'a'.charCodeAt()]++
+    }
+
+    const key = count.join('#')
+
+    if (!map.has(key)) {
+      map.set(key, [])
+    }
+    map.get(key).push(str)
+  }
+
+  return [...map.values()]
+};
+```
+
+### 128.最长连续序列
+
+[128. 最长连续序列](https://leetcode.cn/problems/longest-consecutive-sequence/)
+
+给定一个未排序的整数数组 nums ，找出数字连续的最长序列（不要求序列元素在原数组中连续）的长度。
+
+请你设计并实现时间复杂度为 O(n) 的算法解决此问题。
+
+示例：
+
+输入：nums = [100,4,200,1,3,2]
+输出：4
+解释：最长数字连续序列是 [1, 2, 3, 4]。它的长度为 4。
+
+```js
+var longestConsecutive = function(nums) {
+  if (nums.length === 0) return 0
+
+  const set = new Set(nums)
+  let maxLen = 0
+
+  for (const num of set) {
+    // 只有当 num-1 不存在时，才开始计算序列长度
+    // 这样可以保证每个序列只被计算一次
+    if (!set.has(num - 1)) {
+      let currNum = num
+      let currLen = 1
+
+      while (set.has(currNum + 1)) {
+        currNum++
+        currLen++
+      }
+
+      maxLen = Math.max(maxLen, currLen)
+    }
+  }
+
+  return maxLen
+};
+```
+
+## 前缀和
+
+前缀和是一种预处理技术，通过预先计算数组的前缀和，可以在 O(1) 时间内求出任意区间的和。
+
+核心思想：
+- prefixSum[i] = nums[0] + nums[1] + ... + nums[i-1]
+- 区间 [i, j] 的和 = prefixSum[j+1] - prefixSum[i]
+
+### 560.和为K的子数组
+
+[560. 和为 K 的子数组](https://leetcode.cn/problems/subarray-sum-equals-k/)
+
+给你一个整数数组 nums 和一个整数 k ，请你统计并返回 该数组中和为 k 的连续子数组的个数。
+
+示例：
+
+输入：nums = [1,1,1], k = 2
+输出：2
+
+输入：nums = [1,2,3], k = 3
+输出：2
+
+```js
+var subarraySum = function(nums, k) {
+  const map = new Map()
+  map.set(0, 1) // 前缀和为0出现1次
+
+  let count = 0
+  let prefixSum = 0
+
+  for (const num of nums) {
+    prefixSum += num
+
+    // 如果存在 prefixSum - k，说明中间有一段子数组和为 k
+    if (map.has(prefixSum - k)) {
+      count += map.get(prefixSum - k)
+    }
+
+    map.set(prefixSum, (map.get(prefixSum) || 0) + 1)
+  }
+
+  return count
+};
+```
+
+## 堆
+
+堆是一种特殊的完全二叉树，分为大顶堆和小顶堆：
+- 大顶堆：每个节点的值都大于或等于其子节点的值
+- 小顶堆：每个节点的值都小于或等于其子节点的值
+
+JavaScript 中可以使用数组模拟堆，也可以使用优先队列。
+
+常见应用：
+- Top K 问题
+- 合并有序链表/数组
+- 中位数问题
+
+### 215.数组中的第K个最大元素
+
+[215. 数组中的第K个最大元素](https://leetcode.cn/problems/kth-largest-element-in-an-array/)
+
+给定整数数组 nums 和整数 k，请返回数组中第 k 个最大的元素。
+
+示例：
+
+输入: [3,2,1,5,6,4], k = 2
+输出: 5
+
+```js
+// 方法一：快速选择
+var findKthLargest = function(nums, k) {
+  const quickSelect = (left, right, k) => {
+    if (left === right) return nums[left]
+
+    const pivot = nums[left]
+    let i = left, j = right
+
+    while (i < j) {
+      while (i < j && nums[j] >= pivot) j--
+      nums[i] = nums[j]
+      while (i < j && nums[i] <= pivot) i++
+      nums[j] = nums[i]
+    }
+    nums[i] = pivot
+
+    const count = right - i + 1
+    if (count === k) return nums[i]
+    if (count > k) return quickSelect(i + 1, right, k)
+    return quickSelect(left, i - 1, k - count)
+  }
+
+  return quickSelect(0, nums.length - 1, k)
+};
+
+// 方法二：小顶堆
+var findKthLargest = function(nums, k) {
+  // 使用数组模拟小顶堆
+  const heap = []
+
+  const heapifyUp = (index) => {
+    while (index > 0) {
+      const parentIndex = Math.floor((index - 1) / 2)
+      if (heap[parentIndex] <= heap[index]) break
+      [heap[parentIndex], heap[index]] = [heap[index], heap[parentIndex]]
+      index = parentIndex
+    }
+  }
+
+  const heapifyDown = (index) => {
+    const len = heap.length
+    while (true) {
+      let minIndex = index
+      const left = 2 * index + 1
+      const right = 2 * index + 2
+
+      if (left < len && heap[left] < heap[minIndex]) minIndex = left
+      if (right < len && heap[right] < heap[minIndex]) minIndex = right
+
+      if (minIndex === index) break
+      [heap[minIndex], heap[index]] = [heap[index], heap[minIndex]]
+      index = minIndex
+    }
+  }
+
+  for (const num of nums) {
+    if (heap.length < k) {
+      heap.push(num)
+      heapifyUp(heap.length - 1)
+    } else if (num > heap[0]) {
+      heap[0] = num
+      heapifyDown(0)
+    }
+  }
+
+  return heap[0]
+};
+```
+
+### 23.合并K个升序链表
+
+[23. 合并K个升序链表](https://leetcode.cn/problems/merge-k-sorted-lists/)
+
+给你一个链表数组，每个链表都已经按升序排列。请你将所有链表合并到一个升序链表中，返回合并后的链表。
+
+示例：
+
+输入：lists = [[1,4,5],[1,3,4],[2,6]]
+输出：[1,1,2,3,4,4,5,6]
+
+```js
+// 方法一：小顶堆
+var mergeKLists = function(lists) {
+  if (lists.length === 0) return null
+
+  const minHeap = new MinHeap()
+  
+  // 将所有链表的头节点加入堆
+  for (const list of lists) {
+    if (list) minHeap.push(list)
+  }
+
+  const dummy = new ListNode()
+  let curr = dummy
+
+  while (minHeap.size() > 0) {
+    const node = minHeap.pop()
+    curr.next = node
+    curr = curr.next
+
+    if (node.next) {
+      minHeap.push(node.next)
+    }
+  }
+
+  return dummy.next
+};
+
+// 方法二：分治合并
+var mergeKLists = function(lists) {
+  if (lists.length === 0) return null
+
+  const mergeTwoLists = (l1, l2) => {
+    const dummy = new ListNode()
+    let curr = dummy
+
+    while (l1 && l2) {
+      if (l1.val < l2.val) {
+        curr.next = l1
+        l1 = l1.next
+      } else {
+        curr.next = l2
+        l2 = l2.next
+      }
+      curr = curr.next
+    }
+
+    curr.next = l1 || l2
+    return dummy.next
+  }
+
+  const merge = (lists, left, right) => {
+    if (left === right) return lists[left]
+    if (left > right) return null
+
+    const mid = Math.floor((left + right) / 2)
+    return mergeTwoLists(merge(lists, left, mid), merge(lists, mid + 1, right))
+  }
+
+  return merge(lists, 0, lists.length - 1)
+};
+
+// 小顶堆实现
+class MinHeap {
+  constructor() {
+    this.heap = []
+  }
+
+  push(node) {
+    this.heap.push(node)
+    this.heapifyUp(this.heap.length - 1)
+  }
+
+  pop() {
+    if (this.heap.length === 0) return null
+    const min = this.heap[0]
+    const last = this.heap.pop()
+    if (this.heap.length > 0) {
+      this.heap[0] = last
+      this.heapifyDown(0)
+    }
+    return min
+  }
+
+  size() {
+    return this.heap.length
+  }
+
+  heapifyUp(index) {
+    while (index > 0) {
+      const parentIndex = Math.floor((index - 1) / 2)
+      if (this.heap[parentIndex].val <= this.heap[index].val) break
+      [this.heap[parentIndex], this.heap[index]] = [this.heap[index], this.heap[parentIndex]]
+      index = parentIndex
+    }
+  }
+
+  heapifyDown(index) {
+    const len = this.heap.length
+    while (true) {
+      let minIndex = index
+      const left = 2 * index + 1
+      const right = 2 * index + 2
+
+      if (left < len && this.heap[left].val < this.heap[minIndex].val) minIndex = left
+      if (right < len && this.heap[right].val < this.heap[minIndex].val) minIndex = right
+
+      if (minIndex === index) break
+      [this.heap[minIndex], this.heap[index]] = [this.heap[index], this.heap[minIndex]]
+      index = minIndex
+    }
+  }
+}
