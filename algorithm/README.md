@@ -35,8 +35,8 @@
     - [104.二叉树的最大深度](#104二叉树的最大深度)
   - [BFS 广度优先遍历](#bfs-广度优先遍历)
     - [515. 在每个树行中找最大值](#515-在每个树行中找最大值)
-    - [94.二叉树的中序遍历](#94二叉树的中序遍历)
-  - [226.翻转二叉树](#226翻转二叉树)
+    - [94. 二叉树的中序遍历](#94-二叉树的中序遍历)
+  - [226. 翻转二叉树](#226-翻转二叉树)
 - [队列](#队列)
 - [链表](#链表)
   - [206.反转链表](#206反转链表)
@@ -344,6 +344,8 @@ var mySqrt = function(x) {
             r = mid - 1
         }
     }
+
+    return r
 };
 
 // 二
@@ -366,6 +368,10 @@ var mySqrt = function(x) {
 ## 动态规划
 
 [dynamic program](./dp/README.md)
+
+1. 爬楼梯
+2. 打家劫舍
+3. 最大子数组和
 
 ## 排列组合
 
@@ -541,6 +547,7 @@ combine(names, colors, storages)
 
 ```js
 // 模拟加法
+// charAt 方法返回指定索引处的字符
 // 从两个数最低位开始： i, j 指向 num1, num2 尾部
 // 相加计算是否进位： add 为上一步超出 10 的部分， add = res%10
 // 添加当前位：对位数较短的数字进行 补零操作
@@ -548,14 +555,14 @@ var addStrings = function(num1, num2) {
     let i = num1.length - 1
     let j = num2.length - 1
     let add = 0
-    const ans = []
+    const res = []
     
     while (i >= 0 || j >= 0 || add != 0) {
         const x = i >= 0 ? num1.charAt(i) - '0' : 0;
         const y = j >= 0 ? num2.charAt(j) - '0' : 0;
 
         const result = x + y + add;
-        ans.push(result % 10);
+        res.push(result % 10);
 
         // add = Math.floor(result / 10);
         add = result >= 10 ? 1 : 0;
@@ -564,7 +571,7 @@ var addStrings = function(num1, num2) {
         j--;
     }
 
-    return ans.reverse().join(''); // 前面把最后位 push ，所以需要 reverse
+    return res.reverse().join(''); // 前面把最后位 push ，所以需要 reverse
 };
 ```
 
@@ -591,8 +598,8 @@ var addStrings = function(num1, num2) {
 思路：
 
 1. 创建三个指针，l, r, cur
-2. l 指向下一个0应该放置的位置，初始为0；cur 当前遍历位置，初始为0； r 指向下一个2应该放置的位置，初始为数组末尾
-3. 循环判断当前元素，如果为0，则交换到左边，如果为2，则交换到右边，如果为1，则继续循环
+2. `l` 指向下一个`0`应该放置的位置，初始为`0`；`cur` 当前遍历位置，初始为`0`； `r` 指向下一个`2`应该放置的位置，初始为数组末尾
+3. 循环判断当前元素，如果为`0`，则交换到左边，如果为`2`，则交换到右边，如果为`1`，则继续循环
 
 - [0, l) 区间内都是0
 - [l, cur) 区间内都是1
@@ -605,15 +612,21 @@ var sortColors = function(nums) {
   let l = 0, cur = 0, r = nums.length - 1
   while (cur <= r) {
     if (nums[cur] === 0) {
-      const temp = nums[l]
-      nums[l] = nums[cur]
-      nums[cur] = temp
+      // const temp = nums[l]
+      // nums[l] = nums[cur]
+      // nums[cur] = temp
+
+      [nums[l], nums[cur]] = [nums[cur], nums[l]]
+      
       l++
       cur++
     } else if (nums[cur] === 2) {
-      const temp = nums[r]
-      nums[r] = nums[cur]
-      nums[cur] = temp
+      // const temp = nums[r]
+      // nums[r] = nums[cur]
+      // nums[cur] = temp
+
+      [nums[cur], nums[r]] = [nums[r], nums[cur]]
+
       r-- // 减 r，因为 r 指向的元素已经交换到左边了
       // cur 保持不变，因为从 r 位置交换过来的元素可能是0、1或2，需要进一步判断
     } else {
@@ -1421,7 +1434,7 @@ var largestValues = function(root) {
 }
 ```
 
-#### 94.二叉树的中序遍历
+#### 94. 二叉树的中序遍历
 
 [94.二叉树的中序遍历](https://leetcode.cn/problems/binary-tree-inorder-traversal/)
 
@@ -1457,7 +1470,7 @@ var inorderTraversal = function(root) {
 }
 ```
 
-### 226.翻转二叉树
+### 226. 翻转二叉树
 
 [226. 翻转二叉树](https://leetcode.cn/problems/invert-binary-tree/)
 
@@ -2670,7 +2683,7 @@ var maxProfit = function(prices) {
 ```js
 var addBinary = function(a, b) {
   let ans = ''
-  let num = 0 // 进位
+  let carry = 0 // 进位
 
   let i = a.length - 1
   let j = b.length - 1
@@ -2680,16 +2693,13 @@ var addBinary = function(a, b) {
     let n = j >= 0 ? parseInt(b[j]) : 0
     // 补 0
 
-    let sum = num
-    sum = sum + m
-    sum = sum + n
-
+    let sum = carry + m + n
 
     ans = ans + sum%2 // 拼接 1
-    num = Math.floor(sum/2)
+    carry = Math.floor(sum/2)
   }
 
-  ans = ans + (num == 1 ? num : '') // 判断最后是否进位
+  ans = ans + (carry == 1 ? carry : '') // 判断最后是否进位
   return ans.split('').reverse().join('');
 };
 ```
