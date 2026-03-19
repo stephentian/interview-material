@@ -1745,7 +1745,7 @@ var getIntersectionNode = function(headA, headB) {
 
 ```js
 var isPalindrome = function(head) {
-    // 双指针
+    // 反转链表
     const reverseList = (head) => {
         let prev = null;
         let curr = head;
@@ -1758,6 +1758,10 @@ var isPalindrome = function(head) {
         return prev;
     }
 
+    // 找到前半部分链表的尾节点
+    // 快慢指针
+    // 慢指针移动一步，快指针移动两步； 快指针速度是慢指针的两倍
+    // 当快指针走到链表末尾时，慢指针走到链表的中间位置
     const endOfFirstHalf = (head) => {
         let fast = head;
         let slow = head;
@@ -2742,7 +2746,7 @@ var lengthOfLIS = function(nums) {
     let left = 0, right = f.length;
     while (left < right) {
       // let mid = left + ((right - left) >> 1);
-      let mid = left + ((right - left)/2);
+      let mid = left + Math.floor((right - left)/2); // 数组的索引会自动向下取整
       if (f[mid] < num) left = mid + 1;
       else right = mid;
     }
@@ -2753,6 +2757,8 @@ var lengthOfLIS = function(nums) {
     if (nums[i] > f[f.length - 1]) {
       f.push(nums[i])
     } else {
+      // 会替换掉第一个大于等于 nums[i] 的元素，但是不会改变递增子序列的长度
+      // f 不是真实的递增子序列，只是记录了递增子序列的长度
       f[binarySearch(nums[i])] = nums[i]
     }
   }
