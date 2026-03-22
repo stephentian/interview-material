@@ -6,9 +6,9 @@
     - [第二阶段：进阶提升（建议 2-3 周）](#第二阶段进阶提升建议-2-3-周)
     - [第三阶段：高级突破（建议 2-4 周）](#第三阶段高级突破建议-2-4-周)
   - [二、按面试频率排序](#二按面试频率排序)
-    - [⭐⭐⭐⭐⭐ 超高频（必刷）](#-超高频必刷)
-    - [⭐⭐⭐⭐ 高频（重点）](#-高频重点)
-    - [⭐⭐⭐ 中频（常考）](#-中频常考)
+    - [超高频（必刷）](#超高频必刷)
+    - [高频（重点）](#高频重点)
+    - [中频（常考）](#中频常考)
   - [三、学习建议](#三学习建议)
 - [基础知识](#基础知识)
 - [排序](#排序)
@@ -142,7 +142,7 @@
 
 > 基于近年大厂前端面试真题统计
 
-#### ⭐⭐⭐⭐⭐ 超高频（必刷）
+#### 超高频（必刷）
 
 | 排名 | 题目 | 类型 | 出现频率 |
 |------|------|------|----------|
@@ -157,7 +157,7 @@
 | 9 | 21.合并两个有序链表 | 链表 | 极高 |
 | 10 | 226.翻转二叉树 | 树 | 极高 |
 
-#### ⭐⭐⭐⭐ 高频（重点）
+#### 高频（重点）
 
 | 排名 | 题目 | 类型 | 出现频率 |
 |------|------|------|----------|
@@ -172,7 +172,7 @@
 | 19 | 160.相交链表 | 链表 | 很高 |
 | 20 | 394.字符串解码 | 栈 | 很高 |
 
-#### ⭐⭐⭐ 中频（常考）
+#### 中频（常考）
 
 | 排名 | 题目 | 类型 | 出现频率 |
 |------|------|------|----------|
@@ -946,13 +946,11 @@ var nextGreaterElements = function(nums) {
   const stack = []
 
   // 每个位置i都需要从i+1遍历到i-1的位置，在这个区间内找到下一个更大的值
-  for (let i = 0; i < len * 2- 1; i++) {
+  for (let i = 0; i < len * 2; i++) {
     let num = nums[i % len]
     // 将所有大于nums[i]的数都弹出
-    while (stack.length) {
-      if(num > nums[stack[stack.length - 1] % len]) {
+    while (stack.length && num > nums[stack[stack.length - 1] % len]) {
         res[stack.pop() % len] = num
-      }      
     }
     stack.push(i)
   }
@@ -1826,17 +1824,17 @@ var isPalindrome = function(head) {
 // 贪心的想法就是取最左最小值，取最右最大值，那么得到的差值就是最大利润。
 var maxProfit = function(prices) {
   if (prices.length <= 1) return 0
-  let inV = 0
+  let minIndex = 0
   let res = 0
 
   for (let i = 1; i<prices.length; i++) {
 
-    if (prices[i] - prices[inV] > res) {
-      res = prices[i] - prices[inV]
+    if (prices[i] - prices[minIndex] > res) {
+      res = prices[i] - prices[minIndex]
     }
 
-    if (prices[i] < prices[inV]) {
-      inV = i
+    if (prices[i] < prices[minIndex]) {
+      minIndex = i
     }
   }
   return res
