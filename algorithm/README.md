@@ -2427,10 +2427,18 @@ var solveNQueens = function(n) {
     console.log("判断行 row = " + row + ";" + "列 col = " + col + ";" + "是否可以放置")
 
     for (let i = 0; i < queens.length; i++) {
-      // i 是行, queens[i] 是列
-      // 不能同行，同列，同对角线
-      if (queens[i] === col) return false // 同列检查
-      if (i + queens[i] == row + col || i - queens[i] == row - col) return false  // 对角线检查
+      // i 是已放置皇后的行号, queens[i] 是已放置皇后的列号
+
+      // 检查 1：不能同列
+      if (queens[i] === col) return false
+      // 检查 2：不能同对角线
+      if (i + queens[i] == row + col || i - queens[i] == row - col) return false
+
+      // 主对角线（左上→右下）：行 - 列 = 常数
+      // 副对角线（右上→左下）：行 + 列 = 常数
+      // 例如：
+      // (0,1) 和 (2,3) 在同一条副对角线上：0+1 = 2+3 = 1 ❌
+      // (0,1) 和 (1,0) 在同一条主对角线上：0-1 = 1-0 = -1 ❌
       // if (Math.abs(row - i) === Math.abs(col - queens[i])) return false
     }
 
@@ -2439,7 +2447,7 @@ var solveNQueens = function(n) {
   }
 
   let dfs = (res, queens, n, row) => {
-    console.log("row = " + row + ";" + "尝试在第 " + row + " 行放置皇后")
+    console.log("尝试在第 " + row + " 行放置皇后")
 
     if (row === n) {
       console.log("第 " + row + " 行已放置完所有行")
@@ -2448,15 +2456,15 @@ var solveNQueens = function(n) {
     }
 
     for (let col = 0; col < n; col++) {
-      if (!canPlace(queens, row, col)) continue // 不能放置，跳过
+      if (!canPlace(queens, row, col)) continue // 不能放置，跳过，继续尝试下一列
       queens[row] = col
       console.log("queens 第" + row + "行放置了col：" + col)
       console.log("queens = " + JSON.stringify(queens))
       console.log("深度遍历下一行")
       dfs(res, queens, n, row + 1)
 
-      console.log("dfs 出来了, row: " + row)
-      queens.splice(row, 1)
+      console.log(row + 1 + " for 循环结束， dfs 出来了, row: " + row)
+      queens.splice(row, 1) // 回溯，将当前行的皇后位置清空
       console.log("回溯后的 queens = " + JSON.stringify(queens))
     }
   }
@@ -2468,16 +2476,29 @@ var solveNQueens = function(n) {
 solveNQueens(4)
 
 // 执行过程：
-// row=0: 尝试在第0行放置皇后
+// 尝试在第0行放置皇后
 //  判断行 row = 0;列 col = 0;是否可以放置
 //  位置 row = 0;列 col = 0可以放置
 //  queens 第0行放置了col：0
+//  queens = [0]
 //  深度遍历下一行
-// row=1: 尝试在第1行放置皇后
-//  col=0,1,2都不行，col=3可以: queens=[0,3]
-//         row=2: 尝试在第2行放置皇后
-//           col=0,1,2,3都不行，回溯
-//         回溯到row=1，继续尝试其他列...
+// 尝试在第1行放置皇后
+//   判断行 row = 1;列 col = 0;是否可以放置
+//   判断行 row = 1;列 col = 1;是否可以放置
+//   判断行 row = 1;列 col = 2;是否可以放置
+//   位置 row = 1;列 col = 2可以放置
+//   queens 第1行放置了col：2
+//   queens = [0,2]
+//   深度遍历下一行
+// 尝试在第2行放置皇后
+//   判断行 row = 2;列 col = 0;是否可以放置
+//   判断行 row = 2;列 col = 1;是否可以放置
+//   判断行 row = 2;列 col = 2;是否可以放置
+//   判断行 row = 2;列 col = 3;是否可以放置
+//   dfs 出来了, row: 1
+//   回溯后的 queens = [0]
+// 判断行 row = 1;列 col = 3;是否可以放置
+
 ```
 
 ### 165.比较版本号
