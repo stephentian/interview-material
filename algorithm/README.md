@@ -1809,7 +1809,7 @@ var isPalindrome = function(head) {
 // 贪心的想法就是取最左最小值，取最右最大值，那么得到的差值就是最大利润。
 var maxProfit = function(prices) {
   if (prices.length <= 1) return 0
-  let inV = 0
+  let inV = 0  // 买入值
   let res = 0
 
   for (let i = 1; i<prices.length; i++) {
@@ -2158,6 +2158,11 @@ function rotateArr1(arr, k) {
 
 链接：[24. 两两交换链表中的节点](https://leetcode-cn.com/problems/swap-nodes-in-pairs/)
 
+给你一个链表，两两交换其中相邻的节点，并返回交换后链表的头节点。你必须在不修改节点内部的值的情况下完成本题（即，只能进行节点交换）。
+
+输入：head = [1,2,3,4]
+输出：[2,1,4,3]
+
 递归：
 
 1. 终止条件：链表为空或只剩一个元素
@@ -2349,13 +2354,40 @@ const nSum = function(nums, target) {
 
 leetcode: [394. 字符串解码](https://leetcode-cn.com/problems/decode-string/)
 
-```js
+给定一个经过编码的字符串，返回它解码后的字符串。
+
+编码规则为: k[encoded_string]，表示其中方括号内部的 encoded_string 正好重复 k 次。注意 k 保证为正整数。
+
+你可以认为输入字符串总是有效的；输入字符串中没有额外的空格，且输入的方括号总是符合格式要求的。
+
+此外，你可以认为原始数据不包含数字，所有的数字只表示重复的次数 k ，例如不会出现像 3a 或 2[4] 的输入。
+
+测试用例保证输出的长度不会超过 105。
+
+示例 1：
+
+输入：s = "3[a]2[bc]"
+输出："aaabcbc"
+示例 2：
+
+输入：s = "3[a2[c]]"
+输出："accaccacc"
+示例 3：
+
+输入：s = "2[abc]3[cd]ef"
+输出："abcabccdcdcdef"
+示例 4：
+
+输入：s = "abc3[cd]xyz"
+输出："abccdc
+
+```js 
 var decodeString = function(s) {
     let numStack = [];        // 存倍数的栈
     let strStack = [];        // 存 待拼接的str 的栈
-    let num = 0;              // 倍数的“搬运工”
-    let result = '';          // 字符串的“搬运工”
-    for (const char of s) {   // 逐字符扫描
+    let num = 0;              // 倍数
+    let result = '';
+    for (const char of s) {   // 逐字符扫
         if (!isNaN(char)) {   // 遇到数字
             num = num * 10 + Number(char); // 算出倍数
         } else if (char == '[') {  // 遇到 [
@@ -2621,8 +2653,14 @@ var getKthFromEnd = function(head, k) {
 
 ```js
 // 动态规划
-// dp[i][0] 表示第 i 天交易完后手里没有股票的最大利润，dp[i][1] 表示第 i 天交易完后手里持有一支股票的最大利润（i 从 0 开始）。
+// dp[i][0]：第 i 天结束后，手里没有股票的最大利润。
+// dp[i][1]：第 i 天结束后，手里持有股票的最大利润。
+
+// 第 i 天结束后没股票，只可能是两种情况导致的：
+//  1. 昨天就没股票，今天啥也没干；利润是 dp[i-1][0]
+//  2. 昨天有股票，今天卖了 price[i]；利润是 dp[i-1][1] + price[i]
 // dp[i][0] = max{dp[i-1][0], dp[i-1][1] + prices[i]}
+
 // dp[i][1] = max{dp[i-1][1], dp[i-1][0] - prices[i]}
 var maxProfit = function(prices) {
   const n = prices.length;
