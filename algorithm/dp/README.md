@@ -125,6 +125,7 @@ var climbStairs = function(n) {
   for (let i =3; i <= n; i++) {
     dp[i] = dp[i-1] + dp[i-2]
   }
+
   return dp[n]
 };
 ```
@@ -232,5 +233,15 @@ var maxSubArray = function(nums) {
     }
 
     return res
+};
+
+var maxSubArray = function(nums) {
+    let maxSum = nums[0];
+    let currentSum = nums[0];
+    for (let i = 1; i < nums.length; i++) {
+        currentSum = Math.max(nums[i], currentSum + nums[i]);
+        maxSum = Math.max(maxSum, currentSum);
+    }
+    return maxSum
 };
 ```
