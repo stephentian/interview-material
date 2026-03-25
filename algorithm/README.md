@@ -132,7 +132,7 @@
 | 双指针 | 394.字符串解码 | 中等 | 栈 |
 | 树 | 24.交换链表节点 | 中等 | 递归 |
 | 动态规划 | 122.买卖股票的最佳时机 II | 中等 | DP/贪心 |
-| 设计 | LRU缓存 [LRU](./LRU.js) | 中等 | 设计+Ma
+| 设计 | LRU缓存 [LRU](./LRU.js) | 中等 | 设计+Mav   
 | 设计 | 异步并发调度器 [Scheduler](./Scheduler.js) | 中等 | 设计+Promise |
 | 位运算 | 169.多数元素 | 简单 | 摩尔投票 |
 | 其他 | 165.比较版本号 | 中等 | 双指针 |
@@ -2559,15 +2559,18 @@ var compareVersion = function(version1, version2) {
   let i = 0, j = 0;
   while (i < n || j < m) {
       let x = 0;
-      for (; i < n && version1[i] !== '.'; ++i) {
-          x = x * 10 + version1[i].charCodeAt() - '0'.charCodeAt();
+      while (i < n && version1[i] !== '.') {
+        x = x * 10 + version1[i].charCodeAt() - '0'.charCodeAt();
+        i++;
       }
-      ++i; // 跳过点号
+      i++; // 跳过点号
       let y = 0;
-      for (; j < m && version2.charAt(j) !== '.'; ++j) {
+      while (j < m && version2[j] !== '.') {
           y = y * 10 + version2[j].charCodeAt() - '0'.charCodeAt();
+          j++;
       }
-      ++j; // 跳过点号
+      j++; // 跳过点号
+
       if (x !== y) {
           return x > y ? 1 : -1;
       }
@@ -2590,36 +2593,38 @@ var compareVersion = function(version1, version2) {
 
 输入：stones = [0,1,3,5,6,8,12,17]
 输出：true
-解释：青蛙可以成功过河，按照如下方案跳跃：跳 1 个单位到第 2 块石子, 然后跳 2 个单位到第 3 块石子, 接着 跳 2 个单位到第 4 块石子, 然后跳 3 个单位到第 6 块石子, 跳 4 个单位到第 7 块石子, 最后，跳 5 个单位到第 8 个石子（即最后一块石子）。
+解释：青蛙可以成功过河，按照如下方案跳跃：跳 1 个单位到第 2 块石子（1）, 然后跳 2 个单位到第 3 块石子（3）, 接着 跳 2 个单位到第 4 块石子（5）, 然后跳 3 个单位到第 6 块石子（8）, 跳 4 个单位到第 7 块石子（12）, 最后，跳 5 个单位到第 8 个石子（17）。
 
 输入：stones = [0,1,2,3,4,8,9,11]
 输出：false
-解释：这是因为第 5 和第 6 个石子之间的间距太大，没有可选的方案供青蛙跳跃过去。
+解释：这是因为第 5 和第 6 个石子之间的间距不适合（4跳到8，没有方案，也跳不到9），没有可选的方案供青蛙跳跃过去。
 
 ```js
 var canCross = function (stones) {
-   const set = new Set()
-   return helper(stones, 0, 0, set)
-};
-var helper = function (stones, index, k, set) {
+   const set = new Set() // 记忆化：记录失败的路径，避免重复计算
+
+  // 递归函数：从第 index 个石头开始，上一步跳了 k 格
+  var helper = function (stones, index, k, set) {
     const key = index * 1000 + k
     if (set.has(key)) {
         return false
     } else {
         set.add(key)
     }
+    // 尝试后面每一个石头
     for (let i = index + 1; i < stones.length; i++) {
         const gap = stones[i] - stones[index]
         if (gap >= k-1 && gap <= k+1) {
-            if (helper(stones, i, gap, set)) {
-                return true
-            }
+            if (helper(stones, i, gap, set)) return true
         } else if (gap > k+1) {
             break
         }
     }
     return index == stones.length - 1
-}
+  }
+
+   return helper(stones, 0, 0, set)
+};
 ```
 
 ### 剑指 Offer 22.链表中倒数第k个节点
