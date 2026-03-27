@@ -132,8 +132,8 @@
 | 双指针 | 394.字符串解码 | 中等 | 栈 |
 | 树 | 24.交换链表节点 | 中等 | 递归 |
 | 动态规划 | 122.买卖股票的最佳时机 II | 中等 | DP/贪心 |
-| 设计 | LRU缓存 | 中等 | 设计+Map |
-| 设计 | 异步并发调度器 | 中等 | 设计+Promise |
+| 设计 | LRU缓存 [LRU](./LRU.js) | 中等 | 设计+Mav   
+| 设计 | 异步并发调度器 [Scheduler](./Scheduler.js) | 中等 | 设计+Promise |
 | 位运算 | 169.多数元素 | 简单 | 摩尔投票 |
 | 其他 | 165.比较版本号 | 中等 | 双指针 |
 | 其他 | 403.青蛙过河 | 困难 | DFS+记忆化 |
@@ -2070,17 +2070,31 @@ class LRUCache {
 
 你可以假设数组是非空的，并且给定的数组总是存在多数元素。
 
+1. x = 现在暂时认为的答案
+2. m = 抱团人数
+
+遍历数组：
+
+- 如果抱团人数没了（m=0），就把当前数当成新答案
+- 和答案一样 → 抱团 +1
+- 和答案不一样 → 抵消 -1
+- 最后剩下的 x 一定是答案！
+
+
 ```js
 var majorityElement = function(nums) {
   // 栈降维
   // 相同 + 1，不同 -1
+  // 把多数元素和其他元素两两抵消，最后剩下的一定是多数元素。
   // 因为相同的数大于一半, 所以剩下大于一半的那个
-  let x = 0
-  let m = 0
+  let x = 0 // x：存储当前候选的“多数元素”
+  let m = 0 // m：计数器，记录当前候选元素的“票数”
 
   for (let n of nums) {
     if (m === 0) x = n
 
+    // 如果当前数字 和 候选元素 x 一样 → 票数+1
+    // 如果不一样 → 票数-1（互相抵消）
     m += x === n ? 1 : -1
   }
 
@@ -2172,6 +2186,11 @@ function rotateArr1(arr, k) {
 ### 24.交换链表节点
 
 链接：[24. 两两交换链表中的节点](https://leetcode-cn.com/problems/swap-nodes-in-pairs/)
+
+给你一个链表，两两交换其中相邻的节点，并返回交换后链表的头节点。你必须在不修改节点内部的值的情况下完成本题（即，只能进行节点交换）。
+
+输入：head = [1,2,3,4]
+输出：[2,1,4,3]
 
 递归：
 
@@ -2364,13 +2383,40 @@ const nSum = function(nums, target) {
 
 leetcode: [394. 字符串解码](https://leetcode-cn.com/problems/decode-string/)
 
-```js
+给定一个经过编码的字符串，返回它解码后的字符串。
+
+编码规则为: k[encoded_string]，表示其中方括号内部的 encoded_string 正好重复 k 次。注意 k 保证为正整数。
+
+你可以认为输入字符串总是有效的；输入字符串中没有额外的空格，且输入的方括号总是符合格式要求的。
+
+此外，你可以认为原始数据不包含数字，所有的数字只表示重复的次数 k ，例如不会出现像 3a 或 2[4] 的输入。
+
+测试用例保证输出的长度不会超过 105。
+
+示例 1：
+
+输入：s = "3[a]2[bc]"
+输出："aaabcbc"
+示例 2：
+
+输入：s = "3[a2[c]]"
+输出："accaccacc"
+示例 3：
+
+输入：s = "2[abc]3[cd]ef"
+输出："abcabccdcdcdef"
+示例 4：
+
+输入：s = "abc3[cd]xyz"
+输出："abccdc
+
+```js 
 var decodeString = function(s) {
     let numStack = [];        // 存倍数的栈
     let strStack = [];        // 存 待拼接的str 的栈
-    let num = 0;              // 倍数的“搬运工”
-    let result = '';          // 字符串的“搬运工”
-    for (const char of s) {   // 逐字符扫描
+    let num = 0;              // 倍数
+    let result = '';
+    for (const char of s) {   // 逐字符扫
         if (!isNaN(char)) {   // 遇到数字
             num = num * 10 + Number(char); // 算出倍数
         } else if (char == '[') {  // 遇到 [
@@ -2532,15 +2578,18 @@ var compareVersion = function(version1, version2) {
   let i = 0, j = 0;
   while (i < n || j < m) {
       let x = 0;
-      for (; i < n && version1[i] !== '.'; ++i) {
-          x = x * 10 + version1[i].charCodeAt() - '0'.charCodeAt();
+      while (i < n && version1[i] !== '.') {
+        x = x * 10 + version1[i].charCodeAt() - '0'.charCodeAt();
+        i++;
       }
-      ++i; // 跳过点号
+      i++; // 跳过点号
       let y = 0;
-      for (; j < m && version2.charAt(j) !== '.'; ++j) {
+      while (j < m && version2[j] !== '.') {
           y = y * 10 + version2[j].charCodeAt() - '0'.charCodeAt();
+          j++;
       }
-      ++j; // 跳过点号
+      j++; // 跳过点号
+
       if (x !== y) {
           return x > y ? 1 : -1;
       }
@@ -2563,36 +2612,38 @@ var compareVersion = function(version1, version2) {
 
 输入：stones = [0,1,3,5,6,8,12,17]
 输出：true
-解释：青蛙可以成功过河，按照如下方案跳跃：跳 1 个单位到第 2 块石子, 然后跳 2 个单位到第 3 块石子, 接着 跳 2 个单位到第 4 块石子, 然后跳 3 个单位到第 6 块石子, 跳 4 个单位到第 7 块石子, 最后，跳 5 个单位到第 8 个石子（即最后一块石子）。
+解释：青蛙可以成功过河，按照如下方案跳跃：跳 1 个单位到第 2 块石子（1）, 然后跳 2 个单位到第 3 块石子（3）, 接着 跳 2 个单位到第 4 块石子（5）, 然后跳 3 个单位到第 6 块石子（8）, 跳 4 个单位到第 7 块石子（12）, 最后，跳 5 个单位到第 8 个石子（17）。
 
 输入：stones = [0,1,2,3,4,8,9,11]
 输出：false
-解释：这是因为第 5 和第 6 个石子之间的间距太大，没有可选的方案供青蛙跳跃过去。
+解释：这是因为第 5 和第 6 个石子之间的间距不适合（4跳到8，没有方案，也跳不到9），没有可选的方案供青蛙跳跃过去。
 
 ```js
 var canCross = function (stones) {
-   const set = new Set()
-   return helper(stones, 0, 0, set)
-};
-var helper = function (stones, index, k, set) {
+   const set = new Set() // 记忆化：记录失败的路径，避免重复计算
+
+  // 递归函数：从第 index 个石头开始，上一步跳了 k 格
+  var helper = function (stones, index, k, set) {
     const key = index * 1000 + k
     if (set.has(key)) {
         return false
     } else {
         set.add(key)
     }
+    // 尝试后面每一个石头
     for (let i = index + 1; i < stones.length; i++) {
         const gap = stones[i] - stones[index]
         if (gap >= k-1 && gap <= k+1) {
-            if (helper(stones, i, gap, set)) {
-                return true
-            }
+            if (helper(stones, i, gap, set)) return true
         } else if (gap > k+1) {
             break
         }
     }
     return index == stones.length - 1
-}
+  }
+
+   return helper(stones, 0, 0, set)
+};
 ```
 
 ### 剑指 Offer 22.链表中倒数第k个节点
@@ -2657,8 +2708,14 @@ var getKthFromEnd = function(head, k) {
 
 ```js
 // 动态规划
-// dp[i][0] 表示第 i 天交易完后手里没有股票的最大利润，dp[i][1] 表示第 i 天交易完后手里持有一支股票的最大利润（i 从 0 开始）。
+// dp[i][0]：第 i 天结束后，手里没有股票的最大利润。
+// dp[i][1]：第 i 天结束后，手里持有股票的最大利润。
+
+// 第 i 天结束后没股票，只可能是两种情况导致的：
+//  1. 昨天就没股票，今天啥也没干；利润是 dp[i-1][0]
+//  2. 昨天有股票，今天卖了 price[i]；利润是 dp[i-1][1] + price[i]
 // dp[i][0] = max{dp[i-1][0], dp[i-1][1] + prices[i]}
+
 // dp[i][1] = max{dp[i-1][1], dp[i-1][0] - prices[i]}
 var maxProfit = function(prices) {
   const n = prices.length;
