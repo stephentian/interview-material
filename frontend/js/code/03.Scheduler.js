@@ -27,7 +27,10 @@ class Scheduler {
       promiseCreator.resolve()
 
       // 删除任务
-      this.working.splice(this.working.findIndex(promiseCreator), 1)
+      const index = this.working.indexOf(promiseCreator)
+      if (index !== -1) {
+        this.working.splice(index, 1)
+      }
       if (this.tasks.length > 0) this.run(this.tasks.shift())
     })
   }
