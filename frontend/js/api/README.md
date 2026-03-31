@@ -15,6 +15,7 @@
 - [Promise](#promise)
 - [Reflect](#reflect)
   - [Reflect 和 Object](#reflect-和-object)
+- [Proxy](#proxy)
 - [Class](#class)
 - [async 和 await](#async-和-await)
 
@@ -54,7 +55,18 @@ console.log(d.valueOf())    // {a:2}
 在二者并存的情况下，数值运算时，优先调用 `valueOf`，字符串运算时，优先调用 `toString`
 
 ```js
+const obj = {
+  toString() {
+    return 'hello';
+  },
+  valueOf() {
+    return 100;
+  }
+};
 
+console.log(obj + 100); // 200
+console.log(obj + '100'); // 100100
+console.log(`${obj}`); // hello
 ```
 
 ## charCodeAt()
@@ -160,6 +172,7 @@ const shape = {
   long() {
     return this.radius * 2;
   },
+  // 箭头函数：this 指向定义时的上下文（window）
   circular: () => 2 * Math.PI * this.radius
 };
 
@@ -177,6 +190,15 @@ D: NaN and 63
 对于箭头函数, this 指向它所在的上下文的环境, 与普通函数不同！
 这意味着当我们调用 `circular` 时，它不是指向 shape 对象，而是指其定义时的环境（window）。
 没有值 radius 属性，返回 undefined。
+
+作用域 ：
+
+1. 函数作用域 - 函数内部
+2. 块级作用域 - {} 内部（使用 let/const ）
+3. 模块作用域 - ES6 模块文件
+4. eval 作用域 - eval 函数内部
+
+对象字面量 {} 不会创建新的作用域！
 
 ## padStart 和 padEnd
 
@@ -283,7 +305,7 @@ console.log(...[1, 2, 3])
 
 ## Symbol
 
-原始数据类型。使用 `Symbol()` 创建 Symbol 类型的值。不支持 `new Symbol()`。
+原始数据类型。使用 `Symbol()` 创建 Symbol 类型的值。**不支持 `new Symbol()`**。
 
 每个 Symbol 值都是唯一的，用来解决命名冲突的问题。
 
@@ -315,7 +337,7 @@ Symbol.keyFor(localSym); // undefined
 
 ## Set
 
-类似于数组，但是成员的值都是唯一的，没有重复的值
+类似于数组，但是成员的值都是唯一的，没有重复的值；Set 对象允许你存储任何类型的唯一值。
 
 Set 结构没有键名，只有键值（或者说键名和键值是同一个值）
 
@@ -391,7 +413,7 @@ const map = new Map([
 ])
 ```
 
-Map 的键实际上是跟内存地址绑定的，只要内存地址不一样，就视为两个键
+Map 的键实际上是跟内存地址绑定的，只要内存地址不一样，就视为两个键；所以 Map 可以用相同的对象当键名。
 
 属性和方法
 
@@ -569,6 +591,7 @@ Promise 是 ES6 出的异步编程的一种解决方案。
     ```
 
 3. 方法一致性
+
     ```js
     // Object 的方法命名不一致，有些返回布尔值，有些抛出异常
     delete obj.prop;              // 返回 true/false
@@ -629,7 +652,26 @@ ES6 提供的一种异步编程的解决方案
 - 函数内部使用 `yield` 表达式，用来暂停执行
 - 返回一个遍历器对象，对象使用 `next` 方法进入下一个状态
 
-async 是Generator函数的语法糖，并对Generator函数进行了改进。
+async 是 `Generator` 函数的语法糖，并对Generator函数进行了改进。
+
+```js
+async function* asyncGenerator() {
+  const res = await fetch('https://www.xxx.com');
+  const data = await res.json();
+  yield data;
+}
+
+// 用 Generator + 自动执行器 实现相同功能
+function* fetchDataGenerator() {
+  try {
+    const res = yield fetch('https://api.example.com/data');
+    const data = yield res.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+}
+```
 
 ## Proxy
 
@@ -731,3 +773,22 @@ class Point {
 1. `async` 表示这是一个 `async` 函数， `await` 只能用在 `async` 函数里面，不能单独使用
 2. `await` 等待的是一个 `Promise` 对象，后面必须跟一个 `Promise` 对象，但是不必写 `then()`，直接就可以得到返回值
 3. `async` 返回的是一个 `Promise` 对象
+
+```js
+async function asyncFunction() {
+  const res = await fetch('https://www.xxx.com');
+  const data = await res.json();
+  return data;
+}
+
+// 用 Generator + 自动执行器 实现相同功能
+function* fetchDataGenerator() {
+  try {
+    const res = yield fetch('https://api.example.com/data');
+    const data = yield res.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+}
+```
