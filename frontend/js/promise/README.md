@@ -17,6 +17,10 @@ Promise 是异步编程的一种解决方案。类似一个容器，里面保存
 1. 无法取消 Promise
 2. 于 pending 状态时，无法得知目前进展到哪一个阶段
 
+手写 Promise
+
+[promise](./myPrms.js)
+
 ## 基本用法
 
 ```js
