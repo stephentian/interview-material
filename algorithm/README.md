@@ -6,9 +6,9 @@
     - [第二阶段：进阶提升（建议 2-3 周）](#第二阶段进阶提升建议-2-3-周)
     - [第三阶段：高级突破（建议 2-4 周）](#第三阶段高级突破建议-2-4-周)
   - [二、按面试频率排序](#二按面试频率排序)
-    - [⭐⭐⭐⭐⭐ 超高频（必刷）](#-超高频必刷)
-    - [⭐⭐⭐⭐ 高频（重点）](#-高频重点)
-    - [⭐⭐⭐ 中频（常考）](#-中频常考)
+    - [超高频（必刷）](#超高频必刷)
+    - [高频（重点）](#高频重点)
+    - [中频（常考）](#中频常考)
   - [三、学习建议](#三学习建议)
 - [基础知识](#基础知识)
 - [排序](#排序)
@@ -142,7 +142,7 @@
 
 > 基于近年大厂前端面试真题统计
 
-#### ⭐⭐⭐⭐⭐ 超高频（必刷）
+#### 超高频（必刷）
 
 | 排名 | 题目 | 类型 | 出现频率 |
 |------|------|------|----------|
@@ -157,7 +157,7 @@
 | 9 | 21.合并两个有序链表 | 链表 | 极高 |
 | 10 | 226.翻转二叉树 | 树 | 极高 |
 
-#### ⭐⭐⭐⭐ 高频（重点）
+#### 高频（重点）
 
 | 排名 | 题目 | 类型 | 出现频率 |
 |------|------|------|----------|
@@ -172,7 +172,7 @@
 | 19 | 160.相交链表 | 链表 | 很高 |
 | 20 | 394.字符串解码 | 栈 | 很高 |
 
-#### ⭐⭐⭐ 中频（常考）
+#### 中频（常考）
 
 | 排名 | 题目 | 类型 | 出现频率 |
 |------|------|------|----------|
@@ -946,13 +946,11 @@ var nextGreaterElements = function(nums) {
   const stack = []
 
   // 每个位置i都需要从i+1遍历到i-1的位置，在这个区间内找到下一个更大的值
-  for (let i = 0; i < len * 2- 1; i++) {
+  for (let i = 0; i < len * 2; i++) {
     let num = nums[i % len]
     // 将所有大于nums[i]的数都弹出
-    while (stack.length) {
-      if(num > nums[stack[stack.length - 1] % len]) {
+    while (stack.length && num > nums[stack[stack.length - 1] % len]) {
         res[stack.pop() % len] = num
-      }      
     }
     stack.push(i)
   }
@@ -1826,17 +1824,17 @@ var isPalindrome = function(head) {
 // 贪心的想法就是取最左最小值，取最右最大值，那么得到的差值就是最大利润。
 var maxProfit = function(prices) {
   if (prices.length <= 1) return 0
-  let inV = 0  // 买入值
+  let minIndex = 0
   let res = 0
 
   for (let i = 1; i<prices.length; i++) {
 
-    if (prices[i] - prices[inV] > res) {
-      res = prices[i] - prices[inV]
+    if (prices[i] - prices[minIndex] > res) {
+      res = prices[i] - prices[minIndex]
     }
 
-    if (prices[i] < prices[inV]) {
-      inV = i
+    if (prices[i] < prices[minIndex]) {
+      minIndex = i
     }
   }
   return res
@@ -2475,10 +2473,18 @@ var solveNQueens = function(n) {
     console.log("判断行 row = " + row + ";" + "列 col = " + col + ";" + "是否可以放置")
 
     for (let i = 0; i < queens.length; i++) {
-      // i 是行, queens[i] 是列
-      // 不能同行，同列，同对角线
-      if (queens[i] === col) return false // 同列检查
-      if (i + queens[i] == row + col || i - queens[i] == row - col) return false  // 对角线检查
+      // i 是已放置皇后的行号, queens[i] 是已放置皇后的列号
+
+      // 检查 1：不能同列
+      if (queens[i] === col) return false
+      // 检查 2：不能同对角线
+      if (i + queens[i] == row + col || i - queens[i] == row - col) return false
+
+      // 主对角线（左上→右下）：行 - 列 = 常数
+      // 副对角线（右上→左下）：行 + 列 = 常数
+      // 例如：
+      // (0,1) 和 (2,3) 在同一条副对角线上：0+1 = 2+3 = 1 ❌
+      // (0,1) 和 (1,0) 在同一条主对角线上：0-1 = 1-0 = -1 ❌
       // if (Math.abs(row - i) === Math.abs(col - queens[i])) return false
     }
 
@@ -2487,7 +2493,7 @@ var solveNQueens = function(n) {
   }
 
   let dfs = (res, queens, n, row) => {
-    console.log("row = " + row + ";" + "尝试在第 " + row + " 行放置皇后")
+    console.log("尝试在第 " + row + " 行放置皇后")
 
     if (row === n) {
       console.log("第 " + row + " 行已放置完所有行")
@@ -2496,15 +2502,15 @@ var solveNQueens = function(n) {
     }
 
     for (let col = 0; col < n; col++) {
-      if (!canPlace(queens, row, col)) continue // 不能放置，跳过
+      if (!canPlace(queens, row, col)) continue // 不能放置，跳过，继续尝试下一列
       queens[row] = col
       console.log("queens 第" + row + "行放置了col：" + col)
       console.log("queens = " + JSON.stringify(queens))
       console.log("深度遍历下一行")
       dfs(res, queens, n, row + 1)
 
-      console.log("dfs 出来了, row: " + row)
-      queens.splice(row, 1)
+      console.log(row + 1 + " for 循环结束， dfs 出来了, row: " + row)
+      queens.splice(row, 1) // 回溯，将当前行的皇后位置清空
       console.log("回溯后的 queens = " + JSON.stringify(queens))
     }
   }
@@ -2516,16 +2522,29 @@ var solveNQueens = function(n) {
 solveNQueens(4)
 
 // 执行过程：
-// row=0: 尝试在第0行放置皇后
+// 尝试在第0行放置皇后
 //  判断行 row = 0;列 col = 0;是否可以放置
 //  位置 row = 0;列 col = 0可以放置
 //  queens 第0行放置了col：0
+//  queens = [0]
 //  深度遍历下一行
-// row=1: 尝试在第1行放置皇后
-//  col=0,1,2都不行，col=3可以: queens=[0,3]
-//         row=2: 尝试在第2行放置皇后
-//           col=0,1,2,3都不行，回溯
-//         回溯到row=1，继续尝试其他列...
+// 尝试在第1行放置皇后
+//   判断行 row = 1;列 col = 0;是否可以放置
+//   判断行 row = 1;列 col = 1;是否可以放置
+//   判断行 row = 1;列 col = 2;是否可以放置
+//   位置 row = 1;列 col = 2可以放置
+//   queens 第1行放置了col：2
+//   queens = [0,2]
+//   深度遍历下一行
+// 尝试在第2行放置皇后
+//   判断行 row = 2;列 col = 0;是否可以放置
+//   判断行 row = 2;列 col = 1;是否可以放置
+//   判断行 row = 2;列 col = 2;是否可以放置
+//   判断行 row = 2;列 col = 3;是否可以放置
+//   dfs 出来了, row: 1
+//   回溯后的 queens = [0]
+// 判断行 row = 1;列 col = 3;是否可以放置
+
 ```
 
 ### 165.比较版本号
