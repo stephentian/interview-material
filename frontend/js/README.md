@@ -708,7 +708,9 @@ curriedAdd(1, 2, 3) // 6
 
 ### 为什么设计成单线程？
 
-作者布兰登的书《JavaScript 20 years》写道，不想让浏览器变得太复杂
+单线程，js 不会影响浏览器渲染。
+
+js 作者布兰登的书《JavaScript 20 years》写道，不想让浏览器变得太复杂
 
 1. JavaScript的诞生就是为了处理浏览器网页的交互
 2. 因为多线程需要共享资源、且有可能修改彼此的运行结果
@@ -718,8 +720,8 @@ curriedAdd(1, 2, 3) // 6
 
 defer 和 async 都是异步下载的（相较于 HTML 解析）
 
-- defer: 会在整个文档解析完成后, `document` 的 `DOMContentLoaded` 之前执行
-- async: `js` 在下载完后会立即执行
+- defer: 会在整个文档解析完成后, `document` 的 `DOMContentLoaded` 之前执行；js依赖其他js或者被其他js 依赖，使用 defer;
+- async: `js` 在下载完后会立即执行；当你的js是个独立的模块且不依赖任何js，使用 async;
 
 ### Event Loop 执行顺序
 
@@ -765,14 +767,32 @@ Event loop 每一次循环操作叫 `tick`
    1. 样式计算，布局，绘制
    2. requestAnimationFrame
    3. intersectionObserver
-   4. 是否有空闲时间，有则执行 requestIdleCallback 回调, 无则进入下一个 tick
 4. 检查 宏任务队列，存在则执行
+5. 是否有空闲时间，有则执行 requestIdleCallback 回调, 无则进入下一个 tick
 
 宏任务 task: script(整体代码), setTimeout, setInterval, setImmediate
 
 微任务 microtask: Promise.then, MutaionObserver, process.nextTick
 
 详情: [browser](../browser/README.md) 事件循环 Event Loop
+
+`async` 函数内部执行机制：
+
+```js
+async function async1() {
+    console.log(7)      // ← 同步执行
+    await async2()      // ← await 会暂停，但 async2() 本身是同步调用的
+    console.log(8)      // ← 微任务，等待下一轮
+}
+
+async function async2() {
+    console.log(9)      // ← 同步执行！
+}
+```
+
+requestAnimationFrame: 渲染任务，等待浏览器渲染
+
+requestIdleCallback: 空闲时执行
 
 ### 严格模式和非严格模式
 
