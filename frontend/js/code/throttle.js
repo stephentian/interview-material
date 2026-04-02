@@ -29,19 +29,25 @@ function throttle(fn, time) {
   }
 }
 
-// 方法执行完回调版
 function throttle1(fn, delay) {
+  let lastCall = 0
   let timer = null
-  return function (...args) {
-
-    // 判断是否执行完上一个
-    if (!timer) {
-
+  
+  return function(...args) {
+    const now = Date.now()
+    const timeSinceLastCall = now - lastCall
+    
+    if (timer) clearTimeout(timer)
+    
+    if (timeSinceLastCall >= delay) {
+      lastCall = now
       fn.apply(this, args)
+    } else {
       timer = setTimeout(() => {
+        lastCall = Date.now()
         timer = null
-        canUse = true
-      }, delay);
+        fn.apply(this, args)
+      }, delay - timeSinceLastCall)
     }
   }
 }

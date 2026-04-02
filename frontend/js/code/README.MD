@@ -47,6 +47,26 @@ console.log(-Math.pow(2, 53) - 1); //-9007199254740992
 
 核心方法: `on, emit, off, once`
 
+once: 只执行一次
+
+用法：
+
+```js
+const emitter = new EventEmitter()
+
+emitter.on('click', () => {
+  console.log('click')
+})
+
+emitter.once('click', () => {
+  console.log('click once')
+})
+
+emitter.emit('click')
+// click
+// click once
+```
+
 ## 异步并发调度器
 
 实现一个异步并发调度器，并有并发限制，最多同时运行 2个任务。 `add` 方法添加任务，`run` 执行任务
