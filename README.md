@@ -22,13 +22,13 @@
 
 ## 顺序
 
-0. algorithm 算法天天看
-1. HTML
-2. CSS
-3. JS
-4. framework(vue, react)
-5. performance, network(security)
-6. code
-7. questions
-8. server
-9. project
+1. algorithm
+2. HTML
+3. CSS
+4. JS
+5. framework(vue, react)
+6. performance, network(security)
+7. code
+8. questions
+9. server
+10. project

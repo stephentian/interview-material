@@ -56,6 +56,8 @@
 
 2025, Vue3.5
 
+1. watch 和 watchEffect 新增 stop 方法，用于手动停止监听; pause 方法，用于暂停监听。resume 方法，用于重新监听。
+
 ### api 风格
 
 选项式 API (Options API)
@@ -120,8 +122,6 @@
 
 ### 数据响应式原理
 
-响应性是一种可以使我们声明式地处理变化的编程范式。
-
 Vue 数据响应式是通过数据劫持和发布-订阅模型来实现的。
 
 数据劫持：Vue 2 使用 `Object.defineProperty()` 设置属性的 `getter / setters`。Vue 3 中则使用了 `Proxy` 来创建响应式对象，仅将 `getter / setter` 用于 `ref`。
@@ -158,7 +158,7 @@ Vue 数据响应式是通过数据劫持和发布-订阅模型来实现的。
 1. 在负责视图中提升渲染性能
 2. 维护视图和状态之间的关系
 3. 可以支持服务端渲染 `ssr`, 框架跨平台, 原生应用 rn, 小程序等
-4. DOM 对象创建和销毁非常耗费性能。用虚拟 DOM 减少 DOM 创建和销毁。
+4. DOM 对象创建和销毁非常耗费性能。用虚拟 DOM 减少 DOM 创建和销毁
 
 ## 组件中 name 选项作用
 
@@ -427,18 +427,20 @@ vue3
 
 - `ref` 一般用来处理基本数据类型；返回一个响应式的、可更改的 `ref` 对象，此对象只有一个指向其内部值的属性 `.value`。
 - `ref` 也可以绑定对象，对于深层对象会使用 `reactive` 深层转化为响应式；避免深层对象数据绑定 使用 `shallowRef` 替代，不会被深层递归地转为响应式。只有对 `.value` 的访问是响应式的。
-- reactive 专门用于处理对象和数组，利用Proxy进行深度数据代理，不需要访问 `.value`。
-- reactive 只想保留对这个对象顶层次访问的响应性，请使用 `shallowReactive` 作替代。
+- `reactive` 专门用于处理对象和数组，利用Proxy进行深度数据代理，不需要访问 `.value`。
+- `reactive` 只想保留对这个对象顶层次访问的响应性，请使用 `shallowReactive` 作替代。
 
 ### watch 和 watchEffect
 
 watch 和 watchEffect 都用于监听数据然后响应变化。
 
-watch
+watch:
 
 - 可以访问变化前后的数据
 - 需要手动指定监听的数据
 - 使用场景：1. 观察特定的数据变化，并执行相应的逻辑时。2. 需要访问变化前后的数据时。
+
+watchEffect: 自动收集依赖，不需要手动指定监听的数据。
 
 ```js
 import { ref, watch } from 'vue';  
