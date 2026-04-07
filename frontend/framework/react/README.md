@@ -220,6 +220,10 @@ React 围绕纯函数的概念设计的。
 
 ### React 生命周期
 
+React 生命周期分三个阶段：挂载（Mount）、更新（Update）、卸载（Unmount）
+
+18 版本：
+
 挂载阶段
 
 - constructor
@@ -233,6 +237,7 @@ React 围绕纯函数的概念设计的。
 - shouldComponentUpdate
 - render
 - getSnapshotBeforeUpdate
+- componentDidUpdate
 
 卸载阶段
 
@@ -240,16 +245,17 @@ React 围绕纯函数的概念设计的。
 
 1. `constructor`: 组件实例化时被调用，可以进行组件的初始化工作，例如绑定事件处理程序、设置状态或实例化对象。
 2. `static getDerivedStateFromProps(props, state)`：在组件挂载之前被调用，用于根据 props 来更新组件的状态。它返回一个对象，表示要更新的组件状态，或者返回 null，表示不需要更新状态。
-3. `render`：根据当前的 props 和 state 渲染组件的 UI。
-4. `componentDidMount`：在组件挂载后被调用，可以进行异步请求、添加事件监听器或启动定时器等操作。
+3. `componentDidMount`：在组件挂载后被调用，可以进行异步请求、添加事件监听器或启动定时器等操作。
 
-5. `static getDerivedStateFromProps(props, state)`：在组件更新之前被调用，用于根据 props 更新组件的状态。
-6. `shouldComponentUpdate(nextProps, nextState)`：在组件更新之前被调用，可以根据新的 props 和 state 判断是否需要重新渲染组件。返回 true 表示需要重新渲染，返回 false 表示不需要。
-7. `render`：根据新的 props 和 state 重新渲染组件的 UI。
-8. `getSnapshotBeforeUpdate(prevProps, prevState)`：在 render 方法之后、更新 DOM 之前被调用，可以获取组件更新前的一些信息。它返回一个值，该值会作为第三个参数传递给 componentDidUpdate 方法。
-9. `componentDidUpdate(prevProps, prevState, snapshot)`：在组件更新后被调用，可以进行 DOM 操作、网络请求或更新组件的状态等操作。
+4. `static getDerivedStateFromProps(props, state)`：在组件更新之前被调用，用于根据 props 更新组件的状态。
+5. `shouldComponentUpdate(nextProps, nextState)`：在组件更新之前被调用，可以根据新的 props 和 state 判断是否需要重新渲染组件。返回 true 表示需要重新渲染，返回 false 表示不需要。
+6. `render`：根据新的 props 和 state 重新渲染组件的 UI。
+7. `getSnapshotBeforeUpdate(prevProps, prevState)`：在 render 方法之后、更新 DOM 之前被调用，可以获取组件更新前的一些信息。它返回一个值，该值会作为第三个参数传递给 componentDidUpdate 方法。
+8. `componentDidUpdate(prevProps, prevState, snapshot)`：在组件更新后被调用，可以进行 DOM 操作、网络请求或更新组件的状态等操作。
 
-10. `componentWillUnmount`：在组件卸载之前被调用，可以清除定时器、移除事件监听器或取消网络请求等操作。
+9. `componentWillUnmount`：在组件卸载之前被调用，可以清除定时器、移除事件监听器或取消网络请求等操作。
+
+不要在 render/shouldComponentUpdate 做副作用（请求、DOM 修改）！
 
 ### setState
 
