@@ -6,7 +6,7 @@
 - [前端路由模式](#前端路由模式)
   - [hash](#hash)
   - [history](#history)
-  - [MemotyHistory (abstract)](#memotyhistory-abstract)
+  - [MemoryHistory (abstract)](#memoryhistory-abstract)
 - [手写 Vue-Router](#手写-vue-router)
 - [配置 history](#配置-history)
 
@@ -21,7 +21,7 @@
 
 ### route 和 router 区别
 
-`route`： 是“路由信息对象”，包括 path, params, hash, query, fullPath, matched, name等路由信息参数。
+`route`： 是“路由信息对象”，包括 path, params, hash, query, fullPath, matched, name 等路由信息参数。
 `router`：是“路由实例对象”，包括了路由的跳转方法(push、replace)，钩子函数等。
 
 ## 前端路由模式
@@ -44,6 +44,10 @@ const router = createRouter({
 这种模式适用于不支持 HTML5 History API 的浏览器，如 IE9 及更早版本的浏览器。
 
 缺点: 在 SEO 中确实有不好的影响
+
+1. 搜索引擎不抓取 # 后面的内容
+2. 服务器无法识别 # 后面的内容
+3. 后台系统适用，对外网站不适用
 
 ### history
 
@@ -70,7 +74,7 @@ const router = createRouter({
 
 缺点: 需要服务器端支持，否则会导致页面无法正常加载，返回 404。`nginx uri`
 
-### MemotyHistory (abstract)
+### MemoryHistory (abstract)
 
 这种模式适用于支持 Vue Router 的任何环境，包括浏览器、服务器端和原生移动应用等。
 
