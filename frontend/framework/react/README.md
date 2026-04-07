@@ -34,7 +34,7 @@
 - [问题](#问题)
   - [React性能优化](#react性能优化)
   - [StrictMode 模式是什么](#strictmode-模式是什么)
-  - [类组件，React 请求放哪个生命周期中](#类组件react-请求放哪个生命周期中)
+  - [类组件或函数组件，React 请求放哪个生命周期中](#类组件或函数组件react-请求放哪个生命周期中)
   - [类组件，为什么 bind(this)](#类组件为什么-bindthis)
   - [为什么 React 不推荐直接修改 state](#为什么-react-不推荐直接修改-state)
   - [为什么使用 hooks](#为什么使用-hooks)
@@ -266,11 +266,9 @@ React 生命周期分三个阶段：挂载（Mount）、更新（Update）、卸
 
 #### setState 是异步还是同步
 
-摘自：<https://www.cxymsg.com/guide/react.html#setstate%E5%88%B0%E5%BA%95%E6%98%AF%E5%BC%82%E6%AD%A5%E8%BF%98%E6%98%AF%E5%90%8C%E6%AD%A5>
+在 React18 之前：react 调度机制是异步的，但是在 setTimeout/setInterval 等定时器里逃脱了 React 对它的掌控，setState 变成了同步方法。
 
-setState是一个异步方法，但是在 setTimeout/setInterval 等定时器里逃脱了 React 对它的掌控，变成了同步方法。
-
-所以有时表现出异步,有时表现出同步。异步指的是多个 state 会合并一起批量更新.
+异步指的是多个 state 会合并一起批量更新：
 
 比如执行 100 次 setState, 如果是同步的话，那这个组件绘渲染 100次，这对性能是一个相当大的消耗。
 
@@ -288,7 +286,7 @@ setState是一个异步方法，但是在 setTimeout/setInterval 等定时器里
 - 原生事件不会触发 react 的批处理机制，因而调用 setState 会直接更新
 - 异步代码中调用 setState，由于 js 的异步处理机制，异步代码会暂存，等待同步代码执行完毕再执行，此时 react 的批处理机制已经结束，因而直接更新
 
-注意：**React18 以后，使用了 createRoot api 后，所有 setState 都是异步批量执行的**
+React18 以后：使用了 createRoot 后，所有 setState 都是异步批量执行的。不管是原生事件还是合成事件，所有的事件都会自动进行异步处理了，但是如果依然使用render进行渲染，那么，事件流程还是和react 18之前的机制一样。
 
 #### setState 输出顺序
 
@@ -650,14 +648,14 @@ Route 路由匹配
 
 `StrictMode`，`16.3` 版本发布，为了规范代码，针对开发者编写的“不符合并发更新规范的代码”给出提示，逐步引导开发者编写规范的代码。比如使用以 `will` 开头的生命周期就会给出对应的报错提示。
 
-### 类组件，React 请求放哪个生命周期中
+### 类组件或函数组件，React 请求放哪个生命周期中
 
 类组件：
 
 react16 以前：
-认为在 componentWillMount 中进行异步请求，避免白屏。
-但是在服务器渲染的话，会执行两次请求，一次在服务端一次在客户端。
-其次，`React Fiber` 重写后，`componentWillMount` 可能在一次渲染中多次调用，被废弃。
+在 componentWillMount 中进行异步请求，避免白屏。
+
+现在
 
 官方推荐：`componentDidMount`
 有特殊需要提前请求，也可以在 `constructor` 中请求。
@@ -772,6 +770,64 @@ React.createElement(App, null ,lyllovelemon)
 ### 列举几个用到的自定义 Hooks
 
 useAjaxHooks
+
+```js
+import { useState, useEffect } from 'react';
+
+function useAjaxHooks(url, options = {}) {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        
+        const response = await fetch(url, {
+          ...options,
+          signal: controller.signal,
+        });
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const result = await response.json();
+        setData(result);
+      } catch (err) {
+        if (err.name !== 'AbortError') {
+          setError(err);
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+
+    // 清理函数：组件卸载或 url 变化时取消请求
+    return () => {
+      controller.abort();
+    };
+  }, [url]);
+
+  return { data, loading, error };
+}
+
+// 使用示例
+function UserProfile() {
+  const { data, loading, error } = useAjaxHooks('/api/user/123');
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
+  
+  return <div>Hello {data.name}</div>;
+}
+```
 
 ### 为什么不能在 if 里面写 hook
 
