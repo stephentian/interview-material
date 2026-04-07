@@ -431,9 +431,9 @@ width = content + padding + border
 
 ### CSS 如何设置这两种模型
 
-box-sizing: content-box;
+标准盒子模型 box-sizing: content-box;
 
-box-sizing: border-box;
+怪异盒子模型 box-sizing: border-box;
 
 ### JS 获取盒模型对应的宽和高
 
