@@ -24,12 +24,20 @@
 
 ## 常见 loader 和 plugins
 
+loader：
+
 - 样式资源： css-loader style-loader sass-loader
-- 生成 html 资源： html-webpack-plugin
 - 图片资源： file-loader url-loader
 - css 兼容： postcss-loader
-- 压缩资源：optimize-css-assets-webpack-plugin
 - 语法检查：eslint-loader
+
+plugins：
+
+- 压缩资源：optimize-css-assets-webpack-plugin
+- 生成 html 资源： html-webpack-plugin
+- 抽离公共代码：DLLPlugin
+- 提取公共代码：CommonsChunkPlugin
+- 分析依赖关系：DependencyPlugin
 
 ## webpack 优化
 

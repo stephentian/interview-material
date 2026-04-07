@@ -23,7 +23,7 @@
 
 ## Token
 
-token 由三部分组成：header 签名算法 + payload + signature 前面滚
+token 由三部分组成：header 签名算法 + payload + signature ；用 . 连接。
 
 ## JWT
 
