@@ -184,7 +184,7 @@ animation();
 
 - 执行时机: requestAnimation 由系统决定执行时间, setTimeout 的执行时间并不是确定的
 - requestAnimationFrame 受系统的绘制频率影响，即屏幕分辨率 和 屏幕尺寸，setTimeout 受任务队列和页面渲染有关
-- 页面未激活(切换，隐藏, 最小化), requestAnimationFrame 暂停执行, 旧版浏览器 setTimeout 会继续执行，新版浏览器 setTimeout 也会暂停执行（通过监听 visibilitychange 事件恢复动画）； 
+- 页面未激活(切换，隐藏, 最小化), requestAnimationFrame 暂停执行, setTimeout 也会暂停执行（通过监听 visibilitychange 事件恢复执行，或者web worker 执行）；
 - 函数节流: 防止刷新阶段, 防止函数执行多次
 - 引擎: setTimeout JS 引擎线程, 存在事件队列. requestAnimationFrame 属于 GUI 引擎线程, 发生在渲染之前
 
